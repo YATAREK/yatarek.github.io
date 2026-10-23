@@ -1,0 +1,844 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560">
+  <title>Conventional sintered NdFeB magnet production route</title>
+  <defs>
+    <!-- Technical gradients for subtle machine accents -->
+    <linearGradient id="melt-stream" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="60%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#ef4444"/>
+    </linearGradient>
+
+    <radialGradient id="furnace-heat" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="45%" stop-color="#fbbf24"/>
+      <stop offset="80%" stop-color="#ea580c"/>
+      <stop offset="100%" stop-color="#9a3412"/>
+    </radialGradient>
+
+    <radialGradient id="anneal-heat" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fca5a5"/>
+      <stop offset="50%" stop-color="#dc2626"/>
+      <stop offset="100%" stop-color="#7f1d1d"/>
+    </radialGradient>
+
+    <radialGradient id="pulse-flare" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="30%" stop-color="#93c5fd"/>
+      <stop offset="70%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="bath-fluid" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5b8fb9" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#3d6f94" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <!-- Marker arrow for conveyor flow -->
+    <marker id="flow-arrow" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="4" markerHeight="4" orient="auto">
+      <path d="M 0,1 L 4,3 L 0,5 Z" fill="#7c8a9a"/>
+    </marker>
+  </defs>
+
+  <style>
+    /* Technical typography */
+    text {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      user-select: none;
+    }
+    .main-title {
+      font-size: 13px;
+      font-weight: 700;
+      fill: #7c8a9a;
+      letter-spacing: 1.5px;
+    }
+    .step-badge-bg {
+      fill: #27303f;
+      stroke: #7c8a9a;
+      stroke-width: 1.5px;
+    }
+    .step-badge-num {
+      font-size: 12px;
+      font-weight: 700;
+      fill: #f8fafc;
+      text-anchor: middle;
+      dominant-baseline: central;
+    }
+    .step-label {
+      font-size: 15px;
+      font-weight: 600;
+      fill: #7c8a9a;
+      text-anchor: middle;
+    }
+    .param-text {
+      font-size: 13px;
+      font-weight: 400;
+      fill: #7c8a9a;
+      text-anchor: middle;
+    }
+    .conveyor-belt {
+      fill: #475362;
+      stroke: #333d49;
+      stroke-width: 1.5px;
+    }
+    .conveyor-edge {
+      fill: #343e49;
+      stroke: #2b333d;
+      stroke-width: 1.5px;
+    }
+    .iso-outline {
+      stroke: #4a5360;
+      stroke-width: 1.5px;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+    .flow-marker {
+      fill: none;
+      stroke: #7c8a9a;
+      stroke-width: 1.5px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Keyframe Animations */
+    @keyframes spin-copper-wheel {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes melt-flicker {
+      0%, 100% { opacity: 0.85; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.06); }
+    }
+
+    @keyframes h2-pressure {
+      0%, 100% { opacity: 0.4; transform: scale(0.96); }
+      50% { opacity: 0.95; transform: scale(1.06); }
+    }
+
+    @keyframes powder-drift {
+      0% { transform: translate(0, 0) scale(0.9); opacity: 0.3; }
+      50% { transform: translate(2px, -3px) scale(1.1); opacity: 0.8; }
+      100% { transform: translate(0, 0) scale(0.9); opacity: 0.3; }
+    }
+
+    @keyframes coil-pulse {
+      0%, 100% { opacity: 0.35; stroke-width: 1.5px; }
+      50% { opacity: 0.95; stroke-width: 2.5px; filter: drop-shadow(0 0 3px #c9a227); }
+    }
+
+    @keyframes sinter-glow {
+      0%, 100% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 7px #f59e0b); }
+    }
+
+    @keyframes anneal-glow {
+      0%, 100% { opacity: 0.75; transform: scale(0.97); }
+      50% { opacity: 1; transform: scale(1.03); filter: drop-shadow(0 0 5px #dc2626); }
+    }
+
+    @keyframes slicing-reciprocate {
+      0%, 100% { transform: translate(-6px, -3px); }
+      50% { transform: translate(6px, 3px); }
+    }
+
+    @keyframes bath-effervescence {
+      0%, 100% { transform: translateY(0); opacity: 0.6; }
+      50% { transform: translateY(-1.5px); opacity: 0.95; }
+    }
+
+    @keyframes magnetise-burst {
+      0%, 82% { opacity: 0.05; transform: scale(0.85); }
+      84% { opacity: 1; transform: scale(1.2); }
+      88% { opacity: 0.6; transform: scale(1.05); }
+      92%, 100% { opacity: 0.05; transform: scale(0.85); }
+    }
+
+    @keyframes conveyor-east {
+      0% { transform: translateX(0); opacity: 0; }
+      15% { opacity: 1; }
+      85% { opacity: 1; }
+      100% { transform: translateX(110px); opacity: 0; }
+    }
+
+    @keyframes conveyor-west {
+      0% { transform: translateX(0); opacity: 0; }
+      15% { opacity: 1; }
+      85% { opacity: 1; }
+      100% { transform: translateX(-130px); opacity: 0; }
+    }
+
+    @keyframes turnaround-arc {
+      0% { transform: translate(0, 0); opacity: 0; }
+      10% { opacity: 1; }
+      50% { transform: translate(40px, 105px); opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translate(-20px, 210px); opacity: 0; }
+    }
+
+    /* Assigning animation rules */
+    .anim-wheel {
+      animation: spin-copper-wheel 3s linear infinite;
+      transform-origin: 136px 125px;
+    }
+    .anim-melt {
+      animation: melt-flicker 2s ease-in-out infinite;
+      transform-origin: 122px 115px;
+    }
+    .anim-h2 {
+      animation: h2-pressure 3.5s ease-in-out infinite;
+      transform-origin: 330px 105px;
+    }
+    .anim-powder {
+      animation: powder-drift 3s ease-in-out infinite;
+      transform-origin: 556px 145px;
+    }
+    .anim-coil {
+      animation: coil-pulse 4s ease-in-out infinite;
+    }
+    .anim-sinter {
+      animation: sinter-glow 3.5s ease-in-out infinite;
+      transform-origin: 960px 145px;
+    }
+    .anim-anneal {
+      animation: anneal-glow 4s ease-in-out infinite;
+      transform-origin: 960px 365px;
+    }
+    .anim-slice {
+      animation: slicing-reciprocate 2.5s ease-in-out infinite;
+    }
+    .anim-bath {
+      animation: bath-effervescence 3s ease-in-out infinite;
+    }
+    .anim-pulse {
+      animation: magnetise-burst 5s cubic-bezier(0.1, 0.9, 0.2, 1) infinite;
+      transform-origin: 170px 365px;
+    }
+
+    /* Material packets moving between steps */
+    .pack-top-1 { animation: conveyor-east 3.6s linear infinite; }
+    .pack-top-2 { animation: conveyor-east 3.6s linear 0.9s infinite; }
+    .pack-top-3 { animation: conveyor-east 3.6s linear 1.8s infinite; }
+    .pack-top-4 { animation: conveyor-east 3.6s linear 2.7s infinite; }
+
+    .pack-arc { animation: turnaround-arc 6s ease-in-out infinite; }
+
+    .pack-bot-1 { animation: conveyor-west 4s linear infinite; }
+    .pack-bot-2 { animation: conveyor-west 4s linear 1.3s infinite; }
+    .pack-bot-3 { animation: conveyor-west 4s linear 2.6s infinite; }
+    .pack-bot-4 { animation: conveyor-west 4s linear 0.7s infinite; }
+
+    /* Accessibility reduced motion override */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+      }
+    }
+      /* parcels: use first keyframe during delays; hide when motion is reduced */
+    [class^="pack-"], [class*=" pack-"] { animation-fill-mode: backwards; }
+    @media (prefers-reduced-motion: reduce) { [class^="pack-"], [class*=" pack-"] { display: none; } }
+  </style>
+
+  <!-- ========================================== -->
+  <!-- HEADER TITLE                               -->
+  <!-- ========================================== -->
+  <text x="50" y="38" class="main-title">CONVENTIONAL SINTERED NdFeB FABRICATION ROUTE</text>
+
+  <!-- ========================================== -->
+  <!-- ISOMETRIC CONVEYORS AND TRACKS             -->
+  <!-- ========================================== -->
+  <!-- Row 1 Conveyor (Top row: Left to Right) -->
+  <g id="conveyor-top">
+    <!-- Conveyor supports/legs -->
+    <path d="M 60,188 L 60,206 M 225,188 L 225,206 M 435,188 L 435,206 M 645,188 L 645,206 M 855,188 L 855,206 M 1000,188 L 1000,206" stroke="#4a5360" stroke-width="2"/>
+    <!-- Conveyor bed -->
+    <polygon points="50,174 1005,174 1005,184 50,184" class="conveyor-belt"/>
+    <polygon points="50,184 1005,184 1005,189 50,189" class="conveyor-edge"/>
+    <!-- Conveyor directional chevron markers -->
+    <path d="M 215,179 L 222,179 L 226,181 L 222,183 L 215,183" class="flow-marker"/>
+    <path d="M 425,179 L 432,179 L 436,181 L 432,183 L 425,183" class="flow-marker"/>
+    <path d="M 635,179 L 642,179 L 646,181 L 642,183 L 635,183" class="flow-marker"/>
+    <path d="M 845,179 L 852,179 L 856,181 L 852,183 L 845,183" class="flow-marker"/>
+  </g>
+
+  <!-- Turnaround Curved Conveyor (Looping from Step 5 to Step 6) -->
+  <g id="conveyor-turnaround">
+    <!-- Outer rim / bed curve -->
+    <path d="M 1005,174 C 1115,174 1115,394 1005,394 L 1005,404 C 1125,404 1125,184 1005,184 Z" fill="#475362" stroke="#333d49" stroke-width="1.5"/>
+    <path d="M 1005,184 C 1125,184 1125,404 1005,404 L 1005,409 C 1129,409 1129,189 1005,189 Z" fill="#343e49" stroke="#2b333d" stroke-width="1.5"/>
+    <!-- Transfer guide rails -->
+    <path d="M 1010,178 C 1095,178 1095,390 1010,390" fill="none" stroke="#7c8a9a" stroke-width="1.5" stroke-dasharray="6 6"/>
+    <!-- Turn directional indicators -->
+    <path d="M 1076,275 L 1079,282 L 1074,288" fill="none" stroke="#7c8a9a" stroke-width="1.5"/>
+    <path d="M 1060,335 L 1054,342 L 1046,340" fill="none" stroke="#7c8a9a" stroke-width="1.5"/>
+  </g>
+
+  <!-- Row 2 Conveyor (Bottom row: Right to Left) -->
+  <g id="conveyor-bottom">
+    <!-- Conveyor supports/legs -->
+    <path d="M 960,408 L 960,424 M 825,408 L 825,424 M 560,408 L 560,424 M 300,408 L 300,424 M 90,408 L 90,424" stroke="#4a5360" stroke-width="2"/>
+    <!-- Conveyor bed -->
+    <polygon points="50,394 1005,394 1005,404 50,404" class="conveyor-belt"/>
+    <polygon points="50,404 1005,404 1005,409 50,409" class="conveyor-edge"/>
+    <!-- Conveyor directional chevron markers (pointing left) -->
+    <path d="M 835,399 L 828,399 L 824,401 L 828,403 L 835,403" class="flow-marker"/>
+    <path d="M 570,399 L 563,399 L 559,401 L 563,403 L 570,403" class="flow-marker"/>
+    <path d="M 310,399 L 303,399 L 299,401 L 303,403 L 310,403" class="flow-marker"/>
+    <path d="M 100,399 L 93,399 L 89,401 L 93,403 L 100,403" class="flow-marker"/>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- MATERIAL PACKETS ON CONVEYORS (ANIMATED)   -->
+  <!-- ========================================== -->
+  <!-- Top conveyor material flow (Flakes and green blocks) -->
+  <g class="pack-top-1" transform="translate(155, 175)">
+    <polygon points="0,-4 8,0 0,4 -8,0" fill="#a3aebb" class="iso-outline"/>
+    <polygon points="-8,0 0,4 0,7 -8,3" fill="#7c8a9a" class="iso-outline"/>
+    <polygon points="0,4 8,0 8,3 0,7" fill="#5f6b78" class="iso-outline"/>
+  </g>
+  <g class="pack-top-2" transform="translate(365, 175)">
+    <polygon points="0,-4 8,0 0,4 -8,0" fill="#a3aebb" class="iso-outline"/>
+    <polygon points="-8,0 0,4 0,7 -8,3" fill="#7c8a9a" class="iso-outline"/>
+    <polygon points="0,4 8,0 8,3 0,7" fill="#5f6b78" class="iso-outline"/>
+  </g>
+  <g class="pack-top-3" transform="translate(575, 175)">
+    <!-- Fine compacted green pellet -->
+    <polygon points="0,-4 9,0 0,4 -9,0" fill="#8fae7e" class="iso-outline"/>
+    <polygon points="-9,0 0,4 0,8 -9,4" fill="#6b8a5b" class="iso-outline"/>
+    <polygon points="0,4 9,0 9,4 0,8" fill="#4a633f" class="iso-outline"/>
+  </g>
+  <g class="pack-top-4" transform="translate(785, 175)">
+    <!-- Aligned green compact block -->
+    <polygon points="0,-5 10,0 0,5 -10,0" fill="#c9a227" class="iso-outline"/>
+    <polygon points="-10,0 0,5 0,9 -10,4" fill="#9d7b17" class="iso-outline"/>
+    <polygon points="0,5 10,0 10,4 0,9" fill="#785d0d" class="iso-outline"/>
+  </g>
+
+  <!-- Turnaround conveyor packet (Dense sintered block) -->
+  <g class="pack-arc" transform="translate(1005, 175)">
+    <polygon points="0,-5 10,0 0,5 -10,0" fill="#7c8a9a" class="iso-outline"/>
+    <polygon points="-10,0 0,5 0,10 -10,5" fill="#5f6b78" class="iso-outline"/>
+    <polygon points="0,5 10,0 10,5 0,10" fill="#4a5360" class="iso-outline"/>
+  </g>
+
+  <!-- Bottom conveyor material flow (Heat treated, sliced, coated, magnetized) -->
+  <g class="pack-bot-1" transform="translate(900, 395)">
+    <polygon points="0,-5 10,0 0,5 -10,0" fill="#a3aebb" class="iso-outline"/>
+    <polygon points="-10,0 0,5 0,10 -10,5" fill="#7c8a9a" class="iso-outline"/>
+    <polygon points="0,5 10,0 10,5 0,10" fill="#5f6b78" class="iso-outline"/>
+  </g>
+  <g class="pack-bot-2" transform="translate(635, 395)">
+    <!-- Sliced rectangular mini-blocks -->
+    <polygon points="-6,-4 -1,-6 4,-4 -1,-2" fill="#a3aebb" stroke="#4a5360" stroke-width="1"/>
+    <polygon points="1,-2 6,-4 11,-2 6,0" fill="#a3aebb" stroke="#4a5360" stroke-width="1"/>
+    <polygon points="-6,2 -1,0 4,2 -1,4" fill="#7c8a9a" stroke="#4a5360" stroke-width="1"/>
+    <polygon points="1,4 6,2 11,4 6,6" fill="#5f6b78" stroke="#4a5360" stroke-width="1"/>
+  </g>
+  <g class="pack-bot-3" transform="translate(375, 395)">
+    <!-- Metallic plated (Ni-Cu-Ni shiny) block -->
+    <polygon points="0,-5 10,0 0,5 -10,0" fill="#e2e8f0" class="iso-outline"/>
+    <polygon points="-10,0 0,5 0,9 -10,4" fill="#cbd5e1" class="iso-outline"/>
+    <polygon points="0,5 10,0 10,4 0,9" fill="#94a3b8" class="iso-outline"/>
+  </g>
+  <g class="pack-bot-4" transform="translate(125, 395)">
+    <!-- Finished permanent magnet with magnetic poles -->
+    <polygon points="0,-6 11,0 0,6 -11,0" fill="#f1f5f9" class="iso-outline"/>
+    <!-- North pole (Red) -->
+    <polygon points="-11,0 0,6 0,11 -11,5" fill="#dc2626" class="iso-outline"/>
+    <!-- South pole (Blue) -->
+    <polygon points="0,6 11,0 11,5 0,11" fill="#2563eb" class="iso-outline"/>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- STEP 1: MELTING & STRIP CASTING            -->
+  <!-- ========================================== -->
+  <g id="step-1" transform="translate(120, 160)">
+    <!-- Base Plinth -->
+    <polygon points="0,10 40,30 0,50 -40,30" fill="#a3aebb" class="iso-outline"/>
+    <polygon points="-40,30 0,50 0,60 -40,40" fill="#7c8a9a" class="iso-outline"/>
+    <polygon points="0,50 40,30 40,40 0,60" fill="#5f6b78" class="iso-outline"/>
+
+    <!-- Vacuum Induction Furnace Chamber (Left) -->
+    <g transform="translate(-18, 0)">
+      <!-- Chamber main body -->
+      <polygon points="0,-40 22,-29 0,-18 -22,-29" fill="#a3aebb" class="iso-outline"/>
+      <polygon points="-22,-29 0,-18 0,22 -22,11" fill="#7c8a9a" class="iso-outline"/>
+      <polygon points="0,-18 22,-29 22,11 0,22" fill="#5f6b78" class="iso-outline"/>
+      <!-- Induction heating coils wrapped around furnace -->
+      <path d="M -23,-14 L 0,-3 L 23,-14" fill="none" stroke="#c9a227" stroke-width="3" stroke-linecap="round"/>
+      <path d="M -23,-3 L 0,8 L 23,-3" fill="none" stroke="#c9a227" stroke-width="3" stroke-linecap="round"/>
+      <path d="M -23,8 L 0,19 L 23,8" fill="none" stroke="#c9a227" stroke-width="3" stroke-linecap="round"/>
+      <!-- Top vacuum lid handle -->
+      <polygon points="0,-48 8,-44 0,-40 -8,-44" fill="#cbd5e1" class="iso-outline"/>
+      <path d="M 0,-48 L 0,-40" stroke="#4a5360" stroke-width="2"/>
+    </g>
+
+    <!-- Molten Alloy Pouring Stream -->
+    <path class="anim-melt" d="M -2,-8 Q 12,-4 15,10 Q 18,24 16,30" fill="none" stroke="url(#melt-stream)" stroke-width="3.5" stroke-linecap="round"/>
+
+    <!-- Water-cooled Copper Strip Casting Wheel -->
+    <g transform="translate(16, 25)">
+      <!-- Wheel stand / bearing support -->
+      <polygon points="-4,5 4,1 4,18 -4,22" fill="#5f6b78" class="iso-outline"/>
+      <!-- Copper Wheel (Isometric circular cylinder) -->
+      <g class="anim-wheel">
+        <ellipse cx="0" cy="0" rx="16" ry="8" fill="#d97757" class="iso-outline"/>
+        <!-- Extruded copper rim -->
+        <path d="M -16,0 A 16,8 0 0,0 16,0 L 16,8 A 16,8 0 0,1 -16,8 Z" fill="#c15f3c" class="iso-outline"/>
+        <!-- Spokes / cooling channels on wheel -->
+        <line x1="-12" y1="-2" x2="12" y2="2" stroke="#9a3412" stroke-width="1.5"/>
+        <line x1="-4" y1="-7" x2="4" y2="7" stroke="#9a3412" stroke-width="1.5"/>
+        <circle cx="0" cy="0" r="3" fill="#7c8a9a" stroke="#4a5360" stroke-width="1"/>
+      </g>
+    </g>
+
+    <!-- Solidified Alloy Flakes Collection Chute -->
+    <polygon points="12,38 32,48 24,53 4,43" fill="#a3aebb" class="iso-outline"/>
+    <!-- Small flakes on chute -->
+    <polygon points="18,41 22,43 20,45 16,43" fill="#5f6b78"/>
+    <polygon points="24,44 28,46 26,48 22,46" fill="#c15f3c"/>
+  </g>
+
+  <!-- Step 1 Labels -->
+  <g transform="translate(120, 214)">
+    <circle cx="0" cy="0" r="11" class="step-badge-bg"/>
+    <text x="0" y="0" class="step-badge-num">1</text>
+    <text x="0" y="24" class="step-label">
+      <tspan x="0" dy="0">Melting and</tspan>
+      <tspan x="0" dy="17">strip casting</tspan>
+    </text>
+    <text x="0" y="58" class="param-text">water-cooled wheel</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- STEP 2: HYDROGEN DECREPITATION             -->
+  <!-- ========================================== -->
+  <g id="step-2" transform="translate(330, 160)">
+    <!-- Base Plinth -->
+    <polygon points="0,10 40,30 0,50 -40,30" fill="#a3aebb" class="iso-outline"/>
+    <polygon points="-40,30 0,50 0,60 -40,40" fill="#7c8a9a" class="iso-outline"/>
+    <polygon points="0,50 40,30 40,40 0,60" fill="#5f6b78" class="iso-outline"/>
+
+    <!-- High-Pressure Decrepitation Vessel (Vertical Autoclave) -->
+    <g transform="translate(0, 5)">
+      <!-- Vessel Body: Hexagonal Isometric Cylinder -->
+      <polygon points="0,-50 24,-38 0,-26 -24,-38" fill="#a3aebb" class="iso-outline"/>
+      <polygon points="-24,-38 0,-26 0,26 -24,14" fill="#7c8a9a" class="iso-outline"/>
+      <polygon points="0,-26 24,-38 24,14 0,26" fill="#5f6b78" class="iso-outline"/>
+
+      <!-- Reinforcing Bolted Flange Bands -->
+      <polygon points="-25,-12 0,1 25,-12 25,-8 0,5 -25,-8" fill="#a3aebb" stroke="#4a5360" stroke-width="1"/>
+      <polygon points="-25,8 0,21 25,8 25,12 0,25 -25,12" fill="#a3aebb" stroke="#4a5360" stroke-width="1"/>
+
+      <!-- Vessel Viewport showing cracking flakes -->
+      <ellipse cx="-10" cy="-6" rx="6" ry="4" fill="#334155" stroke="#4a5360" stroke-width="1.5"/>
+      <path d="M -12,-6 L -8,-7 L -9,-5 Z" fill="#cbd5e1"/>
+
+      <!-- Top Gas Manifold & Pressure Gauge -->
+      <path d="M 0,-50 L 0,-62 L 14,-62" fill="none" stroke="#5b8fb9" stroke-width="2.5" stroke-linecap="round"/>
+      <circle class="anim-h2" cx="16" cy="-62" r="5" fill="#5b8fb9" stroke="#1e40af" stroke-width="1.5"/>
+
+      <!-- H2 Gas Absorption Indicator Halo -->
+      <ellipse class="anim-h2" cx="0" cy="-40" rx="18" ry="9" fill="none" stroke="#5b8fb9" stroke-width="2" stroke-dasharray="3 3"/>
+    </g>
+  </g>
+
+  <!-- Step 2 Labels -->
+  <g transform="translate(330, 214)">
+    <circle cx="0" cy="0" r="11" class="step-badge-bg"/>
+    <text x="0" y="0" class="step-badge-num">2</text>
+    <text x="0" y="24" class="step-label">
+      <tspan x="0" dy="0">Hydrogen</tspan>
+      <tspan x="0" dy="17">decrepitation</tspan>
+    </text>
+    <text x="0" y="58" class="param-text">H₂ absorption</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- STEP 3: JET MILLING                        -->
+  <!-- ========================================== -->
+  <g id="step-3" transform="translate(540, 160)">
+    <!-- Base Plinth -->
+    <polygon points="0,10 40,30 0,50 -40,30" fill="#a3aebb" class="iso-outline"/>
+    <polygon points="-40,30 0,50 0,60 -40,40" fill="#7c8a9a" class="iso-outline"/>
+    <polygon points="0,50 40,30 40,40 0,60" fill="#5f6b78" class="iso-outline"/>
+
+    <!-- Fluidized Bed Jet Mill Grinding Chamber (Sage / Steel) -->
+    <g transform="translate(-10, 5)">
+      <!-- Conical bottom chamber -->
+      <polygon points="0,-25 18,-16 0,-7 -18,-16" fill="#a8c499" class="iso-outline"/>
+      <polygon points="-18,-16 0,-7 0,22 -18,13" fill="#8fae7e" class="iso-outline"/>
+      <polygon points="0,-7 18,-16 18,13 0,22" fill="#6b8a5b" class="iso-outline"/>
+
+      <!-- Supersonic Opposed Gas Nozzles -->
+      <polygon points="-24,-5 -18,-8 -18,-2 -24,1" fill="#5b8fb9" class="iso-outline"/>
+      <polygon points="18,-8 24,-5 24,1 18,-2" fill="#426e91" class="iso-outline"/>
+
+      <!-- Top High-Speed Classifier Head -->
+      <polygon points="0,-48 14,-41 0,-34 -14,-41" fill="#cbd5e1" class="iso-outline"/>
+      <polygon points="-14,-41 0,-34 0,-25 -14,-32" fill="#7c8a9a" class="iso-outline"/>
+      <polygon points="0,-34 14,-41 14,-32 0,-25" fill="#5f6b78" class="iso-outline"/>
+
+      <!-- Classifier Drive Motor -->
+      <polygon points="0,-58 8,-54 0,-50 -8,-54" fill="#a3aebb" class="iso-outline"/>
+      <polygon points="-8,-54 0,-50 0,-48 -8,-52" fill="#5f6b78" class="iso-outline"/>
+    </g>
+
+    <!-- Cyclone Separator & Fine Powder Collector (Right side) -->
+    <g transform="translate(18, 15)">
+      <!-- Transfer duct from classifier to cyclone -->
+      <path d="M -10,-32 L 0,-32 L 0,-20" fill="none" stroke="#7c8a9a" stroke-width="3" stroke-linecap="round"/>
+      <!-- Cyclone upper barrel -->
+      <polygon points="0,-20 10,-15 0,-10 -10,-15" fill="#a3aebb" class="iso-outline"/>
+      <polygon points="-10,-15 0,-10 0,5 -10,0" fill="#7c8a9a" class="iso-outline"/>
+      <polygon points="0,-10 10,-15 10,0 0,5" fill="#5f6b78" class="iso-outline"/>
+      <!-- Cyclone bottom cone -->
+      <polygon points="-10,0 0,5 0,18" fill="#8fae7e" class="iso-outline"/>
+      <polygon points="0,5 10,0 0,18" fill="#6b8a5b" class="iso-outline"/>
+
+      <!-- Swirling fine powder cloud (3-5 µm) -->
+      <g class="anim-powder">
+        <circle cx="0" cy="-6" r="2" fill="#d97757"/>
+        <circle cx="-3" cy="-4" r="1.5" fill="#c9a227"/>
+        <circle cx="4" cy="-8" r="1.5" fill="#f8fafc"/>
+        <circle cx="2" cy="-3" r="1.8" fill="#cbd5e1"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Step 3 Labels -->
+  <g transform="translate(540, 214)">
+    <circle cx="0" cy="0" r="11" class="step-badge-bg"/>
+    <text x="0" y="0" class="step-badge-num">3</text>
+    <text x="0" y="24" class="step-label">Jet milling</text>
+    <text x="0" y="58" class="param-text">about 3 to 5 µm</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- STEP 4: FIELD ALIGNMENT & PRESSING         -->
+  <!-- ========================================== -->
+  <g id="step-4" transform="translate(750, 160)">
+    <!-- Base Plinth -->
+    <polygon points="0,10 44,32 0,54 -44,32" fill="#a3aebb" class="iso-outline"/>
+    <polygon points="-44,32 0,54 0,64 -44,42" fill="#7c8a9a" class="iso-outline"/>
+    <polygon points="0,54 44,32 44,42 0,64" fill="#5f6b78" class="iso-outline"/>
+
+    <!-- Hydraulic Press Frame Columns -->
+    <g transform="translate(0, 0)">
+      <!-- Guide pillars -->
+      <path d="M -26,-36 L -26,30 M 26,-36 L 26,30" stroke="#7c8a9a" stroke-width="4" stroke-linecap="round"/>
+      <path d="M -26,-36 L -26,30 M 26,-36 L 26,30" stroke="#a3aebb" stroke-width="1.5"/>
+
+      <!-- Top Press Crown / Crosshead -->
+      <polygon points="0,-48 30,-33 0,-18 -30,-33" fill="#a3aebb" class="iso-outline"/>
+      <polygon points="-30,-33 0,-18 0,-10 -30,-25" fill="#7c8a9a" class="iso-outline"/>
+      <polygon points="0,-18 30,-33 30,-25 0,-10" fill="#5f6b78" class="iso-outline"/>
+
+      <!-- Hydraulic Ram Cylinder on top -->
+      <polygon points="0,-64 12,-58 0,-52 -12,-58" fill="#cbd5e1" class="iso-outline"/>
+      <polygon points="-12,-58 0,-52 0,-48 -12,-54" fill="#5f6b78" class="iso-outline"/>
+      <polygon points="0,-52 12,-58 12,-54 0,-48" fill="#334155" class="iso-outline"/>
+    </g>
+
+    <!-- Twin Giant Electromagnet Orientation Coils (Gold/Copper) -->
+    <!-- Left Coil -->
+    <g transform="translate(-16, 12)">
+      <polygon points="0,-16 12,-10 0,-4 -12,-10" fill="#dfba45" class="iso-outline"/>
+      <polygon points="-12,-10 0,-4 0,16 -12,10" fill="#c9a227" class="iso-outline"/>
+      <polygon points="0,-4 12,-10 12,10 0,16" fill="#9d7b17" class="iso-outline"/>
+    </g>
+    <!-- Right Coil -->
+    <g transform="translate(16, 28)">
+      <polygon points="0,-16 12,-10 0,-4 -12,-10" fill="#dfba45" class="iso-outline"/>
+      <polygon points="-12,-10 0,-4 0,16 -12,10" fill="#c9a227" class="iso-outline"/>
+      <polygon points="0,-4 12,-10 12,10 0,16" fill="#9d7b17" class="iso-outline"/>
+    </g>
+
+    <!-- Pressing Die Cavity with Compacted Green Magnet -->
+    <g transform="translate(0, 20)">
+      <polygon points="0,-10 9,-5 0,0 -9,-5" fill="#334155" class="iso-outline"/>
+      <polygon points="-9,-5 0,0 0,10 -9,5" fill="#1e293b" class="iso-outline"/>
+      <polygon points="0,0 9,-5 9,5 0,10" fill="#0f172a" class="iso-outline"/>
+    </g>
+
+    <!-- Pulsing Magnetic Field Flux Lines (Animated) -->
+    <ellipse class="anim-coil" cx="0" cy="20" rx="32" ry="16" fill="none" stroke="#c9a227" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <ellipse class="anim-coil" cx="0" cy="20" rx="22" ry="11" fill="none" stroke="#e0a922" stroke-width="1.5" stroke-dasharray="3 3"/>
+  </g>
+
+  <!-- Step 4 Labels -->
+  <g transform="translate(750, 214)">
+    <circle cx="0" cy="0" r="11" class="step-badge-bg"/>
+    <text x="0" y="0" class="step-badge-num">4</text>
+    <text x="0" y="24" class="step-label">
+      <tspan x="0" dy="0">Alignment and</tspan>
+      <tspan x="0" dy="17">pressing</tspan>
+    </text>
+    <text x="0" y="58" class="param-text">magnetic field</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- STEP 5: VACUUM SINTERING                   -->
+  <!-- ========================================== -->
+  <g id="step-5" transform="translate(960, 160)">
+    <!-- Base Plinth -->
+    <polygon points="0,10 46,33 0,56 -46,33" fill="#a3aebb" class="iso-outline"/>
+    <polygon points="-46,33 0,56 0,66 -46,43" fill="#7c8a9a" class="iso-outline"/>
+    <polygon points="0,56 46,33 46,43 0,66" fill="#5f6b78" class="iso-outline"/>
+
+    <!-- Vacuum Sintering Furnace Chamber (Horizontal cylinder / body) -->
+    <g transform="translate(0, 10)">
+      <!-- Chamber main insulated shell -->
+      <polygon points="0,-46 32,-30 0,-14 -32,-30" fill="#a3aebb" class="iso-outline"/>
+      <polygon points="-32,-30 0,-14 0,26 -32,10" fill="#7c8a9a" class="iso-outline"/>
+      <polygon points="0,-14 32,-30 32,10 0,26" fill="#5f6b78" class="iso-outline"/>
+
+      <!-- Heavy Vacuum Door Flange (Bolted circular collar) -->
+      <ellipse cx="-16" cy="-2" rx="14" ry="24" fill="#5f6b78" class="iso-outline"/>
+      <ellipse cx="-16" cy="-2" rx="10" ry="18" fill="#334155" class="iso-outline"/>
+
+      <!-- Glowing High-Temperature Interior (1050 to 1100 °C) -->
+      <ellipse class="anim-sinter" cx="-16" cy="-2" rx="8" ry="14" fill="url(#furnace-heat)"/>
+
+      <!-- Sintering Trays with Magnet Blocks inside glowing core -->
+      <polygon points="-20,-2 -14,-5 -10,-3 -16,0" fill="#78350f"/>
+      <polygon points="-22,4 -16,1 -12,3 -18,6" fill="#78350f"/>
+
+      <!-- Top Vacuum Exhaust / Turbomolecular Pump Port -->
+      <polygon points="12,-44 20,-40 12,-36 4,-40" fill="#cbd5e1" class="iso-outline"/>
+      <polygon points="4,-40 12,-36 12,-26 4,-30" fill="#5b8fb9" class="iso-outline"/>
+      <polygon points="12,-36 20,-40 20,-30 12,-26" fill="#426e91" class="iso-outline"/>
+    </g>
+  </g>
+
+  <!-- Step 5 Labels -->
+  <g transform="translate(960, 214)">
+    <circle cx="0" cy="0" r="11" class="step-badge-bg"/>
+    <text x="0" y="0" class="step-badge-num">5</text>
+    <text x="0" y="24" class="step-label">Vacuum sintering</text>
+    <text x="0" y="58" class="param-text">about 1000 to 1100 °C</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- STEP 6: ANNEALING / HEAT TREATMENT         -->
+  <!-- ========================================== -->
+  <g id="step-6" transform="translate(960, 380)">
+    <!-- Base Plinth -->
+    <polygon points="0,10 46,33 0,56 -46,33" fill="#a3aebb" class="iso-outline"/>
+    <polygon points="-46,33 0,56 0,66 -46,43" fill="#7c8a9a" class="iso-outline"/>
+    <polygon points="0,56 46,33 46,43 0,66" fill="#5f6b78" class="iso-outline"/>
+
+    <!-- Annealing Furnace Chamber (Deep Clay / Clay refractory) -->
+    <g transform="translate(0, 10)">
+      <polygon points="0,-44 32,-28 0,-12 -32,-28" fill="#e89578" class="iso-outline"/>
+      <polygon points="-32,-28 0,-12 0,26 -32,10" fill="#d97757" class="iso-outline"/>
+      <polygon points="0,-12 32,-28 32,10 0,26" fill="#c15f3c" class="iso-outline"/>
+
+      <!-- Inspection window showing 500 to 600 °C cherry-red annealing glow -->
+      <polygon points="-20,-5 -6,2 -6,14 -20,7" fill="#334155" class="iso-outline"/>
+      <polygon class="anim-anneal" points="-18,-3 -8,3 -8,12 -18,6" fill="url(#anneal-heat)"/>
+
+      <!-- Top Rapid Cooling Heat Exchanger / Quench Fins -->
+      <g transform="translate(10, -42)">
+        <polygon points="0,-12 14,-5 0,2 -14,-5" fill="#7aa8cc" class="iso-outline"/>
+        <polygon points="-14,-5 0,2 0,10 -14,3" fill="#5b8fb9" class="iso-outline"/>
+        <polygon points="0,2 14,-5 14,3 0,10" fill="#426e91" class="iso-outline"/>
+        <!-- Cooling fin ribs -->
+        <line x1="-10" y1="-3" x2="-10" y2="5" stroke="#2c5270" stroke-width="1.5"/>
+        <line x1="-3" y1="0" x2="-3" y2="8" stroke="#2c5270" stroke-width="1.5"/>
+        <line x1="4" y1="-3" x2="4" y2="5" stroke="#2c5270" stroke-width="1.5"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Step 6 Labels -->
+  <g transform="translate(960, 434)">
+    <circle cx="0" cy="0" r="11" class="step-badge-bg"/>
+    <text x="0" y="0" class="step-badge-num">6</text>
+    <text x="0" y="24" class="step-label">Heat treatment</text>
+    <text x="0" y="58" class="param-text">about 500 to 600 °C</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- STEP 7: PRECISION MACHINING & SLICING      -->
+  <!-- ========================================== -->
+  <g id="step-7" transform="translate(690, 380)">
+    <!-- Base Plinth -->
+    <polygon points="0,10 44,32 0,54 -44,32" fill="#a3aebb" class="iso-outline"/>
+    <polygon points="-44,32 0,54 0,64 -44,42" fill="#7c8a9a" class="iso-outline"/>
+    <polygon points="0,54 44,32 44,42 0,64" fill="#5f6b78" class="iso-outline"/>
+
+    <!-- CNC Wire EDM / Diamond Slicing Machine Bed -->
+    <g transform="translate(0, 10)">
+      <!-- Machine cast iron base -->
+      <polygon points="0,-18 28,-4 0,10 -28,-4" fill="#7c8a9a" class="iso-outline"/>
+      <polygon points="-28,-4 0,10 0,22 -28,8" fill="#5f6b78" class="iso-outline"/>
+      <polygon points="0,10 28,-4 28,8 0,22" fill="#4a5360" class="iso-outline"/>
+
+      <!-- Workpiece carriage holding sintered magnet blocks -->
+      <polygon points="-12,-3 0,3 12,-3 0,-9" fill="#334155" class="iso-outline"/>
+      <!-- Sliced magnet blocks array -->
+      <polygon points="-10,-1 -2,3 -4,5 -12,1" fill="#a3aebb"/>
+      <polygon points="-1,4 7,0 5,-2 -3,2" fill="#cbd5e1"/>
+
+      <!-- Diamond Wire Slicing Head Gantry Arch (Animated oscillation) -->
+      <g class="anim-slice">
+        <!-- Arch uprights -->
+        <polygon points="-18,-42 -12,-39 -12,-10 -18,-13" fill="#5b8fb9" class="iso-outline"/>
+        <polygon points="12,-27 18,-24 18,5 12,2" fill="#426e91" class="iso-outline"/>
+        <!-- Cross bridge -->
+        <polygon points="0,-52 18,-43 0,-34 -18,-43" fill="#7aa8cc" class="iso-outline"/>
+        <polygon points="-18,-43 0,-34 0,-26 -18,-35" fill="#5b8fb9" class="iso-outline"/>
+        <polygon points="0,-34 18,-43 18,-35 0,-26" fill="#426e91" class="iso-outline"/>
+
+        <!-- Multi-wire diamond cutting array (High tensile gold wires) -->
+        <line x1="-10" y1="-22" x2="8" y2="-13" stroke="#c9a227" stroke-width="1.2"/>
+        <line x1="-8" y1="-20" x2="10" y2="-11" stroke="#c9a227" stroke-width="1.2"/>
+        <line x1="-6" y1="-18" x2="12" y2="-9" stroke="#c9a227" stroke-width="1.2"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Step 7 Labels -->
+  <g transform="translate(690, 434)">
+    <circle cx="0" cy="0" r="11" class="step-badge-bg"/>
+    <text x="0" y="0" class="step-badge-num">7</text>
+    <text x="0" y="24" class="step-label">
+      <tspan x="0" dy="0">Precision</tspan>
+      <tspan x="0" dy="17">machining</tspan>
+    </text>
+    <text x="0" y="58" class="param-text">wire EDM and grinding</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- STEP 8: SURFACE COATING (PLATING)          -->
+  <!-- ========================================== -->
+  <g id="step-8" transform="translate(430, 380)">
+    <!-- Base Plinth -->
+    <polygon points="0,10 44,32 0,54 -44,32" fill="#a3aebb" class="iso-outline"/>
+    <polygon points="-44,32 0,54 0,64 -44,42" fill="#7c8a9a" class="iso-outline"/>
+    <polygon points="0,54 44,32 44,42 0,64" fill="#5f6b78" class="iso-outline"/>
+
+    <!-- Immersion Coating / Electroplating Tank (Blue / Steel) -->
+    <g transform="translate(0, 10)">
+      <!-- Tank Outer Body -->
+      <polygon points="0,-28 32,-12 0,4 -32,-12" fill="#a3aebb" class="iso-outline"/>
+      <polygon points="-32,-12 0,4 0,22 -32,6" fill="#7c8a9a" class="iso-outline"/>
+      <polygon points="0,4 32,-12 32,6 0,22" fill="#5f6b78" class="iso-outline"/>
+
+      <!-- Open Bath Cavity with Electrolyte Solution -->
+      <polygon points="0,-24 26,-11 0,2 -26,-11" fill="#334155" class="iso-outline"/>
+      <!-- Plating solution meniscus with animated ripple -->
+      <polygon class="anim-bath" points="0,-21 24,-9 0,3 -24,-9" fill="url(#bath-fluid)"/>
+
+      <!-- Anode basket plates along walls -->
+      <polygon points="-22,-9 -18,-7 -18,1 -22,-1" fill="#c9a227"/>
+      <polygon points="18,-7 22,-9 22,-1 18,1" fill="#cbd5e1"/>
+
+      <!-- Overhead Dipping Flight Bar & Suspended Magnets -->
+      <g transform="translate(0, -18)">
+        <!-- Vertical hoist bar -->
+        <path d="M 0,-32 L 0,-14" stroke="#4a5360" stroke-width="2.5"/>
+        <!-- Horizontal carrier rack -->
+        <line x1="-16" y1="-14" x2="16" y2="2" stroke="#5f6b78" stroke-width="2"/>
+        <!-- Hanging magnets submerged into bath (coated shiny) -->
+        <line x1="-10" y1="-11" x2="-10" y2="-2" stroke="#94a3b8" stroke-width="1.5"/>
+        <polygon points="-13,-2 -7,1 -7,7 -13,4" fill="#f8fafc" class="iso-outline"/>
+
+        <line x1="2" y1="-5" x2="2" y2="4" stroke="#94a3b8" stroke-width="1.5"/>
+        <polygon points="-1,4 5,7 5,13 -1,10" fill="#f8fafc" class="iso-outline"/>
+
+        <line x1="12" y1="0" x2="12" y2="9" stroke="#94a3b8" stroke-width="1.5"/>
+        <polygon points="9,9 15,12 15,18 9,15" fill="#f8fafc" class="iso-outline"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Step 8 Labels -->
+  <g transform="translate(430, 434)">
+    <circle cx="0" cy="0" r="11" class="step-badge-bg"/>
+    <text x="0" y="0" class="step-badge-num">8</text>
+    <text x="0" y="24" class="step-label">Surface coating</text>
+    <text x="0" y="58" class="param-text">Ni-Cu-Ni or epoxy</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- STEP 9: PULSE MAGNETISING                  -->
+  <!-- ========================================== -->
+  <g id="step-9" transform="translate(170, 380)">
+    <!-- Base Plinth -->
+    <polygon points="0,10 44,32 0,54 -44,32" fill="#a3aebb" class="iso-outline"/>
+    <polygon points="-44,32 0,54 0,64 -44,42" fill="#7c8a9a" class="iso-outline"/>
+    <polygon points="0,54 44,32 44,42 0,64" fill="#5f6b78" class="iso-outline"/>
+
+    <!-- High-Field Pulse Magnetising Solenoid Coil Fixture -->
+    <g transform="translate(0, 10)">
+      <!-- Rear Capacitor Bank / Transformer Enclosure -->
+      <polygon points="6,-46 28,-35 12,-27 -10,-38" fill="#a3aebb" class="iso-outline"/>
+      <polygon points="-10,-38 12,-27 12,-1 0,-7" fill="#7c8a9a" class="iso-outline"/>
+      <polygon points="12,-27 28,-35 28,-9 12,-1" fill="#5f6b78" class="iso-outline"/>
+
+      <!-- Pulse Solenoid Outer Reinforced Collar -->
+      <ellipse cx="-4" cy="-6" rx="20" ry="12" fill="#5f6b78" class="iso-outline"/>
+      <path d="M -24,-6 A 20,12 0 0,0 16,-6 L 16,14 A 20,12 0 0,1 -24,14 Z" fill="#4a5360" class="iso-outline"/>
+
+      <!-- Heavy Copper Solenoid Windings -->
+      <ellipse cx="-4" cy="-8" rx="16" ry="9" fill="#c9a227" class="iso-outline"/>
+      <ellipse cx="-4" cy="-8" rx="11" ry="6" fill="#334155" class="iso-outline"/>
+
+      <!-- High-current Busbar Connections -->
+      <path d="M -4,-28 L -4,-16" stroke="#d97757" stroke-width="4" stroke-linecap="round"/>
+      <path d="M 6,-24 L 6,-12" stroke="#d97757" stroke-width="4" stroke-linecap="round"/>
+
+      <!-- Finished Magnet in Coil Bore -->
+      <g transform="translate(-4, -6)">
+        <polygon points="0,-4 6,-1 0,2 -6,-1" fill="#f8fafc"/>
+        <polygon points="-6,-1 0,2 0,7 -6,4" fill="#dc2626"/>
+        <polygon points="0,2 6,-1 6,4 0,7" fill="#2563eb"/>
+      </g>
+
+      <!-- Intense Magnetic Pulse Discharge Flare (Animated) -->
+      <ellipse class="anim-pulse" cx="-4" cy="-6" rx="28" ry="18" fill="url(#pulse-flare)"/>
+    </g>
+  </g>
+
+  <!-- Step 9 Labels -->
+  <g transform="translate(170, 434)">
+    <circle cx="0" cy="0" r="11" class="step-badge-bg"/>
+    <text x="0" y="0" class="step-badge-num">9</text>
+    <text x="0" y="24" class="step-label">Pulse magnetising</text>
+    <text x="0" y="58" class="param-text">pulsed field</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- FINISHED PRODUCT OUTPUT & QA STATION       -->
+  <!-- ========================================== -->
+  <g id="output-station" transform="translate(60, 394)">
+    <!-- Inspection tray platform -->
+    <polygon points="0,-5 18,4 0,13 -18,4" fill="#a3aebb" class="iso-outline"/>
+    <polygon points="-18,4 0,13 0,18 -18,9" fill="#7c8a9a" class="iso-outline"/>
+    <polygon points="0,13 18,4 18,9 0,18" fill="#5f6b78" class="iso-outline"/>
+
+    <!-- High-Grade Finished Permanent NdFeB Magnets with N / S Polarity -->
+    <!-- Magnet 1 -->
+    <g transform="translate(-6, -2)">
+      <polygon points="0,-4 7,0 0,4 -7,0" fill="#f8fafc" stroke="#4a5360" stroke-width="1"/>
+      <polygon points="-7,0 0,4 0,9 -7,5" fill="#dc2626" stroke="#4a5360" stroke-width="1"/>
+      <polygon points="0,4 7,0 7,5 0,9" fill="#2563eb" stroke="#4a5360" stroke-width="1"/>
+      <!-- Pole Labels -->
+      <text x="-4" y="6" font-size="5" font-weight="800" fill="#ffffff">N</text>
+      <text x="3" y="6" font-size="5" font-weight="800" fill="#ffffff">S</text>
+    </g>
+
+    <!-- Magnet 2 -->
+    <g transform="translate(5, 4)">
+      <polygon points="0,-4 7,0 0,4 -7,0" fill="#f8fafc" stroke="#4a5360" stroke-width="1"/>
+      <polygon points="-7,0 0,4 0,9 -7,5" fill="#dc2626" stroke="#4a5360" stroke-width="1"/>
+      <polygon points="0,4 7,0 7,5 0,9" fill="#2563eb" stroke="#4a5360" stroke-width="1"/>
+    </g>
+
+    <!-- QA Checkmark Badge -->
+    <circle cx="14" cy="-8" r="6" fill="#8fae7e" stroke="#4a633f" stroke-width="1"/>
+    <path d="M 12,-8 L 13.5,-6.5 L 16.5,-9.5" fill="none" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+</svg>

@@ -342,3 +342,37 @@
 .md-typeset .footnote hr { display: none; }
 /* separate adjacent citation numbers: 1,2 not 12 */
 .md-typeset sup[id^="fnref"] + sup[id^="fnref"]::before { content: ","; }
+
+/* wide process schematics */
+.md-typeset figure.figure-wide img { max-width: 100%; }
+/* small source note under tables */
+.md-typeset .table-note {
+  margin-top: -0.6em;
+  font-size: 0.66rem;
+  color: var(--md-default-fg-color--light);
+  text-align: left !important;
+  hyphens: manual !important;
+}
+/* responsive YouTube embeds */
+.md-typeset .video {
+  position: relative;
+  width: 100%;
+  max-width: 40rem;
+  margin: 1.4em auto 0.4em;
+  aspect-ratio: 16 / 9;
+  border-radius: 0.8rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--clay) 20%, transparent);
+  background: #000;
+}
+.md-typeset .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.md-typeset .video__caption {
+  max-width: 36rem;
+  margin: 0 auto 1.4em;
+  font-size: 0.7rem;
+  font-style: italic;
+  color: var(--md-default-fg-color--light);
+  text-align: center !important;
+  hyphens: manual !important;
+}
+.md-typeset figure.figure-wide a { display: block; cursor: zoom-in; }
