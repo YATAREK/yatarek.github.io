@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+  <title>Persistent Mode Magnetic Field Decay in Superconducting vs Resistive Joint</title>
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+      .reveal-box { width: 450px !important; }
+    }
+    .axis {
+      stroke: #7c8a9a;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+    }
+    .axis-arrowhead {
+      fill: #7c8a9a;
+    }
+    .tick {
+      stroke: #7c8a9a;
+      stroke-width: 2.5;
+    }
+    .sc-base {
+      fill: none;
+      stroke: #d97757;
+      stroke-width: 3.2;
+      stroke-opacity: 0.35;
+      stroke-linecap: round;
+    }
+    .res-base {
+      fill: none;
+      stroke: #7c8a9a;
+      stroke-width: 2.8;
+      stroke-dasharray: 6 5;
+      stroke-opacity: 0.35;
+      stroke-linecap: round;
+    }
+    .sc-active {
+      fill: none;
+      stroke: #d97757;
+      stroke-width: 3.5;
+      stroke-linecap: round;
+    }
+    .res-active {
+      fill: none;
+      stroke: #7c8a9a;
+      stroke-width: 3;
+      stroke-dasharray: 6 5;
+      stroke-linecap: round;
+    }
+    .reveal-box {
+      animation: draw-sweep 8s linear infinite;
+    }
+    @keyframes draw-sweep {
+      0% { width: 0px; }
+      55%, 88% { width: 445px; }
+      98%, 100% { width: 0px; }
+    }
+    .dot-sc {
+      animation: sweep-sc 8s linear infinite;
+    }
+    @keyframes sweep-sc {
+      0% { transform: translate(0, 0); opacity: 1; }
+      55%, 88% { transform: translate(440px, 0); opacity: 1; }
+      92%, 100% { transform: translate(440px, 0); opacity: 0; }
+    }
+    .dot-res {
+      offset-path: path("M 95 95 C 160 178, 205 206, 270 225 C 345 247, 430 263, 535 268");
+      animation: sweep-res 8s linear infinite;
+    }
+    @keyframes sweep-res {
+      0% { offset-distance: 0%; opacity: 1; }
+      55%, 88% { offset-distance: 100%; opacity: 1; }
+      92%, 100% { offset-distance: 100%; opacity: 0; }
+    }
+    .label {
+      font-family: system-ui, sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      fill: #7c8a9a;
+    }
+    .label-clay {
+      font-family: system-ui, sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      fill: #d97757;
+    }
+    .caption {
+      font-family: system-ui, sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      fill: #7c8a9a;
+    }
+  </style>
+
+  <defs>
+    <clipPath id="sweep-clip">
+      <rect x="95" y="40" width="445" height="260" class="reveal-box" />
+    </clipPath>
+  </defs>
+
+  <!-- Caption at top -->
+  <text x="330" y="45" text-anchor="middle" class="caption">persistent mode</text>
+
+  <!-- B and t Axes -->
+  <!-- Horizontal t axis -->
+  <line x1="95" y1="290" x2="570" y2="290" class="axis" />
+  <polygon points="580,290 566,284 566,296" class="axis-arrowhead" />
+  <text x="595" y="295" class="label">t</text>
+
+  <!-- Vertical B axis -->
+  <line x1="95" y1="290" x2="95" y2="50" class="axis" />
+  <polygon points="95,40 89,54 101,54" class="axis-arrowhead" />
+  <text x="95" y="28" text-anchor="middle" class="label">B</text>
+
+  <!-- Initial Field Tick at B0 -->
+  <line x1="88" y1="95" x2="102" y2="95" class="tick" />
+
+  <!-- Base curves (readable statically in first frame and under reduced motion) -->
+  <path class="sc-base" d="M 95 95 L 535 95" />
+  <path class="res-base" d="M 95 95 C 160 178, 205 206, 270 225 C 345 247, 430 263, 535 268" />
+
+  <!-- Animated drawn curves revealed progressively via clip-path -->
+  <g clip-path="url(#sweep-clip)">
+    <path class="sc-active" d="M 95 95 L 535 95" />
+    <path class="res-active" d="M 95 95 C 160 178, 205 206, 270 225 C 345 247, 430 263, 535 268" />
+  </g>
+
+  <!-- Tracer dots at the wavefront of drawing -->
+  <g transform="translate(95, 95)">
+    <circle cx="0" cy="0" r="5.5" fill="#c9a227" stroke="#d97757" stroke-width="2" class="dot-sc" />
+  </g>
+  <circle cx="0" cy="0" r="5.5" fill="#7c8a9a" stroke="#637080" stroke-width="2" class="dot-res" />
+
+  <!-- Labels for the two curves -->
+  <text x="315" y="80" text-anchor="middle" class="label-clay">superconducting joint</text>
+  <text x="330" y="218" text-anchor="start" class="label">resistive joint</text>
+</svg>

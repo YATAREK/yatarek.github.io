@@ -30,6 +30,8 @@ My current focus is magnetic and superconducting materials, guided by machine le
 NdFeB magnets are the strongest permanent magnets in use today. I am developing an
 NdFeB based magnet, from initial design through to a working prototype. The work
 relates processing route and composition to magnetic performance.
+
+[Read about NdFeB magnets in my blog →](blog/posts/ndfeb-magnets.md){ .project__link }
 </div>
 </div>
 
@@ -48,6 +50,8 @@ Fusion magnets need superconductors that can be shaped into wire without crackin
 I am developing a ductile superconductor based on high-entropy alloys for this purpose.
 Machine learning guides which compositions to make, using the
 [prediction and inverse design tools](machine-learning.md) I built.
+
+[Read about high-entropy superconductors in my blog →](blog/posts/high-entropy-superconductors.md){ .project__link }
 </div>
 </div>
 
@@ -71,6 +75,8 @@ process. Joint performance was validated by its **transport critical current
 (I<sub>c</sub>)**.
 
 <p class="project__note">Industry funded and under IP protection. Publications are on hold pending patent clearance.</p>
+
+[Read about MgB₂ joints in my blog →](blog/posts/mgb2-superconducting-joints.md){ .project__link }
 </div>
 </div>
 
@@ -89,7 +95,8 @@ I developed a **ternary hybrid electrode** of Ni(OH)<sub>2</sub>, MnO<sub>2</sub
 reduced graphene oxide (rGO). Its wrinkled, flower-like structure improved charge
 storage. The work was published in **ACS Omega**.
 
-[Read the paper →](https://pubs.acs.org/doi/10.1021/acsomega.2c01986){ target=_blank }
+[Read about supercapacitors in my blog →](blog/posts/supercapacitors.md){ .project__link }
+[Read the paper →](https://pubs.acs.org/doi/10.1021/acsomega.2c01986){ target=_blank .project__link }
 </div>
 </div>
 

@@ -7,5 +7,5 @@ hide:
 
 # Blog
 
-Notes on my research, papers I'm reading, techniques I'm learning, and the occasional
-longer thought. Posts are listed newest-first below.
+Articles on the science behind my research projects: what the materials are, why they
+matter, and what I am working on. Every post is fully referenced.

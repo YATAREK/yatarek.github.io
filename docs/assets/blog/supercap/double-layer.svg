@@ -1,0 +1,260 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+  <title>Electric Double Layer (EDL) Formation at Porous Carbon Electrode Surface</title>
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+    }
+    .carbon-matrix {
+      fill: #7c8a9a;
+      fill-opacity: 0.22;
+      stroke: #7c8a9a;
+      stroke-width: 3;
+      stroke-linejoin: round;
+    }
+    .current-collector {
+      fill: #7c8a9a;
+      fill-opacity: 0.35;
+      stroke: #7c8a9a;
+      stroke-width: 2.5;
+    }
+    .edl-bracket {
+      stroke: #7c8a9a;
+      stroke-width: 2;
+    }
+    .label {
+      font-family: system-ui, sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      fill: #7c8a9a;
+    }
+    .surf-minus {
+      animation: charge-surf 8s ease-in-out infinite;
+    }
+    @keyframes charge-surf {
+      0%, 20% { opacity: 0.35; }
+      45%, 75% { opacity: 1; }
+      90%, 100% { opacity: 0.35; }
+    }
+    .solv-cat {
+      stroke: #d97757;
+      stroke-width: 1.5;
+      stroke-dasharray: 3 3;
+      stroke-opacity: 0.75;
+      fill: none;
+    }
+    .solv-an {
+      stroke: #5b8fb9;
+      stroke-width: 1.5;
+      stroke-dasharray: 3 3;
+      stroke-opacity: 0.75;
+      fill: none;
+    }
+    .cat-ion {
+      fill: #d97757;
+      stroke: #c15f3c;
+      stroke-width: 2;
+    }
+    .an-ion {
+      fill: #5b8fb9;
+      stroke: #41729f;
+      stroke-width: 2;
+    }
+    .sign-line {
+      stroke: #ffffff;
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+
+    /* Drift animations for cations packing into compact layer at surface */
+    .c-drift-1 { animation: c-d1 8s ease-in-out infinite; }
+    .c-drift-2 { animation: c-d2 8s ease-in-out infinite; }
+    .c-drift-3 { animation: c-d3 8s ease-in-out infinite; }
+    .c-drift-4 { animation: c-d4 8s ease-in-out infinite; }
+    .c-drift-5 { animation: c-d5 8s ease-in-out infinite; }
+    .c-drift-6 { animation: c-d6 8s ease-in-out infinite; }
+
+    @keyframes c-d1 { 0%, 20% { transform: translate(0, 0); } 45%, 75% { transform: translate(-115px, 0); } 90%, 100% { transform: translate(0, 0); } }
+    @keyframes c-d2 { 0%, 20% { transform: translate(0, 0); } 45%, 75% { transform: translate(-225px, 0); } 90%, 100% { transform: translate(0, 0); } }
+    @keyframes c-d3 { 0%, 20% { transform: translate(0, 0); } 45%, 75% { transform: translate(-95px, 0); } 90%, 100% { transform: translate(0, 0); } }
+    @keyframes c-d4 { 0%, 20% { transform: translate(0, 0); } 45%, 75% { transform: translate(-235px, 0); } 90%, 100% { transform: translate(0, 0); } }
+    @keyframes c-d5 { 0%, 20% { transform: translate(0, 0); } 45%, 75% { transform: translate(-105px, 0); } 90%, 100% { transform: translate(0, 0); } }
+    @keyframes c-d6 { 0%, 20% { transform: translate(0, 0); } 45%, 75% { transform: translate(-225px, 0); } 90%, 100% { transform: translate(0, 0); } }
+
+    /* Drift animations for anions repelled away during charge */
+    .a-drift-1 { animation: a-d1 8s ease-in-out infinite; }
+    .a-drift-2 { animation: a-d2 8s ease-in-out infinite; }
+    .a-drift-3 { animation: a-d3 8s ease-in-out infinite; }
+    .a-drift-4 { animation: a-d4 8s ease-in-out infinite; }
+    .a-drift-5 { animation: a-d5 8s ease-in-out infinite; }
+    .a-drift-6 { animation: a-d6 8s ease-in-out infinite; }
+
+    @keyframes a-d1 { 0%, 20% { transform: translate(0, 0); } 45%, 75% { transform: translate(100px, 0); } 90%, 100% { transform: translate(0, 0); } }
+    @keyframes a-d2 { 0%, 20% { transform: translate(0, 0); } 45%, 75% { transform: translate(180px, 0); } 90%, 100% { transform: translate(0, 0); } }
+    @keyframes a-d3 { 0%, 20% { transform: translate(0, 0); } 45%, 75% { transform: translate(90px, 0); } 90%, 100% { transform: translate(0, 0); } }
+    @keyframes a-d4 { 0%, 20% { transform: translate(0, 0); } 45%, 75% { transform: translate(200px, 0); } 90%, 100% { transform: translate(0, 0); } }
+    @keyframes a-d5 { 0%, 20% { transform: translate(0, 0); } 45%, 75% { transform: translate(90px, 0); } 90%, 100% { transform: translate(0, 0); } }
+    @keyframes a-d6 { 0%, 20% { transform: translate(0, 0); } 45%, 75% { transform: translate(170px, 0); } 90%, 100% { transform: translate(0, 0); } }
+  </style>
+
+  <!-- Labels -->
+  <text x="115" y="42" text-anchor="middle" class="label">electrode</text>
+  <text x="440" y="42" text-anchor="middle" class="label">electrolyte</text>
+
+  <!-- Left: Porous Carbon Electrode Block -->
+  <rect x="35" y="55" width="16" height="250" rx="3" class="current-collector" />
+  <path class="carbon-matrix" d="M 51 55 L 175 55 C 150 68, 110 75, 110 95 C 110 115, 155 120, 175 135 C 145 145, 105 155, 105 180 C 105 205, 145 215, 175 225 C 140 240, 110 250, 110 270 C 110 290, 150 295, 175 305 L 51 305 Z" />
+
+  <!-- Negative charges on electrode surface appearing during charge -->
+  <g class="surf-minus">
+    <!-- Top outer -->
+    <circle cx="165" cy="65" r="5.5" fill="#5b8fb9" />
+    <line x1="162" y1="65" x2="168" y2="65" class="sign-line" />
+
+    <!-- Pore 1 interior -->
+    <circle cx="118" cy="95" r="5.5" fill="#5b8fb9" />
+    <line x1="115" y1="95" x2="121" y2="95" class="sign-line" />
+
+    <!-- Mid ridge 1 -->
+    <circle cx="165" cy="128" r="5.5" fill="#5b8fb9" />
+    <line x1="162" y1="128" x2="168" y2="128" class="sign-line" />
+
+    <!-- Pore 2 interior -->
+    <circle cx="112" cy="180" r="5.5" fill="#5b8fb9" />
+    <line x1="109" y1="180" x2="115" y2="180" class="sign-line" />
+
+    <!-- Mid ridge 2 -->
+    <circle cx="165" cy="220" r="5.5" fill="#5b8fb9" />
+    <line x1="162" y1="220" x2="168" y2="220" class="sign-line" />
+
+    <!-- Pore 3 interior -->
+    <circle cx="118" cy="270" r="5.5" fill="#5b8fb9" />
+    <line x1="115" y1="270" x2="121" y2="270" class="sign-line" />
+
+    <!-- Bottom outer -->
+    <circle cx="165" cy="295" r="5.5" fill="#5b8fb9" />
+    <line x1="162" y1="295" x2="168" y2="295" class="sign-line" />
+  </g>
+
+  <!-- Right: Electrolyte with Solvated Cations and Anions -->
+  <!-- 6 Solvated Cations (Clay, + inside, dashed solvation shell) -->
+  <!-- Cation 1 -->
+  <g transform="translate(320, 75)">
+    <g class="c-drift-1">
+      <circle cx="0" cy="0" r="16" class="solv-cat" />
+      <circle cx="0" cy="0" r="8.5" class="cat-ion" />
+      <line x1="-3.5" y1="0" x2="3.5" y2="0" class="sign-line" />
+      <line x1="0" y1="-3.5" x2="0" y2="3.5" class="sign-line" />
+    </g>
+  </g>
+
+  <!-- Cation 2 -->
+  <g transform="translate(430, 115)">
+    <g class="c-drift-2">
+      <circle cx="0" cy="0" r="16" class="solv-cat" />
+      <circle cx="0" cy="0" r="8.5" class="cat-ion" />
+      <line x1="-3.5" y1="0" x2="3.5" y2="0" class="sign-line" />
+      <line x1="0" y1="-3.5" x2="0" y2="3.5" class="sign-line" />
+    </g>
+  </g>
+
+  <!-- Cation 3 -->
+  <g transform="translate(300, 155)">
+    <g class="c-drift-3">
+      <circle cx="0" cy="0" r="16" class="solv-cat" />
+      <circle cx="0" cy="0" r="8.5" class="cat-ion" />
+      <line x1="-3.5" y1="0" x2="3.5" y2="0" class="sign-line" />
+      <line x1="0" y1="-3.5" x2="0" y2="3.5" class="sign-line" />
+    </g>
+  </g>
+
+  <!-- Cation 4 -->
+  <g transform="translate(440, 195)">
+    <g class="c-drift-4">
+      <circle cx="0" cy="0" r="16" class="solv-cat" />
+      <circle cx="0" cy="0" r="8.5" class="cat-ion" />
+      <line x1="-3.5" y1="0" x2="3.5" y2="0" class="sign-line" />
+      <line x1="0" y1="-3.5" x2="0" y2="3.5" class="sign-line" />
+    </g>
+  </g>
+
+  <!-- Cation 5 -->
+  <g transform="translate(310, 240)">
+    <g class="c-drift-5">
+      <circle cx="0" cy="0" r="16" class="solv-cat" />
+      <circle cx="0" cy="0" r="8.5" class="cat-ion" />
+      <line x1="-3.5" y1="0" x2="3.5" y2="0" class="sign-line" />
+      <line x1="0" y1="-3.5" x2="0" y2="3.5" class="sign-line" />
+    </g>
+  </g>
+
+  <!-- Cation 6 -->
+  <g transform="translate(430, 285)">
+    <g class="c-drift-6">
+      <circle cx="0" cy="0" r="16" class="solv-cat" />
+      <circle cx="0" cy="0" r="8.5" class="cat-ion" />
+      <line x1="-3.5" y1="0" x2="3.5" y2="0" class="sign-line" />
+      <line x1="0" y1="-3.5" x2="0" y2="3.5" class="sign-line" />
+    </g>
+  </g>
+
+  <!-- 6 Solvated Anions (Blue, - inside, dashed solvation shell) -->
+  <!-- Anion 1 -->
+  <g transform="translate(430, 75)">
+    <g class="a-drift-1">
+      <circle cx="0" cy="0" r="16" class="solv-an" />
+      <circle cx="0" cy="0" r="8.5" class="an-ion" />
+      <line x1="-3.5" y1="0" x2="3.5" y2="0" class="sign-line" />
+    </g>
+  </g>
+
+  <!-- Anion 2 -->
+  <g transform="translate(320, 115)">
+    <g class="a-drift-2">
+      <circle cx="0" cy="0" r="16" class="solv-an" />
+      <circle cx="0" cy="0" r="8.5" class="an-ion" />
+      <line x1="-3.5" y1="0" x2="3.5" y2="0" class="sign-line" />
+    </g>
+  </g>
+
+  <!-- Anion 3 -->
+  <g transform="translate(450, 155)">
+    <g class="a-drift-3">
+      <circle cx="0" cy="0" r="16" class="solv-an" />
+      <circle cx="0" cy="0" r="8.5" class="an-ion" />
+      <line x1="-3.5" y1="0" x2="3.5" y2="0" class="sign-line" />
+    </g>
+  </g>
+
+  <!-- Anion 4 -->
+  <g transform="translate(310, 195)">
+    <g class="a-drift-4">
+      <circle cx="0" cy="0" r="16" class="solv-an" />
+      <circle cx="0" cy="0" r="8.5" class="an-ion" />
+      <line x1="-3.5" y1="0" x2="3.5" y2="0" class="sign-line" />
+    </g>
+  </g>
+
+  <!-- Anion 5 -->
+  <g transform="translate(440, 240)">
+    <g class="a-drift-5">
+      <circle cx="0" cy="0" r="16" class="solv-an" />
+      <circle cx="0" cy="0" r="8.5" class="an-ion" />
+      <line x1="-3.5" y1="0" x2="3.5" y2="0" class="sign-line" />
+    </g>
+  </g>
+
+  <!-- Anion 6 -->
+  <g transform="translate(330, 285)">
+    <g class="a-drift-6">
+      <circle cx="0" cy="0" r="16" class="solv-an" />
+      <circle cx="0" cy="0" r="8.5" class="an-ion" />
+      <line x1="-3.5" y1="0" x2="3.5" y2="0" class="sign-line" />
+    </g>
+  </g>
+
+  <!-- Double layer bracket at interface -->
+  <line x1="165" y1="324" x2="235" y2="324" class="edl-bracket" />
+  <line x1="165" y1="318" x2="165" y2="330" class="edl-bracket" />
+  <line x1="235" y1="318" x2="235" y2="330" class="edl-bracket" />
+  <text x="200" y="346" text-anchor="middle" class="label">double layer</text>
+</svg>

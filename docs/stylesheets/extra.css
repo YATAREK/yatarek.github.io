@@ -297,3 +297,46 @@
   .md-typeset .project,
   .md-typeset .project__status--live::before { transition: none; animation: none; }
 }
+
+.md-typeset .project__link {
+  display: inline-block;
+  margin-right: 1.2em;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+/* ---- Blog articles ---------------------------------------------------------- */
+.md-typeset .lede {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--md-default-fg-color);
+  border-left: 3px solid var(--clay);
+  padding-left: 0.9em;
+}
+.md-typeset figure {
+  margin: 1.6em auto;
+}
+.md-typeset figure img {
+  display: block;
+  width: 100%;
+  max-width: 40rem;
+  margin: 0 auto;
+  border-radius: 0.8rem;
+  background: color-mix(in srgb, var(--steel) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--clay) 20%, transparent);
+}
+.md-typeset figure.post-hero img { max-width: 100%; }
+.md-typeset figcaption {
+  max-width: 36rem;
+  margin: 0.6em auto 0;
+  font-size: 0.7rem;
+  font-style: italic;
+  color: var(--md-default-fg-color--light);
+  text-align: center !important;
+  hyphens: manual !important;
+}
+/* numbered bibliography */
+.md-typeset .footnote { font-size: 0.72rem; }
+.md-typeset .footnote ol { padding-left: 1.4em; }
+.md-typeset .footnote li { margin-bottom: 0.5em; text-align: left !important; hyphens: manual !important; }
+.md-typeset .footnote hr { display: none; }
