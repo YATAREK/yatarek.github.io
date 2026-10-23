@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+  <title>Magnetic Hysteresis Loop of NdFeB Hard Magnet and Soft Magnet</title>
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+    }
+    .axis {
+      stroke: #7c8a9a;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+    }
+    .axis-arrowhead {
+      fill: #7c8a9a;
+    }
+    .tick {
+      stroke: #7c8a9a;
+      stroke-width: 2.5;
+    }
+    .soft-loop {
+      fill: #7c8a9a;
+      fill-opacity: 0.18;
+      stroke: #7c8a9a;
+      stroke-width: 2.5;
+      stroke-dasharray: 6 5;
+    }
+    .hard-loop-base {
+      fill: #d97757;
+      fill-opacity: 0.22;
+      stroke: #d97757;
+      stroke-width: 3;
+      stroke-opacity: 0.45;
+    }
+    .hard-loop-draw {
+      fill: none;
+      stroke: #d97757;
+      stroke-width: 3.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 740;
+      animation: draw-loop 8s linear infinite;
+    }
+    @keyframes draw-loop {
+      0% { stroke-dashoffset: 740; }
+      45%, 88% { stroke-dashoffset: 0; }
+      98%, 100% { stroke-dashoffset: 740; }
+    }
+    .trace-dot {
+      offset-path: path("M 475 78 L 385 78 C 345 78, 315 90, 300 92 C 240 96, 185 110, 165 180 C 150 235, 140 270, 125 282 L 215 282 C 255 282, 285 270, 300 268 C 360 264, 415 250, 435 180 C 450 125, 460 90, 475 78 Z");
+      animation: trace-motion 8s linear infinite;
+    }
+    @keyframes trace-motion {
+      0% { offset-distance: 0%; }
+      100% { offset-distance: 100%; }
+    }
+    .label {
+      font-family: system-ui, sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      fill: #7c8a9a;
+    }
+    .label-clay {
+      font-family: system-ui, sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      fill: #d97757;
+    }
+  </style>
+
+  <!-- M and H Axes -->
+  <!-- Horizontal H axis -->
+  <line x1="60" y1="180" x2="530" y2="180" class="axis" />
+  <polygon points="540,180 526,174 526,186" class="axis-arrowhead" />
+  <text x="555" y="186" class="label">H</text>
+
+  <!-- Vertical M axis -->
+  <line x1="300" y1="315" x2="300" y2="45" class="axis" />
+  <polygon points="300,35 294,49 306,49" class="axis-arrowhead" />
+  <text x="300" y="24" text-anchor="middle" class="label">M</text>
+
+  <!-- Soft Magnet Loop (Steel, dashed, narrow) -->
+  <path class="soft-loop" d="M 318 70 C 318 70, 308 100, 306 175 C 304 235, 292 290, 282 290 C 282 290, 292 260, 294 185 C 296 125, 308 70, 318 70 Z" />
+  <text x="325" y="260" class="label">soft magnet</text>
+
+  <!-- Hard Magnet Loop (Clay, square, wide) -->
+  <!-- Base filled shape and outline -->
+  <path class="hard-loop-base" d="M 475 78 L 385 78 C 345 78, 315 90, 300 92 C 240 96, 185 110, 165 180 C 150 235, 140 270, 125 282 L 215 282 C 255 282, 285 270, 300 268 C 360 264, 415 250, 435 180 C 450 125, 460 90, 475 78 Z" />
+
+  <!-- Animated line drawing on top -->
+  <path class="hard-loop-draw" d="M 475 78 L 385 78 C 345 78, 315 90, 300 92 C 240 96, 185 110, 165 180 C 150 235, 140 270, 125 282 L 215 282 C 255 282, 285 270, 300 268 C 360 264, 415 250, 435 180 C 450 125, 460 90, 475 78 Z" />
+
+  <!-- Tracing dot circulating around hard loop -->
+  <circle cx="0" cy="0" r="6" fill="#c9a227" stroke="#d97757" stroke-width="2.5" class="trace-dot" />
+
+  <!-- Label for hard magnet -->
+  <text x="440" y="115" class="label-clay">hard magnet</text>
+
+  <!-- Remanence (Mr) tick on M axis -->
+  <line x1="293" y1="92" x2="307" y2="92" class="tick" />
+  <text x="282" y="97" text-anchor="end" class="label">M<tspan baseline-shift="sub" font-size="12">r</tspan></text>
+
+  <!-- Coercivity (Hc) tick on H axis -->
+  <line x1="165" y1="173" x2="165" y2="187" class="tick" />
+  <text x="165" y="208" text-anchor="middle" class="label">H<tspan baseline-shift="sub" font-size="12">c</tspan></text>
+</svg>

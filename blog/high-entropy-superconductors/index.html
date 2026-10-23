@@ -1,0 +1,1362 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Why mixing five or more metals in equal parts can produce a superconductor, how fusion magnet wire is made today, and where high-entropy alloys could fit.">
+      
+      
+        <meta name="author" content="Yeasin Tarek">
+      
+      
+        <link rel="canonical" href="https://yatarek.github.io/blog/high-entropy-superconductors/">
+      
+      
+        <link rel="prev" href="../mgb2-superconducting-joints/">
+      
+      
+        <link rel="next" href="../ndfeb-magnets/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>High-entropy superconductors: order from chemical chaos - Yeasin Tarek</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#high-entropy-superconductors-order-from-chemical-chaos" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Yeasin Tarek" class="md-header__button md-logo" aria-label="Yeasin Tarek" data-md-component="logo">
+      <a href="https://yatarek.github.io/" class="md-header__button md-logo" aria-label="Yeasin Tarek" title="Yeasin Tarek">
+  <svg class="lattice-logo" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="50" height="50" aria-hidden="true">
+    <!-- center atom (anchor) -->
+    <circle class="atom-center" cx="24" cy="24" r="4.4" fill="#e8b4a0" stroke="#d97757" stroke-width="1.5"/>
+
+    <!-- each corner = atom + its 2 edges + its diagonal, grouped so they move together -->
+    <g class="corner corner-tl">
+      <path d="M12 12 L36 12 M12 12 L12 36 M12 12 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="12" cy="12" r="3.6" fill="#d97757"/>
+    </g>
+    <g class="corner corner-tr">
+      <path d="M36 12 L36 36 M36 12 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="36" cy="12" r="3.6" fill="#d97757"/>
+    </g>
+    <g class="corner corner-br">
+      <path d="M36 36 L12 36 M36 36 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="36" cy="36" r="3.6" fill="#d97757"/>
+    </g>
+    <g class="corner corner-bl">
+      <path d="M12 36 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="12" cy="36" r="3.6" fill="#d97757"/>
+    </g>
+  </svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Yeasin Tarek
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              High-entropy superconductors: order from chemical chaos
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../research/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Research
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Blog
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contact/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contact
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Yeasin Tarek" class="md-nav__button md-logo" aria-label="Yeasin Tarek" data-md-component="logo">
+      <a href="https://yatarek.github.io/" class="md-header__button md-logo" aria-label="Yeasin Tarek" title="Yeasin Tarek">
+  <svg class="lattice-logo" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="50" height="50" aria-hidden="true">
+    <!-- center atom (anchor) -->
+    <circle class="atom-center" cx="24" cy="24" r="4.4" fill="#e8b4a0" stroke="#d97757" stroke-width="1.5"/>
+
+    <!-- each corner = atom + its 2 edges + its diagonal, grouped so they move together -->
+    <g class="corner corner-tl">
+      <path d="M12 12 L36 12 M12 12 L12 36 M12 12 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="12" cy="12" r="3.6" fill="#d97757"/>
+    </g>
+    <g class="corner corner-tr">
+      <path d="M36 12 L36 36 M36 12 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="36" cy="12" r="3.6" fill="#d97757"/>
+    </g>
+    <g class="corner corner-br">
+      <path d="M36 36 L12 36 M36 36 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="36" cy="36" r="3.6" fill="#d97757"/>
+    </g>
+    <g class="corner corner-bl">
+      <path d="M12 36 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="12" cy="36" r="3.6" fill="#d97757"/>
+    </g>
+  </svg>
+    </a>
+    Yeasin Tarek
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Blog
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Categories
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Categories
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../category/research/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contact
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#superconductivity-in-one-minute" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Superconductivity in one minute
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-fusion-magnet-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The fusion magnet problem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-high-entropy-alloy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is a high-entropy alloy?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#superconducting-high-entropy-alloys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Superconducting high-entropy alloys
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-superconducting-wire-is-made-today" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How superconducting wire is made today
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-it-made" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See it made
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#who-makes-fusion-superconductors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Who makes fusion superconductors?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#searching-a-huge-composition-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Searching a huge composition space
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#my-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        My work
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../" class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2026-10-24 11:00:00+00:00" class="md-ellipsis">October 24, 2026</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/research/">Research</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              7 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">fusion</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">high-entropy alloys</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">machine learning</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">superconductors</span>
+      
+    
+  </nav>
+
+
+
+<h1 id="high-entropy-superconductors-order-from-chemical-chaos">High-entropy superconductors: order from chemical chaos<a class="headerlink" href="#high-entropy-superconductors-order-from-chemical-chaos" title="Permanent link">&para;</a></h1>
+<figure class="post-hero">
+<p><img alt="Animated high-entropy lattice and a bending superconducting wire" src="../../assets/research/hes.svg" /></p>
+</figure>
+<p class="lede">Metallurgy has long followed a simple recipe: take one main metal and add
+small amounts of others. High-entropy alloys break that rule. They mix five or more
+elements in near-equal amounts, and some of them superconduct. They may help solve one
+of fusion energy's hardest materials problems.</p>
+
+<!-- more -->
+
+<h2 id="superconductivity-in-one-minute">Superconductivity in one minute<a class="headerlink" href="#superconductivity-in-one-minute" title="Permanent link">&para;</a></h2>
+<p>Below a critical temperature, T<sub>c</sub>, some materials lose all electrical
+resistance. Electrons pair up into <strong>Cooper pairs</strong>, bound together through vibrations of
+the crystal lattice. The pairs then move through the material without scattering.<sup id="fnref:bcs"><a class="footnote-ref" href="#fn:bcs">1</a></sup></p>
+<figure>
+<p><img alt="Animated plot of resistance falling sharply to zero at the critical temperature" src="../../assets/blog/hes/resistance.svg" /></p>
+<figcaption>On cooling, resistance falls gradually, then drops to exactly zero at T<sub>c</sub>.</figcaption>
+</figure>
+<p>Zero resistance means a coil can carry a huge current without heating. That is why
+superconducting magnets produce fields far stronger than ordinary electromagnets.</p>
+<h2 id="the-fusion-magnet-problem">The fusion magnet problem<a class="headerlink" href="#the-fusion-magnet-problem" title="Permanent link">&para;</a></h2>
+<p>A tokamak confines plasma hotter than the Sun's core inside a ring of magnetic field.
+The magnets must carry enormous currents in high fields, survive huge mechanical forces,
+and work for decades.</p>
+<p>ITER, the international fusion experiment in France, shows the scale. Its magnet system
+uses 18 toroidal field coils and a central solenoid wound from Nb<sub>3</sub>Sn, plus
+poloidal field coils wound from Nb–Ti.<sup id="fnref:iter"><a class="footnote-ref" href="#fn:iter">2</a></sup> All use <strong>cable-in-conduit</strong> conductors:
+hundreds of superconducting strands twisted into a cable and sealed inside a steel jacket,
+with helium flowing through to cool them.<sup id="fnref2:iter"><a class="footnote-ref" href="#fn:iter">2</a></sup></p>
+<p>Today's conductor choices each involve a trade-off:</p>
+<table>
+<thead>
+<tr>
+<th>Conductor</th>
+<th>T<sub>c</sub></th>
+<th>Mechanical behaviour</th>
+<th>Fusion use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Nb–Ti</strong></td>
+<td>about 9 K</td>
+<td>Ductile alloy; easy to draw into wire</td>
+<td>Lower-field coils (ITER poloidal field)</td>
+</tr>
+<tr>
+<td><strong>Nb<sub>3</sub>Sn</strong></td>
+<td>about 18 K</td>
+<td>Brittle intermetallic; strain sensitive</td>
+<td>High-field coils (ITER toroidal field, central solenoid)</td>
+</tr>
+<tr>
+<td><strong>REBCO</strong> (high-temperature superconductor)</td>
+<td>about 90 K</td>
+<td>Thin ceramic layer on a metal tape</td>
+<td>Compact high-field tokamaks</td>
+</tr>
+<tr>
+<td><strong>Ta–Nb–Hf–Zr–Ti</strong> (high-entropy alloy)</td>
+<td>about 7 K</td>
+<td>Metallic BCC alloy</td>
+<td>Research stage</td>
+</tr>
+</tbody>
+</table>
+<p class="table-note">Values from Larbalestier et al.,<sup id="fnref:larb"><a class="footnote-ref" href="#fn:larb">3</a></sup> Godeke<sup id="fnref:godeke"><a class="footnote-ref" href="#fn:godeke">4</a></sup> and Koželj et al.<sup id="fnref:kozelj"><a class="footnote-ref" href="#fn:kozelj">5</a></sup></p>
+<p>Nb<sub>3</sub>Sn performs well at high field, but it is so brittle that coils are usually
+wound first and reacted afterwards ("wind and react").<sup id="fnref2:godeke"><a class="footnote-ref" href="#fn:godeke">4</a></sup> High-temperature
+superconductors are advancing fast. In 2021, a large REBCO test coil for the SPARC
+tokamak reached a peak field of about 20 T.<sup id="fnref:sparc"><a class="footnote-ref" href="#fn:sparc">6</a></sup> Even so, a conductor combining
+Nb–Ti's ductility with better superconducting performance would be valuable. This is
+where high-entropy alloys come in.</p>
+<h2 id="what-is-a-high-entropy-alloy">What is a high-entropy alloy?<a class="headerlink" href="#what-is-a-high-entropy-alloy" title="Permanent link">&para;</a></h2>
+<p>In 2004, two groups independently explored alloys made of many principal elements in
+equal proportions.<sup id="fnref:yeh"><a class="footnote-ref" href="#fn:yeh">7</a></sup><sup id="fnref:cantor"><a class="footnote-ref" href="#fn:cantor">8</a></sup> Intuition suggested such mixtures would form many
+brittle phases. Instead, some formed a <strong>single, simple crystal structure</strong>.</p>
+<figure>
+<p><img alt="Animation of five elements mixing into a single body-centred cubic lattice" src="../../assets/blog/hes/mixing.svg" /></p>
+<figcaption>Five elements share one body-centred cubic (BCC) lattice, with each site occupied at random.</figcaption>
+</figure>
+<p>The name comes from configurational entropy. For <em>n</em> elements in equal amounts, the
+mixing entropy is</p>
+<div class="eq">Δ<i>S</i><sub>conf</sub> = <i>R</i> ln <i>n</i></div>
+
+<p>where <em>R</em> is the gas constant. For five elements this is about 1.61 <em>R</em>. At high
+temperature, this entropy term can stabilise a random solid solution over competing
+ordered phases.<sup id="fnref2:yeh"><a class="footnote-ref" href="#fn:yeh">7</a></sup></p>
+<h2 id="superconducting-high-entropy-alloys">Superconducting high-entropy alloys<a class="headerlink" href="#superconducting-high-entropy-alloys" title="Permanent link">&para;</a></h2>
+<p>In 2014, Koželj and colleagues reported the first superconducting high-entropy alloy:
+Ta–Nb–Hf–Zr–Ti, with a BCC structure and a T<sub>c</sub> of about 7.3 K.<sup id="fnref2:kozelj"><a class="footnote-ref" href="#fn:kozelj">5</a></sup> Later
+work showed its zero resistance survives pressures up to 190 GPa, a remarkable
+robustness.<sup id="fnref:guo"><a class="footnote-ref" href="#fn:guo">9</a></sup></p>
+<p>Since then, many related alloys have been studied.<sup id="fnref:suncava"><a class="footnote-ref" href="#fn:suncava">10</a></sup> Their T<sub>c</sub> follows
+trends with the average number of valence electrons per atom. This echoes an empirical
+rule first noted by Matthias in the 1950s.<sup id="fnref:matthias"><a class="footnote-ref" href="#fn:matthias">11</a></sup> Three design questions now drive
+the field:</p>
+<ol>
+<li><strong>Can T<sub>c</sub> and the upper critical field be raised</strong> while keeping a single
+   BCC phase?</li>
+<li><strong>Does chemical disorder help pin magnetic flux</strong>, which sets how much current a wire
+   can carry in a field?</li>
+<li><strong>Can the alloy stay ductile</strong> enough to be drawn into fine filaments?</li>
+</ol>
+<h2 id="how-superconducting-wire-is-made-today">How superconducting wire is made today<a class="headerlink" href="#how-superconducting-wire-is-made-today" title="Permanent link">&para;</a></h2>
+<p>A practical fusion conductor is not a single wire. It is a composite of many fine
+superconducting filaments in a copper matrix. The copper carries current safely if the
+superconductor briefly fails, and it conducts heat away.</p>
+<figure class="figure-wide">
+<p><a href="../../assets/blog/hes/process.svg" target="_blank" title="Open full size"><img alt="Isometric 3D schematic of the conventional multifilamentary superconducting wire route from melting to coil winding" src="../../assets/blog/hes/process.svg" /></a></p>
+<figcaption>The conventional route for multifilamentary superconducting wire and fusion coils.</figcaption>
+</figure>
+<p>For a ductile alloy such as Nb–Ti, the route looks like this:<sup id="fnref2:larb"><a class="footnote-ref" href="#fn:larb">3</a></sup><sup id="fnref3:godeke"><a class="footnote-ref" href="#fn:godeke">4</a></sup></p>
+<ol>
+<li><strong>Alloy melting.</strong> The alloy is melted, typically by vacuum arc or electron-beam
+   melting, to get a clean, homogeneous ingot.</li>
+<li><strong>Homogenisation.</strong> A long heat treatment evens out the composition.</li>
+<li><strong>Rod making.</strong> The ingot is worked into rods and clad in copper.</li>
+<li><strong>Billet assembly.</strong> Thousands of hexagonal copper-clad rods are stacked inside a
+   copper can.</li>
+<li><strong>Hot extrusion.</strong> The billet is pushed through a die, bonding everything into one
+   composite.</li>
+<li><strong>Wire drawing.</strong> The composite is drawn down through many dies. Intermediate heat
+   treatments create nanoscale precipitates that pin magnetic flux.<sup id="fnref3:larb"><a class="footnote-ref" href="#fn:larb">3</a></sup></li>
+<li><strong>Cabling.</strong> Strands are twisted into a cable, then jacketed (cable-in-conduit).</li>
+<li><strong>Coil winding.</strong> The cable is wound into the final coil.</li>
+</ol>
+<p>Brittle Nb<sub>3</sub>Sn needs a different trick. Its precursors (niobium and tin, or
+bronze) are drawn while still ductile. The compound forms only in a final reaction heat
+treatment, usually after the coil is wound.<sup id="fnref4:godeke"><a class="footnote-ref" href="#fn:godeke">4</a></sup> A <strong>ductile superconducting
+high-entropy alloy</strong> could follow the simpler Nb–Ti route, with no reaction step.</p>
+<h2 id="see-it-made">See it made<a class="headerlink" href="#see-it-made" title="Permanent link">&para;</a></h2>
+<div class="video">
+<iframe allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" loading="lazy" src="https://www.youtube-nocookie.com/embed/GCJN7CP_DVQ" title="The making of the ITER toroidal field coils (ITER Organization)"></iframe>
+</div>
+<p class="video__caption">The making of the ITER toroidal field coils, from the ITER Organization.</p>
+
+<div class="video">
+<iframe allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" loading="lazy" src="https://www.youtube-nocookie.com/embed/HrmUQTmq19Q" title="Manufacture of niobium-tin and niobium-titanium superconductors"></iframe>
+</div>
+<p class="video__caption">How Nb<sub>3</sub>Sn and Nb–Ti superconducting wires are manufactured (Professor Harry Bhadeshia, University of Cambridge channel).</p>
+
+<div class="video">
+<iframe allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" loading="lazy" src="https://www.youtube-nocookie.com/embed/uHbbsjDiAYE" title="What are high entropy alloys? (Taylor Sparks)"></iframe>
+</div>
+<p class="video__caption">An introduction to high-entropy alloys by materials scientist Taylor Sparks.</p>
+
+<h2 id="who-makes-fusion-superconductors">Who makes fusion superconductors?<a class="headerlink" href="#who-makes-fusion-superconductors" title="Permanent link">&para;</a></h2>
+<p>Superconducting strand is a specialised industry. For ITER's toroidal field coils alone,
+suppliers across six ITER members (China, Europe, Japan, Korea, Russia and the United
+States) produced more than 400 tonnes of Nb<sub>3</sub>Sn strand.<sup id="fnref:iterstrand"><a class="footnote-ref" href="#fn:iterstrand">12</a></sup> Europe's
+share was made by Bruker EAS in Germany and Oxford Superconducting Technology (OST) in
+the United States, using the bronze and internal-tin routes respectively.<sup id="fnref:boutboul"><a class="footnote-ref" href="#fn:boutboul">13</a></sup></p>
+<h2 id="searching-a-huge-composition-space">Searching a huge composition space<a class="headerlink" href="#searching-a-huge-composition-space" title="Permanent link">&para;</a></h2>
+<p>With ten candidate metals and freedom over proportions, the number of possible alloys is
+enormous. Making and testing each one is not practical. Machine learning helps narrow the
+search. Composition-based descriptors, such as averaged elemental properties, allow a
+model to learn from known alloys.<sup id="fnref:ward"><a class="footnote-ref" href="#fn:ward">14</a></sup></p>
+<p>I built a two-stage approach. First, a classifier predicts whether a composition forms a
+stable single-phase BCC structure. Second, a set of regression models predicts
+T<sub>c</sub> for the compositions that pass. You can try both on my
+<a href="../../machine-learning/">Machine Learning</a> page.</p>
+<h2 id="my-work">My work<a class="headerlink" href="#my-work" title="Permanent link">&para;</a></h2>
+<p>At The University of Queensland, I am developing a ductile superconductor based on
+high-entropy alloys for fusion applications. Machine learning guides which compositions
+to synthesise. Experiments then test both the superconducting properties and the
+mechanical behaviour that wire manufacturing requires.</p>
+<div class="admonition tip">
+<p class="admonition-title">The big picture</p>
+<p>High-entropy alloys turn chemical disorder into a design tool. For superconductors,
+the goal is a conductor that is both strong in high fields and easy to manufacture.</p>
+</div>
+<p><a class="md-button" href="../../research/#hes">Back to my research</a></p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:bcs">
+<p>Bardeen, J., Cooper, L. N., &amp; Schrieffer, J. R. (1957). Theory of superconductivity. <em>Physical Review</em>, 108, 1175–1204. <a href="https://doi.org/10.1103/PhysRev.108.1175">doi:10.1103/PhysRev.108.1175</a>&#160;<a class="footnote-backref" href="#fnref:bcs" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:iter">
+<p>Mitchell, N., Bessette, D., Gallix, R., Jong, C., Knaster, J., Libeyre, P., et al. (2008). The ITER magnet system. <em>IEEE Transactions on Applied Superconductivity</em>, 18, 435–440. <a href="https://doi.org/10.1109/TASC.2008.921232">doi:10.1109/TASC.2008.921232</a>&#160;<a class="footnote-backref" href="#fnref:iter" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:iter" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:larb">
+<p>Larbalestier, D., Gurevich, A., Feldmann, D. M., &amp; Polyanskii, A. (2001). High-T<sub>c</sub> superconducting materials for electric power applications. <em>Nature</em>, 414, 368–377. <a href="https://doi.org/10.1038/35104654">doi:10.1038/35104654</a>&#160;<a class="footnote-backref" href="#fnref:larb" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:larb" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:larb" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:godeke">
+<p>Godeke, A. (2006). A review of the properties of Nb<sub>3</sub>Sn and their variation with A15 composition, morphology and strain state. <em>Superconductor Science and Technology</em>, 19, R68–R80. <a href="https://doi.org/10.1088/0953-2048/19/8/R02">doi:10.1088/0953-2048/19/8/R02</a>&#160;<a class="footnote-backref" href="#fnref:godeke" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:godeke" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:godeke" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:godeke" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:kozelj">
+<p>Koželj, P., Vrtnik, S., Jelen, A., Jazbec, S., Jagličić, Z., Maiti, S., Feuerbacher, M., Steurer, W., &amp; Dolinšek, J. (2014). Discovery of a superconducting high-entropy alloy. <em>Physical Review Letters</em>, 113, 107001. <a href="https://doi.org/10.1103/PhysRevLett.113.107001">doi:10.1103/PhysRevLett.113.107001</a>&#160;<a class="footnote-backref" href="#fnref:kozelj" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:kozelj" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:sparc">
+<p>Whyte, D. G., LaBombard, B., Doody, J., et al., &amp; Hartwig, Z. S. (2024). Experimental assessment and model validation of the SPARC toroidal field model coil. <em>IEEE Transactions on Applied Superconductivity</em>, 34, 1–18. <a href="https://doi.org/10.1109/TASC.2023.3332823">doi:10.1109/TASC.2023.3332823</a>&#160;<a class="footnote-backref" href="#fnref:sparc" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:yeh">
+<p>Yeh, J.-W., Chen, S.-K., Lin, S.-J., Gan, J.-Y., Chin, T.-S., Shun, T.-T., Tsau, C.-H., &amp; Chang, S.-Y. (2004). Nanostructured high-entropy alloys with multiple principal elements: Novel alloy design concepts and outcomes. <em>Advanced Engineering Materials</em>, 6, 299–303. <a href="https://doi.org/10.1002/adem.200300567">doi:10.1002/adem.200300567</a>&#160;<a class="footnote-backref" href="#fnref:yeh" title="Jump back to footnote 7 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:yeh" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:cantor">
+<p>Cantor, B., Chang, I. T. H., Knight, P., &amp; Vincent, A. J. B. (2004). Microstructural development in equiatomic multicomponent alloys. <em>Materials Science and Engineering: A</em>, 375–377, 213–218. <a href="https://doi.org/10.1016/j.msea.2003.10.257">doi:10.1016/j.msea.2003.10.257</a>&#160;<a class="footnote-backref" href="#fnref:cantor" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+<li id="fn:guo">
+<p>Guo, J., Wang, H., von Rohr, F., et al. (2017). Robust zero resistance in a superconducting high-entropy alloy at pressures up to 190 GPa. <em>Proceedings of the National Academy of Sciences</em>, 114, 13144–13147. <a href="https://doi.org/10.1073/pnas.1716981114">doi:10.1073/pnas.1716981114</a>&#160;<a class="footnote-backref" href="#fnref:guo" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+</li>
+<li id="fn:suncava">
+<p>Sun, L., &amp; Cava, R. J. (2019). High-entropy alloy superconductors: Status, opportunities, and challenges. <em>Physical Review Materials</em>, 3, 090301. <a href="https://doi.org/10.1103/PhysRevMaterials.3.090301">doi:10.1103/PhysRevMaterials.3.090301</a>&#160;<a class="footnote-backref" href="#fnref:suncava" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+</li>
+<li id="fn:matthias">
+<p>Matthias, B. T. (1955). Empirical relation between superconductivity and the number of valence electrons per atom. <em>Physical Review</em>, 97, 74–76. <a href="https://doi.org/10.1103/PhysRev.97.74">doi:10.1103/PhysRev.97.74</a>&#160;<a class="footnote-backref" href="#fnref:matthias" title="Jump back to footnote 11 in the text">&#8617;</a></p>
+</li>
+<li id="fn:iterstrand">
+<p>ITER Organization (2013). <em>Toroidal field coils: Strand production passes 400 tonnes</em>. ITER Newsline. <a href="https://www.iter.org/node/17043">iter.org</a>&#160;<a class="footnote-backref" href="#fnref:iterstrand" title="Jump back to footnote 12 in the text">&#8617;</a></p>
+</li>
+<li id="fn:boutboul">
+<p>Boutboul, T., Abaecherli, V., Berger, G., Hampshire, D., Parrell, J., Raine, M., et al. (2016). European Nb<sub>3</sub>Sn superconducting strand production and characterization for ITER TF coil conductor. <em>IEEE Transactions on Applied Superconductivity</em>, 26, 1–4. <a href="https://doi.org/10.1109/TASC.2015.2512386">doi:10.1109/TASC.2015.2512386</a>&#160;<a class="footnote-backref" href="#fnref:boutboul" title="Jump back to footnote 13 in the text">&#8617;</a></p>
+</li>
+<li id="fn:ward">
+<p>Ward, L., Agrawal, A., Choudhary, A., &amp; Wolverton, C. (2016). A general-purpose machine learning framework for predicting properties of inorganic materials. <em>npj Computational Materials</em>, 2, 16028. <a href="https://doi.org/10.1038/npjcompumats.2016.28">doi:10.1038/npjcompumats.2016.28</a>&#160;<a class="footnote-backref" href="#fnref:ward" title="Jump back to footnote 14 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../mgb2-superconducting-joints/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Closing the loop: MgB₂ superconducting joints for MRI">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Closing the loop: MgB₂ superconducting joints for MRI
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../ndfeb-magnets/" class="md-footer__link md-footer__link--next" aria-label="Next: NdFeB magnets: the small giants behind modern motors">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                NdFeB magnets: the small giants behind modern motors
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/YATAREK" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://scholar.google.com/citations?user=B3c5GJQAAAAJ" target="_blank" rel="noopener" title="scholar.google.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M390.9 298.5s0 .1.1.1c9.2 19.4 14.4 41.1 14.4 64C405.3 445.1 338.5 512 256 512s-149.3-66.9-149.3-149.3c0-22.9 5.2-44.6 14.4-64 1.7-3.6 3.6-7.2 5.6-10.7q6.6-11.4 15-21.3c27.4-32.6 68.5-53.3 114.4-53.3 33.6 0 64.6 11.1 89.6 29.9 9.1 6.9 17.4 14.7 24.8 23.5 5.6 6.6 10.6 13.8 15 21.3 2 3.4 3.8 7 5.5 10.5zm26.4-18.8c-30.1-58.4-91-98.4-161.3-98.4s-131.2 40-161.3 98.4L0 202.7 256 0l256 202.7-94.7 77.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://orcid.org/0000-0003-2113-2486" target="_blank" rel="noopener" title="orcid.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M294.7 188.2h-45.9V342h47.5c67.6 0 83.1-51.3 83.1-76.9 0-41.6-26.5-76.9-84.7-76.9M256 8a248 248 0 1 0 0 496 248 248 0 1 0 0-496m-80.8 360.8h-29.8V161.3h29.8zM160.3 98.5a19.6 19.6 0 1 1 0 39.2 19.6 19.6 0 1 1 0-39.2M300 369h-81V161.3h80.6c76.7 0 110.4 54.8 110.4 103.9 0 53.3-41.7 103.9-110 103.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/yatarek/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "navigation.instant", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,225 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+  <title>High-Entropy Solid Solution BCC Lattice Mixing</title>
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+    }
+    .lattice-line {
+      stroke: #7c8a9a;
+      stroke-width: 2.2;
+      stroke-opacity: 0.55;
+    }
+    .lattice-diag {
+      stroke: #7c8a9a;
+      stroke-width: 1.8;
+      stroke-opacity: 0.35;
+      stroke-dasharray: 4 4;
+    }
+    .site-placeholder {
+      fill: none;
+      stroke: #7c8a9a;
+      stroke-width: 1.5;
+      stroke-opacity: 0.35;
+      stroke-dasharray: 3 3;
+    }
+    .label {
+      font-family: system-ui, sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      fill: #7c8a9a;
+    }
+    .caption {
+      font-family: system-ui, sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      fill: #7c8a9a;
+    }
+
+    /* Atoms base styles */
+    .atom {
+      stroke-width: 2;
+    }
+    .col-nb { fill: #d97757; stroke: #c15f3c; }
+    .col-ta { fill: #7c8a9a; stroke: #637080; }
+    .col-ti { fill: #5b8fb9; stroke: #41729f; }
+    .col-zr { fill: #8fae7e; stroke: #6f8f5e; }
+    .col-hf { fill: #c9a227; stroke: #a3821a; }
+
+    /* The lattice spends most of the loop (0-60% and 88-100%) filled in place */
+    .fly-atom {
+      animation-duration: 9s;
+      animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      animation-iteration-count: infinite;
+    }
+
+    .f-nb1 { animation-name: k-nb1; }
+    .f-nb2 { animation-name: k-nb2; }
+    .f-nb3 { animation-name: k-nb3; }
+
+    .f-ta1 { animation-name: k-ta1; }
+    .f-ta2 { animation-name: k-ta2; }
+    .f-ta3 { animation-name: k-ta3; }
+
+    .f-ti1 { animation-name: k-ti1; }
+    .f-ti2 { animation-name: k-ti2; }
+    .f-ti3 { animation-name: k-ti3; }
+
+    .f-zr1 { animation-name: k-zr1; }
+    .f-zr2 { animation-name: k-zr2; }
+
+    .f-hf1 { animation-name: k-hf1; }
+    .f-hf2 { animation-name: k-hf2; }
+
+    @keyframes k-nb1 { 0%, 60% { transform: translate(0, 0); } 68%, 75% { transform: translate(-302px, -29px); } 88%, 100% { transform: translate(0, 0); } }
+    @keyframes k-nb2 { 0%, 60% { transform: translate(0, 0); } 68%, 75% { transform: translate(-396px, -91px); } 88%, 100% { transform: translate(0, 0); } }
+    @keyframes k-nb3 { 0%, 60% { transform: translate(0, 0); } 68%, 75% { transform: translate(-418px, -132px); } 88%, 100% { transform: translate(0, 0); } }
+
+    @keyframes k-ta1 { 0%, 60% { transform: translate(0, 0); } 68%, 75% { transform: translate(-422px, -9px); } 88%, 100% { transform: translate(0, 0); } }
+    @keyframes k-ta2 { 0%, 60% { transform: translate(0, 0); } 68%, 75% { transform: translate(-316px, -31px); } 88%, 100% { transform: translate(0, 0); } }
+    @keyframes k-ta3 { 0%, 60% { transform: translate(0, 0); } 68%, 75% { transform: translate(-378px, -112px); } 88%, 100% { transform: translate(0, 0); } }
+
+    @keyframes k-ti1 { 0%, 60% { transform: translate(0, 0); } 68%, 75% { transform: translate(-462px, 91px); } 88%, 100% { transform: translate(0, 0); } }
+    @keyframes k-ti2 { 0%, 60% { transform: translate(0, 0); } 68%, 75% { transform: translate(-476px, 29px); } 88%, 100% { transform: translate(0, 0); } }
+    @keyframes k-ti3 { 0%, 60% { transform: translate(0, 0); } 68%, 75% { transform: translate(-338px, -12px); } 88%, 100% { transform: translate(0, 0); } }
+
+    @keyframes k-zr1 { 0%, 60% { transform: translate(0, 0); } 68%, 75% { transform: translate(-382px, 151px); } 88%, 100% { transform: translate(0, 0); } }
+    @keyframes k-zr2 { 0%, 60% { transform: translate(0, 0); } 68%, 75% { transform: translate(-458px, 8px); } 88%, 100% { transform: translate(0, 0); } }
+
+    @keyframes k-hf1 { 0%, 60% { transform: translate(0, 0); } 68%, 75% { transform: translate(-342px, 171px); } 88%, 100% { transform: translate(0, 0); } }
+    @keyframes k-hf2 { 0%, 60% { transform: translate(0, 0); } 68%, 75% { transform: translate(-298px, 68px); } 88%, 100% { transform: translate(0, 0); } }
+  </style>
+
+  <!-- Left: Five Elemental Clusters -->
+  <!-- 1. Niobium (Nb, clay) -->
+  <g>
+    <circle cx="50" cy="48" r="8.5" class="atom col-nb" />
+    <circle cx="54" cy="64" r="8.5" class="atom col-nb" />
+    <text x="105" y="61" class="label">Nb</text>
+  </g>
+
+  <!-- 2. Tantalum (Ta, steel) -->
+  <g>
+    <circle cx="50" cy="108" r="8.5" class="atom col-ta" />
+    <circle cx="54" cy="124" r="8.5" class="atom col-ta" />
+    <text x="105" y="121" class="label">Ta</text>
+  </g>
+
+  <!-- 3. Titanium (Ti, blue) -->
+  <g>
+    <circle cx="50" cy="168" r="8.5" class="atom col-ti" />
+    <circle cx="54" cy="184" r="8.5" class="atom col-ti" />
+    <text x="105" y="181" class="label">Ti</text>
+  </g>
+
+  <!-- 4. Zirconium (Zr, sage) -->
+  <g>
+    <circle cx="50" cy="228" r="8.5" class="atom col-zr" />
+    <circle cx="54" cy="244" r="8.5" class="atom col-zr" />
+    <text x="105" y="241" class="label">Zr</text>
+  </g>
+
+  <!-- 5. Hafnium (Hf, gold) -->
+  <g>
+    <circle cx="50" cy="288" r="8.5" class="atom col-hf" />
+    <circle cx="54" cy="304" r="8.5" class="atom col-hf" />
+    <text x="105" y="301" class="label">Hf</text>
+  </g>
+
+  <!-- Right: Single-Phase BCC Solid Solution Lattice -->
+  <!-- Diagonal links to body centers -->
+  <g class="lattice-diag">
+    <!-- Top-left cell (center at 410, 115) -->
+    <line x1="370" y1="75" x2="410" y2="115" /><line x1="450" y1="75" x2="410" y2="115" />
+    <line x1="370" y1="155" x2="410" y2="115" /><line x1="450" y1="155" x2="410" y2="115" />
+
+    <!-- Top-right cell (center at 490, 115) -->
+    <line x1="450" y1="75" x2="490" y2="115" /><line x1="530" y1="75" x2="490" y2="115" />
+    <line x1="450" y1="155" x2="490" y2="115" /><line x1="530" y1="155" x2="490" y2="115" />
+
+    <!-- Bottom-left cell (center at 410, 195) -->
+    <line x1="370" y1="155" x2="410" y2="195" /><line x1="450" y1="155" x2="410" y2="195" />
+    <line x1="370" y1="235" x2="410" y2="195" /><line x1="450" y1="235" x2="410" y2="195" />
+
+    <!-- Bottom-right cell (center at 490, 195) -->
+    <line x1="450" y1="155" x2="490" y2="195" /><line x1="530" y1="155" x2="490" y2="195" />
+    <line x1="450" y1="235" x2="490" y2="195" /><line x1="530" y1="235" x2="490" y2="195" />
+  </g>
+
+  <!-- Outer and division lattice grid lines -->
+  <g class="lattice-line">
+    <!-- Horizontals -->
+    <line x1="370" y1="75" x2="530" y2="75" />
+    <line x1="370" y1="155" x2="530" y2="155" />
+    <line x1="370" y1="235" x2="530" y2="235" />
+
+    <!-- Verticals -->
+    <line x1="370" y1="75" x2="370" y2="235" />
+    <line x1="450" y1="75" x2="450" y2="235" />
+    <line x1="530" y1="75" x2="530" y2="235" />
+  </g>
+
+  <!-- Site placeholders (dashed circles showing target sites) -->
+  <g class="site-placeholder">
+    <!-- Corners -->
+    <circle cx="370" cy="75" r="8.5" />
+    <circle cx="450" cy="75" r="8.5" />
+    <circle cx="530" cy="75" r="8.5" />
+    <circle cx="370" cy="155" r="8.5" />
+    <circle cx="450" cy="155" r="8.5" />
+    <circle cx="530" cy="155" r="8.5" />
+    <circle cx="370" cy="235" r="8.5" />
+    <circle cx="450" cy="235" r="8.5" />
+    <circle cx="530" cy="235" r="8.5" />
+
+    <!-- Body Centers -->
+    <circle cx="410" cy="115" r="8" />
+    <circle cx="490" cy="115" r="8" />
+    <circle cx="410" cy="195" r="8" />
+    <circle cx="490" cy="195" r="8" />
+  </g>
+
+  <!-- Atoms filling the BCC lattice (default state is FILLED, animated flight from clusters) -->
+  <g>
+    <!-- Site 1: Corner (370, 75) - Nb (clay) -->
+    <circle cx="370" cy="75" r="8.5" class="atom col-nb fly-atom f-nb1" />
+
+    <!-- Site 2: Corner (450, 75) - Zr (sage) -->
+    <circle cx="450" cy="75" r="8.5" class="atom col-zr fly-atom f-zr1" />
+
+    <!-- Site 3: Corner (530, 75) - Ti (blue) -->
+    <circle cx="530" cy="75" r="8.5" class="atom col-ti fly-atom f-ti1" />
+
+    <!-- Site 4: Body Center (410, 115) - Hf (gold) -->
+    <circle cx="410" cy="115" r="8" class="atom col-hf fly-atom f-hf1" />
+
+    <!-- Site 5: Body Center (490, 115) - Ta (steel) -->
+    <circle cx="490" cy="115" r="8" class="atom col-ta fly-atom f-ta1" />
+
+    <!-- Site 6: Corner (370, 155) - Ta (steel) -->
+    <circle cx="370" cy="155" r="8.5" class="atom col-ta fly-atom f-ta2" />
+
+    <!-- Site 7: Corner (450, 155) - Nb (clay) -->
+    <circle cx="450" cy="155" r="8.5" class="atom col-nb fly-atom f-nb2" />
+
+    <!-- Site 8: Corner (530, 155) - Ti (blue) -->
+    <circle cx="530" cy="155" r="8.5" class="atom col-ti fly-atom f-ti2" />
+
+    <!-- Site 9: Body Center (410, 195) - Ti (blue) -->
+    <circle cx="410" cy="195" r="8" class="atom col-ti fly-atom f-ti3" />
+
+    <!-- Site 10: Body Center (490, 195) - Nb (clay) -->
+    <circle cx="490" cy="195" r="8" class="atom col-nb fly-atom f-nb3" />
+
+    <!-- Site 11: Corner (370, 235) - Hf (gold) -->
+    <circle cx="370" cy="235" r="8.5" class="atom col-hf fly-atom f-hf2" />
+
+    <!-- Site 12: Corner (450, 235) - Ta (steel) -->
+    <circle cx="450" cy="235" r="8.5" class="atom col-ta fly-atom f-ta3" />
+
+    <!-- Site 13: Corner (530, 235) - Zr (sage) -->
+    <circle cx="530" cy="235" r="8.5" class="atom col-zr fly-atom f-zr2" />
+  </g>
+
+  <!-- Solid Solution Caption -->
+  <text x="450" y="300" text-anchor="middle" class="caption">single-phase BCC solid solution</text>
+</svg>

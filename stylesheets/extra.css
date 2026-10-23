@@ -1,0 +1,467 @@
+/* ===========================================================================
+   Yeasin Tarek: custom theme
+   Warm, minimal, "reading-room" feel. Clay accent + serif display headings.
+   =========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap');
+
+/* ---- Accent (both schemes) ------------------------------------------------ */
+:root {
+  --clay:        #d97757;   /* Claude-ish warm clay */
+  --clay-deep:   #c15f3c;
+  --steel:       #7c8a9a;   /* cool secondary; nods to metals/materials */
+}
+
+[data-md-color-primary="custom"] {
+  --md-primary-fg-color:        var(--clay);
+  --md-primary-fg-color--light: #e2916f;
+  --md-primary-fg-color--dark:  var(--clay-deep);
+  --md-primary-bg-color:        #ffffff;
+  --md-primary-bg-color--light: rgba(255,255,255,0.7);
+}
+[data-md-color-accent="custom"] {
+  --md-accent-fg-color:         var(--clay-deep);
+  --md-accent-fg-color--transparent: rgba(217,119,87,0.1);
+}
+
+/* ---- Dark scheme: warm near-black instead of cold slate ------------------- */
+[data-md-color-scheme="slate"] {
+  --md-hue: 30;
+  --md-default-bg-color:        #1a1917;
+  --md-default-bg-color--light: #1f1d1b;
+  --md-default-fg-color:        #e8e4dd;
+  --md-default-fg-color--light: #c9c3b9;
+  --md-default-fg-color--lighter: #a8a199;
+  --md-code-bg-color:           #24221f;
+  --md-typeset-a-color:         var(--clay);
+  --md-footer-bg-color:         #141312;
+}
+[data-md-color-scheme="slate"] .md-header,
+[data-md-color-scheme="slate"] .md-tabs {
+  background-color: #141312;
+}
+
+/* ---- Light scheme: warm cream, not stark white --------------------------- */
+[data-md-color-scheme="default"] {
+  --md-default-bg-color:        #f7f4ee;
+  --md-default-fg-color:        #2a2724;
+  --md-code-bg-color:           #efe9df;
+  --md-typeset-a-color:         var(--clay-deep);
+}
+[data-md-color-scheme="default"] .md-header,
+[data-md-color-scheme="default"] .md-tabs {
+  background-color: #2a2724;
+}
+
+/* ---- Typography: serif display, comfortable measure ---------------------- */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-nav__title,
+.md-header__title {
+  font-family: "Source Serif 4", Georgia, serif;
+  letter-spacing: -0.01em;
+}
+.md-typeset h1 { font-weight: 700; }
+.md-typeset h2 { font-weight: 600; margin-top: 2.2em; }
+.md-typeset { font-size: 0.82rem; line-height: 1.7; }
+.md-grid { max-width: 62rem; }   /* slightly tighter, book-like column */
+
+/* Accent rule under section headings */
+.md-typeset h2 {
+  padding-bottom: 0.25em;
+  border-bottom: 1px solid var(--md-default-fg-color--lighter);
+}
+
+/* ---- Home hero ----------------------------------------------------------- */
+.hero {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 1rem 0 2.5rem;
+}
+.hero__portrait {
+  width: 148px;
+  height: 148px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--clay);
+  flex-shrink: 0;
+}
+.hero__body { flex: 1 1 320px; }
+.hero__body h1 {
+  margin: 0 0 0.45em;
+  font-size: 2.4em;
+  line-height: 1.1;
+  letter-spacing: 0.005em;
+}
+.hero__role {
+  color: var(--clay);
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin: 0 0 0.6em;
+}
+
+/* ---- Interest / focus chips ---------------------------------------------- */
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; }
+.chip {
+  border: 1px solid var(--clay);
+  color: var(--clay);
+  border-radius: 999px;
+  padding: 0.2rem 0.8rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+/* ---- Animated lattice logo (relay: one corner reaches out, then the next) */
+.lattice-logo { overflow: visible; }
+
+.lattice-logo .corner {
+  transform-box: fill-box;
+  transform-origin: 24px 24px;
+  animation: corner-relay 4s ease-in-out infinite;
+}
+.lattice-logo .corner-tl { animation-delay: 0s;   --dx: -4px; --dy: -4px; }
+.lattice-logo .corner-tr { animation-delay: 1s;   --dx:  4px; --dy: -4px; }
+.lattice-logo .corner-br { animation-delay: 2s;   --dx:  4px; --dy:  4px; }
+.lattice-logo .corner-bl { animation-delay: 3s;   --dx: -4px; --dy:  4px; }
+
+/* full cycle = 4s; each corner reaches out and returns within its own 1s quarter */
+@keyframes corner-relay {
+  0%    { transform: translate(0, 0); }
+  12.5% { transform: translate(var(--dx), var(--dy)); }
+  25%   { transform: translate(0, 0); }
+  100%  { transform: translate(0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lattice-logo .corner { animation: none; }
+}
+
+
+/* ---- Experience / education timeline -------------------------------------- */
+.md-typeset .timeline { margin: 1.2em 0 0; }
+.md-typeset .tl-item {
+  position: relative;
+  padding: 0 0 1.4em 1.6rem;
+}
+/* dot */
+.md-typeset .tl-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: var(--clay);
+  box-shadow: 0 0 0 3px var(--md-default-bg-color);
+}
+/* connecting line down to the next dot */
+.md-typeset .tl-item::after {
+  content: "";
+  position: absolute;
+  left: calc(0.325rem - 1px);
+  top: 1.25em;
+  bottom: -0.45em;
+  width: 2px;
+  background: color-mix(in srgb, var(--clay) 45%, transparent);
+}
+.md-typeset .tl-item:last-child::after { display: none; }
+.md-typeset .tl-item:last-child { padding-bottom: 0.2em; }
+.md-typeset .tl-item h4 { margin: 0 0 0.1em; font-size: 0.9rem; line-height: 1.4; }
+.md-typeset .tl-meta {
+  color: var(--md-default-fg-color--light);
+  font-size: 0.72rem;
+  margin: 0 0 0.4em;
+  text-align: left;
+}
+/* tick bullets instead of dots */
+.md-typeset .tl-item ul { list-style: none; margin: 0; padding: 0; }
+.md-typeset .tl-item ul li {
+  list-style: none;
+  position: relative;
+  margin: 0.15em 0 0.15em 0;
+  padding-left: 1.3em;
+}
+.md-typeset .tl-item ul li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--clay);
+  font-weight: 600;
+}
+
+/* ---- Justified body text ---------------------------------------------------- */
+/* Only on screens wide enough for even spacing; phones stay left-aligned.
+   Hyphenation keeps word gaps tight so lines don't look stretched. */
+@media screen and (min-width: 45em) {
+  .md-typeset p,
+  .md-typeset li,
+  .md-typeset dd,
+  .md-typeset blockquote {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphenate-limit-chars: 6 3 3;
+  }
+  /* keep short or structural text left-aligned */
+  .md-typeset .hero__role,
+  .md-typeset .tl-meta,
+  .md-typeset td,
+  .md-typeset th,
+  .md-typeset .md-button,
+  .md-typeset .tabbed-labels,
+  .md-typeset .admonition-title {
+    text-align: left;
+    hyphens: manual;
+  }
+}
+
+/* ---- Research project cards --------------------------------------------- */
+.md-typeset .project {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: 1.4rem;
+  align-items: center;
+  margin: 1.4rem 0;
+  padding: 1.2rem;
+  border: 1px solid color-mix(in srgb, var(--clay) 25%, transparent);
+  border-radius: 0.8rem;
+  background: color-mix(in srgb, var(--clay) 4%, transparent);
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+.md-typeset .project:hover {
+  border-color: color-mix(in srgb, var(--clay) 60%, transparent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+.md-typeset .project__media p { margin: 0; }
+.md-typeset .project__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.6rem;
+  background: color-mix(in srgb, var(--steel) 8%, transparent);
+}
+.md-typeset .project__body h3 { margin: 0.35em 0 0.1em; }
+.md-typeset .project__body > p:last-child { margin-bottom: 0; }
+.md-typeset .project__meta {
+  color: var(--md-default-fg-color--light);
+  font-size: 0.72rem;
+  font-style: italic;
+  margin: 0 0 0.6em;
+  text-align: left;
+}
+.md-typeset .project__status {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--steel);
+  color: var(--steel);
+}
+.md-typeset .project__status--live {
+  border-color: var(--clay);
+  color: var(--clay);
+}
+.md-typeset .project__status--live::before {
+  content: "";
+  display: inline-block;
+  width: 0.45em;
+  height: 0.45em;
+  margin-right: 0.4em;
+  border-radius: 50%;
+  background: var(--clay);
+  vertical-align: 0.1em;
+  animation: project-pulse 2s ease-in-out infinite;
+}
+@keyframes project-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+.md-typeset .project__note {
+  text-align: left !important;
+  hyphens: manual !important;
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--light);
+  border-left: 2px solid var(--clay);
+  padding-left: 0.7em;
+}
+/* stack image above text until the text column is wide enough to justify well */
+@media screen and (max-width: 59.9375em) {
+  .md-typeset .project { grid-template-columns: 1fr; }
+  .md-typeset .project__media { max-width: 26rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .md-typeset .project,
+  .md-typeset .project__status--live::before { transition: none; animation: none; }
+}
+
+.md-typeset .project__link {
+  display: inline-block;
+  margin-right: 1.2em;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+/* ---- Blog articles ---------------------------------------------------------- */
+.md-typeset .lede {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--md-default-fg-color);
+  border-left: 3px solid var(--clay);
+  padding-left: 0.9em;
+}
+.md-typeset figure {
+  margin: 1.6em auto;
+}
+.md-typeset figure img {
+  display: block;
+  width: 100%;
+  max-width: 40rem;
+  margin: 0 auto;
+  border-radius: 0.8rem;
+  background: color-mix(in srgb, var(--steel) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--clay) 20%, transparent);
+}
+.md-typeset figure.post-hero img { max-width: 100%; }
+.md-typeset figcaption {
+  max-width: 36rem;
+  margin: 0.6em auto 0;
+  font-size: 0.7rem;
+  font-style: italic;
+  color: var(--md-default-fg-color--light);
+  text-align: center !important;
+  hyphens: manual !important;
+}
+/* numbered bibliography */
+.md-typeset .footnote { font-size: 0.72rem; }
+.md-typeset .footnote ol { padding-left: 1.4em; }
+.md-typeset .footnote li { margin-bottom: 0.5em; text-align: left !important; hyphens: manual !important; }
+.md-typeset .footnote hr { display: none; }
+/* separate adjacent citation numbers: 1,2 not 12 */
+.md-typeset sup[id^="fnref"] + sup[id^="fnref"]::before { content: ","; }
+
+/* wide process schematics */
+.md-typeset figure.figure-wide img { max-width: 100%; }
+/* small source note under tables */
+.md-typeset .table-note {
+  margin-top: -0.6em;
+  font-size: 0.66rem;
+  color: var(--md-default-fg-color--light);
+  text-align: left !important;
+  hyphens: manual !important;
+}
+/* responsive YouTube embeds */
+.md-typeset .video {
+  position: relative;
+  width: 100%;
+  max-width: 40rem;
+  margin: 1.4em auto 0.4em;
+  aspect-ratio: 16 / 9;
+  border-radius: 0.8rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--clay) 20%, transparent);
+  background: #000;
+}
+.md-typeset .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.md-typeset .video__caption {
+  max-width: 36rem;
+  margin: 0 auto 1.4em;
+  font-size: 0.7rem;
+  font-style: italic;
+  color: var(--md-default-fg-color--light);
+  text-align: center !important;
+  hyphens: manual !important;
+}
+.md-typeset figure.figure-wide a { display: block; cursor: zoom-in; }
+
+/* ---- Equations (plain HTML, no script needed) ----------------------------- */
+.md-typeset .eq {
+  margin: 1.2em 0;
+  text-align: center !important;
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 1.05rem;
+  hyphens: manual !important;
+}
+.md-typeset .eq i { font-style: italic; }
+.md-typeset .frac {
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: middle;
+  text-align: center;
+  margin: 0 0.15em;
+  line-height: 1.25;
+}
+.md-typeset .frac > span:first-child {
+  border-bottom: 1px solid currentColor;
+  padding: 0 0.2em;
+}
+
+/* ---- Header: bigger logo and name; logo sits directly above the Home tab ---- */
+@media screen and (min-width: 76.25em) {
+  .md-header__inner { height: 3.6rem; }
+  .md-header__button.md-logo {
+    margin: 0;
+    padding: 0;
+    /* line the logo's left atom up with the "Home" tab text below */
+    margin-left: 0.08rem;
+  }
+  .md-header__button.md-logo svg,
+  .md-header__button.md-logo img {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+  .md-header__title {
+    margin-left: -0.6rem;
+  }
+  .md-header__title .md-header__topic:first-child .md-ellipsis,
+  .md-header__title .md-header__topic:first-child {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+}
+
+/* ---- Contact links with brand icons --------------------------------------- */
+.md-typeset .contact-links p { margin: 0.5em 0; text-align: left !important; }
+.md-typeset .contact-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+}
+.md-typeset .contact-links .twemoji {
+  width: 1.5em;
+  height: 1.5em;
+  color: var(--clay);
+}
+.md-typeset .contact-links .twemoji svg { width: 1.5em; height: 1.5em; }
+
+/* ---- Timeline: organisation logos and current-role dots ------------------- */
+.md-typeset .tl-item { padding-left: 5rem; }
+.md-typeset .tl-logo {
+  position: absolute;
+  left: 1.5rem;
+  top: 0.05em;
+  width: 2.8rem;
+  height: 2.8rem;
+  object-fit: contain;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  background: #ffffff;
+  border: 1px solid color-mix(in srgb, var(--steel) 35%, transparent);
+}
+.md-typeset .tl-item--current::before {
+  background: #5b8fb9;
+  box-shadow: 0 0 0 3px var(--md-default-bg-color), 0 0 0 6px rgba(91, 143, 185, 0.25);
+}
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .tl-item { padding-left: 4.2rem; }
+  .md-typeset .tl-logo { left: 1.3rem; width: 2.4rem; height: 2.4rem; }
+}

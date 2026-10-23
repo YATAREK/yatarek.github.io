@@ -1,0 +1,1359 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="How neodymium-iron-boron became the strongest permanent magnet, how it is made industrially, and why making it better is a microstructure problem.">
+      
+      
+        <meta name="author" content="Yeasin Tarek">
+      
+      
+        <link rel="canonical" href="https://yatarek.github.io/blog/ndfeb-magnets/">
+      
+      
+        <link rel="prev" href="../high-entropy-superconductors/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>NdFeB magnets: the small giants behind modern motors - Yeasin Tarek</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ndfeb-magnets-the-small-giants-behind-modern-motors" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Yeasin Tarek" class="md-header__button md-logo" aria-label="Yeasin Tarek" data-md-component="logo">
+      <a href="https://yatarek.github.io/" class="md-header__button md-logo" aria-label="Yeasin Tarek" title="Yeasin Tarek">
+  <svg class="lattice-logo" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="50" height="50" aria-hidden="true">
+    <!-- center atom (anchor) -->
+    <circle class="atom-center" cx="24" cy="24" r="4.4" fill="#e8b4a0" stroke="#d97757" stroke-width="1.5"/>
+
+    <!-- each corner = atom + its 2 edges + its diagonal, grouped so they move together -->
+    <g class="corner corner-tl">
+      <path d="M12 12 L36 12 M12 12 L12 36 M12 12 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="12" cy="12" r="3.6" fill="#d97757"/>
+    </g>
+    <g class="corner corner-tr">
+      <path d="M36 12 L36 36 M36 12 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="36" cy="12" r="3.6" fill="#d97757"/>
+    </g>
+    <g class="corner corner-br">
+      <path d="M36 36 L12 36 M36 36 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="36" cy="36" r="3.6" fill="#d97757"/>
+    </g>
+    <g class="corner corner-bl">
+      <path d="M12 36 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="12" cy="36" r="3.6" fill="#d97757"/>
+    </g>
+  </svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Yeasin Tarek
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              NdFeB magnets: the small giants behind modern motors
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../research/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Research
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Blog
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contact/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contact
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Yeasin Tarek" class="md-nav__button md-logo" aria-label="Yeasin Tarek" data-md-component="logo">
+      <a href="https://yatarek.github.io/" class="md-header__button md-logo" aria-label="Yeasin Tarek" title="Yeasin Tarek">
+  <svg class="lattice-logo" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="50" height="50" aria-hidden="true">
+    <!-- center atom (anchor) -->
+    <circle class="atom-center" cx="24" cy="24" r="4.4" fill="#e8b4a0" stroke="#d97757" stroke-width="1.5"/>
+
+    <!-- each corner = atom + its 2 edges + its diagonal, grouped so they move together -->
+    <g class="corner corner-tl">
+      <path d="M12 12 L36 12 M12 12 L12 36 M12 12 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="12" cy="12" r="3.6" fill="#d97757"/>
+    </g>
+    <g class="corner corner-tr">
+      <path d="M36 12 L36 36 M36 12 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="36" cy="12" r="3.6" fill="#d97757"/>
+    </g>
+    <g class="corner corner-br">
+      <path d="M36 36 L12 36 M36 36 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="36" cy="36" r="3.6" fill="#d97757"/>
+    </g>
+    <g class="corner corner-bl">
+      <path d="M12 36 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="12" cy="36" r="3.6" fill="#d97757"/>
+    </g>
+  </svg>
+    </a>
+    Yeasin Tarek
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Blog
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Categories
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Categories
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../category/research/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contact
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#a-discovery-made-twice-in-one-year" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A discovery made twice in one year
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-makes-a-magnet-permanent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What makes a magnet "permanent"?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inside-the-crystal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inside the crystal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-coercivity-gap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The coercivity gap
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#three-ways-to-make-an-ndfeb-magnet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three ways to make an NdFeB magnet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-conventional-sintered-route-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The conventional sintered route, step by step
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-it-made" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See it made
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#who-makes-ndfeb-magnets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Who makes NdFeB magnets?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#processing-shapes-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing shapes performance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#my-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        My work
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../" class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2026-10-24 12:00:00+00:00" class="md-ellipsis">October 24, 2026</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/research/">Research</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              7 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">NdFeB</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">magnetism</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">permanent magnets</span>
+      
+    
+  </nav>
+
+
+
+<h1 id="ndfeb-magnets-the-small-giants-behind-modern-motors">NdFeB magnets: the small giants behind modern motors<a class="headerlink" href="#ndfeb-magnets-the-small-giants-behind-modern-motors" title="Permanent link">&para;</a></h1>
+<figure class="post-hero">
+<p><img alt="Animated NdFeB magnet with field lines and aligning grains" src="../../assets/research/ndfeb.svg" /></p>
+</figure>
+<p class="lede">Every electric car, wind turbine and smartphone vibration motor relies on a
+magnet you have probably never seen. It is made of neodymium, iron and boron. Gram for
+gram, it is the strongest permanent magnet ever commercialised.</p>
+
+<!-- more -->
+
+<h2 id="a-discovery-made-twice-in-one-year">A discovery made twice in one year<a class="headerlink" href="#a-discovery-made-twice-in-one-year" title="Permanent link">&para;</a></h2>
+<p>In 1984, two teams announced the same breakthrough almost simultaneously. At Sumitomo
+Special Metals in Japan, Masato Sagawa and colleagues produced fully dense <strong>sintered</strong>
+Nd–Fe–B magnets from pressed powder.<sup id="fnref:sagawa"><a class="footnote-ref" href="#fn:sagawa">1</a></sup> At General Motors in the United States,
+John Croat's group made magnets from <strong>rapidly quenched</strong> (melt-spun) ribbons.<sup id="fnref:croat"><a class="footnote-ref" href="#fn:croat">2</a></sup></p>
+<p>Both routes led to the same compound: Nd<sub>2</sub>Fe<sub>14</sub>B. Four decades later,
+these two processing families still dominate the industry.<sup id="fnref:gutfleisch"><a class="footnote-ref" href="#fn:gutfleisch">3</a></sup></p>
+<h2 id="what-makes-a-magnet-permanent">What makes a magnet "permanent"?<a class="headerlink" href="#what-makes-a-magnet-permanent" title="Permanent link">&para;</a></h2>
+<p>All ferromagnets can be magnetised. A <em>permanent</em> magnet must also <strong>resist being
+demagnetised</strong>. Two numbers capture this, and both come from the hysteresis loop.</p>
+<figure>
+<p><img alt="Animated hysteresis loops comparing a wide hard magnet with a narrow soft magnet" src="../../assets/blog/ndfeb/hysteresis.svg" /></p>
+<figcaption>A hard magnet (wide loop) keeps its magnetisation; a soft magnet (narrow loop) loses it easily.</figcaption>
+</figure>
+<ul>
+<li><strong>Remanence (M<sub>r</sub>)</strong>: the magnetisation left when the external field is removed.
+  This sets how strong the magnet is.</li>
+<li><strong>Coercivity (H<sub>c</sub>)</strong>: the reverse field needed to cancel the magnetisation.
+  This sets how stubborn the magnet is.</li>
+</ul>
+<p>Together they give the maximum energy product, (BH)<sub>max</sub>. It measures how much
+magnetic energy a magnet can deliver per unit volume. NdFeB has the highest
+(BH)<sub>max</sub> of any commercial magnet, so designers can use less material for the
+same field.<sup id="fnref2:gutfleisch"><a class="footnote-ref" href="#fn:gutfleisch">3</a></sup><sup id="fnref:coey"><a class="footnote-ref" href="#fn:coey">4</a></sup></p>
+<h2 id="inside-the-crystal">Inside the crystal<a class="headerlink" href="#inside-the-crystal" title="Permanent link">&para;</a></h2>
+<p>Nd<sub>2</sub>Fe<sub>14</sub>B has a tetragonal structure with 68 atoms in each unit
+cell.<sup id="fnref:herbst"><a class="footnote-ref" href="#fn:herbst">5</a></sup> Each element has a job.</p>
+<figure>
+<p><img alt="Animated side view of the Nd2Fe14B crystal structure with layers of Nd, Fe and B atoms" src="../../assets/blog/ndfeb/crystal.svg" /></p>
+<figcaption>Simplified side view of Nd<sub>2</sub>Fe<sub>14</sub>B. Iron supplies the magnetisation; neodymium locks it along the c axis.</figcaption>
+</figure>
+<table>
+<thead>
+<tr>
+<th>Property of Nd<sub>2</sub>Fe<sub>14</sub>B</th>
+<th>Typical value</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Saturation polarisation, J<sub>s</sub></td>
+<td>about 1.6 T</td>
+<td>Upper limit for remanence</td>
+</tr>
+<tr>
+<td>Anisotropy field, μ<sub>0</sub>H<sub>A</sub></td>
+<td>around 7 T</td>
+<td>Theoretical ceiling for coercivity</td>
+</tr>
+<tr>
+<td>Curie temperature, T<sub>C</sub></td>
+<td>about 585 K (312 °C)</td>
+<td>Magnetism vanishes above this</td>
+</tr>
+</tbody>
+</table>
+<p class="table-note">Intrinsic values at room temperature.<sup id="fnref2:herbst"><a class="footnote-ref" href="#fn:herbst">5</a></sup></p>
+<ul>
+<li><strong>Iron</strong> carries most of the magnetic moment.</li>
+<li><strong>Neodymium</strong> provides strong magnetocrystalline anisotropy. The magnetisation prefers
+  one direction, the crystal's c axis.</li>
+<li><strong>Boron</strong> stabilises the tetragonal structure.</li>
+</ul>
+<h2 id="the-coercivity-gap">The coercivity gap<a class="headerlink" href="#the-coercivity-gap" title="Permanent link">&para;</a></h2>
+<p>In theory, the anisotropy field sets the upper limit for coercivity. In practice, real
+magnets reach only a fraction of it.<sup id="fnref:hono"><a class="footnote-ref" href="#fn:hono">6</a></sup> Reversal does not happen everywhere at once.
+It starts at weak spots, such as defective grain surfaces or magnetically coupled
+neighbouring grains, and then spreads.</p>
+<p>So coercivity is a <strong>microstructure</strong> property, not just a chemistry property. Three
+levers matter most:<sup id="fnref2:hono"><a class="footnote-ref" href="#fn:hono">6</a></sup><sup id="fnref2:coey"><a class="footnote-ref" href="#fn:coey">4</a></sup></p>
+<ol>
+<li><strong>Grain size.</strong> Smaller grains reduce the number of easy nucleation sites.</li>
+<li><strong>Grain boundaries.</strong> A thin, non-magnetic boundary layer decouples neighbouring grains.</li>
+<li><strong>Heavy rare earths.</strong> Adding dysprosium or terbium raises anisotropy and coercivity.
+   However, these elements are scarce and costly.</li>
+</ol>
+<p>A widely adopted compromise is <strong>grain boundary diffusion</strong>. Dysprosium or terbium is
+applied to the surface of a finished magnet and diffused along the grain boundaries by
+heat treatment. It ends up concentrated in the outer shell of each grain, exactly where
+reversal begins. This raises coercivity while using far less heavy rare earth than adding
+it to the whole alloy.<sup id="fnref:kim"><a class="footnote-ref" href="#fn:kim">7</a></sup></p>
+<p>Temperature adds a further challenge. Coercivity falls quickly as a motor heats up, so
+high-temperature applications such as traction motors need extra margin.<sup id="fnref3:gutfleisch"><a class="footnote-ref" href="#fn:gutfleisch">3</a></sup></p>
+<h2 id="three-ways-to-make-an-ndfeb-magnet">Three ways to make an NdFeB magnet<a class="headerlink" href="#three-ways-to-make-an-ndfeb-magnet" title="Permanent link">&para;</a></h2>
+<p>Industry makes NdFeB magnets by three main routes. They trade performance against
+shape freedom and cost.<sup id="fnref:brown"><a class="footnote-ref" href="#fn:brown">8</a></sup><sup id="fnref2:croat"><a class="footnote-ref" href="#fn:croat">2</a></sup></p>
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>How it is made</th>
+<th>Strengths</th>
+<th>Typical uses</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sintered</strong></td>
+<td>Fine powder aligned in a field, pressed and sintered to full density</td>
+<td>Highest (BH)<sub>max</sub>; fully dense and anisotropic</td>
+<td>EV and wind-turbine motors, industrial drives</td>
+</tr>
+<tr>
+<td><strong>Bonded</strong></td>
+<td>Melt-spun flakes mixed with a polymer, then moulded or pressed</td>
+<td>Complex net shapes, tight tolerances; lower energy product</td>
+<td>Small motors, sensors, electronics</td>
+</tr>
+<tr>
+<td><strong>Hot-deformed</strong></td>
+<td>Melt-spun powder hot-pressed, then die-upset to create alignment</td>
+<td>Very fine grains, so good coercivity with little heavy rare earth</td>
+<td>Rings and arc segments for motors</td>
+</tr>
+</tbody>
+</table>
+<p>Sintered magnets account for most of the market by value, because they deliver the
+strongest fields.<sup id="fnref4:gutfleisch"><a class="footnote-ref" href="#fn:gutfleisch">3</a></sup></p>
+<h2 id="the-conventional-sintered-route-step-by-step">The conventional sintered route, step by step<a class="headerlink" href="#the-conventional-sintered-route-step-by-step" title="Permanent link">&para;</a></h2>
+<figure class="figure-wide">
+<p><a href="../../assets/blog/ndfeb/process.svg" target="_blank" title="Open full size"><img alt="Isometric 3D schematic of the sintered NdFeB production line from strip casting to magnetising" src="../../assets/blog/ndfeb/process.svg" /></a></p>
+<figcaption>The conventional powder-metallurgy route for sintered NdFeB magnets.</figcaption>
+</figure>
+<p>Each step is designed to protect a fine, well-aligned microstructure.<sup id="fnref2:brown"><a class="footnote-ref" href="#fn:brown">8</a></sup><sup id="fnref2:sagawa"><a class="footnote-ref" href="#fn:sagawa">1</a></sup></p>
+<ol>
+<li><strong>Melting and strip casting.</strong> The alloy is melted under vacuum and poured onto a
+   rotating, water-cooled copper wheel. Rapid cooling gives thin flakes with a fine,
+   uniform structure and little free iron.</li>
+<li><strong>Hydrogen decrepitation.</strong> The flakes absorb hydrogen. The grain boundary phase
+   expands and the flakes crack into a coarse, friable powder.</li>
+<li><strong>Jet milling.</strong> Streams of inert gas collide the particles until they are a few
+   micrometres across. Ideally, each particle is a single crystal.</li>
+<li><strong>Alignment and pressing.</strong> The powder is placed in a strong magnetic field. Each
+   particle rotates so its easy axis points the same way. The powder is then pressed,
+   locking the alignment in place.</li>
+<li><strong>Vacuum sintering.</strong> The pressed compact is heated to roughly 1,000 to 1,100 °C. A
+   neodymium-rich liquid forms at the grain boundaries and pulls the part to full density.</li>
+<li><strong>Post-sinter annealing.</strong> A lower-temperature heat treatment optimises the grain
+   boundary phase and raises coercivity.</li>
+<li><strong>Machining.</strong> Sintered blocks are hard and brittle. They are ground, sliced and
+   wire-cut to final shape.</li>
+<li><strong>Coating.</strong> NdFeB corrodes easily, so magnets are plated (often nickel-copper-nickel)
+   or coated with epoxy.</li>
+<li><strong>Magnetising.</strong> Finally, a short, intense pulsed field magnetises the part to
+   saturation.</li>
+</ol>
+<p>Oxygen is the enemy throughout. The fine powder oxidises rapidly, and oxides consume
+neodymium that should be at the grain boundaries. Modern plants therefore handle powder
+under inert gas from milling to sintering.<sup id="fnref3:brown"><a class="footnote-ref" href="#fn:brown">8</a></sup></p>
+<h2 id="see-it-made">See it made<a class="headerlink" href="#see-it-made" title="Permanent link">&para;</a></h2>
+<div class="video">
+<iframe allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" loading="lazy" src="https://www.youtube-nocookie.com/embed/vXqOcZDNSfg" title="Rare Earth Magnets: HOW they're made (MP Materials)"></iframe>
+</div>
+<p class="video__caption">MP Materials, which mines rare earths at Mountain Pass, California, explains how rare earth magnets are made.</p>
+
+<div class="video">
+<iframe allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" loading="lazy" src="https://www.youtube-nocookie.com/embed/5JaXVbXPcvY" title="Manufacturing processes for sintered NdFeB magnet (X-Mag)"></iframe>
+</div>
+<p class="video__caption">Manufacturing processes for sintered NdFeB magnets, from magnet maker X-Mag.</p>
+
+<h2 id="who-makes-ndfeb-magnets">Who makes NdFeB magnets?<a class="headerlink" href="#who-makes-ndfeb-magnets" title="Permanent link">&para;</a></h2>
+<p>Production is highly concentrated. The International Energy Agency estimates that China
+produced about 94% of the world's sintered permanent magnets in 2024.<sup id="fnref:iea"><a class="footnote-ref" href="#fn:iea">9</a></sup> Outside China,
+long-established producers include TDK, Shin-Etsu Chemical and Proterial (formerly
+Hitachi Metals) in Japan, and VAC (Vacuumschmelze) in Germany.<sup id="fnref:magmag"><a class="footnote-ref" href="#fn:magmag">10</a></sup></p>
+<h2 id="processing-shapes-performance">Processing shapes performance<a class="headerlink" href="#processing-shapes-performance" title="Permanent link">&para;</a></h2>
+<p>Because microstructure controls coercivity, the processing route is central. Conventional
+sintering needs hours at high temperature, which lets grains grow. <strong>Spark plasma
+sintering (SPS)</strong> instead passes a pulsed electric current through the powder under
+pressure.<sup id="fnref:munir"><a class="footnote-ref" href="#fn:munir">11</a></sup> It reaches full density in minutes. This limits grain growth, helping
+preserve the fine grains that coercivity depends on.</p>
+<h2 id="my-work">My work<a class="headerlink" href="#my-work" title="Permanent link">&para;</a></h2>
+<p>At The University of Queensland, I am developing an NdFeB based magnet, from design
+through to a working prototype. My focus is how the processing route and composition
+change the final magnetic performance. I use powder metallurgy and spark plasma sintering
+to control the microstructure.</p>
+<div class="admonition tip">
+<p class="admonition-title">The big picture</p>
+<p>Demand for NdFeB is rising with electric transport and renewable energy.<sup id="fnref5:gutfleisch"><a class="footnote-ref" href="#fn:gutfleisch">3</a></sup><sup id="fnref3:coey"><a class="footnote-ref" href="#fn:coey">4</a></sup>
+Magnets that need fewer critical elements, and that keep their coercivity when hot,
+will help that transition scale.</p>
+</div>
+<p><a class="md-button" href="../../research/#ndfeb">Back to my research</a></p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:sagawa">
+<p>Sagawa, M., Fujimura, S., Togawa, N., Yamamoto, H., &amp; Matsuura, Y. (1984). New material for permanent magnets on a base of Nd and Fe. <em>Journal of Applied Physics</em>, 55, 2083–2087. <a href="https://doi.org/10.1063/1.333572">doi:10.1063/1.333572</a>&#160;<a class="footnote-backref" href="#fnref:sagawa" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:sagawa" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:croat">
+<p>Croat, J. J., Herbst, J. F., Lee, R. W., &amp; Pinkerton, F. E. (1984). Pr-Fe and Nd-Fe-based materials: A new class of high-performance permanent magnets. <em>Journal of Applied Physics</em>, 55, 2078–2082. <a href="https://doi.org/10.1063/1.333571">doi:10.1063/1.333571</a>&#160;<a class="footnote-backref" href="#fnref:croat" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:croat" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:gutfleisch">
+<p>Gutfleisch, O., Willard, M. A., Brück, E., Chen, C. H., Sankar, S. G., &amp; Liu, J. P. (2011). Magnetic materials and devices for the 21st century: Stronger, lighter, and more energy efficient. <em>Advanced Materials</em>, 23, 821–842. <a href="https://doi.org/10.1002/adma.201002180">doi:10.1002/adma.201002180</a>&#160;<a class="footnote-backref" href="#fnref:gutfleisch" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:gutfleisch" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:gutfleisch" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:gutfleisch" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref5:gutfleisch" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:coey">
+<p>Coey, J. M. D. (2020). Perspective and prospects for rare earth permanent magnets. <em>Engineering</em>, 6, 119–131. <a href="https://doi.org/10.1016/j.eng.2018.11.034">doi:10.1016/j.eng.2018.11.034</a>&#160;<a class="footnote-backref" href="#fnref:coey" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:coey" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:coey" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:herbst">
+<p>Herbst, J. F. (1991). R<sub>2</sub>Fe<sub>14</sub>B materials: Intrinsic properties and technological aspects. <em>Reviews of Modern Physics</em>, 63, 819–898. <a href="https://doi.org/10.1103/RevModPhys.63.819">doi:10.1103/RevModPhys.63.819</a>&#160;<a class="footnote-backref" href="#fnref:herbst" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:herbst" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:hono">
+<p>Hono, K., &amp; Sepehri-Amin, H. (2012). Strategy for high-coercivity Nd–Fe–B magnets. <em>Scripta Materialia</em>, 67, 530–535. <a href="https://doi.org/10.1016/j.scriptamat.2012.06.038">doi:10.1016/j.scriptamat.2012.06.038</a>&#160;<a class="footnote-backref" href="#fnref:hono" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:hono" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:kim">
+<p>Kim, T.-H., Sasaki, T. T., Ohkubo, T., Takada, Y., Kato, A., Kaneko, Y., &amp; Hono, K. (2019). Microstructure and coercivity of grain boundary diffusion processed Dy-free and Dy-containing Nd-Fe-B sintered magnets. <em>Acta Materialia</em>, 172, 139–149. <a href="https://doi.org/10.1016/j.actamat.2019.04.032">doi:10.1016/j.actamat.2019.04.032</a>&#160;<a class="footnote-backref" href="#fnref:kim" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:brown">
+<p>Brown, D., Ma, B.-M., &amp; Chen, Z. (2002). Developments in the processing and properties of NdFeB-type permanent magnets. <em>Journal of Magnetism and Magnetic Materials</em>, 248, 432–440. <a href="https://doi.org/10.1016/S0304-8853(02)00334-7">doi:10.1016/S0304-8853(02)00334-7</a>&#160;<a class="footnote-backref" href="#fnref:brown" title="Jump back to footnote 8 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:brown" title="Jump back to footnote 8 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:brown" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+<li id="fn:iea">
+<p>Skillings Mining Review (2026, September 14). <em>Rare earths supply chain 2026: Magnet capacity reaches 300,000 tonnes</em>, reporting International Energy Agency estimates. <a href="https://www.skillings.net/?p=101182">skillings.net</a>&#160;<a class="footnote-backref" href="#fnref:iea" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+</li>
+<li id="fn:magmag">
+<p>Magnetics Magazine (2018, December 10). <em>Production of rare earth magnets soars in China, says new market report</em>. <a href="https://magneticsmag.com/production-of-rare-earth-magnets-soars-in-china-says-new-market-report/">magneticsmag.com</a>&#160;<a class="footnote-backref" href="#fnref:magmag" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+</li>
+<li id="fn:munir">
+<p>Munir, Z. A., Anselmi-Tamburini, U., &amp; Ohyanagi, M. (2006). The effect of electric field and pressure on the synthesis and consolidation of materials: A review of the spark plasma sintering method. <em>Journal of Materials Science</em>, 41, 763–777. <a href="https://doi.org/10.1007/s10853-006-6555-2">doi:10.1007/s10853-006-6555-2</a>&#160;<a class="footnote-backref" href="#fnref:munir" title="Jump back to footnote 11 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../high-entropy-superconductors/" class="md-footer__link md-footer__link--prev" aria-label="Previous: High-entropy superconductors: order from chemical chaos">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                High-entropy superconductors: order from chemical chaos
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/YATAREK" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://scholar.google.com/citations?user=B3c5GJQAAAAJ" target="_blank" rel="noopener" title="scholar.google.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M390.9 298.5s0 .1.1.1c9.2 19.4 14.4 41.1 14.4 64C405.3 445.1 338.5 512 256 512s-149.3-66.9-149.3-149.3c0-22.9 5.2-44.6 14.4-64 1.7-3.6 3.6-7.2 5.6-10.7q6.6-11.4 15-21.3c27.4-32.6 68.5-53.3 114.4-53.3 33.6 0 64.6 11.1 89.6 29.9 9.1 6.9 17.4 14.7 24.8 23.5 5.6 6.6 10.6 13.8 15 21.3 2 3.4 3.8 7 5.5 10.5zm26.4-18.8c-30.1-58.4-91-98.4-161.3-98.4s-131.2 40-161.3 98.4L0 202.7 256 0l256 202.7-94.7 77.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://orcid.org/0000-0003-2113-2486" target="_blank" rel="noopener" title="orcid.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M294.7 188.2h-45.9V342h47.5c67.6 0 83.1-51.3 83.1-76.9 0-41.6-26.5-76.9-84.7-76.9M256 8a248 248 0 1 0 0 496 248 248 0 1 0 0-496m-80.8 360.8h-29.8V161.3h29.8zM160.3 98.5a19.6 19.6 0 1 1 0 39.2 19.6 19.6 0 1 1 0-39.2M300 369h-81V161.3h80.6c76.7 0 110.4 54.8 110.4 103.9 0 53.3-41.7 103.9-110 103.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/yatarek/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "navigation.instant", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

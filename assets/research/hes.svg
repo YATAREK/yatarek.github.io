@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300">
+  <title>Ductile High-Entropy Superconductor Lattice and Cooper Pairs</title>
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+    }
+    .lattice-grid {
+      stroke: #7c8a9a;
+      stroke-width: 2.2;
+      stroke-opacity: 0.55;
+      fill: none;
+    }
+    .lattice-diag {
+      stroke: #7c8a9a;
+      stroke-width: 1.8;
+      stroke-opacity: 0.4;
+      stroke-dasharray: 3 3;
+      fill: none;
+    }
+    .atom {
+      stroke: #7c8a9a;
+      stroke-width: 1.5;
+      stroke-opacity: 0.6;
+    }
+    .v1 { animation: v1 2.2s ease-in-out infinite; }
+    .v2 { animation: v2 2.6s ease-in-out infinite; }
+    .v3 { animation: v3 2.4s ease-in-out infinite; }
+    .v4 { animation: v4 2.8s ease-in-out infinite; }
+
+    @keyframes v1 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(1.4px, -1.5px); } 66% { transform: translate(-1.1px, 0.9px); } }
+    @keyframes v2 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(-1.5px, 1.1px); } 66% { transform: translate(1.1px, -1.4px); } }
+    @keyframes v3 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(1px, 1.5px); } 66% { transform: translate(-1.3px, -1.1px); } }
+    @keyframes v4 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(-1.1px, -1.4px); } 66% { transform: translate(1.5px, 0.8px); } }
+
+    .wire-assembly {
+      transform-origin: 354px 238px;
+      animation: flex-wire 6s ease-in-out infinite;
+    }
+    @keyframes flex-wire {
+      0%, 100% { transform: scaleY(0.65) scaleX(1.05); }
+      50% { transform: scaleY(1.3) scaleX(0.95); }
+    }
+    .wire-sheath {
+      fill: none;
+      stroke: #7c8a9a;
+      stroke-width: 9;
+      stroke-linecap: round;
+      opacity: 0.85;
+    }
+    .wire-core {
+      fill: none;
+      stroke: #d97757;
+      stroke-width: 3;
+      stroke-linecap: round;
+      opacity: 0.95;
+    }
+    .cooper-flow {
+      fill: none;
+      stroke: #c9a227;
+      stroke-linecap: round;
+      stroke-width: 6.5;
+      stroke-dasharray: 0.1 13 0.1 58;
+      animation: flow-cooper 4s linear infinite;
+    }
+    .cooper-glow {
+      fill: none;
+      stroke: #d97757;
+      stroke-linecap: round;
+      stroke-width: 13;
+      stroke-opacity: 0.45;
+      stroke-dasharray: 0.1 13 0.1 58;
+      animation: flow-cooper 4s linear infinite;
+    }
+    @keyframes flow-cooper {
+      to { stroke-dashoffset: -142.4; }
+    }
+  </style>
+
+  <!-- Labels -->
+  <text x="116" y="60" text-anchor="middle" fill="#7c8a9a" font-family="system-ui, sans-serif" font-size="17" font-weight="600">BCC lattice</text>
+  <text x="354" y="60" text-anchor="middle" fill="#7c8a9a" font-family="system-ui, sans-serif" font-size="17" font-weight="600">ductile wire</text>
+
+  <!-- Left: BCC Lattice (4x3 unit cells, high entropy: 5 mixed colors) -->
+  <g>
+    <!-- Diagonal body-center links -->
+    <g class="lattice-diag">
+      <!-- Row 1 cells -->
+      <line x1="24" y1="106" x2="47" y2="129" /><line x1="70" y1="106" x2="47" y2="129" /><line x1="24" y1="152" x2="47" y2="129" /><line x1="70" y1="152" x2="47" y2="129" />
+      <line x1="70" y1="106" x2="93" y2="129" /><line x1="116" y1="106" x2="93" y2="129" /><line x1="70" y1="152" x2="93" y2="129" /><line x1="116" y1="152" x2="93" y2="129" />
+      <line x1="116" y1="106" x2="139" y2="129" /><line x1="162" y1="106" x2="139" y2="129" /><line x1="116" y1="152" x2="139" y2="129" /><line x1="162" y1="152" x2="139" y2="129" />
+      <line x1="162" y1="106" x2="185" y2="129" /><line x1="208" y1="106" x2="185" y2="129" /><line x1="162" y1="152" x2="185" y2="129" /><line x1="208" y1="152" x2="185" y2="129" />
+
+      <!-- Row 2 cells -->
+      <line x1="24" y1="152" x2="47" y2="175" /><line x1="70" y1="152" x2="47" y2="175" /><line x1="24" y1="198" x2="47" y2="175" /><line x1="70" y1="198" x2="47" y2="175" />
+      <line x1="70" y1="152" x2="93" y2="175" /><line x1="116" y1="152" x2="93" y2="175" /><line x1="70" y1="198" x2="93" y2="175" /><line x1="116" y1="198" x2="93" y2="175" />
+      <line x1="116" y1="152" x2="139" y2="175" /><line x1="162" y1="152" x2="139" y2="175" /><line x1="116" y1="198" x2="139" y2="175" /><line x1="162" y1="198" x2="139" y2="175" />
+      <line x1="162" y1="152" x2="185" y2="175" /><line x1="208" y1="152" x2="185" y2="175" /><line x1="162" y1="198" x2="185" y2="175" /><line x1="208" y1="198" x2="185" y2="175" />
+
+      <!-- Row 3 cells -->
+      <line x1="24" y1="198" x2="47" y2="221" /><line x1="70" y1="198" x2="47" y2="221" /><line x1="24" y1="244" x2="47" y2="221" /><line x1="70" y1="244" x2="47" y2="221" />
+      <line x1="70" y1="198" x2="93" y2="221" /><line x1="116" y1="198" x2="93" y2="221" /><line x1="70" y1="244" x2="93" y2="221" /><line x1="116" y1="244" x2="93" y2="221" />
+      <line x1="116" y1="198" x2="139" y2="221" /><line x1="162" y1="198" x2="139" y2="221" /><line x1="116" y1="244" x2="139" y2="221" /><line x1="162" y1="244" x2="139" y2="221" />
+      <line x1="162" y1="198" x2="185" y2="221" /><line x1="208" y1="198" x2="185" y2="221" /><line x1="162" y1="244" x2="185" y2="221" /><line x1="208" y1="244" x2="185" y2="221" />
+    </g>
+
+    <!-- Grid lines connecting corners -->
+    <g class="lattice-grid">
+      <line x1="24" y1="106" x2="208" y2="106" />
+      <line x1="24" y1="152" x2="208" y2="152" />
+      <line x1="24" y1="198" x2="208" y2="198" />
+      <line x1="24" y1="244" x2="208" y2="244" />
+      <line x1="24" y1="106" x2="24" y2="244" />
+      <line x1="70" y1="106" x2="70" y2="244" />
+      <line x1="116" y1="106" x2="116" y2="244" />
+      <line x1="162" y1="106" x2="162" y2="244" />
+      <line x1="208" y1="106" x2="208" y2="244" />
+    </g>
+
+    <!-- Corner atoms (r=8.5, 5 high-entropy colors) -->
+    <circle cx="24" cy="106" r="8.5" fill="#d97757" class="atom v1" />
+    <circle cx="70" cy="106" r="8.5" fill="#8fae7e" class="atom v2" />
+    <circle cx="116" cy="106" r="8.5" fill="#5b8fb9" class="atom v3" />
+    <circle cx="162" cy="106" r="8.5" fill="#7c8a9a" class="atom v4" />
+    <circle cx="208" cy="106" r="8.5" fill="#c9a227" class="atom v1" />
+
+    <circle cx="24" cy="152" r="8.5" fill="#c9a227" class="atom v2" />
+    <circle cx="70" cy="152" r="8.5" fill="#5b8fb9" class="atom v3" />
+    <circle cx="116" cy="152" r="8.5" fill="#7c8a9a" class="atom v4" />
+    <circle cx="162" cy="152" r="8.5" fill="#d97757" class="atom v1" />
+    <circle cx="208" cy="152" r="8.5" fill="#8fae7e" class="atom v2" />
+
+    <circle cx="24" cy="198" r="8.5" fill="#5b8fb9" class="atom v3" />
+    <circle cx="70" cy="198" r="8.5" fill="#7c8a9a" class="atom v4" />
+    <circle cx="116" cy="198" r="8.5" fill="#8fae7e" class="atom v1" />
+    <circle cx="162" cy="198" r="8.5" fill="#c9a227" class="atom v2" />
+    <circle cx="208" cy="198" r="8.5" fill="#d97757" class="atom v3" />
+
+    <circle cx="24" cy="244" r="8.5" fill="#7c8a9a" class="atom v4" />
+    <circle cx="70" cy="244" r="8.5" fill="#d97757" class="atom v1" />
+    <circle cx="116" cy="244" r="8.5" fill="#c9a227" class="atom v2" />
+    <circle cx="162" cy="244" r="8.5" fill="#8fae7e" class="atom v3" />
+    <circle cx="208" cy="244" r="8.5" fill="#5b8fb9" class="atom v4" />
+
+    <!-- Body center atoms (r=7.5) -->
+    <circle cx="47" cy="129" r="7.5" fill="#7c8a9a" class="atom v2" />
+    <circle cx="93" cy="129" r="7.5" fill="#c9a227" class="atom v3" />
+    <circle cx="139" cy="129" r="7.5" fill="#8fae7e" class="atom v4" />
+    <circle cx="185" cy="129" r="7.5" fill="#5b8fb9" class="atom v1" />
+
+    <circle cx="47" cy="175" r="7.5" fill="#8fae7e" class="atom v4" />
+    <circle cx="93" cy="175" r="7.5" fill="#d97757" class="atom v1" />
+    <circle cx="139" cy="175" r="7.5" fill="#5b8fb9" class="atom v2" />
+    <circle cx="185" cy="175" r="7.5" fill="#7c8a9a" class="atom v3" />
+
+    <circle cx="47" cy="221" r="7.5" fill="#d97757" class="atom v1" />
+    <circle cx="93" cy="221" r="7.5" fill="#8fae7e" class="atom v2" />
+    <circle cx="139" cy="221" r="7.5" fill="#7c8a9a" class="atom v3" />
+    <circle cx="185" cy="221" r="7.5" fill="#c9a227" class="atom v4" />
+  </g>
+
+  <!-- Right: Ductile wire with flowing Cooper pairs -->
+  <!-- Wire mechanical supports -->
+  <line x1="240" y1="244" x2="468" y2="244" stroke="#7c8a9a" stroke-width="2" stroke-opacity="0.5" />
+  <polygon points="244,244 252,234 260,244" fill="#7c8a9a" stroke="#7c8a9a" stroke-width="2" />
+  <polygon points="448,244 456,234 464,244" fill="#7c8a9a" stroke="#7c8a9a" stroke-width="2" />
+
+  <!-- Bending wire group -->
+  <g class="wire-assembly">
+    <!-- Steel outer wire (9px) -->
+    <path class="wire-sheath" d="M 252 238 Q 354 85 456 238" />
+    <!-- Clay core line (3px) -->
+    <path class="wire-core" d="M 252 238 Q 354 85 456 238" />
+    <!-- Cooper pairs (paired dots) glow layer -->
+    <path class="cooper-glow" d="M 252 238 Q 354 85 456 238" />
+    <!-- Cooper pairs core glowing dots -->
+    <path class="cooper-flow" d="M 252 238 Q 354 85 456 238" />
+  </g>
+</svg>

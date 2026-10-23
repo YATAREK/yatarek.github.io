@@ -1,0 +1,199 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+  <title>MgB2 Hexagonal Crystal Structure and Boron Honeycomb Phonons</title>
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+    }
+    .c-axis-guide {
+      stroke: #7c8a9a;
+      stroke-width: 1.8;
+      stroke-dasharray: 4 4;
+      stroke-opacity: 0.45;
+    }
+    .mg-plane {
+      stroke: #7c8a9a;
+      stroke-width: 1.8;
+      stroke-dasharray: 5 5;
+      stroke-opacity: 0.35;
+      fill: none;
+    }
+    .b-bond {
+      stroke: #c9a227;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-opacity: 0.85;
+      fill: none;
+    }
+    .atom-mg {
+      fill: #7c8a9a;
+      stroke: #637080;
+      stroke-width: 2.5;
+      fill-opacity: 0.9;
+    }
+    .atom-b {
+      fill: #c9a227;
+      stroke: #a3821a;
+      stroke-width: 2;
+    }
+    .v-b1 {
+      animation: phonon-1 2.5s ease-in-out infinite;
+    }
+    .v-b2 {
+      animation: phonon-2 2.5s ease-in-out infinite;
+    }
+    @keyframes phonon-1 {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(1.8px, -0.6px); }
+    }
+    @keyframes phonon-2 {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-1.8px, 0.6px); }
+    }
+    .label {
+      font-family: system-ui, sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      fill: #7c8a9a;
+    }
+    .label-gold {
+      font-family: system-ui, sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      fill: #c9a227;
+    }
+    .label-gold-sub {
+      font-family: system-ui, sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      fill: #c9a227;
+    }
+  </style>
+
+  <!-- Vertical c-axis prism alignment lines through hexagon centers -->
+  <g class="c-axis-guide">
+    <line x1="220" y1="45" x2="220" y2="305" />
+    <line x1="292" y1="45" x2="292" y2="305" />
+    <line x1="364" y1="45" x2="364" y2="305" />
+    <line x1="436" y1="45" x2="436" y2="305" />
+    <line x1="148" y1="45" x2="148" y2="305" />
+    <line x1="508" y1="45" x2="508" y2="305" />
+  </g>
+
+  <!-- Layer 1: Mg Plane (Top, y=55) -->
+  <line x1="148" y1="55" x2="508" y2="55" class="mg-plane" />
+  <g>
+    <circle cx="148" cy="55" r="10.5" class="atom-mg" />
+    <circle cx="220" cy="55" r="10.5" class="atom-mg" />
+    <circle cx="292" cy="55" r="10.5" class="atom-mg" />
+    <circle cx="364" cy="55" r="10.5" class="atom-mg" />
+    <circle cx="436" cy="55" r="10.5" class="atom-mg" />
+    <circle cx="508" cy="55" r="10.5" class="atom-mg" />
+  </g>
+
+  <!-- Layer 2: Boron Honeycomb Layer (y=115) -->
+  <!-- Honeycomb Bonds -->
+  <path class="b-bond" d="
+    M 184 115 L 202 99 L 238 99 L 256 115 L 238 131 L 202 131 Z
+    M 256 115 L 274 99 L 310 99 L 328 115 L 310 131 L 274 131 Z
+    M 328 115 L 346 99 L 382 99 L 400 115 L 382 131 L 346 131 Z
+    M 400 115 L 418 99 L 454 99 L 472 115 L 454 131 L 418 131 Z
+  " />
+  <!-- Boron Atoms Layer 2 (with gentle in-plane phonon vibration) -->
+  <g>
+    <circle cx="184" cy="115" r="5.5" class="atom-b v-b1" />
+    <circle cx="202" cy="99" r="5.5" class="atom-b v-b2" />
+    <circle cx="238" cy="99" r="5.5" class="atom-b v-b1" />
+    <circle cx="256" cy="115" r="5.5" class="atom-b v-b2" />
+    <circle cx="238" cy="131" r="5.5" class="atom-b v-b1" />
+    <circle cx="202" cy="131" r="5.5" class="atom-b v-b2" />
+
+    <circle cx="274" cy="99" r="5.5" class="atom-b v-b1" />
+    <circle cx="310" cy="99" r="5.5" class="atom-b v-b2" />
+    <circle cx="328" cy="115" r="5.5" class="atom-b v-b1" />
+    <circle cx="310" cy="131" r="5.5" class="atom-b v-b2" />
+    <circle cx="274" cy="131" r="5.5" class="atom-b v-b1" />
+
+    <circle cx="346" cy="99" r="5.5" class="atom-b v-b2" />
+    <circle cx="382" cy="99" r="5.5" class="atom-b v-b1" />
+    <circle cx="400" cy="115" r="5.5" class="atom-b v-b2" />
+    <circle cx="382" cy="131" r="5.5" class="atom-b v-b1" />
+    <circle cx="346" cy="131" r="5.5" class="atom-b v-b2" />
+
+    <circle cx="418" cy="99" r="5.5" class="atom-b v-b1" />
+    <circle cx="454" cy="99" r="5.5" class="atom-b v-b2" />
+    <circle cx="472" cy="115" r="5.5" class="atom-b v-b1" />
+    <circle cx="454" cy="131" r="5.5" class="atom-b v-b2" />
+    <circle cx="418" cy="131" r="5.5" class="atom-b v-b1" />
+  </g>
+
+  <!-- Layer 3: Mg Plane (Middle, y=175) -->
+  <line x1="148" y1="175" x2="508" y2="175" class="mg-plane" />
+  <g>
+    <circle cx="148" cy="175" r="10.5" class="atom-mg" />
+    <circle cx="220" cy="175" r="10.5" class="atom-mg" />
+    <circle cx="292" cy="175" r="10.5" class="atom-mg" />
+    <circle cx="364" cy="175" r="10.5" class="atom-mg" />
+    <circle cx="436" cy="175" r="10.5" class="atom-mg" />
+    <circle cx="508" cy="175" r="10.5" class="atom-mg" />
+  </g>
+
+  <!-- Layer 4: Boron Honeycomb Layer (y=235) -->
+  <!-- Honeycomb Bonds -->
+  <path class="b-bond" d="
+    M 184 235 L 202 219 L 238 219 L 256 235 L 238 251 L 202 251 Z
+    M 256 235 L 274 219 L 310 219 L 328 235 L 310 251 L 274 251 Z
+    M 328 235 L 346 219 L 382 219 L 400 235 L 382 251 L 346 251 Z
+    M 400 235 L 418 219 L 454 219 L 472 235 L 454 251 L 418 251 Z
+  " />
+  <!-- Boron Atoms Layer 4 (with gentle in-plane phonon vibration) -->
+  <g>
+    <circle cx="184" cy="235" r="5.5" class="atom-b v-b2" />
+    <circle cx="202" cy="219" r="5.5" class="atom-b v-b1" />
+    <circle cx="238" cy="219" r="5.5" class="atom-b v-b2" />
+    <circle cx="256" cy="235" r="5.5" class="atom-b v-b1" />
+    <circle cx="238" cy="251" r="5.5" class="atom-b v-b2" />
+    <circle cx="202" cy="251" r="5.5" class="atom-b v-b1" />
+
+    <circle cx="274" cy="219" r="5.5" class="atom-b v-b2" />
+    <circle cx="310" cy="219" r="5.5" class="atom-b v-b1" />
+    <circle cx="328" cy="235" r="5.5" class="atom-b v-b2" />
+    <circle cx="310" cy="251" r="5.5" class="atom-b v-b1" />
+    <circle cx="274" cy="251" r="5.5" class="atom-b v-b2" />
+
+    <circle cx="346" cy="219" r="5.5" class="atom-b v-b1" />
+    <circle cx="382" cy="219" r="5.5" class="atom-b v-b2" />
+    <circle cx="400" cy="235" r="5.5" class="atom-b v-b1" />
+    <circle cx="382" cy="251" r="5.5" class="atom-b v-b2" />
+    <circle cx="346" cy="251" r="5.5" class="atom-b v-b1" />
+
+    <circle cx="418" cy="219" r="5.5" class="atom-b v-b2" />
+    <circle cx="454" cy="219" r="5.5" class="atom-b v-b1" />
+    <circle cx="472" cy="235" r="5.5" class="atom-b v-b2" />
+    <circle cx="454" cy="251" r="5.5" class="atom-b v-b1" />
+    <circle cx="418" cy="251" r="5.5" class="atom-b v-b2" />
+  </g>
+
+  <!-- Layer 5: Mg Plane (Bottom, y=295) -->
+  <line x1="148" y1="295" x2="508" y2="295" class="mg-plane" />
+  <g>
+    <circle cx="148" cy="295" r="10.5" class="atom-mg" />
+    <circle cx="220" cy="295" r="10.5" class="atom-mg" />
+    <circle cx="292" cy="295" r="10.5" class="atom-mg" />
+    <circle cx="364" cy="295" r="10.5" class="atom-mg" />
+    <circle cx="436" cy="295" r="10.5" class="atom-mg" />
+    <circle cx="508" cy="295" r="10.5" class="atom-mg" />
+  </g>
+
+  <!-- Labels -->
+  <!-- 1. Mg label -->
+  <text x="535" y="60" class="label">Mg</text>
+
+  <!-- 2. B label -->
+  <text x="535" y="120" class="label-gold">B</text>
+
+  <!-- 3. Boron honeycomb layer label with leader line on right side -->
+  <text x="445" y="152" class="label-gold-sub">boron honeycomb layer</text>
+  <line x1="480" y1="138" x2="474" y2="124" stroke="#c9a227" stroke-width="2" stroke-linecap="round" />
+  <polygon points="472,118 471,126 478,124" fill="#c9a227" />
+</svg>
