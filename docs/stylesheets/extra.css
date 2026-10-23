@@ -340,3 +340,5 @@
 .md-typeset .footnote ol { padding-left: 1.4em; }
 .md-typeset .footnote li { margin-bottom: 0.5em; text-align: left !important; hyphens: manual !important; }
 .md-typeset .footnote hr { display: none; }
+/* separate adjacent citation numbers: 1,2 not 12 */
+.md-typeset sup[id^="fnref"] + sup[id^="fnref"]::before { content: ","; }
