@@ -3,408 +3,2041 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>HES Inverse Design: Find Superconductors by Target Tc</title>
+<title>High-entropy superconductor inverse design · Materials Informatics</title>
 
+<!-- Fonts & Plotly CDN -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 
 <style>
-  :root{
-    --bg:#070B15; --panel:#0E1626; --panel-2:#15213A;
-    --line:rgba(124,156,214,.14); --line-strong:rgba(124,156,214,.28);
-    --ink:#E8EEF9; --muted:#8595B4; --faint:#5D6C8C;
-    --sc:#37E5D4; --sc-dim:#1C7E77; --warm:#F4A64B; --danger:#FF6B6B;
-    --radius:14px;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0}
-  body{
-    background:
-      radial-gradient(1200px 600px at 78% -8%, rgba(55,229,212,.10), transparent 60%),
-      radial-gradient(800px 400px at 20% 100%, rgba(244,166,75,.06), transparent 50%),
-      var(--bg);
-    color:var(--ink);
-    font-family:"Inter",system-ui,sans-serif;
-    line-height:1.5; -webkit-font-smoothing:antialiased;
-    padding:clamp(18px,4vw,48px);
-  }
-  .wrap{max-width:1200px;margin:0 auto}
+  /* -------------------------------------------------------------
+     Apple Design Tokens (Light and Dark with Clay Accent)
+  ------------------------------------------------------------- */
+  :root {
+    --bg: #f5f5f7;
+    --card: #ffffff;
+    --card-subtle: #fbfbfd;
+    --card-hover: #ffffff;
+    --text: #1d1d1f;
+    --text-secondary: #6e6e73;
+    --text-tertiary: #86868b;
+    --border: rgba(0, 0, 0, 0.08);
+    --border-subtle: rgba(0, 0, 0, 0.04);
+    --border-focus: rgba(217, 119, 87, 0.45);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.03);
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.08);
 
-  header{margin-bottom:32px}
-  .eyebrow{
-    font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.22em;
-    text-transform:uppercase;color:var(--sc);margin:0 0 10px;
-  }
-  h1{
-    font-family:"Space Grotesk",sans-serif;font-weight:700;
-    font-size:clamp(26px,5vw,40px);line-height:1.1;margin:0 0 12px;
-    letter-spacing:-.02em;
-  }
-  h1 .accent{color:var(--sc)}
-  header p{color:var(--muted);max-width:64ch;margin:0;font-size:15px}
+    --accent: #d97757;
+    --accent-hover: #c86849;
+    --accent-subtle: rgba(217, 119, 87, 0.10);
+    --accent-border: rgba(217, 119, 87, 0.25);
 
-  .grid{display:grid;grid-template-columns:340px 1fr;gap:20px}
-  @media(max-width:860px){.grid{grid-template-columns:1fr}}
-  .panel{
-    background:linear-gradient(180deg,var(--panel),#0B1220);
-    border:1px solid var(--line);border-radius:var(--radius);
-    padding:22px;
-  }
-  .panel h2{
-    font-family:"Space Grotesk",sans-serif;font-size:13px;font-weight:600;
-    letter-spacing:.14em;text-transform:uppercase;color:var(--faint);
-    margin:0 0 16px;
+    --sc-blue: #0a84ff;
+    --sc-blue-subtle: rgba(10, 132, 255, 0.10);
+    --green: #16a34a;
+    --green-bg: rgba(22, 163, 74, 0.10);
+    --green-border: rgba(22, 163, 74, 0.25);
+    --amber: #d97706;
+    --amber-bg: rgba(217, 119, 6, 0.09);
+    --amber-border: rgba(217, 119, 6, 0.28);
+    --danger: #dc2626;
+    --danger-bg: rgba(220, 38, 38, 0.09);
+    --danger-border: rgba(220, 38, 38, 0.28);
+
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-card: 22px;
+
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --trans-fast: 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    --trans-smooth: 350ms cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
-  label.field{display:block;margin-bottom:14px}
-  .field span{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}
-  .inrow{display:flex;gap:8px}
-  input[type=number],select{
-    width:100%;background:var(--panel-2);border:1px solid var(--line-strong);
-    color:var(--ink);border-radius:10px;padding:10px 12px;font-size:14px;
-    font-family:"IBM Plex Mono",monospace;
-  }
-  input[type=number]:focus,select:focus{
-    outline:none;border-color:var(--sc);box-shadow:0 0 0 3px rgba(55,229,212,.16);
-  }
-  select{cursor:pointer;font-family:"Inter",sans-serif}
-  button{
-    font-family:"Inter",sans-serif;font-weight:600;cursor:pointer;
-    border-radius:10px;border:1px solid transparent;transition:.15s;
-  }
-  .btn-primary{
-    background:var(--sc);color:#04201D;width:100%;padding:13px;font-size:15px;
-    margin-top:6px;
-  }
-  .btn-primary:hover{filter:brightness(1.08)}
-  .btn-primary:disabled{opacity:.5;cursor:not-allowed;filter:none}
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --card: #1c1c1e;
+      --card-subtle: #242426;
+      --card-hover: #222224;
+      --text: #f5f5f7;
+      --text-secondary: #86868b;
+      --text-tertiary: #636366;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-subtle: rgba(255, 255, 255, 0.04);
+      --border-focus: rgba(217, 119, 87, 0.55);
+      --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.6);
 
-  .progress-bar{
-    width:100%;height:4px;border-radius:2px;background:var(--panel-2);
-    overflow:hidden;margin-top:10px;display:none;
-  }
-  .progress-bar-fill{height:100%;background:var(--sc);transition:width .3s}
-  .status{color:var(--muted);font-size:13px;margin-top:10px;min-height:18px}
+      --accent: #e08466;
+      --accent-hover: #f09578;
+      --accent-subtle: rgba(224, 132, 102, 0.16);
+      --accent-border: rgba(224, 132, 102, 0.32);
 
-  /* Stats */
-  .inv-stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;display:none}
-  .inv-stat{
-    background:var(--panel-2);border:1px solid var(--line);border-radius:10px;
-    padding:10px 16px;text-align:center;flex:1;min-width:90px;
-  }
-  .inv-stat b{display:block;font-family:"IBM Plex Mono",monospace;font-size:20px;color:var(--sc)}
-  .inv-stat small{color:var(--faint);font-size:10px;text-transform:uppercase;letter-spacing:.06em}
-
-  /* Table */
-  .table-wrap{overflow-x:auto;margin-top:12px}
-  .inv-table{
-    width:100%;border-collapse:collapse;font-size:13px;
-    font-family:"IBM Plex Mono",monospace;
-  }
-  .inv-table th{
-    text-align:left;padding:10px 10px;font-size:10px;letter-spacing:.08em;
-    text-transform:uppercase;color:var(--faint);border-bottom:1px solid var(--line-strong);
-    font-family:"Inter",sans-serif;white-space:nowrap;
-  }
-  .inv-table td{padding:10px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
-  .inv-table tr:hover td{background:rgba(55,229,212,.04)}
-  .inv-table .rank{color:var(--sc);font-weight:600;font-size:16px}
-  .inv-table .formula{color:var(--ink);font-weight:600;font-size:14px}
-  .check-pass{color:var(--sc)}
-  .check-fail{color:var(--danger)}
-  .novel-yes{color:var(--sc)}
-  .novel-no{color:var(--warm)}
-
-  .expand-row{display:none}
-  .expand-row.open{display:table-row}
-  .expand-cell{padding:16px 12px;background:var(--panel-2)}
-  .expand-detail{display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:12px}
-  @media(max-width:600px){.expand-detail{grid-template-columns:1fr}}
-  .expand-detail dt{color:var(--muted);margin:0}
-  .expand-detail dd{color:var(--ink);margin:0 0 6px}
-
-  .placeholder{color:var(--muted);text-align:center;padding:50px 20px;font-size:14px}
-
-  .note{color:var(--faint);font-size:12px;margin-top:24px;line-height:1.6}
-  a{color:var(--sc)}
-  .banner{
-    display:none;background:rgba(255,107,107,.1);border:1px solid var(--danger);
-    color:#ffd7d7;border-radius:10px;padding:12px 14px;margin-bottom:18px;font-size:14px;
+      --sc-blue: #0a84ff;
+      --sc-blue-subtle: rgba(10, 132, 255, 0.16);
+      --green: #4ade80;
+      --green-bg: rgba(74, 222, 128, 0.14);
+      --green-border: rgba(74, 222, 128, 0.30);
+      --amber: #f59e0b;
+      --amber-bg: rgba(245, 158, 11, 0.12);
+      --amber-border: rgba(245, 158, 11, 0.32);
+      --danger: #ef4444;
+      --danger-bg: rgba(239, 68, 68, 0.14);
+      --danger-border: rgba(239, 68, 68, 0.32);
+    }
   }
 
-  .workflow{
-    margin-top:24px;padding:18px;background:var(--panel-2);
-    border:1px solid var(--line);border-radius:var(--radius);font-size:12px;
-    color:var(--muted);line-height:1.8;
+  /* Reset & Typography */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html {
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
-  .workflow b{color:var(--ink)}
-  .workflow .arrow{color:var(--sc);margin:0 6px}
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    padding-bottom: 72px;
+  }
+  a { color: var(--accent); text-decoration: none; transition: opacity var(--trans-fast); }
+  a:hover { opacity: 0.8; }
 
-  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
-  /* justified paragraphs, hyphenated so spacing stays even */
-  @media (min-width:720px){
-    p{text-align:justify;text-justify:inter-word;hyphens:auto;-webkit-hyphens:auto}
-    .eyebrow{text-align:left;hyphens:manual}
+  /* Navigation Bar */
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(245, 245, 247, 0.82);
+    border-bottom: 1px solid var(--border);
+    transition: background-color var(--trans-smooth);
   }
+  @media (prefers-color-scheme: dark) {
+    .top-nav { background: rgba(0, 0, 0, 0.78); }
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .nav-links { display: flex; align-items: center; gap: 12px; }
+  .nav-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: all var(--trans-fast);
+  }
+  .nav-link-btn:hover { color: var(--text); background: var(--border-subtle); }
+  .server-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+  .server-dot { width: 7px; height: 7px; border-radius: 50%; background: #10b981; }
+  .server-dot.waking { background: var(--amber); animation: pulse 1.4s infinite ease-in-out; }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.25); }
+  }
+
+  /* Wrap & Hero */
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  header.hero { padding: 44px 0 28px; }
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  h1.hero-title {
+    font-size: clamp(32px, 5.2vw, 54px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 19px);
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    max-width: 780px;
+  }
+
+  /* Waking Server Banner */
+  .waking-banner {
+    display: none;
+    align-items: center;
+    gap: 14px;
+    background: var(--amber-bg);
+    border: 1px solid var(--amber-border);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .waking-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--amber);
+    border-top-color: transparent;
+    animation: spin 0.9s linear infinite;
+    flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Two Column Layout */
+  .grid-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    gap: 24px;
+    align-items: start;
+  }
+  @media (max-width: 960px) {
+    .grid-container { grid-template-columns: 1fr; }
+  }
+
+  /* Card Base */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: 26px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--trans-smooth), border-color var(--trans-smooth);
+    margin-bottom: 24px;
+  }
+  .card:hover { box-shadow: var(--shadow-md); }
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .card-title {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--text);
+  }
+  .card-badge {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: var(--border-subtle);
+    color: var(--text-secondary);
+  }
+
+  /* Form Elements */
+  .field-group { margin-bottom: 18px; }
+  .field-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+  .field-hint { font-size: 11.5px; color: var(--text-tertiary); }
+
+  .input-row { display: flex; gap: 8px; }
+  input[type="number"], select {
+    width: 100%;
+    background: var(--card-subtle);
+    border: 1.5px solid var(--border);
+    color: var(--text);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    font-size: 16px;
+    font-family: var(--font-mono);
+    outline: none;
+    transition: border-color var(--trans-fast), box-shadow var(--trans-fast);
+  }
+  input[type="number"]:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--border-focus);
+  }
+  select { cursor: pointer; font-family: var(--font-sans); }
+
+  /* Segmented Controls */
+  .seg-control {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    background: var(--card-subtle);
+    padding: 6px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+  }
+  @media (max-width: 520px) { .seg-control { grid-template-columns: 1fr; } }
+  .seg-btn {
+    background: transparent;
+    border: none;
+    padding: 10px 8px;
+    border-radius: 9px;
+    cursor: pointer;
+    text-align: center;
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+    font-size: 12.5px;
+    font-weight: 500;
+    transition: all var(--trans-fast);
+  }
+  .seg-btn:hover { color: var(--text); background: var(--border-subtle); }
+  .seg-btn.active {
+    background: var(--card);
+    color: var(--text);
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  }
+  .seg-btn-sub { display: block; font-size: 10.5px; color: var(--text-tertiary); margin-top: 2px; }
+  .seg-btn.active .seg-btn-sub { color: var(--accent); }
+
+  /* Chips & Presets */
+  .chips-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; }
+  .chip-tag {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: var(--border-subtle);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--trans-fast);
+  }
+  .chip-tag:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-subtle); }
+  .chip-tag.selected {
+    background: var(--accent);
+    color: #ffffff;
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+  .chip-preset {
+    font-family: var(--font-sans);
+    font-size: 11.5px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    background: var(--card-subtle);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--trans-fast);
+  }
+  .chip-preset:hover { color: var(--text); border-color: var(--text-tertiary); }
+  .chip-preset.active { background: var(--accent-subtle); border-color: var(--accent-border); color: var(--accent); font-weight: 600; }
+
+  /* Latency & Combination Estimator */
+  .estimator-box {
+    background: var(--card-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  .estimator-badge {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--green-bg);
+    color: var(--green);
+    border: 1px solid var(--green-border);
+  }
+  .estimator-badge.warn {
+    background: var(--amber-bg);
+    color: var(--amber);
+    border-color: var(--amber-border);
+  }
+
+  /* Action Button */
+  .btn-primary {
+    width: 100%;
+    background: var(--accent);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: var(--font-sans);
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(217, 119, 87, 0.28);
+    transition: all var(--trans-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .btn-primary:hover { background: var(--accent-hover); box-shadow: 0 6px 18px rgba(217, 119, 87, 0.36); }
+  .btn-primary:active { transform: scale(0.985); }
+  .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  /* Progress Bar */
+  .progress-bar-wrap {
+    width: 100%;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--border-subtle);
+    overflow: hidden;
+    margin-top: 12px;
+    display: none;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    width: 0%;
+    transition: width var(--trans-smooth);
+  }
+  .search-status-text {
+    font-size: 12.5px;
+    color: var(--text-tertiary);
+    margin-top: 8px;
+    min-height: 18px;
+    text-align: center;
+  }
+
+  /* Advanced Filters Accordion */
+  details.advanced-drawer {
+    background: var(--card-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    margin-top: 14px;
+    font-size: 13px;
+  }
+  details.advanced-drawer summary {
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+  }
+  details.advanced-drawer summary:hover { color: var(--text); }
+  .advanced-content { margin-top: 14px; display: grid; gap: 14px; }
+
+  /* Summary Stats Row */
+  .stats-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .stat-pill {
+    background: var(--card-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+    text-align: center;
+  }
+  .stat-pill b { display: block; font-family: var(--font-mono); font-size: 18px; color: var(--text); }
+  .stat-pill small {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-tertiary);
+    margin-top: 2px;
+  }
+
+  /* Candidate Spotlight Hero */
+  .candidate-spotlight {
+    background: var(--card-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: 22px;
+    margin-bottom: 22px;
+  }
+  .spotlight-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .spotlight-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-tertiary);
+  }
+  .spotlight-formula {
+    font-family: var(--font-mono);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .tc-display-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 8px 0;
+  }
+  .tc-number-box {
+    display: inline-flex;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: clamp(44px, 7vw, 62px);
+    line-height: 1;
+    color: var(--text);
+  }
+  .tc-unit { font-size: 0.45em; font-weight: 500; color: var(--accent); margin-left: 6px; }
+  .tc-uncertainty { font-family: var(--font-mono); font-size: clamp(16px, 3vw, 22px); color: var(--text-secondary); }
+  .tc-assumption {
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--text-secondary);
+    background: var(--card);
+    border-left: 3px solid var(--accent);
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin: 12px 0 16px;
+  }
+
+  /* Spread Range Strip */
+  .spread-strip-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    margin-bottom: 16px;
+  }
+  .spread-strip-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+  .spread-strip-track {
+    position: relative;
+    height: 8px;
+    background: var(--border-subtle);
+    border-radius: 999px;
+    margin: 14px 6px 10px;
+  }
+  .spread-strip-range {
+    position: absolute;
+    height: 100%;
+    background: rgba(217, 119, 87, 0.25);
+    border-radius: 999px;
+  }
+  .spread-dot {
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--text-secondary);
+    border: 2px solid var(--card);
+    transform: translate(-50%, -50%);
+  }
+
+  /* Candidate List Cards */
+  .candidates-list { display: flex; flex-direction: column; gap: 12px; }
+  .candidate-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    cursor: pointer;
+    transition: all var(--trans-fast);
+  }
+  .candidate-card:hover {
+    border-color: var(--accent-border);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  }
+  .candidate-card.active {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent-border);
+  }
+  .cand-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .cand-rank {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .cand-formula {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .cand-tc-pill {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--card-subtle);
+    border: 1px solid var(--border);
+    padding: 3px 9px;
+    border-radius: 6px;
+  }
+  .cand-badges-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .cand-badge {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--border-subtle);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+  .cand-badge.pass { background: var(--green-bg); color: var(--green); border-color: var(--green-border); }
+  .cand-badge.novel { background: var(--sc-blue-subtle); color: var(--sc-blue); border-color: rgba(10, 132, 255, 0.25); }
+
+  /* Candidate Drawer Details */
+  .cand-details {
+    display: none;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .cand-details.open { display: block; }
+  .details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  @media (max-width: 600px) { .details-grid { grid-template-columns: 1fr; } }
+  .details-dl dt { color: var(--text-tertiary); margin-bottom: 2px; }
+  .details-dl dd { color: var(--text); font-weight: 500; font-family: var(--font-mono); margin-bottom: 8px; }
+  .model-preds-list { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 4px; }
+  .model-pred-item {
+    background: var(--card-subtle);
+    border: 1px solid var(--border);
+    padding: 4px 6px;
+    border-radius: 6px;
+    font-size: 11px;
+  }
+
+  /* Notices and Error Banners */
+  .notice-box {
+    display: none;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--amber-bg);
+    border: 1px solid var(--amber-border);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--text);
+  }
+  .error-box {
+    display: none;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--danger-bg);
+    border: 1px solid var(--danger-border);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    margin-bottom: 18px;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--text);
+  }
+  .notice-icon {
+    font-weight: 700;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* Right Column: Performance and Charts */
+  .perf-stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .stat-card {
+    background: var(--card-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    text-align: center;
+  }
+  .stat-val { font-family: var(--font-mono); font-size: 20px; font-weight: 700; color: var(--text); }
+  .stat-lbl {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+  .perf-dataset-box {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    background: var(--card-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  .perf-dataset-box strong { color: var(--text); font-weight: 600; }
+  .perf-dataset-box .hea-caveat { display: block; margin-top: 6px; font-size: 11.5px; color: var(--amber); }
+
+  .chart-box { width: 100%; height: 280px; margin-bottom: 12px; }
+  .chart-box-sm { height: 250px; }
+  .chart-caption { font-size: 12px; color: var(--text-tertiary); line-height: 1.45; margin-bottom: 22px; }
+
+  /* Phase Card in Right Column */
+  .phase-card {
+    background: var(--card-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    margin-top: 20px;
+  }
+  .phase-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .phase-pill {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    background: var(--green-bg);
+    color: var(--green);
+    border: 1px solid var(--green-border);
+  }
+  .phase-bcc-bar-wrap {
+    height: 8px;
+    background: var(--border-subtle);
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 8px 0 12px;
+  }
+  .phase-bcc-bar { height: 100%; background: var(--accent); border-radius: 999px; width: 0%; transition: width var(--trans-smooth); }
+
+  /* Footer */
+  footer.site-footer {
+    margin-top: 54px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  :focus-visible { outline: none; box-shadow: 0 0 0 3px var(--border-focus); }
 </style>
 </head>
 <body>
+
+<!-- Sticky Frosted Header -->
+<nav class="top-nav">
+  <div class="nav-inner">
+    <div class="nav-links">
+      <a href="../machine-learning/" class="nav-link-btn">
+        <span>&larr;</span> Back to Machine Learning
+      </a>
+      <a href="../hes-tc-predictor/" class="nav-link-btn" style="color:var(--text-tertiary)">
+        Forward Predictor &rarr;
+      </a>
+    </div>
+    <div class="server-pill" id="serverPill">
+      <span class="server-dot" id="serverDot"></span>
+      <span id="serverStatusText">Connecting to server...</span>
+    </div>
+  </div>
+</nav>
+
 <div class="wrap">
 
-  <header>
-    <p class="eyebrow">Inverse design · machine learning</p>
-    <h1><span class="accent">Inverse Design</span> for predicting<br>high-Tc HES compositions</h1>
-    <p>Enter a target critical temperature and let the pipeline screen 672 equimolar
-       high-entropy alloy compositions, verify each through 5 independent checks,
-       and return the top candidates most likely to superconduct near your target.</p>
+  <!-- Hero Header -->
+  <header class="hero">
+    <div class="eyebrow">Inverse design &middot; two-stage machine learning</div>
+    <h1 class="hero-title">High-entropy superconductor<br>inverse design</h1>
+    <p class="hero-sub">
+      Target a critical temperature (Tc) to screen candidate equimolar refractory alloy compositions
+      through phase stability filters and 6-model ensemble verification gates.
+    </p>
   </header>
 
-  <div id="banner" class="banner"></div>
-
-  <div class="workflow">
-    <b>Workflow:</b>
-    User enters Tc<sub>target</sub>
-    <span class="arrow">→</span> Enumerate 672 HEA compositions (4–6 elements from 10 refractory metals)
-    <span class="arrow">→</span> <b>Stage 1:</b> Phase stability filter (P(BCC) ≥ 0.7)
-    <span class="arrow">→</span> <b>Stage 2:</b> 6-model Tc prediction
-    <span class="arrow">→</span> <b>5-check verification gate</b> (phase, agreement, bounds, VEC, novelty)
-    <span class="arrow">→</span> Score, rank, return top 10
+  <!-- Waking Server Banner -->
+  <div id="wakingBanner" class="waking-banner">
+    <div class="waking-icon"></div>
+    <div>
+      <strong>Waking up inference server&hellip;</strong>
+      <div id="wakingBannerMsg">
+        The free compute instance is spinning up. This usually takes 30 to 60 seconds on cold start. Thank you for your patience.
+      </div>
+    </div>
   </div>
 
-  <div class="grid" style="margin-top:24px">
-    <!-- Controls -->
-    <section class="panel">
-      <h2>Search Parameters</h2>
+  <!-- Error Banner -->
+  <div id="errorBanner" class="error-box">
+    <div class="notice-icon" style="background:var(--danger); color:#fff">!</div>
+    <div style="flex:1">
+      <strong id="errorTitle">Screening Failed</strong>
+      <p id="errorMsg" style="margin:4px 0 8px;"></p>
+      <button id="btnErrorRetry" class="chip-preset" type="button" style="background:#fff; color:var(--text); font-weight:600">
+        Retry Search
+      </button>
+    </div>
+  </div>
 
-      <label class="field">
-        <span>Target Tc (K)</span>
-        <input id="inv-tc" type="number" value="8.0" step="0.5" min="0.1" max="300" />
-      </label>
+  <!-- Two Column Main Workspace -->
+  <main class="grid-container">
 
-      <label class="field">
-        <span>Search mode</span>
-        <select id="inv-mode">
-          <option value="target">Target: closest to Tc</option>
-          <option value="maximize">Maximize: highest Tc</option>
-          <option value="range">Range: all within bounds</option>
-        </select>
-      </label>
+    <!-- LEFT COLUMN: Search Parameters & Verified Candidates -->
+    <section>
 
-      <label class="field">
-        <span>Tc bounds (min to max, K)</span>
-        <div class="inrow">
-          <input id="inv-tcmin" type="number" value="5.0" step="1" min="0.1" max="300" />
-          <input id="inv-tcmax" type="number" value="30.0" step="1" min="0.1" max="300" />
+      <!-- Search Parameters Card -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Search Parameters</h2>
+          <span class="card-badge">Target &amp; Filters</span>
         </div>
-      </label>
 
-      <label class="field">
-        <span>P(BCC) threshold</span>
-        <input id="inv-pbcc" type="number" value="0.7" step="0.05" min="0.5" max="0.95" />
-      </label>
-
-      <label class="field">
-        <span>Max model disagreement σ (K)</span>
-        <input id="inv-sigma" type="number" value="2.0" step="0.5" min="0.5" max="3.0" />
-      </label>
-
-      <label class="field">
-        <span>VEC range</span>
-        <div class="inrow">
-          <input id="inv-vecmin" type="number" value="3.5" step="0.5" min="3.0" max="5.0" />
-          <input id="inv-vecmax" type="number" value="7.5" step="0.5" min="6.0" max="8.5" />
+        <!-- Target Tc Input -->
+        <div class="field-group">
+          <div class="field-label">
+            <span>Target critical temperature (Tc)</span>
+            <span class="field-hint">Training data: 0 to 22.8 K</span>
+          </div>
+          <div class="input-row">
+            <input id="invTc" type="number" value="8.0" step="0.5" min="0.1" max="300" />
+          </div>
+          <div class="chips-bar">
+            <span style="font-size:11.5px; color:var(--text-tertiary)">Presets:</span>
+            <button type="button" class="chip-preset" data-tc="5.0">5.0 K</button>
+            <button type="button" class="chip-preset" data-tc="7.5">7.5 K</button>
+            <button type="button" class="chip-preset active" data-tc="8.0">8.0 K</button>
+            <button type="button" class="chip-preset" data-tc="9.2">9.2 K (Nb-rich)</button>
+            <button type="button" class="chip-preset" data-tc="12.0">12.0 K</button>
+          </div>
         </div>
-      </label>
 
-      <label class="field">
-        <span>Element count per alloy</span>
-        <select id="inv-nelements" multiple style="height:72px">
-          <option value="4" selected>4 elements</option>
-          <option value="5" selected>5 elements</option>
-          <option value="6" selected>6 elements</option>
-        </select>
-      </label>
+        <!-- Search Mode Segmented Control -->
+        <div class="field-group">
+          <label class="field-label">Search objective</label>
+          <div class="seg-control" id="modeSelector">
+            <button type="button" class="seg-btn active" data-mode="target">
+              Target
+              <span class="seg-btn-sub">Closest to Tc</span>
+            </button>
+            <button type="button" class="seg-btn" data-mode="maximize">
+              Maximize
+              <span class="seg-btn-sub">Highest predicted Tc</span>
+            </button>
+            <button type="button" class="seg-btn" data-mode="range">
+              Range
+              <span class="seg-btn-sub">All within bounds</span>
+            </button>
+          </div>
+        </div>
 
-      <label class="field">
-        <span>Number of results</span>
-        <input id="inv-nresults" type="number" value="10" min="1" max="50" />
-      </label>
+        <!-- Refractory Element Pool Selection -->
+        <div class="field-group">
+          <div class="field-label">
+            <span>Refractory metal pool</span>
+            <span class="field-hint" id="elemPoolCountHint">5 elements selected</span>
+          </div>
+          <div class="chips-bar" id="poolPresets">
+            <button type="button" class="chip-preset active" data-preset="nb-ta-5">Nb-Ta-Ti-Zr-Hf (6 alloys · about 1.5 min)</button>
+            <button type="button" class="chip-preset" data-preset="ref-6">Refractory 6 with Mo (7 alloys · about 1.5 min)</button>
+            <button type="button" class="chip-preset" data-preset="nb-ta-backbone">Nb-Ta-V-W-Mo (6 alloys · about 1.5 min)</button>
+            <button type="button" class="chip-preset" data-preset="all-10">All 10 (672 alloys · too large to run online)</button>
+          </div>
+          <div class="chips-bar" id="elementToggles" style="margin-top:10px;">
+            <!-- Rendered by JS -->
+          </div>
 
-      <button class="btn-primary" id="inv-run">Run Inverse Design</button>
-      <div class="progress-bar" id="inv-progress">
-        <div class="progress-bar-fill" id="inv-progress-fill" style="width:0%"></div>
+          <!-- Combinatorial Estimator -->
+          <div class="estimator-box">
+            <span id="estimatorText">Evaluating alloy combinations...</span>
+            <span id="estimatorBadge" class="estimator-badge">Fast Screening</span>
+          </div>
+        </div>
+
+        <!-- Advanced Filter Controls (Collapsible) -->
+        <details class="advanced-drawer" id="advancedDrawer">
+          <summary>Fine-tuning &amp; verification thresholds</summary>
+          <div class="advanced-content">
+            <div class="field-group" style="margin:0">
+              <div class="field-label">
+                <span>Tc search window bounds (K)</span>
+                <span class="field-hint">Min to Max</span>
+              </div>
+              <div class="input-row">
+                <input id="invTcMin" type="number" value="5.0" step="0.5" min="0.1" max="300" />
+                <input id="invTcMax" type="number" value="30.0" step="0.5" min="0.1" max="300" />
+              </div>
+            </div>
+
+            <div class="field-group" style="margin:0">
+              <div class="field-label">
+                <span>Minimum P(BCC) solid solution threshold</span>
+                <span class="field-hint">Default 0.70</span>
+              </div>
+              <input id="invPbcc" type="number" value="0.70" step="0.05" min="0.50" max="0.95" />
+            </div>
+
+            <div class="field-group" style="margin:0">
+              <div class="field-label">
+                <span>Max model consensus disagreement &sigma; (K)</span>
+                <span class="field-hint">Default 2.0 K</span>
+              </div>
+              <input id="invSigma" type="number" value="2.0" step="0.2" min="0.5" max="3.0" />
+            </div>
+
+            <div class="field-group" style="margin:0">
+              <div class="field-label">
+                <span>Valence electron concentration (VEC) bounds</span>
+                <span class="field-hint">Matthias optimum: 4.67</span>
+              </div>
+              <div class="input-row">
+                <input id="invVecMin" type="number" value="3.5" step="0.2" min="3.0" max="5.0" />
+                <input id="invVecMax" type="number" value="7.5" step="0.2" min="6.0" max="8.5" />
+              </div>
+            </div>
+
+            <div class="field-group" style="margin:0">
+              <div class="field-label">
+                <span>Alloy element count</span>
+                <span class="field-hint">Equimolar refractory HEAs</span>
+              </div>
+              <div class="chips-bar" id="nElemPills">
+                <button type="button" class="chip-tag selected" data-nelem="4">4 Elements</button>
+                <button type="button" class="chip-tag selected" data-nelem="5">5 Elements</button>
+                <button type="button" class="chip-tag" data-nelem="6">6 Elements</button>
+              </div>
+            </div>
+
+            <div class="field-group" style="margin:0">
+              <div class="field-label">
+                <span>Max candidates to return</span>
+                <span class="field-hint">1 to 50</span>
+              </div>
+              <input id="invNResults" type="number" value="10" min="1" max="50" />
+            </div>
+          </div>
+        </details>
+
+        <!-- Primary Action Button -->
+        <button id="btnRun" class="btn-primary" type="button">
+          Run Inverse Design
+        </button>
+
+        <div class="progress-bar-wrap" id="progressBar">
+          <div class="progress-bar-fill" id="progressBarFill"></div>
+        </div>
+        <div class="search-status-text" id="searchStatusText">
+          Ready. Configure parameters and run screening.
+        </div>
       </div>
-      <div class="status" id="inv-status">Ready. Configure parameters and run.</div>
+
+      <!-- Verified Candidate Results Card -->
+      <div class="card" id="resultsCard">
+        <div class="card-header">
+          <h2 class="card-title">Screened Candidates</h2>
+          <span class="card-badge" id="resultsCountBadge">0 Verified</span>
+        </div>
+
+        <!-- Summary Stats Strip -->
+        <div class="stats-strip" id="statsStrip" style="display:none">
+          <div class="stat-pill"><b id="statScreened">0</b><small>Screened</small></div>
+          <div class="stat-pill"><b id="statPhase">0</b><small>Phase Gate</small></div>
+          <div class="stat-pill"><b id="statPassed">0</b><small>All Checks</small></div>
+          <div class="stat-pill"><b id="statShown">0</b><small>Returned</small></div>
+          <div class="stat-pill"><b id="statTime">0s</b><small>Compute</small></div>
+        </div>
+
+        <!-- Top Candidate Spotlight -->
+        <div class="candidate-spotlight" id="candSpotlight" style="display:none">
+          <div class="spotlight-header">
+            <span class="spotlight-title">Top Ranked Candidate</span>
+            <span id="spotlightRank" class="cand-rank">#1</span>
+          </div>
+          <div class="spotlight-formula" id="spotlightFormula">--</div>
+
+          <div class="tc-display-row">
+            <div class="tc-number-box">
+              <span id="spotlightTc">--</span>
+              <span class="tc-unit">K</span>
+            </div>
+            <div class="tc-uncertainty" id="spotlightUncertainty">&plusmn; -- K</div>
+          </div>
+
+          <div class="tc-assumption">
+            Predicted Tc assumes the alloy superconducts. The underlying regression models were trained only on confirmed superconductors.
+          </div>
+
+          <!-- 6-Model Spread Range Strip -->
+          <div class="spread-strip-box">
+            <div class="spread-strip-header">
+              <span style="font-weight:600; color:var(--text)">6-Model Ensemble Predictions</span>
+              <span id="spreadStatsText">Mean: -- K · Spread: -- to -- K</span>
+            </div>
+            <div class="spread-strip-track" id="spreadTrack">
+              <div class="spread-strip-range" id="spreadRange" style="left:0; width:0;"></div>
+            </div>
+          </div>
+
+          <!-- Quick Metric Badges -->
+          <div class="cand-badges-row" id="spotlightBadges"></div>
+        </div>
+
+        <!-- Candidate Cards / Table -->
+        <div id="candidatesContainer" class="candidates-list">
+          <p style="color:var(--text-tertiary); text-align:center; padding:36px 16px; font-size:13.5px;">
+            Configure parameters above and click "Run Inverse Design" to screen candidates.
+          </p>
+        </div>
+      </div>
+
     </section>
 
-    <!-- Results -->
-    <section class="panel" style="overflow:hidden">
-      <h2>Verified Candidates</h2>
-      <div class="inv-stats" id="inv-stats"></div>
-      <div class="table-wrap" id="inv-results">
-        <p class="placeholder">
-          Screen the HEA composition space for verified superconducting candidates.<br>
-          All displayed results pass 5 independent checks before appearing here.
+    <!-- RIGHT COLUMN: Model Performance & Cross-Validation Insights -->
+    <section>
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Model Performance</h2>
+          <span class="card-badge" id="activeModelLabel">Model CV</span>
+        </div>
+
+        <!-- Model Selection Tabs -->
+        <label style="display:block; font-size:12.5px; font-weight:500; color:var(--text-secondary); margin-bottom:8px;">
+          Tc regression model
+        </label>
+        <div id="modelSelector" class="seg-control" style="grid-template-columns: repeat(3, 1fr); margin-bottom:16px;">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="perf-stats-row">
+          <div class="stat-card">
+            <div class="stat-val" id="metricMAE">--</div>
+            <div class="stat-lbl">MAE (K)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val" id="metricRMSE">--</div>
+            <div class="stat-lbl">RMSE (K)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val" id="metricR2">--</div>
+            <div class="stat-lbl">R&sup2; Score</div>
+          </div>
+        </div>
+
+        <!-- Training Dataset & HEA Accuracy Caveat -->
+        <div class="perf-dataset-box">
+          <strong>Cross-validation on 3,319 superconductors (3,253 conventional metallic SuperCon entries + 66 high-entropy alloys).</strong>
+          <span class="hea-caveat">
+            Because only 66 training samples are high-entropy alloys, accuracy on new high-entropy compositions is likely lower than these figures.
+          </span>
+        </div>
+
+        <!-- Parity Chart -->
+        <div style="font-size:13px; font-weight:600; margin-bottom:6px;">Parity Plot (Out-of-Fold Cross-Validation)</div>
+        <div id="parityChart" class="chart-box"></div>
+        <p class="chart-caption">
+          Dashed line indicates perfect agreement (y = x). Evaluates generalisation on known metallic superconductors.
         </p>
+
+        <!-- Distribution Chart -->
+        <div style="font-size:13px; font-weight:600; margin-bottom:6px;">Training Set Tc Distribution &amp; Target Marker</div>
+        <div id="distChart" class="chart-box"></div>
+        <p class="chart-caption">
+          Histogram of Tc across the 3,319 training samples (0.001 to 22.8 K). Vertical indicator shows your target or candidate Tc.
+        </p>
+
+        <!-- Feature Importances Chart -->
+        <div style="font-size:13px; font-weight:600; margin-bottom:6px;">Top 8 Magpie Feature Importances</div>
+        <div id="importanceChart" class="chart-box chart-box-sm"></div>
+        <p class="chart-caption">
+          Key chemical and electronic descriptors driving this model (Ward et al. Magpie features).
+        </p>
+
+        <!-- Phase Stability Stage 1 Explainer -->
+        <div class="phase-card">
+          <div class="phase-header-row">
+            <strong style="font-size:13.5px; color:var(--text)">Stage 1: Phase Stability Gate</strong>
+            <span class="phase-pill">96% BCC Accuracy</span>
+          </div>
+          <div class="phase-bcc-bar-wrap">
+            <div class="phase-bcc-bar" style="width: 96%;"></div>
+          </div>
+          <p style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+            Trained on 11,247 high-entropy alloy compositions (Peivaste et al., 2023). Filters out multiphase and intermetallic structures,
+            passing only candidates with P(BCC) solid solution &ge; threshold.
+          </p>
+        </div>
+
       </div>
     </section>
-  </div>
 
-  <p class="note">
-    <b>Element pool:</b> Nb, Ta, Ti, Zr, Hf, V, Mo, W, Re, Ru (10 refractory HES elements).<br>
-    <b>Models:</b> Extra Trees, Random Forest, XGBoost, Gradient Boosting, SVR, KNN.<br>
-    <b>Phase classifier:</b> 11,247 training samples (Peivaste et al. 2023), 96% BCC accuracy.<br>
-    <b>Tc predictor:</b> 3,319 samples, R² = 0.87 (best single model).<br><br>
-    Predictions are ML model outputs, not measured values. Use as a guide for experimental priorities.
-    <br><br>
-    <a href="../hes-tc-predictor/index.html">← Forward Tc Predictor</a> &nbsp;|&nbsp;
-    <a href="../machine-learning.html">Machine Learning</a>
-  </p>
+  </main>
+
+  <!-- Attributions Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>
+        Phase classifier trained on 11,247 experimentally observed high-entropy alloys (Peivaste et al., Scientific Reports, 2023).
+        Tc models use 138 Magpie composition descriptors (Ward et al., 2016).
+        Predictions are model estimates, not measurements.
+      </p>
+      <div>
+        <a href="../machine-learning/" class="nav-link-btn" style="padding-left:0;">
+          <span>&larr;</span> Back to Machine Learning
+        </a>
+      </div>
+    </div>
+  </footer>
+
 </div>
 
+<!-- -------------------------------------------------------------
+     Client-Side Logic & Application Script
+------------------------------------------------------------- -->
 <script>
 const API_BASE = "https://ml-project-sfos.onrender.com";
+
+const REFRACTORY_10 = ["Nb", "Ta", "Ti", "Zr", "Hf", "V", "Mo", "W", "Re", "Ru"];
+let selectedElements = new Set(["Nb", "Ta", "Ti", "Zr", "Hf"]);
+let selectedNElements = new Set([4, 5]);
+
+let META = null;
+let selectedModelId = "extra_trees";
+let currentSearchMode = "target";
+let latestResults = [];
+let selectedCandidateIdx = 0;
+let isScreening = false;
+
+let wakeInterval = null;
+let wakeStart = null;
+
 const $ = id => document.getElementById(id);
 
-function showBanner(msg){
-  const b = $("banner"); b.innerHTML = msg; b.style.display = "block";
+/* ---------- Typography & Text Sanitizer (Ensures ZERO Em Dashes) ---------- */
+function sanitizeText(str) {
+  if (!str) return "";
+  return str
+    .replace(/\u2014/g, ", ")     // Em dash to comma space
+    .replace(/\u2013/g, " to ")   // En dash to "to"
+    .replace(/--/g, ": ")
+    .trim();
 }
 
-$("inv-run").onclick = async () => {
-  const btn = $("inv-run");
-  btn.disabled = true; btn.textContent = "Screening…";
-  $("inv-status").textContent = "Enumerating compositions and running verification…";
-  $("inv-progress").style.display = "block";
-  $("inv-progress-fill").style.width = "30%";
+/* ---------- Theme Detection for Plotly Charts ---------- */
+function isDarkMode() {
+  return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+}
 
-  const nElements = Array.from($("inv-nelements").selectedOptions).map(o => parseInt(o.value));
-
-  const body = {
-    tc_target: parseFloat($("inv-tc").value),
-    tc_min: parseFloat($("inv-tcmin").value),
-    tc_max: parseFloat($("inv-tcmax").value),
-    mode: $("inv-mode").value,
-    p_bcc_threshold: parseFloat($("inv-pbcc").value),
-    max_sigma: parseFloat($("inv-sigma").value),
-    vec_min: parseFloat($("inv-vecmin").value),
-    vec_max: parseFloat($("inv-vecmax").value),
-    n_results: parseInt($("inv-nresults").value),
-    n_elements: nElements,
+function getPlotTheme() {
+  const dark = isDarkMode();
+  return {
+    textColor: dark ? "#86868b" : "#6e6e73",
+    gridColor: dark ? "rgba(255, 255, 255, 0.07)" : "rgba(0, 0, 0, 0.06)",
+    zerolineColor: dark ? "rgba(255, 255, 255, 0.12)" : "rgba(0, 0, 0, 0.12)",
+    accent: dark ? "#e08466" : "#d97757",
+    scBlue: "#0a84ff",
+    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif'
   };
+}
 
-  try{
-    $("inv-progress-fill").style.width = "60%";
-    const r = await fetch(`${API_BASE}/inverse`, {
-      method:"POST", headers:{"Content-Type":"application/json"},
-      body:JSON.stringify(body),
-    });
-    $("inv-progress-fill").style.width = "90%";
-    const j = await r.json();
-    if(!r.ok) throw new Error(j.detail || "Inverse design failed");
-    $("inv-progress-fill").style.width = "100%";
-    renderResults(j);
-    $("inv-status").textContent =
-      `Done in ${j.elapsed_seconds}s. ${j.passed_all_checks} candidates passed all 5 verification checks.`;
-  }catch(e){
-    $("inv-status").textContent = "Error: " + e.message;
-    $("inv-results").innerHTML = `<p style="color:var(--danger);text-align:center;padding:30px">${e.message}</p>`;
-  }finally{
-    btn.disabled = false; btn.textContent = "Run Inverse Design";
-    setTimeout(() => { $("inv-progress").style.display = "none"; }, 800);
+const CFG = { displayModeBar: false, responsive: true };
+
+/* ---------- Combinatorial Calculation Helper ---------- */
+function combinationCount(n, k) {
+  if (k < 0 || k > n) return 0;
+  if (k === 0 || k === n) return 1;
+  let c = 1;
+  for (let i = 1; i <= k; i++) {
+    c = (c * (n - (k - i))) / i;
   }
-};
+  return Math.round(c);
+}
 
-function renderResults(data){
-  const stats = $("inv-stats");
-  stats.style.display = "flex";
-  stats.innerHTML = [
-    ["Screened", data.screened],
-    ["Phase Gate", data.passed_phase],
-    ["Verified", data.passed_all_checks],
-    ["Shown", data.results.length],
-    ["Time", data.elapsed_seconds + "s"],
-  ].map(([l,v]) => `<div class="inv-stat"><b>${v}</b><small>${l}</small></div>`).join("");
+function updateCombinationsEstimator() {
+  const n = selectedElements.size;
+  let totalCombinations = 0;
+  for (const k of selectedNElements) {
+    if (n >= k) {
+      totalCombinations += combinationCount(n, k);
+    }
+  }
 
-  if(!data.results.length){
-    const msg = data.mode === "target"
-      ? `No candidates found with predicted Tc within ±${data.tc_window} K of ${data.tc_target} K. `
-        + `The current element pool does not produce verified alloys in this temperature range. `
-        + `Try: widening the Tc window, changing the target, or switching to "Range" mode.`
-      : `No candidates passed all verification checks. Try relaxing thresholds (lower P(BCC), higher σ, wider VEC range).`;
-    $("inv-results").innerHTML = `<p style="color:var(--warm);text-align:center;padding:30px">${msg}</p>`;
+  const textEl = $("estimatorText");
+  const badgeEl = $("estimatorBadge");
+
+  $("elemPoolCountHint").textContent = `${n} elements selected`;
+
+  if (totalCombinations === 0) {
+    textEl.textContent = "Please select at least 4 elements matching the element counts.";
+    badgeEl.textContent = "0 Combinations";
+    badgeEl.className = "estimator-badge warn";
+    $("btnRun").disabled = true;
     return;
   }
 
-  let html = `<table class="inv-table"><thead><tr>
-    <th>#</th><th>Formula</th><th>Tc (K)</th><th>± (K)</th>
-    <th>P(BCC)</th><th>VEC</th><th>Score</th><th>Reliability</th><th>Novel</th><th></th>
-  </tr></thead><tbody>`;
+  $("btnRun").disabled = false;
 
-  data.results.forEach((r, i) => {
-    const ph = r.physics || {};
-    const relColor = ph.level === "high" ? "var(--sc)" : ph.level === "medium" ? "var(--warm)" : "var(--danger)";
-    const relLabel = ph.reliability !== undefined ? `${(ph.reliability*100).toFixed(0)}%` : "N/A";
+  // Measured on the live free-tier server: about 13 s per candidate alloy.
+  const estSec = Math.ceil(totalCombinations * 13);
+  const estText = estSec < 90 ? `about ${estSec} s` : `about ${Math.round(estSec / 60)} min`;
+  if (totalCombinations <= 8) {
+    textEl.textContent = `${totalCombinations} candidate alloys to screen (${estText} on the free server).`;
+    badgeEl.textContent = `${totalCombinations} Alloys · Quick`;
+    badgeEl.className = "estimator-badge";
+  } else if (totalCombinations <= 20) {
+    textEl.textContent = `${totalCombinations} candidate alloys to screen (${estText} on the free server). Please keep this tab open.`;
+    badgeEl.textContent = `${totalCombinations} Alloys · Slow`;
+    badgeEl.className = "estimator-badge";
+  } else {
+    textEl.textContent = `${totalCombinations} candidate alloys would take ${estText} on the free server, longer than it allows. Select fewer elements or fewer alloy sizes (20 candidates at most).`;
+    badgeEl.textContent = `${totalCombinations} Alloys · Too many`;
+    badgeEl.className = "estimator-badge warn";
+    $("btnRun").disabled = true;
+  }
+}
 
-    html += `<tr class="data-row" data-idx="${i}" style="cursor:pointer">
-      <td class="rank">${r.rank}</td>
-      <td class="formula">${r.formula}</td>
-      <td>${r.tc_mean.toFixed(2)}</td>
-      <td>${r.tc_std.toFixed(2)}</td>
-      <td>${r.p_bcc.toFixed(3)}</td>
-      <td>${r.vec.toFixed(1)}</td>
-      <td>${r.score.toFixed(3)}</td>
-      <td style="color:${relColor};font-weight:600">${relLabel}</td>
-      <td class="${r.is_novel?'novel-yes':'novel-no'}">${r.is_novel?'&#10003; Novel':'&#10007; Known'}</td>
-      <td style="color:var(--muted)" class="toggle">&#9660;</td>
-    </tr>`;
+/* ---------- Render Element Selection Chips ---------- */
+function renderElementToggles() {
+  const container = $("elementToggles");
+  container.innerHTML = "";
+  REFRACTORY_10.forEach(el => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = `chip-tag ${selectedElements.has(el) ? "selected" : ""}`;
+    btn.textContent = el;
+    btn.onclick = () => {
+      if (selectedElements.has(el)) {
+        if (selectedElements.size <= 4) {
+          alert("A minimum of 4 elements is required for high-entropy alloy screening.");
+          return;
+        }
+        selectedElements.delete(el);
+      } else {
+        selectedElements.add(el);
+      }
+      renderElementToggles();
+      updateCombinationsEstimator();
+    };
+    container.appendChild(btn);
+  });
+}
 
-    const models = Object.entries(r.model_predictions||{})
-      .map(([k,v]) => `<dd>${k}: ${v.toFixed(3)} K</dd>`).join("");
-
-    const flags = (ph.flags || []).map(f => `<dd style="color:var(--muted)">• ${f}</dd>`).join("");
-
-    html += `<tr class="expand-row" id="exp-${i}">
-      <td colspan="10" class="expand-cell"><div class="expand-detail">
-        <dl>
-          <dt>Composition</dt><dd>${r.formula} (${r.n_elements} elements, equimolar)</dd>
-          <dt>VEC</dt><dd>${r.vec.toFixed(2)} (optimum: 4.67)</dd>
-          <dt>&#948; (size mismatch)</dt><dd>${r.delta.toFixed(2)}%</dd>
-          <dt>P(BCC)</dt><dd>${(r.p_bcc*100).toFixed(1)}%</dd>
-          <dt>95% CI</dt><dd>${r.tc_95_lo.toFixed(2)} &ndash; ${r.tc_95_hi.toFixed(2)} K</dd>
-          <dt>Nb fraction</dt><dd>${ph.nb_fraction !== undefined ? (ph.nb_fraction*100).toFixed(1)+'%' : 'N/A'}</dd>
-          <dt>Nb+Ta fraction</dt><dd>${ph.nb_ta_fraction !== undefined ? (ph.nb_ta_fraction*100).toFixed(1)+'%' : 'N/A'}</dd>
-        </dl>
-        <dl>
-          <dt>Model Predictions</dt>${models}
-          <dt>Nearest Training</dt><dd>${r.nearest_training||'N/A'} (element distance = ${r.nearest_dist})</dd>
-          <dt>Physics Assessment</dt>
-          <dd style="color:${relColor};font-weight:600">${ph.level ? ph.level.toUpperCase() : 'N/A'} reliability (${relLabel})</dd>
-          ${flags}
-        </dl>
-      </div></td>
-    </tr>`;
+/* ---------- Setup Presets ---------- */
+function setupPresets() {
+  document.querySelectorAll("#poolPresets .chip-preset").forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll("#poolPresets .chip-preset").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const p = btn.dataset.preset;
+      if (p === "nb-ta-5") {
+        selectedElements = new Set(["Nb", "Ta", "Ti", "Zr", "Hf"]);
+        selectedNElements = new Set([4, 5]);
+      } else if (p === "ref-6") {
+        selectedElements = new Set(["Nb", "Ta", "Ti", "Zr", "Hf", "Mo"]);
+        selectedNElements = new Set([5, 6]);
+      } else if (p === "nb-ta-backbone") {
+        selectedElements = new Set(["Nb", "Ta", "V", "W", "Mo"]);
+        selectedNElements = new Set([4, 5]);
+      } else if (p === "all-10") {
+        selectedElements = new Set(REFRACTORY_10);
+        selectedNElements = new Set([4, 5, 6]);
+      }
+      syncNElemPills();
+      renderElementToggles();
+      updateCombinationsEstimator();
+    };
   });
 
-  html += `</tbody></table>`;
-  $("inv-results").innerHTML = html;
+  // Target Tc presets
+  document.querySelectorAll(".chips-bar button[data-tc]").forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll(".chips-bar button[data-tc]").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      $("invTc").value = btn.dataset.tc;
+      drawDistribution(parseFloat(btn.dataset.tc));
+    };
+  });
 
-  document.querySelectorAll(".data-row").forEach(row => {
-    row.onclick = () => {
-      const idx = row.dataset.idx;
-      const detail = document.getElementById("exp-" + idx);
-      detail.classList.toggle("open");
-      row.querySelector(".toggle").innerHTML = detail.classList.contains("open") ? "&#9650;" : "&#9660;";
+  // Search Mode Selector
+  document.querySelectorAll("#modeSelector .seg-btn").forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll("#modeSelector .seg-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentSearchMode = btn.dataset.mode;
+    };
+  });
+
+  // NElem pills
+  document.querySelectorAll("#nElemPills .chip-tag").forEach(btn => {
+    btn.onclick = () => {
+      const k = parseInt(btn.dataset.nelem);
+      if (selectedNElements.has(k)) {
+        if (selectedNElements.size <= 1) return;
+        selectedNElements.delete(k);
+        btn.classList.remove("selected");
+      } else {
+        selectedNElements.add(k);
+        btn.classList.add("selected");
+      }
+      updateCombinationsEstimator();
     };
   });
 }
 
-// Verify API is reachable
-fetch(`${API_BASE}/health`).then(r => {
-  if(!r.ok) throw new Error();
-}).catch(() => {
-  showBanner(`Cannot reach backend at <code>${API_BASE}</code>. The server may be starting up (cold start ~30s on Render free tier). Try again shortly.`);
-});
+function syncNElemPills() {
+  document.querySelectorAll("#nElemPills .chip-tag").forEach(btn => {
+    const k = parseInt(btn.dataset.nelem);
+    if (selectedNElements.has(k)) {
+      btn.classList.add("selected");
+    } else {
+      btn.classList.remove("selected");
+    }
+  });
+}
+
+/* ---------- Resilient Fetch with Waking Notice ---------- */
+async function fetchJsonWithWake(url, options = {}, maxWaitMs = 150000) {
+  const start = Date.now();
+  let attempt = 0;
+
+  while (Date.now() - start < maxWaitMs) {
+    attempt++;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), Math.min(300000, maxWaitMs));
+
+    const slowTimer = setTimeout(() => {
+      showWakingNotice(true);
+    }, 2500);
+
+    try {
+      const res = await fetch(url, { ...options, signal: controller.signal });
+      clearTimeout(timeoutId);
+      clearTimeout(slowTimer);
+
+      if (!res.ok) {
+        const text = await res.text();
+        let detail = text;
+        try {
+          const parsed = JSON.parse(text);
+          detail = parsed.detail || parsed.error || text;
+        } catch (e) {}
+        throw new Error(detail || `Server responded with status ${res.status}`);
+      }
+
+      showWakingNotice(false);
+      return await res.json();
+    } catch (err) {
+      clearTimeout(timeoutId);
+      clearTimeout(slowTimer);
+
+      if (err.name === "AbortError") {
+        throw new Error("Computation timed out after 145 seconds. The selected composition space is too large for the free-tier server. Please select a 5-metal pool (Nb-Ta-Ti-Zr-Hf) or fewer element counts.");
+      }
+
+      // If it looks like server waking up, retry up to 2 times
+      if (attempt <= 2 && (Date.now() - start < 45000)) {
+        showWakingNotice(true);
+        await new Promise(r => setTimeout(r, 3500 * attempt));
+      } else {
+        showWakingNotice(false);
+        throw err;
+      }
+    }
+  }
+
+  showWakingNotice(false);
+  throw new Error("Screening timed out. Please try a narrower element pool.");
+}
+
+function showWakingNotice(show) {
+  const banner = $("wakingBanner");
+  const dot = $("serverDot");
+  const statusTxt = $("serverStatusText");
+
+  if (show) {
+    banner.style.display = "flex";
+    dot.className = "server-dot waking";
+    if (!wakeStart) wakeStart = Date.now();
+    if (!wakeInterval) {
+      wakeInterval = setInterval(() => {
+        const secs = Math.round((Date.now() - wakeStart) / 1000);
+        statusTxt.textContent = `Waking server (${secs}s)...`;
+      }, 1000);
+    }
+  } else {
+    banner.style.display = "none";
+    dot.className = "server-dot";
+    if (wakeInterval) {
+      clearInterval(wakeInterval);
+      wakeInterval = null;
+    }
+    wakeStart = null;
+    statusTxt.textContent = "Server Ready";
+  }
+}
+
+/* ---------- Execute Inverse Design Search ---------- */
+async function executeInverseDesign() {
+  if (isScreening) return;
+  hideError();
+
+  const tcTarget = parseFloat($("invTc").value);
+  if (isNaN(tcTarget) || tcTarget < 0.1 || tcTarget > 300) {
+    showError("Validation Error", "Target Tc must be between 0.1 and 300 K.");
+    return;
+  }
+
+  const tcMin = parseFloat($("invTcMin").value);
+  const tcMax = parseFloat($("invTcMax").value);
+  const pBcc = parseFloat($("invPbcc").value);
+  const sigma = parseFloat($("invSigma").value);
+  const vecMin = parseFloat($("invVecMin").value);
+  const vecMax = parseFloat($("invVecMax").value);
+  const nResults = parseInt($("invNResults").value);
+
+  const nElementsArray = Array.from(selectedNElements).sort();
+  const poolArray = Array.from(selectedElements);
+
+  const body = {
+    tc_target: tcTarget,
+    tc_min: tcMin,
+    tc_max: tcMax,
+    mode: currentSearchMode,
+    p_bcc_threshold: pBcc,
+    max_sigma: sigma,
+    vec_min: vecMin,
+    vec_max: vecMax,
+    n_results: nResults,
+    n_elements: nElementsArray,
+    element_pool: poolArray
+  };
+
+  isScreening = true;
+  const btn = $("btnRun");
+  btn.disabled = true;
+  btn.textContent = "Screening alloys across 6 models\u2026";
+  $("progressBar").style.display = "block";
+  $("progressBarFill").style.width = "25%";
+  $("searchStatusText").textContent = "Synthesising compositions, extracting Magpie features and evaluating phase stability...";
+
+  try {
+    const progressTimer = setTimeout(() => {
+      $("progressBarFill").style.width = "65%";
+      $("searchStatusText").textContent = "Executing 6-model ensemble inference and 5 verification gates...";
+    }, 12000);
+
+    const data = await fetchJsonWithWake(`${API_BASE}/inverse`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    }, 300000);
+
+    clearTimeout(progressTimer);
+    $("progressBarFill").style.width = "100%";
+
+    renderScreeningResults(data);
+    $("searchStatusText").textContent = `Screening complete in ${data.elapsed_seconds}s. ${data.passed_all_checks} candidates passed all verification gates.`;
+
+  } catch (err) {
+    console.error("Inverse design error:", err);
+    showError("Screening Error", sanitizeText(err.message));
+    $("searchStatusText").textContent = "Screening interrupted. See error details above.";
+  } finally {
+    isScreening = false;
+    btn.disabled = false;
+    btn.textContent = "Run Inverse Design";
+    setTimeout(() => { $("progressBar").style.display = "none"; $("progressBarFill").style.width = "0%"; }, 600);
+  }
+}
+
+/* ---------- Render Search Results ---------- */
+function renderScreeningResults(data) {
+  latestResults = data.results || [];
+
+  // Update Summary Stats
+  $("statsStrip").style.display = "grid";
+  $("statScreened").textContent = data.screened || 0;
+  $("statPhase").textContent = data.passed_phase || 0;
+  $("statPassed").textContent = data.passed_all_checks || 0;
+  $("statShown").textContent = latestResults.length;
+  $("statTime").textContent = `${data.elapsed_seconds || 0}s`;
+  $("resultsCountBadge").textContent = `${latestResults.length} Verified Candidates`;
+
+  const container = $("candidatesContainer");
+
+  if (!latestResults || latestResults.length === 0) {
+    $("candSpotlight").style.display = "none";
+    const msg = data.mode === "target"
+      ? `No alloys found within predicted range of ${data.tc_target} K with current thresholds. The element pool does not produce verified high-entropy superconductors in this temperature window. Suggestions: widen the Tc bounds, lower the P(BCC) threshold, or expand the element pool.`
+      : `No candidate alloys passed all 5 verification gates. Try relaxing thresholds: lower P(BCC) to 0.65, increase model disagreement sigma to 2.5 K, or expand VEC bounds.`;
+
+    container.innerHTML = `
+      <div style="background:var(--card-subtle); border:1px solid var(--border); border-radius:var(--radius-md); padding:28px 20px; text-align:center;">
+        <div style="font-size:15px; font-weight:600; color:var(--text); margin-bottom:6px;">Zero Candidates Passed Verification</div>
+        <p style="font-size:13px; color:var(--text-secondary); line-height:1.5; max-width:560px; margin:0 auto;">${msg}</p>
+      </div>
+    `;
+    return;
+  }
+
+  // Display candidate list
+  let html = "";
+  latestResults.forEach((r, idx) => {
+    const ph = r.physics || {};
+    const relLevel = (ph.level || "high").toLowerCase();
+    const relColor = relLevel === "high" ? "var(--green)" : relLevel === "medium" ? "var(--amber)" : "var(--danger)";
+    const relPercent = ph.reliability !== undefined ? `${Math.round(ph.reliability * 100)}%` : "N/A";
+    const isNovel = r.is_novel;
+
+    // Checks string
+    const checks = r.checks || {};
+    const passedChecksCount = Object.values(checks).filter(Boolean).length;
+
+    html += `
+      <div class="candidate-card ${idx === 0 ? "active" : ""}" data-idx="${idx}">
+        <div class="cand-top-row">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="cand-rank">#${r.rank || idx + 1}</span>
+            <span class="cand-formula">${r.formula}</span>
+            <span style="font-size:11px; color:var(--text-tertiary)">(${r.n_elements} metals)</span>
+          </div>
+          <div class="cand-tc-pill">
+            ${r.tc_mean.toFixed(1)} K <span style="font-size:11px; color:var(--text-secondary); font-weight:400">&plusmn; ${r.tc_std.toFixed(1)}</span>
+          </div>
+        </div>
+
+        <div class="cand-badges-row">
+          <span class="cand-badge pass">P(BCC) ${Math.round(r.p_bcc * 100)}%</span>
+          <span class="cand-badge">VEC ${r.vec.toFixed(1)}</span>
+          <span class="cand-badge">&delta; ${r.delta.toFixed(1)}%</span>
+          <span class="cand-badge ${isNovel ? 'novel' : ''}">${isNovel ? 'Novel' : 'In Training DB'}</span>
+          <span class="cand-badge" style="color:${relColor}; font-weight:600">${relLevel.toUpperCase()} reliability (${relPercent})</span>
+          <span class="cand-badge" style="margin-left:auto">${passedChecksCount}/5 Checks</span>
+        </div>
+
+        <!-- Collapsible Details -->
+        <div class="cand-details" id="details-${idx}">
+          <div class="details-grid">
+            <dl class="details-dl">
+              <dt>Composition</dt>
+              <dd>${r.formula} (equimolar)</dd>
+              <dt>95% Confidence Interval</dt>
+              <dd>${r.tc_95_lo.toFixed(1)} to ${r.tc_95_hi.toFixed(1)} K</dd>
+              <dt>Valence Electron Concentration (VEC)</dt>
+              <dd>${r.vec.toFixed(2)} (Matthias optimum: 4.67)</dd>
+              <dt>Size mismatch (&delta;)</dt>
+              <dd>${r.delta.toFixed(1)}%</dd>
+            </dl>
+            <dl class="details-dl">
+              <dt>Nearest Training Compound</dt>
+              <dd>${r.nearest_training || 'None'} (element distance = ${r.nearest_dist})</dd>
+              <dt>Nb Content / Nb+Ta Content</dt>
+              <dd>${ph.nb_fraction ? Math.round(ph.nb_fraction*100)+'%' : 'N/A'} / ${ph.nb_ta_fraction ? Math.round(ph.nb_ta_fraction*100)+'%' : 'N/A'}</dd>
+              <dt>Physics Assessment</dt>
+              <dd style="color:${relColor}">${relLevel.toUpperCase()} reliability</dd>
+            </dl>
+          </div>
+
+          <div style="font-weight:600; font-size:11.5px; color:var(--text-secondary); margin-bottom:4px;">
+            Individual Model Predictions (K)
+          </div>
+          <div class="model-preds-list">
+            ${Object.entries(r.model_predictions || {}).map(([mId, val]) => `
+              <div class="model-pred-item">
+                <span style="color:var(--text-secondary)">${mId}:</span>
+                <strong style="float:right">${val.toFixed(1)} K</strong>
+              </div>
+            `).join("")}
+          </div>
+
+          ${(ph.flags && ph.flags.length > 0) ? `
+            <div style="margin-top:10px; font-size:11.5px; color:var(--text-secondary);">
+              <strong>Physics Notes:</strong>
+              <ul style="margin:4px 0 0 16px; padding:0;">
+                ${ph.flags.map(f => `<li>${sanitizeText(f)}</li>`).join("")}
+              </ul>
+            </div>
+          ` : ""}
+        </div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+
+  // Add card click listeners
+  container.querySelectorAll(".candidate-card").forEach(card => {
+    card.onclick = () => {
+      const idx = parseInt(card.dataset.idx);
+      selectCandidate(idx);
+    };
+  });
+
+  // Spotlight top candidate
+  selectCandidate(0);
+}
+
+/* ---------- Select & Highlight Candidate ---------- */
+function selectCandidate(idx) {
+  selectedCandidateIdx = idx;
+  const cand = latestResults[idx];
+  if (!cand) return;
+
+  // Update active state in card list
+  document.querySelectorAll(".candidate-card").forEach((c, i) => {
+    const details = $(`details-${i}`);
+    if (i === idx) {
+      c.classList.add("active");
+      if (details) details.classList.add("open");
+    } else {
+      c.classList.remove("active");
+      if (details) details.classList.remove("open");
+    }
+  });
+
+  // Update Spotlight Hero
+  $("candSpotlight").style.display = "block";
+  $("spotlightRank").textContent = `#${cand.rank || idx + 1}`;
+  $("spotlightFormula").textContent = cand.formula;
+
+  animateSpotlightTc(cand.tc_mean);
+  $("spotlightUncertainty").textContent = `\u00B1 ${cand.tc_std.toFixed(1)} K (95% CI: ${cand.tc_95_lo.toFixed(1)} to ${cand.tc_95_hi.toFixed(1)} K)`;
+
+  // Render Spread Strip
+  renderSpreadTrack(cand.model_predictions);
+
+  // Render Spotlight Badges
+  const ph = cand.physics || {};
+  const relLevel = (ph.level || "high").toLowerCase();
+  const relColor = relLevel === "high" ? "var(--green)" : relLevel === "medium" ? "var(--amber)" : "var(--danger)";
+
+  $("spotlightBadges").innerHTML = `
+    <span class="cand-badge pass">BCC ${(cand.p_bcc * 100).toFixed(0)}%</span>
+    <span class="cand-badge">VEC ${cand.vec.toFixed(2)}</span>
+    <span class="cand-badge">&delta; ${cand.delta.toFixed(1)}%</span>
+    <span class="cand-badge ${cand.is_novel ? 'novel' : ''}">${cand.is_novel ? 'Novel Compound' : 'In Training Set'}</span>
+    <span class="cand-badge" style="color:${relColor}; font-weight:600">${relLevel.toUpperCase()} reliability</span>
+  `;
+
+  // Draw distribution indicator at this candidate's Tc
+  drawDistribution(cand.tc_mean);
+}
+
+/* ---------- Number Count-Up Animation ---------- */
+function animateSpotlightTc(targetVal) {
+  const el = $("spotlightTc");
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    el.textContent = targetVal.toFixed(1);
+    return;
+  }
+  const duration = 450;
+  const startVal = parseFloat(el.textContent) || 0;
+  const startTime = performance.now();
+
+  function step(now) {
+    const progress = Math.min((now - startTime) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const current = startVal + (targetVal - startVal) * ease;
+    el.textContent = Math.max(0, current).toFixed(1);
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    } else {
+      el.textContent = targetVal.toFixed(1);
+    }
+  }
+  requestAnimationFrame(step);
+}
+
+/* ---------- Cross-Model Spread Track Rendering ---------- */
+function renderSpreadTrack(predictionsObj) {
+  const track = $("spreadTrack");
+  const rangeBar = $("spreadRange");
+  const statsLabel = $("spreadStatsText");
+
+  track.querySelectorAll(".spread-dot").forEach(d => d.remove());
+  if (!predictionsObj) return;
+
+  const tcs = Object.values(predictionsObj);
+  if (tcs.length === 0) return;
+
+  const min = Math.min(...tcs);
+  const max = Math.max(...tcs);
+  const mean = tcs.reduce((a, b) => a + b, 0) / tcs.length;
+
+  statsLabel.textContent = `Mean: ${mean.toFixed(1)} K · Spread: ${min.toFixed(1)} to ${max.toFixed(1)} K`;
+
+  const domain = Math.max(0.5, max - min);
+  const pad = domain * 0.15;
+  const leftBound = Math.max(0, min - pad);
+  const rightBound = max + pad;
+  const span = Math.max(0.1, rightBound - leftBound);
+
+  const rangeLeft = ((min - leftBound) / span) * 100;
+  const rangeWidth = ((max - min) / span) * 100;
+  rangeBar.style.left = `${rangeLeft}%`;
+  rangeBar.style.width = `${rangeWidth}%`;
+
+  Object.entries(predictionsObj).forEach(([mId, val]) => {
+    const dot = document.createElement("div");
+    dot.className = "spread-dot";
+    const pos = ((val - leftBound) / span) * 100;
+    dot.style.left = `${pos}%`;
+    dot.title = `${mId}: ${val.toFixed(1)} K`;
+    track.appendChild(dot);
+  });
+}
+
+/* ---------- Plotly Charts: Parity, Distribution, Feature Importances ---------- */
+function drawParity(modelId) {
+  if (!META || !META.parity || !META.parity[modelId]) return;
+  const p = META.parity[modelId];
+  const theme = getPlotTheme();
+
+  const minVal = Math.min(...p.actual, ...p.predicted);
+  const maxVal = Math.max(...p.actual, ...p.predicted);
+  const pad = (maxVal - minVal) * 0.05 || 1;
+
+  const data = [
+    {
+      x: [minVal - pad, maxVal + pad],
+      y: [minVal - pad, maxVal + pad],
+      mode: "lines",
+      line: { color: theme.textColor, dash: "dash", width: 1.5 },
+      hoverinfo: "skip",
+      showlegend: false
+    },
+    {
+      x: p.actual,
+      y: p.predicted,
+      mode: "markers",
+      marker: {
+        color: theme.accent,
+        size: 5.5,
+        opacity: 0.65,
+        line: { color: isDarkMode() ? "#1c1c1e" : "#ffffff", width: 0.5 }
+      },
+      hovertemplate: "Measured: %{x:.2f} K<br>CV Predicted: %{y:.2f} K<extra></extra>",
+      showlegend: false
+    }
+  ];
+
+  const layout = {
+    paper_bgcolor: "transparent",
+    plot_bgcolor: "transparent",
+    font: { color: theme.textColor, family: theme.fontFamily, size: 11 },
+    margin: { l: 48, r: 16, t: 12, b: 42 },
+    xaxis: {
+      title: "Measured Tc (K)",
+      gridcolor: theme.gridColor,
+      zerolinecolor: theme.zerolineColor,
+      range: [minVal - pad, maxVal + pad]
+    },
+    yaxis: {
+      title: "CV Predicted Tc (K)",
+      gridcolor: theme.gridColor,
+      zerolinecolor: theme.zerolineColor,
+      range: [minVal - pad, maxVal + pad]
+    }
+  };
+
+  Plotly.react("parityChart", data, layout, CFG);
+}
+
+function drawDistribution(markerTc = null) {
+  if (!META || !META.tc_distribution) return;
+  const theme = getPlotTheme();
+
+  const data = [{
+    x: META.tc_distribution,
+    type: "histogram",
+    nbinsx: 48,
+    marker: {
+      color: theme.accent,
+      opacity: 0.38,
+      line: { color: theme.accent, width: 1 }
+    },
+    hovertemplate: "%{y} alloys<br>Tc: %{x:.1f} K<extra></extra>"
+  }];
+
+  const layout = {
+    paper_bgcolor: "transparent",
+    plot_bgcolor: "transparent",
+    font: { color: theme.textColor, family: theme.fontFamily, size: 11 },
+    margin: { l: 48, r: 16, t: 16, b: 42 },
+    bargap: 0.05,
+    xaxis: {
+      title: "Superconducting Tc (K)",
+      gridcolor: theme.gridColor,
+      zeroline: false
+    },
+    yaxis: {
+      title: "Count",
+      gridcolor: theme.gridColor,
+      zeroline: false
+    },
+    shapes: [],
+    annotations: []
+  };
+
+  const currentMarker = markerTc !== null ? markerTc : parseFloat($("invTc").value);
+  if (!isNaN(currentMarker)) {
+    layout.shapes.push({
+      type: "line",
+      x0: currentMarker,
+      x1: currentMarker,
+      yref: "paper",
+      y0: 0,
+      y1: 1,
+      line: { color: theme.scBlue, width: 2.5 }
+    });
+    layout.annotations.push({
+      x: currentMarker,
+      yref: "paper",
+      y: 1,
+      text: `Tc: ${currentMarker.toFixed(1)} K`,
+      showarrow: false,
+      yanchor: "bottom",
+      font: { color: theme.scBlue, size: 11, family: theme.fontFamily, weight: 600 }
+    });
+  }
+
+  Plotly.react("distChart", data, layout, CFG);
+}
+
+function drawImportances(modelId) {
+  if (!META || !META.importances || !META.importances[modelId]) return;
+  const rawList = META.importances[modelId];
+  const theme = getPlotTheme();
+
+  const top8 = [...rawList]
+    .sort((a, b) => b.importance - a.importance)
+    .slice(0, 8)
+    .reverse();
+
+  const yLabels = top8.map(d => d.feature.replace(/^MagpieData\s*/, ""));
+  const xValues = top8.map(d => d.importance);
+
+  const data = [{
+    type: "bar",
+    orientation: "h",
+    x: xValues,
+    y: yLabels,
+    marker: {
+      color: theme.accent,
+      opacity: 0.85,
+      line: { color: theme.accent, width: 1 }
+    },
+    hovertemplate: "%{y}: %{x:.4f}<extra></extra>"
+  }];
+
+  const layout = {
+    paper_bgcolor: "transparent",
+    plot_bgcolor: "transparent",
+    font: { color: theme.textColor, family: theme.fontFamily, size: 10.5 },
+    margin: { l: 140, r: 16, t: 10, b: 36 },
+    xaxis: {
+      title: "Relative Importance",
+      gridcolor: theme.gridColor,
+      zeroline: false
+    },
+    yaxis: {
+      gridcolor: "transparent",
+      automargin: true
+    }
+  };
+
+  Plotly.react("importanceChart", data, layout, CFG);
+}
+
+/* ---------- Model Selector & Metrics Update ---------- */
+function renderModelSelector() {
+  const container = $("modelSelector");
+  container.innerHTML = "";
+  if (!META || !META.models) return;
+
+  META.models.forEach(m => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = `seg-btn ${m.id === selectedModelId ? "active" : ""}`;
+    btn.innerHTML = `
+      <span>${m.label}</span>
+      <span class="seg-btn-sub">MAE &plusmn;${m.metrics.MAE.toFixed(1)} K</span>
+    `;
+    btn.onclick = () => selectModel(m.id);
+    container.appendChild(btn);
+  });
+}
+
+function selectModel(id) {
+  selectedModelId = id;
+  const m = META.models.find(x => x.id === id);
+  if (!m) return;
+
+  document.querySelectorAll("#modelSelector .seg-btn").forEach((b, idx) => {
+    if (META.models[idx].id === id) {
+      b.classList.add("active");
+    } else {
+      b.classList.remove("active");
+    }
+  });
+
+  $("activeModelLabel").textContent = m.label;
+  $("metricMAE").textContent = m.metrics.MAE.toFixed(2);
+  $("metricRMSE").textContent = m.metrics.RMSE.toFixed(2);
+  $("metricR2").textContent = m.metrics.R2.toFixed(3);
+
+  drawParity(id);
+  drawImportances(id);
+}
+
+/* ---------- Error Handling ---------- */
+function showError(title, msg) {
+  $("errorTitle").textContent = title;
+  $("errorMsg").textContent = msg;
+  $("errorBanner").style.display = "flex";
+}
+
+function hideError() {
+  $("errorBanner").style.display = "none";
+}
+
+/* ---------- Bootstrap Application ---------- */
+async function boot() {
+  renderElementToggles();
+  setupPresets();
+  updateCombinationsEstimator();
+
+  $("btnRun").onclick = executeInverseDesign;
+  $("btnErrorRetry").onclick = executeInverseDesign;
+
+  $("invTc").addEventListener("input", () => {
+    const val = parseFloat($("invTc").value);
+    if (!isNaN(val)) drawDistribution(val);
+  });
+
+  $("invTc").addEventListener("keydown", e => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      executeInverseDesign();
+    }
+  });
+
+  // Watch system color-scheme changes to redraw charts cleanly
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+    if (selectedModelId) {
+      drawParity(selectedModelId);
+      drawDistribution();
+      drawImportances(selectedModelId);
+    }
+  });
+
+  // Fetch Metadata from Render API
+  try {
+    META = await fetchJsonWithWake(`${API_BASE}/meta`);
+    if (META && META.models && META.models.length > 0) {
+      renderModelSelector();
+      selectModel("extra_trees");
+      drawDistribution(8.0);
+    }
+  } catch (err) {
+    console.error("Meta initialization failed:", err);
+  }
+
+  // Health check
+  fetch(`${API_BASE}/health`).then(r => {
+    if (r.ok) {
+      $("serverDot").className = "server-dot";
+      $("serverStatusText").textContent = "Server Ready";
+    }
+  }).catch(() => {
+    showWakingNotice(true);
+  });
+}
+
+boot();
 </script>
 </body>
 </html>
