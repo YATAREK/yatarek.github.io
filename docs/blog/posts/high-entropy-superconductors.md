@@ -82,9 +82,7 @@ brittle phases. Instead, some formed a **single, simple crystal structure**.
 The name comes from configurational entropy. For *n* elements in equal amounts, the
 mixing entropy is
 
-$$
-\Delta S_{\text{conf}} = R \ln n
-$$
+<div class="eq">Δ<i>S</i><sub>conf</sub> = <i>R</i> ln <i>n</i></div>
 
 where *R* is the gas constant. For five elements this is about 1.61 *R*. At high
 temperature, this entropy term can stabilise a random solid solution over competing

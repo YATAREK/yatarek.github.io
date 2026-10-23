@@ -59,9 +59,7 @@ layer**. Charge is stored electrostatically, with no chemical reaction.[^conway]
 
 The capacitance follows the familiar parallel-plate relation
 
-$$
-C = \frac{\varepsilon_r \varepsilon_0 A}{d}
-$$
+<div class="eq"><i>C</i> = <span class="frac"><span><i>ε</i><sub>r</sub> <i>ε</i><sub>0</sub> <i>A</i></span><span><i>d</i></span></span></div>
 
 where *A* is the electrode surface area and *d* is the tiny charge separation. Because
 *d* is so small, the capacitance per unit area is large. So the goal is to maximise
@@ -69,9 +67,7 @@ where *A* is the electrode surface area and *d* is the tiny charge separation. B
 
 The stored energy is
 
-$$
-E = \tfrac{1}{2} C V^2
-$$
+<div class="eq"><i>E</i> = <span class="frac"><span>1</span><span>2</span></span> <i>C</i> <i>V</i><sup>2</sup></div>
 
 so both capacitance and operating voltage *V* matter. Voltage is limited by the
 electrolyte. Water decomposes above about 1.2 V, so commercial cells mostly use organic

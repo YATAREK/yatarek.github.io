@@ -37,7 +37,9 @@ combines synthesis, characterisation and machine learning.
 
 <div class="timeline" markdown>
 
-<div class="tl-item" markdown>
+<div class="tl-item tl-item--current" markdown>
+<img class="tl-logo" src="assets/logos/enviroforce.jpg" alt="EnviroForce logo">
+
 #### Assistant Scientist · EnviroForce
 <p class="tl-meta">Oct 2026 – Present · Brisbane, Australia</p>
 
@@ -46,7 +48,9 @@ combines synthesis, characterisation and machine learning.
 - NATA-accredited sampling for methamphetamine, mould, lead and asbestos.
 </div>
 
-<div class="tl-item" markdown>
+<div class="tl-item tl-item--current" markdown>
+<img class="tl-logo" src="assets/logos/uq.svg" alt="The University of Queensland crest">
+
 #### Senior Research Assistant · The University of Queensland
 <p class="tl-meta">Sep 2026 – Present · Brisbane, Australia</p>
 
@@ -57,6 +61,8 @@ combines synthesis, characterisation and machine learning.
 </div>
 
 <div class="tl-item" markdown>
+<img class="tl-logo" src="assets/logos/uq.svg" alt="The University of Queensland crest">
+
 #### Doctoral Researcher · The University of Queensland
 <p class="tl-meta">Oct 2022 – Sep 2026 · Brisbane, Australia</p>
 
@@ -71,6 +77,8 @@ combines synthesis, characterisation and machine learning.
 </div>
 
 <div class="tl-item" markdown>
+<img class="tl-logo" src="assets/logos/bcsir.gif" alt="BCSIR logo">
+
 #### Researcher · Bangladesh Council of Scientific and Industrial Research
 <p class="tl-meta">Aug 2021 – Aug 2022 · Dhaka, Bangladesh</p>
 
@@ -80,6 +88,8 @@ combines synthesis, characterisation and machine learning.
 </div>
 
 <div class="tl-item" markdown>
+<img class="tl-logo" src="assets/logos/buet.svg" alt="BUET logo">
+
 #### Postgraduate Researcher · BUET
 <p class="tl-meta">Mar 2021 – Jul 2021 · Dhaka, Bangladesh</p>
 
@@ -89,6 +99,8 @@ combines synthesis, characterisation and machine learning.
 </div>
 
 <div class="tl-item" markdown>
+<img class="tl-logo" src="assets/logos/buet.svg" alt="BUET logo">
+
 #### Experimental Officer · BUET
 <p class="tl-meta">Aug 2020 – Dec 2020 · Dhaka, Bangladesh</p>
 
@@ -104,16 +116,22 @@ combines synthesis, characterisation and machine learning.
 <div class="timeline" markdown>
 
 <div class="tl-item" markdown>
+<img class="tl-logo" src="assets/logos/uq.svg" alt="The University of Queensland crest">
+
 #### Doctor of Philosophy, Mechanical Engineering · The University of Queensland
 <p class="tl-meta">Oct 2022 – Sep 2026</p>
 </div>
 
 <div class="tl-item" markdown>
+<img class="tl-logo" src="assets/logos/buet.svg" alt="BUET logo">
+
 #### Master of Science, Chemistry · Bangladesh University of Engineering and Technology
 <p class="tl-meta">Nov 2018 – Jun 2021</p>
 </div>
 
 <div class="tl-item" markdown>
+<img class="tl-logo" src="assets/logos/khulna.svg" alt="Khulna University logo">
+
 #### Bachelor of Science, Chemistry · Khulna University
 <p class="tl-meta">Jun 2014 – Jun 2018</p>
 </div>

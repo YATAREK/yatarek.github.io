@@ -376,3 +376,87 @@
   hyphens: manual !important;
 }
 .md-typeset figure.figure-wide a { display: block; cursor: zoom-in; }
+
+/* ---- Equations (plain HTML, no script needed) ----------------------------- */
+.md-typeset .eq {
+  margin: 1.2em 0;
+  text-align: center !important;
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 1.05rem;
+  hyphens: manual !important;
+}
+.md-typeset .eq i { font-style: italic; }
+.md-typeset .frac {
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: middle;
+  text-align: center;
+  margin: 0 0.15em;
+  line-height: 1.25;
+}
+.md-typeset .frac > span:first-child {
+  border-bottom: 1px solid currentColor;
+  padding: 0 0.2em;
+}
+
+/* ---- Header: bigger logo and name; logo sits directly above the Home tab ---- */
+@media screen and (min-width: 76.25em) {
+  .md-header__inner { height: 3.6rem; }
+  .md-header__button.md-logo {
+    margin: 0;
+    padding: 0;
+    /* line the logo's left atom up with the "Home" tab text below */
+    margin-left: 0.08rem;
+  }
+  .md-header__button.md-logo svg,
+  .md-header__button.md-logo img {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+  .md-header__title {
+    margin-left: -0.6rem;
+  }
+  .md-header__title .md-header__topic:first-child .md-ellipsis,
+  .md-header__title .md-header__topic:first-child {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+}
+
+/* ---- Contact links with brand icons --------------------------------------- */
+.md-typeset .contact-links p { margin: 0.5em 0; text-align: left !important; }
+.md-typeset .contact-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+}
+.md-typeset .contact-links .twemoji {
+  width: 1.5em;
+  height: 1.5em;
+  color: var(--clay);
+}
+.md-typeset .contact-links .twemoji svg { width: 1.5em; height: 1.5em; }
+
+/* ---- Timeline: organisation logos and current-role dots ------------------- */
+.md-typeset .tl-item { padding-left: 5rem; }
+.md-typeset .tl-logo {
+  position: absolute;
+  left: 1.5rem;
+  top: 0.05em;
+  width: 2.8rem;
+  height: 2.8rem;
+  object-fit: contain;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  background: #ffffff;
+  border: 1px solid color-mix(in srgb, var(--steel) 35%, transparent);
+}
+.md-typeset .tl-item--current::before {
+  background: #5b8fb9;
+  box-shadow: 0 0 0 3px var(--md-default-bg-color), 0 0 0 6px rgba(91, 143, 185, 0.25);
+}
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .tl-item { padding-left: 4.2rem; }
+  .md-typeset .tl-logo { left: 1.3rem; width: 2.4rem; height: 2.4rem; }
+}

@@ -33,9 +33,7 @@ circulating with no driving voltage. This is called **persistent mode**.
 The field is only as stable as the loop is perfect. Any residual resistance *R* in the
 circuit makes the current decay with a time constant
 
-$$
-\tau = \frac{L}{R}
-$$
+<div class="eq"><i>τ</i> = <span class="frac"><span><i>L</i></span><span><i>R</i></span></span></div>
 
 where *L* is the coil inductance.[^iwasa] MRI needs field drift measured in parts per
 million over long periods. So the total resistance must be vanishingly small.[^lvovsky]
