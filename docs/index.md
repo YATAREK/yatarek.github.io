@@ -104,17 +104,17 @@ combines synthesis, characterisation and machine learning.
 <div class="timeline" markdown>
 
 <div class="tl-item" markdown>
-#### PhD, Mechanical & Mining Engineering · The University of Queensland
-<p class="tl-meta">Oct 2022 – Sep 2026</p>
+#### Doctor of Philosophy, Mechanical Engineering · The University of Queensland
+<p class="tl-meta">Oct 2022 – Oct 2026</p>
 </div>
 
 <div class="tl-item" markdown>
-#### MSc in Chemistry · Bangladesh University of Engineering and Technology (BUET)
+#### Master of Science, Chemistry · Bangladesh University of Engineering and Technology
 <p class="tl-meta">Nov 2018 – Jun 2021</p>
 </div>
 
 <div class="tl-item" markdown>
-#### BSc in Chemistry · Khulna University
+#### Bachelor of Science, Chemistry · Khulna University
 <p class="tl-meta">Jun 2014 – Jun 2018</p>
 </div>
 
