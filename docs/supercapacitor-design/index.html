@@ -189,25 +189,25 @@
     <div class="grid">
       <div class="panel">
         <h2>Electrode Parameters</h2>
-        <label class="field"><span>SSA — Specific Surface Area (m²/g)</span>
+        <label class="field"><span>SSA: Specific Surface Area (m²/g)</span>
           <div class="slider-row">
             <input type="range" id="fwd-SSA" min="100" max="3000" step="10" value="1200">
             <span class="slider-val" id="fwd-SSA-val">1200</span>
           </div>
         </label>
-        <label class="field"><span>SSA_micro — Micropore Surface Area (m²/g)</span>
+        <label class="field"><span>SSA_micro: Micropore Surface Area (m²/g)</span>
           <div class="slider-row">
             <input type="range" id="fwd-SSA_micro" min="0" max="2500" step="10" value="600">
             <span class="slider-val" id="fwd-SSA_micro-val">600</span>
           </div>
         </label>
-        <label class="field"><span>PV — Total Pore Volume (cm³/g)</span>
+        <label class="field"><span>PV: Total Pore Volume (cm³/g)</span>
           <div class="slider-row">
             <input type="range" id="fwd-PV" min="0.1" max="3.5" step="0.01" value="0.8">
             <span class="slider-val" id="fwd-PV-val">0.80</span>
           </div>
         </label>
-        <label class="field"><span>PV_micro — Micropore Volume (cm³/g)</span>
+        <label class="field"><span>PV_micro: Micropore Volume (cm³/g)</span>
           <div class="slider-row">
             <input type="range" id="fwd-PV_micro" min="0" max="2.0" step="0.01" value="0.3">
             <span class="slider-val" id="fwd-PV_micro-val">0.30</span>
@@ -219,7 +219,7 @@
             <span class="slider-val" id="fwd-pore_size-val">2.0</span>
           </div>
         </label>
-        <label class="field"><span>ID/IG — Defect Ratio</span>
+        <label class="field"><span>ID/IG: Defect Ratio</span>
           <div class="slider-row">
             <input type="range" id="fwd-ID_IG" min="0.5" max="1.5" step="0.01" value="1.0">
             <span class="slider-val" id="fwd-ID_IG-val">1.00</span>
@@ -341,7 +341,7 @@
     <div class="panel" style="max-width:700px">
       <h2>SHAP Feature Importance (Gradient Boosting)</h2>
       <p style="font-size:13px;color:var(--muted);margin-bottom:20px">
-        Mean |SHAP value| — higher = greater impact on predicted capacitance.
+        Mean |SHAP value|: higher = greater impact on predicted capacitance.
         Features ordered by importance. These values represent the expected physics-consistent
         ranking from EDLC and pseudocapacitance theory, validated against GradientBoosting
         feature importances. Hover for physical explanation.
@@ -373,7 +373,7 @@ async function checkAPI() {
     if (res.ok) {
       const d = await res.json();
       if (d.models_loaded) {
-        textEl.textContent = 'Connected — models loaded and ready.';
+        textEl.textContent = 'Connected: models loaded and ready.';
         statusEl.style.borderLeftColor = 'var(--sc)';
         apiReady = true;
       } else {
@@ -418,7 +418,7 @@ async function predictForward() {
   errEl.textContent = '';
 
   if (!apiReady) {
-    errEl.textContent = 'API not ready yet — server may still be waking up. Wait for the status bar above to show "Connected".';
+    errEl.textContent = 'API not ready yet. Server may still be waking up. Wait for the status bar above to show "Connected".';
     return;
   }
 
@@ -470,7 +470,7 @@ async function predictForward() {
     `;
   } catch (e) {
     errEl.textContent = e.message;
-    document.getElementById('fwd-result').innerHTML = '<p class="loading">Prediction failed — see error below the button.</p>';
+    document.getElementById('fwd-result').innerHTML = '<p class="loading">Prediction failed. See error below the button.</p>';
   } finally {
     btn.disabled = false;
     btn.textContent = 'Predict Capacitance';
@@ -484,7 +484,7 @@ async function runInverse() {
   errEl.textContent = '';
 
   if (!apiReady) {
-    errEl.textContent = 'API not ready yet — server may still be waking up. Wait for the status bar above to show "Connected".';
+    errEl.textContent = 'API not ready yet. Server may still be waking up. Wait for the status bar above to show "Connected".';
     return;
   }
 
@@ -514,11 +514,11 @@ async function runInverse() {
     renderInverseResults(data);
   } catch (e) {
     if (e.name === 'TimeoutError') {
-      errEl.textContent = 'Request timed out. Bayesian optimisation is computationally expensive — try reducing n_suggestions or retry.';
+      errEl.textContent = 'Request timed out. Bayesian optimisation is computationally expensive; try reducing n_suggestions or retry.';
     } else {
       errEl.textContent = e.message;
     }
-    document.getElementById('inv-result').innerHTML = '<p class="loading">Optimisation failed — see error below the button.</p>';
+    document.getElementById('inv-result').innerHTML = '<p class="loading">Optimisation failed. See error below the button.</p>';
   } finally {
     btn.disabled = false;
     btn.textContent = 'Find Optimal Materials';
@@ -564,9 +564,9 @@ function renderInverseResults(data) {
 // SHAP placeholder (populated from precomputed data or static values)
 const SHAP_DATA = [
   {feature: "SSA", value: 45.2, tooltip: "EDLC capacitance scales with accessible surface area (Helmholtz relation)"},
-  {feature: "potential_window", value: 32.8, tooltip: "Energy stored scales as V² — wider window = higher measured C"},
+  {feature: "potential_window", value: 32.8, tooltip: "Energy stored scales as V²: wider window = higher measured C"},
   {feature: "N_content", value: 28.4, tooltip: "N-doping introduces pseudocapacitive faradaic reactions"},
-  {feature: "current_density", value: 22.1, tooltip: "Rate capability — higher current = lower measured C (kinetic limitation)"},
+  {feature: "current_density", value: 22.1, tooltip: "Rate capability: higher current = lower measured C (kinetic limitation)"},
   {feature: "pore_size", value: 18.6, tooltip: "Ion accessibility depends on pore-to-ion size ratio"},
   {feature: "SSA_N_synergy", value: 15.3, tooltip: "Combined effect: N sites on high-surface-area carbon amplify pseudocapacitance"},
   {feature: "micropore_fraction", value: 12.7, tooltip: "Micropores dominate in aqueous electrolytes (small ion size)"},

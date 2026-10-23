@@ -1,5 +1,5 @@
 site_name: Yeasin Tarek
-site_description: Materials scientist — research, publications, and notes.
+site_description: Materials scientist, research, publications, and notes.
 site_author: Yeasin Tarek
 site_url: https://yatarek.github.io/
 
@@ -44,7 +44,6 @@ nav:
   - Research: research.md
   - Publications: publications.md
   - Machine Learning: machine-learning.md
-  - Micro-CT: micro-ct.md
   - Blog:
       - blog/index.md
   - Contact: contact.md

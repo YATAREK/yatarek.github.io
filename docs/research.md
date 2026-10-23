@@ -1,16 +1,16 @@
 # Research
 
 My research connects **materials synthesis** with **advanced characterization** to
-develop and understand functional materials — currently superconductors for medical
+develop and understand functional materials, currently superconductors for medical
 imaging, and previously electrode materials for energy storage.
 
 ## Research interests
 
-- **Superconducting materials & joint technology** — fabricating MgB<sub>2</sub> wire and
+- **Superconducting materials & joint technology**: fabricating MgB<sub>2</sub> wire and
   developing practical joints for persistent-mode superconducting magnets.
-- **Energy storage materials** — hybrid supercapacitor electrodes and related
+- **Energy storage materials**: hybrid supercapacitor electrodes and related
   nanomaterials.
-- **Structure–property relationships** — using a broad characterization toolkit to
+- **Structure–property relationships**: using a broad characterization toolkit to
   connect microstructure to performance.
 
 ---
@@ -22,12 +22,12 @@ imaging, and previously electrode materials for energy storage.
 *PhD research · The University of Queensland · 2022 – present*
 
 Persistent-mode operation is what lets an MRI magnet hold a stable field without a
-continuously connected power supply — and that depends on **superconducting joints** with
+continuously connected power supply, and that depends on **superconducting joints** with
 extremely low resistance. My PhD develops a fabrication technology for **reacted
 MgB<sub>2</sub> joints** suitable for industrial-grade superconducting MRI magnets.
 
 I fabricate the MgB<sub>2</sub> superconductor myself and produce the reacted joint using
-a specialized process — a difficult but practically essential step for real-world magnet
+a specialized process, a difficult but practically essential step for real-world magnet
 manufacturing. The performance of each joint is validated by measuring its **transport
 critical current (I<sub>c</sub>)**.
 
@@ -56,7 +56,7 @@ I work across synthesis, fabrication, and a broad range of characterization meth
 === "Structural & imaging"
 
     - X-ray diffraction (XRD)
-    - Electron microscopy — SEM, TEM, EDS, SAED
+    - Electron microscopy: SEM, TEM, EDS, SAED
     - Focused ion beam (FIB)
     - Raman and FTIR spectroscopy
     - XPS

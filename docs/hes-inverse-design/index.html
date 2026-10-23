@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>HES Inverse Design — Find Superconductors by Target Tc</title>
+<title>HES Inverse Design: Find Superconductors by Target Tc</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -180,14 +180,14 @@
       <label class="field">
         <span>Search mode</span>
         <select id="inv-mode">
-          <option value="target">Target — closest to Tc</option>
-          <option value="maximize">Maximize — highest Tc</option>
-          <option value="range">Range — all within bounds</option>
+          <option value="target">Target: closest to Tc</option>
+          <option value="maximize">Maximize: highest Tc</option>
+          <option value="range">Range: all within bounds</option>
         </select>
       </label>
 
       <label class="field">
-        <span>Tc bounds (min — max, K)</span>
+        <span>Tc bounds (min to max, K)</span>
         <div class="inrow">
           <input id="inv-tcmin" type="number" value="5.0" step="1" min="0.1" max="300" />
           <input id="inv-tcmax" type="number" value="30.0" step="1" min="0.1" max="300" />
@@ -251,7 +251,7 @@
     <b>Models:</b> Extra Trees, Random Forest, XGBoost, Gradient Boosting, SVR, KNN.<br>
     <b>Phase classifier:</b> 11,247 training samples (Peivaste et al. 2023), 96% BCC accuracy.<br>
     <b>Tc predictor:</b> 3,319 samples, R² = 0.87 (best single model).<br><br>
-    Predictions are ML model outputs — not measured values. Use as a guide for experimental priorities.
+    Predictions are ML model outputs, not measured values. Use as a guide for experimental priorities.
     <br><br>
     <a href="../hes-tc-predictor/index.html">← Forward Tc Predictor</a> &nbsp;|&nbsp;
     <a href="../machine-learning.html">Machine Learning</a>
@@ -339,7 +339,7 @@ function renderResults(data){
   data.results.forEach((r, i) => {
     const ph = r.physics || {};
     const relColor = ph.level === "high" ? "var(--sc)" : ph.level === "medium" ? "var(--warm)" : "var(--danger)";
-    const relLabel = ph.reliability !== undefined ? `${(ph.reliability*100).toFixed(0)}%` : "—";
+    const relLabel = ph.reliability !== undefined ? `${(ph.reliability*100).toFixed(0)}%` : "N/A";
 
     html += `<tr class="data-row" data-idx="${i}" style="cursor:pointer">
       <td class="rank">${r.rank}</td>
@@ -367,14 +367,14 @@ function renderResults(data){
           <dt>&#948; (size mismatch)</dt><dd>${r.delta.toFixed(2)}%</dd>
           <dt>P(BCC)</dt><dd>${(r.p_bcc*100).toFixed(1)}%</dd>
           <dt>95% CI</dt><dd>${r.tc_95_lo.toFixed(2)} &ndash; ${r.tc_95_hi.toFixed(2)} K</dd>
-          <dt>Nb fraction</dt><dd>${ph.nb_fraction !== undefined ? (ph.nb_fraction*100).toFixed(1)+'%' : '—'}</dd>
-          <dt>Nb+Ta fraction</dt><dd>${ph.nb_ta_fraction !== undefined ? (ph.nb_ta_fraction*100).toFixed(1)+'%' : '—'}</dd>
+          <dt>Nb fraction</dt><dd>${ph.nb_fraction !== undefined ? (ph.nb_fraction*100).toFixed(1)+'%' : 'N/A'}</dd>
+          <dt>Nb+Ta fraction</dt><dd>${ph.nb_ta_fraction !== undefined ? (ph.nb_ta_fraction*100).toFixed(1)+'%' : 'N/A'}</dd>
         </dl>
         <dl>
           <dt>Model Predictions</dt>${models}
           <dt>Nearest Training</dt><dd>${r.nearest_training||'N/A'} (element distance = ${r.nearest_dist})</dd>
           <dt>Physics Assessment</dt>
-          <dd style="color:${relColor};font-weight:600">${ph.level ? ph.level.toUpperCase() : '—'} reliability (${relLabel})</dd>
+          <dd style="color:${relColor};font-weight:600">${ph.level ? ph.level.toUpperCase() : 'N/A'} reliability (${relLabel})</dd>
           ${flags}
         </dl>
       </div></td>

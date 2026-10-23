@@ -1,5 +1,5 @@
 /* ===========================================================================
-   Yeasin Tarek — custom theme
+   Yeasin Tarek: custom theme
    Warm, minimal, "reading-room" feel. Clay accent + serif display headings.
    =========================================================================== */
 
@@ -9,7 +9,7 @@
 :root {
   --clay:        #d97757;   /* Claude-ish warm clay */
   --clay-deep:   #c15f3c;
-  --steel:       #7c8a9a;   /* cool secondary — nods to metals/materials */
+  --steel:       #7c8a9a;   /* cool secondary; nods to metals/materials */
 }
 
 [data-md-color-primary="custom"] {

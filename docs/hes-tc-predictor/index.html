@@ -201,7 +201,7 @@
           <div class="phase-header">
             <div class="phase-icon" id="phaseIcon">?</div>
             <div>
-              <div class="phase-label" id="phaseLabel">—</div>
+              <div class="phase-label" id="phaseLabel">-</div>
               <div class="phase-sub" id="phaseSub">Phase classifier · 11,247 training alloys</div>
             </div>
           </div>
@@ -285,7 +285,7 @@ async function boot(){
     META = await fetchJson(`${API_BASE}/meta`);
   }catch(e){
     showBanner(`Can't reach the prediction API at <code>${API_BASE}</code>. `
-      + `The free-tier server may be waking up — try again in 30 seconds.`);
+      + `The free-tier server may be waking up. Try again in 30 seconds.`);
     return;
   }
   const sel = $("model");

@@ -43,7 +43,7 @@ and [ORCID](https://orcid.org/0000-0003-2113-2486){ target=_blank }.
 ## 2021
 
 - Barai, H. R., Reaz, A. H., **Tarek, Y. A.**, Saha, S., Mojumder, M. N., Chowdhury, K., … &
-  Roy, C. K. (2021). *Communication—Self-doped mesoporous activated carbon prepared from car
+  Roy, C. K. (2021). *Communication: Self-doped mesoporous activated carbon prepared from car
   exhaust exhibited long cycle life and high specific capacitance for supercapacitor applications.*
   ECS Journal of Solid State Science and Technology, 10(7), 071014.
 
