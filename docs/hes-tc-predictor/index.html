@@ -160,6 +160,11 @@
   }
   a{color:var(--sc)}
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+  /* justified paragraphs, hyphenated so spacing stays even */
+  @media (min-width:720px){
+    p{text-align:justify;text-justify:inter-word;hyphens:auto;-webkit-hyphens:auto}
+    .eyebrow{text-align:left;hyphens:manual}
+  }
 </style>
 </head>
 <body>
@@ -211,7 +216,7 @@
         </div>
 
         <!-- Stage 2: Tc -->
-        <div class="tc-value"><span id="tc">&mdash;</span><span class="k">K</span></div>
+        <div class="tc-value"><span id="tc">-</span><span class="k">K</span></div>
         <div class="tc-sub" id="tcSub">No prediction yet.</div>
         <div class="tags" id="tags"></div>
         <div class="cryo"><svg id="cryo" viewBox="0 0 340 74" preserveAspectRatio="none"></svg></div>
@@ -404,7 +409,7 @@ function renderPhase(j){
   $("phaseLabel").textContent = phase;
   $("phaseSub").textContent = isBCC
     ? `BCC probability: ${(prob*100).toFixed(0)}%`
-    : `BCC probability: ${(prob*100).toFixed(0)}% \u2014 predicted: ${phase}`;
+    : `BCC probability: ${(prob*100).toFixed(0)}%, predicted: ${phase}`;
 
   // Bar
   const bar = $("phaseBar");

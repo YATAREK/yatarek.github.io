@@ -142,6 +142,11 @@
   .workflow .arrow{color:var(--sc);margin:0 6px}
 
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+  /* justified paragraphs, hyphenated so spacing stays even */
+  @media (min-width:720px){
+    p{text-align:justify;text-justify:inter-word;hyphens:auto;-webkit-hyphens:auto}
+    .eyebrow{text-align:left;hyphens:manual}
+  }
 </style>
 </head>
 <body>

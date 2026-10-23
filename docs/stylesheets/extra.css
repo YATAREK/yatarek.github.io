@@ -134,12 +134,83 @@
   .lattice-logo .corner { animation: none; }
 }
 
-/* ---- Experience list (LinkedIn-style check bullets) ---------------------- */
-.xp h4 { margin: 1.6em 0 0.1em; font-size: 0.95rem; }
-.xp__meta {
+
+/* ---- Experience / education timeline -------------------------------------- */
+.md-typeset .timeline { margin: 1.2em 0 0; }
+.md-typeset .tl-item {
+  position: relative;
+  padding: 0 0 1.4em 1.6rem;
+}
+/* dot */
+.md-typeset .tl-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: var(--clay);
+  box-shadow: 0 0 0 3px var(--md-default-bg-color);
+}
+/* connecting line down to the next dot */
+.md-typeset .tl-item::after {
+  content: "";
+  position: absolute;
+  left: calc(0.325rem - 1px);
+  top: 1.25em;
+  bottom: -0.45em;
+  width: 2px;
+  background: color-mix(in srgb, var(--clay) 45%, transparent);
+}
+.md-typeset .tl-item:last-child::after { display: none; }
+.md-typeset .tl-item:last-child { padding-bottom: 0.2em; }
+.md-typeset .tl-item h4 { margin: 0 0 0.1em; font-size: 0.9rem; line-height: 1.4; }
+.md-typeset .tl-meta {
   color: var(--md-default-fg-color--light);
   font-size: 0.72rem;
-  margin: 0 0 0.6em;
+  margin: 0 0 0.4em;
+  text-align: left;
 }
-.md-typeset .xp ul { list-style: none; margin-left: 0; padding-left: 0; }
-.md-typeset .xp ul li { margin-left: 0; }
+/* tick bullets instead of dots */
+.md-typeset .tl-item ul { list-style: none; margin: 0; padding: 0; }
+.md-typeset .tl-item ul li {
+  list-style: none;
+  position: relative;
+  margin: 0.15em 0 0.15em 0;
+  padding-left: 1.3em;
+}
+.md-typeset .tl-item ul li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--clay);
+  font-weight: 600;
+}
+
+/* ---- Justified body text ---------------------------------------------------- */
+/* Only on screens wide enough for even spacing; phones stay left-aligned.
+   Hyphenation keeps word gaps tight so lines don't look stretched. */
+@media screen and (min-width: 45em) {
+  .md-typeset p,
+  .md-typeset li,
+  .md-typeset dd,
+  .md-typeset blockquote {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphenate-limit-chars: 6 3 3;
+  }
+  /* keep short or structural text left-aligned */
+  .md-typeset .hero__role,
+  .md-typeset .tl-meta,
+  .md-typeset td,
+  .md-typeset th,
+  .md-typeset .md-button,
+  .md-typeset .tabbed-labels,
+  .md-typeset .admonition-title {
+    text-align: left;
+    hyphens: manual;
+  }
+}

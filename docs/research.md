@@ -1,6 +1,6 @@
 # Research
 
-My research connects **materials synthesis** with **advanced characterization** to
+My research connects **materials synthesis** with **advanced characterisation** to
 develop and understand functional materials, currently superconductors for medical
 imaging, and previously electrode materials for energy storage.
 
@@ -10,7 +10,7 @@ imaging, and previously electrode materials for energy storage.
   developing practical joints for persistent-mode superconducting magnets.
 - **Energy storage materials**: hybrid supercapacitor electrodes and related
   nanomaterials.
-- **Structure–property relationships**: using a broad characterization toolkit to
+- **Structure–property relationships**: using a broad characterisation toolkit to
   connect microstructure to performance.
 
 ---
@@ -27,7 +27,7 @@ extremely low resistance. My PhD develops a fabrication technology for **reacted
 MgB<sub>2</sub> joints** suitable for industrial-grade superconducting MRI magnets.
 
 I fabricate the MgB<sub>2</sub> superconductor myself and produce the reacted joint using
-a specialized process, a difficult but practically essential step for real-world magnet
+a specialised process, a difficult but practically essential step for real-world magnet
 manufacturing. The performance of each joint is validated by measuring its **transport
 critical current (I<sub>c</sub>)**.
 
@@ -51,7 +51,7 @@ storage, and the work was published in **ACS Omega**.
 
 ## Techniques & tools
 
-I work across synthesis, fabrication, and a broad range of characterization methods.
+I work across synthesis, fabrication, and a broad range of characterisation methods.
 
 === "Structural & imaging"
 

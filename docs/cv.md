@@ -6,7 +6,7 @@
 
 PhD researcher in the Department of Mechanical & Mining Engineering at the University of
 Queensland, with a strong foundation in materials science, chemistry, and advanced
-characterization. Expertise in superconducting joint technology, including material
+characterisation. Expertise in superconducting joint technology, including material
 synthesis and laboratory-scale process development for the MRI industry. Interested in
 magnetic and energy-storage materials for industrial applications.
 
@@ -27,7 +27,7 @@ magnetic and energy-storage materials for industrial applications.
 
 **Postgraduate Research Fellow**, *Chemistry Department, BUET, Dhaka*, Mar 2021 – Jul 2021
 : - Research on biomass-derived Na/K-ion battery materials.
-: - Synthesis, electrochemical evaluation, and advanced characterization.
+: - Synthesis, electrochemical evaluation, and advanced characterisation.
 
 **Experimental Officer**, *ESTex, Chemical Engineering Department, BUET, Dhaka*, Aug 2020 – Dec 2020
 : - Chemical and elemental analysis of industrial sludge and effluents using GC-MS, FTIR, and XRF.
@@ -36,10 +36,10 @@ magnetic and energy-storage materials for industrial applications.
 
 | Area | Details |
 | --- | --- |
-| Synthesis & processing | Experimental design, fabrication, measurement, characterization|
+| Synthesis & processing | Experimental design, fabrication, measurement, characterisation|
 | Superconducting materials | Magnetic and transport measurements |
 | Electrochemical analysis | CV, GCD, EIS |
-| Characterization | SEM, TEM, XRD, XPS, tXRF, Raman, BET, NMR, AAS, FTIR, GC-MS |
+| Characterisation | SEM, TEM, XRD, XPS, tXRF, Raman, BET, NMR, AAS, FTIR, GC-MS |
 
 ## Links
 

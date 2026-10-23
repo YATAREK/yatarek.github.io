@@ -144,6 +144,11 @@
     transition:width .4s ease;
   }
   .shap-value{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--faint)}
+  /* justified paragraphs, hyphenated so spacing stays even */
+  @media (min-width:720px){
+    p{text-align:justify;text-justify:inter-word;hyphens:auto;-webkit-hyphens:auto}
+    .eyebrow{text-align:left;hyphens:manual}
+  }
 </style>
 </head>
 <body>
@@ -168,7 +173,7 @@
       <tr><td style="padding:2px 12px 2px 0"><strong>Gradient Boosting</strong></td><td>R&sup2; = 0.57, RMSE = 68 F/g</td></tr>
     </table>
     <p style="font-size:12px;color:var(--faint);margin:0">
-      <strong>Note:</strong> Current accuracy is moderate due to the limited dataset (558 entries, 6 features). Predictions include uncertainty estimates &mdash; always interpret results with the reported &sigma;. Higher R&sup2; (&gt;0.90) expected with the full Mishra et al. 2023 dataset (4,899 entries, 13+ features). The GPR is used for inverse design because it provides calibrated uncertainty for Bayesian Optimisation.
+      <strong>Note:</strong> Current accuracy is moderate due to the limited dataset (558 entries, 6 features). Predictions include uncertainty estimates. Always interpret results with the reported &sigma;. Higher R&sup2; (&gt;0.90) expected with the full Mishra et al. 2023 dataset (4,899 entries, 13+ features). The GPR is used for inverse design because it provides calibrated uncertainty for Bayesian Optimisation.
     </p>
   </div>
 
@@ -532,7 +537,7 @@ function renderInverseResults(data) {
   }
 
   let html = `<p style="font-size:13px;color:var(--muted);margin-bottom:12px">
-    Target: <strong>${data.target_capacitance} F/g</strong> &mdash; ${data.suggestions.length} suggestions found
+    Target: <strong>${data.target_capacitance} F/g</strong>: ${data.suggestions.length} suggestions found
   </p>`;
   html += `<table class="results-table"><thead><tr>
     <th>#</th><th>SSA</th><th>N%</th><th>Pore</th><th>PV</th><th>Window</th><th>Pred. C</th><th>&sigma;</th>
@@ -554,8 +559,8 @@ function renderInverseResults(data) {
   html += '</tbody></table>';
   html += `<p style="font-size:11px;color:var(--faint);margin-top:12px">
     Suggestions generated via Bayesian Optimisation (Expected Improvement) over the PI-GPR surrogate.
-    High &sigma; values indicate the model is extrapolating beyond training data &mdash;
-    treat suggestions as starting points for experimental validation, not guaranteed outcomes.
+    High &sigma; values indicate the model is extrapolating beyond training data.
+    Treat suggestions as starting points for experimental validation, not guaranteed outcomes.
     Physical constraints enforced: SSA_micro &le; SSA, PV_micro &le; PV, pore size &ge; 0.3 nm.
   </p>`;
   document.getElementById('inv-result').innerHTML = html;
