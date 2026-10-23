@@ -1,49 +1,61 @@
 # Research
 
-My research connects **materials synthesis** with **advanced characterisation** to
-develop and understand functional materials, currently superconductors for medical
-imaging, and previously electrode materials for energy storage.
+I study how processing and composition control the properties of functional materials.
+My current focus is magnetic and superconducting materials, guided by machine learning.
 
 ## Research interests
 
-- **Superconducting materials & joint technology**: fabricating MgB<sub>2</sub> wire and
-  developing practical joints for persistent-mode superconducting magnets.
-- **Energy storage materials**: hybrid supercapacitor electrodes and related
-  nanomaterials.
-- **Structure–property relationships**: using a broad characterisation toolkit to
-  connect microstructure to performance.
+- **Permanent magnets**: NdFeB magnets, from design to working prototype.
+- **Superconductors**: ductile high-entropy superconductors for fusion, and
+  MgB<sub>2</sub> joints for MRI magnets.
+- **Energy storage**: supercapacitor electrodes and related nanomaterials.
+- **Machine learning for materials**: property prediction and inverse design.
+  See [Machine Learning](machine-learning.md).
 
 ---
 
 ## Projects
 
+### NdFeB permanent magnets { #ndfeb }
+
+*The University of Queensland · 2026 – present*
+
+NdFeB magnets are the strongest permanent magnets in use today. I am developing an
+NdFeB based magnet, from initial design through to a working prototype. The work
+relates processing route and composition to magnetic performance.
+
+### Ductile high-entropy superconductors for fusion { #hes }
+
+*The University of Queensland · 2026 – present*
+
+Fusion magnets need superconductors that can be shaped into wire without cracking.
+I am developing a ductile superconductor based on high-entropy alloys for this purpose.
+Machine learning guides which compositions to make, using the
+[prediction and inverse design tools](machine-learning.md) I built.
+
 ### MgB₂ reacted joints for persistent-mode MRI magnets { #mgb2 }
 
-*PhD research · The University of Queensland · 2022 – present*
+*PhD research · The University of Queensland · 2022 – 2026*
 
-Persistent-mode operation is what lets an MRI magnet hold a stable field without a
-continuously connected power supply, and that depends on **superconducting joints** with
-extremely low resistance. My PhD develops a fabrication technology for **reacted
-MgB<sub>2</sub> joints** suitable for industrial-grade superconducting MRI magnets.
+An MRI magnet in persistent mode holds a stable field without a power supply. This
+requires **superconducting joints** with extremely low resistance. My PhD developed a
+fabrication method for **reacted MgB<sub>2</sub> joints** for industrial MRI magnets.
 
-I fabricate the MgB<sub>2</sub> superconductor myself and produce the reacted joint using
-a specialised process, a difficult but practically essential step for real-world magnet
-manufacturing. The performance of each joint is validated by measuring its **transport
-critical current (I<sub>c</sub>)**.
+I synthesised the MgB<sub>2</sub> myself and formed each joint with a specialised
+process. Joint performance was validated by its **transport critical current
+(I<sub>c</sub>)**.
 
 !!! note "Industry-funded · IP protected"
-    This is an industrially funded project and its deliverables are currently under
-    intellectual-property protection. Related publications are on hold pending clearance
-    from the patent office.
+    This project is industry funded and its outcomes are under intellectual-property
+    protection. Related publications are on hold pending patent clearance.
 
 ### Ternary hybrid supercapacitor electrode: Ni(OH)₂–MnO₂–rGO { #supercapacitor }
 
 *MSc thesis · BUET*
 
-For my master's research I developed a **ternary hybrid electrode material** combining
-nickel hydroxide, manganese dioxide, and reduced graphene oxide (rGO) for
-high-performance supercapacitors. The wrinkled, flower-like architecture improved charge
-storage, and the work was published in **ACS Omega**.
+I developed a **ternary hybrid electrode** of nickel hydroxide, manganese dioxide and
+reduced graphene oxide (rGO). Its wrinkled, flower-like structure improved charge
+storage. The work was published in **ACS Omega**.
 
 [Read the paper in ACS Omega →](https://pubs.acs.org/doi/10.1021/acsomega.2c01986){ target=_blank }
 
@@ -51,24 +63,32 @@ storage, and the work was published in **ACS Omega**.
 
 ## Techniques & tools
 
-I work across synthesis, fabrication, and a broad range of characterisation methods.
+=== "Synthesis & processing"
+
+    - Arc melting and spark plasma sintering (SPS)
+    - Powder metallurgy and inert-atmosphere heat treatment
+    - MgB<sub>2</sub> synthesis and reacted-joint fabrication
+    - Nanomaterial synthesis (metal oxides and hydroxides, graphene) and electrode design
 
 === "Structural & imaging"
 
     - X-ray diffraction (XRD)
     - Electron microscopy: SEM, TEM, EDS, SAED
     - Focused ion beam (FIB)
-    - Raman and FTIR spectroscopy
-    - XPS
+    - XPS, Raman, FTIR and NMR spectroscopy
+    - BET surface area analysis
+    - Image segmentation for porosity analysis
 
-=== "Electrochemical & transport"
+=== "Magnetic & electrochemical"
 
+    - Magnetic and transport measurements at cryogenic temperatures
     - Transport critical current (I<sub>c</sub>) measurement
-    - Magnetic & transport measurements of superconductors
-    - Cyclic voltammetry (CV), galvanostatic charge–discharge (GCD),
+    - Cyclic voltammetry (CV), galvanostatic charge–discharge (GCD) and
       electrochemical impedance spectroscopy (EIS)
 
-=== "Synthesis & processing"
+=== "Chemical analysis"
 
-    - MgB<sub>2</sub> superconductor synthesis and reacted-joint fabrication.
-    - Nanomaterial synthesis (Metal Oxides/hydroxides, Graphene), and electrode design.
+    - LC-MS and GC-MS
+    - TXRF and XRF
+    - Atomic absorption spectroscopy (AAS)
+    - Wet chemistry under GLP and NATA requirements

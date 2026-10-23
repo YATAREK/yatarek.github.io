@@ -105,7 +105,7 @@ combines synthesis, characterisation and machine learning.
 
 <div class="tl-item" markdown>
 #### Doctor of Philosophy, Mechanical Engineering · The University of Queensland
-<p class="tl-meta">Oct 2022 – Oct 2026</p>
+<p class="tl-meta">Oct 2022 – Sep 2026</p>
 </div>
 
 <div class="tl-item" markdown>

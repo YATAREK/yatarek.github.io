@@ -29,7 +29,6 @@ Everything lives in the `docs/` folder as Markdown, plus `mkdocs.yml` for settin
 | Home page (bio, hero) | `docs/index.md` |
 | Research projects | `docs/research.md` |
 | Publications | `docs/publications.md` |
-| CV (and drop in `cv.pdf`) | `docs/cv.md`, `docs/assets/cv.pdf` |
 | Contact + social links | `docs/contact.md` and `mkdocs.yml` → `extra.social` |
 | Your photo | replace `docs/assets/portrait.svg` (use a square image; a `.jpg` is fine — just update the `src` in `index.md`) |
 | Colors / fonts | `docs/stylesheets/extra.css` (the clay accent is `--clay`) |
