@@ -133,3 +133,13 @@
 @media (prefers-reduced-motion: reduce) {
   .lattice-logo .corner { animation: none; }
 }
+
+/* ---- Experience list (LinkedIn-style check bullets) ---------------------- */
+.xp h4 { margin: 1.6em 0 0.1em; font-size: 0.95rem; }
+.xp__meta {
+  color: var(--md-default-fg-color--light);
+  font-size: 0.72rem;
+  margin: 0 0 0.6em;
+}
+.md-typeset .xp ul { list-style: none; margin-left: 0; padding-left: 0; }
+.md-typeset .xp ul li { margin-left: 0; }
