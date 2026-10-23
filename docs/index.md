@@ -10,8 +10,6 @@ hide:
 
 # Yeasin Tarek
 
-<p class="hero__role">Senior Research Assistant · Materials Science</p>
-
 Materials scientist based in Brisbane. I develop permanent magnets and superconductors at
 The University of Queensland, and work as an Assistant Scientist at EnviroForce. My work
 combines synthesis, characterisation and machine learning.
