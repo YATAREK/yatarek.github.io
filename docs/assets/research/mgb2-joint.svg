@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300">
+  <title>Persistent-Mode MgB2 Superconducting Joint Loop</title>
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+    }
+    .loop-sheath {
+      fill: none;
+      stroke: #7c8a9a;
+      stroke-width: 7.5;
+      stroke-linejoin: round;
+      opacity: 0.85;
+    }
+    .loop-core {
+      fill: none;
+      stroke: #5b8fb9;
+      stroke-width: 2.5;
+      stroke-linejoin: round;
+      opacity: 0.5;
+    }
+    .pulse-glow {
+      fill: none;
+      stroke: #d97757;
+      stroke-width: 14;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-opacity: 0.3;
+      stroke-dasharray: 0.1 13.9 0.1 13.9 0.1 13.9 0.1 13.9 0.1 1113.0;
+      animation: circulate 5s linear infinite;
+    }
+    .pulse-tail {
+      fill: none;
+      stroke: #d97757;
+      stroke-width: 4.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-opacity: 0.55;
+      stroke-dasharray: 0.1 13.9 0.1 13.9 0.1 13.9 0.1 13.9 0.1 1113.0;
+      animation: circulate 5s linear infinite;
+    }
+    .pulse-mid {
+      fill: none;
+      stroke: #d97757;
+      stroke-width: 6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-opacity: 0.85;
+      stroke-dasharray: 0.1 13.9 0.1 13.9 0.1 1141.0;
+      animation: circulate 5s linear infinite;
+    }
+    .pulse-head {
+      fill: none;
+      stroke: #c9a227;
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 0.1 1168.9;
+      animation: circulate 5s linear infinite;
+    }
+    @keyframes circulate {
+      from { stroke-dashoffset: 0; }
+      to { stroke-dashoffset: -1169.0; }
+    }
+    .field-ring {
+      fill: none;
+      stroke: #5b8fb9;
+      stroke-width: 2.2;
+      stroke-dasharray: 5 5;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+    .ring-1 { animation: pulse-ring 4s ease-in-out infinite; }
+    .ring-2 { animation: pulse-ring 4s ease-in-out infinite -1s; }
+    .ring-3 { animation: pulse-ring 4s ease-in-out infinite -2s; }
+
+    @keyframes pulse-ring {
+      0%, 100% {
+        opacity: 0.25;
+        transform: scale(0.95);
+      }
+      50% {
+        opacity: 0.85;
+        transform: scale(1.05);
+      }
+    }
+  </style>
+
+  <!-- Labels -->
+  <text x="240" y="20" text-anchor="middle" fill="#7c8a9a" font-family="system-ui, sans-serif" font-size="16" font-weight="600">persistent mode</text>
+  <text x="240" y="106" text-anchor="middle" fill="#7c8a9a" font-family="system-ui, sans-serif" font-size="17" font-weight="600">B</text>
+  <text x="240" y="287" text-anchor="middle" fill="#7c8a9a" font-family="system-ui, sans-serif" font-size="16" font-weight="600">joint</text>
+
+  <!-- Central pulsing magnetic field indicator -->
+  <g>
+    <circle cx="240" cy="138" r="4.5" fill="#5b8fb9" />
+    <circle cx="240" cy="138" r="13" fill="none" stroke="#5b8fb9" stroke-width="2" stroke-opacity="0.75" />
+    <circle cx="240" cy="138" r="28" class="field-ring ring-1" />
+    <circle cx="240" cy="138" r="56" class="field-ring ring-2" />
+    <circle cx="240" cy="138" r="84" class="field-ring ring-3" />
+  </g>
+
+  <!-- Closed superconducting loop (scaled up, 7.5px steel stroke) -->
+  <path class="loop-sheath" d="M 240 248 L 92 248 A 60 60 0 0 1 32 188 L 32 88 A 60 60 0 0 1 92 28 L 388 28 A 60 60 0 0 1 448 88 L 448 188 A 60 60 0 0 1 388 248 Z" />
+  <path class="loop-core" d="M 240 248 L 92 248 A 60 60 0 0 1 32 188 L 32 88 A 60 60 0 0 1 92 28 L 388 28 A 60 60 0 0 1 448 88 L 448 188 A 60 60 0 0 1 388 248 Z" />
+
+  <!-- Circulating current pulse with short fading tail around entire loop -->
+  <path class="pulse-glow" d="M 240 248 L 92 248 A 60 60 0 0 1 32 188 L 32 88 A 60 60 0 0 1 92 28 L 388 28 A 60 60 0 0 1 448 88 L 448 188 A 60 60 0 0 1 388 248 Z" />
+  <path class="pulse-tail" d="M 240 248 L 92 248 A 60 60 0 0 1 32 188 L 32 88 A 60 60 0 0 1 92 28 L 388 28 A 60 60 0 0 1 448 88 L 448 188 A 60 60 0 0 1 388 248 Z" />
+  <path class="pulse-mid" d="M 240 248 L 92 248 A 60 60 0 0 1 32 188 L 32 88 A 60 60 0 0 1 92 28 L 388 28 A 60 60 0 0 1 448 88 L 448 188 A 60 60 0 0 1 388 248 Z" />
+  <path class="pulse-head" d="M 240 248 L 92 248 A 60 60 0 0 1 32 188 L 32 88 A 60 60 0 0 1 92 28 L 388 28 A 60 60 0 0 1 448 88 L 448 188 A 60 60 0 0 1 388 248 Z" />
+
+  <!-- Highlighted clay joint block at bottom (scaled up) -->
+  <rect x="190" y="228" width="100" height="40" rx="5" fill="#d97757" fill-opacity="0.25" stroke="#d97757" stroke-width="3" />
+  <!-- Wire interface inside joint block -->
+  <line x1="190" y1="243" x2="248" y2="243" stroke="#7c8a9a" stroke-width="2.5" />
+  <line x1="232" y1="253" x2="290" y2="253" stroke="#7c8a9a" stroke-width="2.5" />
+  <rect x="222" y="235" width="36" height="26" rx="3" fill="#d97757" fill-opacity="0.5" stroke="#d97757" stroke-width="1.8" stroke-dasharray="3 3" />
+  <!-- Fasteners -->
+  <circle cx="206" cy="248" r="3.2" fill="#d97757" />
+  <circle cx="274" cy="248" r="3.2" fill="#d97757" />
+</svg>

@@ -16,26 +16,51 @@ My current focus is magnetic and superconducting materials, guided by machine le
 
 ## Projects
 
+<div class="project" markdown>
+<div class="project__media" markdown>
+![Animated NdFeB magnet with field lines and aligning grains](assets/research/ndfeb.svg)
+</div>
+<div class="project__body" markdown>
+<span class="project__status project__status--live">Current</span>
+
 ### NdFeB permanent magnets { #ndfeb }
 
-*The University of Queensland · 2026 – present*
+<p class="project__meta">The University of Queensland · 2026 – present</p>
 
 NdFeB magnets are the strongest permanent magnets in use today. I am developing an
 NdFeB based magnet, from initial design through to a working prototype. The work
 relates processing route and composition to magnetic performance.
+</div>
+</div>
+
+<div class="project" markdown>
+<div class="project__media" markdown>
+![Animated high-entropy lattice and a bending superconducting wire](assets/research/hes.svg)
+</div>
+<div class="project__body" markdown>
+<span class="project__status project__status--live">Current</span>
 
 ### Ductile high-entropy superconductors for fusion { #hes }
 
-*The University of Queensland · 2026 – present*
+<p class="project__meta">The University of Queensland · 2026 – present</p>
 
 Fusion magnets need superconductors that can be shaped into wire without cracking.
 I am developing a ductile superconductor based on high-entropy alloys for this purpose.
 Machine learning guides which compositions to make, using the
 [prediction and inverse design tools](machine-learning.md) I built.
+</div>
+</div>
+
+<div class="project" markdown>
+<div class="project__media" markdown>
+![Animated current circulating through a superconducting joint loop](assets/research/mgb2-joint.svg)
+</div>
+<div class="project__body" markdown>
+<span class="project__status">PhD · Completed</span>
 
 ### MgB₂ reacted joints for persistent-mode MRI magnets { #mgb2 }
 
-*PhD research · The University of Queensland · 2022 – 2026*
+<p class="project__meta">The University of Queensland · 2022 – 2026</p>
 
 An MRI magnet in persistent mode holds a stable field without a power supply. This
 requires **superconducting joints** with extremely low resistance. My PhD developed a
@@ -45,19 +70,28 @@ I synthesised the MgB<sub>2</sub> myself and formed each joint with a specialise
 process. Joint performance was validated by its **transport critical current
 (I<sub>c</sub>)**.
 
-!!! note "Industry-funded · IP protected"
-    This project is industry funded and its outcomes are under intellectual-property
-    protection. Related publications are on hold pending patent clearance.
+<p class="project__note">Industry funded and under IP protection. Publications are on hold pending patent clearance.</p>
+</div>
+</div>
 
-### Ternary hybrid supercapacitor electrode: Ni(OH)₂–MnO₂–rGO { #supercapacitor }
+<div class="project" markdown>
+<div class="project__media" markdown>
+![Animated ions charging and discharging a porous supercapacitor electrode](assets/research/supercap.svg)
+</div>
+<div class="project__body" markdown>
+<span class="project__status">MSc · Published</span>
 
-*MSc thesis · BUET*
+### Ternary hybrid supercapacitor electrode { #supercapacitor }
 
-I developed a **ternary hybrid electrode** of nickel hydroxide, manganese dioxide and
+<p class="project__meta">Bangladesh University of Engineering and Technology</p>
+
+I developed a **ternary hybrid electrode** of Ni(OH)<sub>2</sub>, MnO<sub>2</sub> and
 reduced graphene oxide (rGO). Its wrinkled, flower-like structure improved charge
 storage. The work was published in **ACS Omega**.
 
-[Read the paper in ACS Omega →](https://pubs.acs.org/doi/10.1021/acsomega.2c01986){ target=_blank }
+[Read the paper →](https://pubs.acs.org/doi/10.1021/acsomega.2c01986){ target=_blank }
+</div>
+</div>
 
 ---
 
@@ -91,4 +125,4 @@ storage. The work was published in **ACS Omega**.
     - LC-MS and GC-MS
     - TXRF and XRF
     - Atomic absorption spectroscopy (AAS)
-    - Wet chemistry under GLP and NATA requirements
+    - Wet chemistry under GLP, NATA and ISO 9001 requirements

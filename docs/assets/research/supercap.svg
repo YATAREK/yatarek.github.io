@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300">
+  <title>Supercapacitor Porous Carbon Electrodes and Ion Dynamics</title>
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+    }
+    .carbon-matrix {
+      fill: #7c8a9a;
+      fill-opacity: 0.22;
+      stroke: #7c8a9a;
+      stroke-width: 3;
+      stroke-linejoin: round;
+    }
+    .current-collector {
+      fill: #7c8a9a;
+      fill-opacity: 0.35;
+      stroke: #7c8a9a;
+      stroke-width: 2.5;
+    }
+    .separator-line {
+      stroke: #7c8a9a;
+      stroke-width: 2.5;
+      stroke-dasharray: 6 6;
+    }
+    .charge-track {
+      fill: none;
+      stroke: #7c8a9a;
+      stroke-width: 2;
+      stroke-opacity: 0.5;
+    }
+    .charge-level {
+      fill: #d97757;
+      transform-origin: 115px 20.5px;
+      animation: charge-bar 7s ease-in-out infinite;
+    }
+    @keyframes charge-bar {
+      0%, 15% { transform: scaleX(0.08); opacity: 0.4; }
+      45%, 65% { transform: scaleX(1); opacity: 1; }
+      85%, 100% { transform: scaleX(0.08); opacity: 0.4; }
+    }
+    .cation {
+      fill: #d97757;
+      stroke: #c15f3c;
+      stroke-width: 1.8;
+      animation-duration: 7s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
+    .anion {
+      fill: #5b8fb9;
+      stroke: #41729f;
+      stroke-width: 1.8;
+      animation-duration: 7s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
+    .d-c1 { animation-name: drift-c1; }
+    .d-c2 { animation-name: drift-c2; }
+    .d-c3 { animation-name: drift-c3; }
+    .d-c4 { animation-name: drift-c4; }
+
+    .d-a1 { animation-name: drift-a1; }
+    .d-a2 { animation-name: drift-a2; }
+    .d-a3 { animation-name: drift-a3; }
+    .d-a4 { animation-name: drift-a4; }
+
+    @keyframes drift-c1 { 0%, 15% { transform: translate(0, 0); } 45%, 65% { transform: translate(-105px, 2px); } 85%, 100% { transform: translate(0, 0); } }
+    @keyframes drift-c2 { 0%, 15% { transform: translate(0, 0); } 45%, 65% { transform: translate(-115px, -5px); } 85%, 100% { transform: translate(0, 0); } }
+    @keyframes drift-c3 { 0%, 15% { transform: translate(0, 0); } 45%, 65% { transform: translate(-80px, 12px); } 85%, 100% { transform: translate(0, 0); } }
+    @keyframes drift-c4 { 0%, 15% { transform: translate(0, 0); } 45%, 65% { transform: translate(-100px, 6px); } 85%, 100% { transform: translate(0, 0); } }
+
+    @keyframes drift-a1 { 0%, 15% { transform: translate(0, 0); } 45%, 65% { transform: translate(105px, 2px); } 85%, 100% { transform: translate(0, 0); } }
+    @keyframes drift-a2 { 0%, 15% { transform: translate(0, 0); } 45%, 65% { transform: translate(115px, -5px); } 85%, 100% { transform: translate(0, 0); } }
+    @keyframes drift-a3 { 0%, 15% { transform: translate(0, 0); } 45%, 65% { transform: translate(80px, 12px); } 85%, 100% { transform: translate(0, 0); } }
+    @keyframes drift-a4 { 0%, 15% { transform: translate(0, 0); } 45%, 65% { transform: translate(100px, 6px); } 85%, 100% { transform: translate(0, 0); } }
+  </style>
+
+  <!-- Charge bar at top -->
+  <text x="115" y="12" fill="#7c8a9a" font-family="system-ui, sans-serif" font-size="16" font-weight="600">charge</text>
+  <rect class="charge-track" x="115" y="16" width="250" height="9" rx="4.5" />
+  <rect class="charge-level" x="115" y="16" width="250" height="9" rx="4.5" />
+
+  <!-- Left electrode: negative during charge -->
+  <!-- Current collector -->
+  <rect class="current-collector" x="16" y="44" width="16" height="232" rx="3" />
+  <!-- Porous carbon matrix with deep channels -->
+  <path class="carbon-matrix" d="M 32 44 L 175 44 C 150 54, 85 58, 85 78 C 85 98, 155 94, 175 110 C 145 116, 80 120, 80 142 C 80 164, 145 160, 168 178 C 135 186, 75 190, 75 212 C 75 234, 140 230, 172 246 C 148 256, 90 260, 90 276 L 32 276 Z" />
+
+  <!-- Right electrode: positive during charge -->
+  <!-- Current collector -->
+  <rect class="current-collector" x="448" y="44" width="16" height="232" rx="3" />
+  <!-- Porous carbon matrix with deep channels -->
+  <path class="carbon-matrix" d="M 448 44 L 305 44 C 330 54, 395 58, 395 78 C 395 98, 325 94, 305 110 C 335 116, 400 120, 400 142 C 400 164, 335 160, 312 178 C 345 186, 405 190, 405 212 C 405 234, 340 230, 308 246 C 332 256, 390 260, 390 276 L 448 276 Z" />
+
+  <!-- Middle separator -->
+  <rect x="235" y="44" width="10" height="232" fill="#7c8a9a" fill-opacity="0.12" />
+  <line class="separator-line" x1="240" y1="44" x2="240" y2="276" />
+  <text x="240" y="292" text-anchor="middle" fill="#7c8a9a" font-family="system-ui, sans-serif" font-size="16" font-weight="600">separator</text>
+
+  <!-- Ions in electrolyte -->
+  <!-- Cations (clay #d97757, r=6): drift into left pores during charge -->
+  <circle cx="205" cy="76" r="6" class="cation d-c1" />
+  <circle cx="228" cy="84" r="6" class="cation d-c2" />
+  <circle cx="188" cy="66" r="6" class="cation d-c3" />
+
+  <circle cx="205" cy="136" r="6" class="cation d-c1" />
+  <circle cx="228" cy="146" r="6" class="cation d-c2" />
+  <circle cx="185" cy="128" r="6" class="cation d-c3" />
+
+  <circle cx="205" cy="206" r="6" class="cation d-c1" />
+  <circle cx="228" cy="218" r="6" class="cation d-c2" />
+  <circle cx="185" cy="198" r="6" class="cation d-c3" />
+
+  <circle cx="205" cy="258" r="6" class="cation d-c4" />
+  <circle cx="228" cy="268" r="6" class="cation d-c2" />
+
+  <!-- Anions (blue #5b8fb9, r=6): drift into right pores during charge -->
+  <circle cx="275" cy="76" r="6" class="anion d-a1" />
+  <circle cx="252" cy="84" r="6" class="anion d-a2" />
+  <circle cx="292" cy="66" r="6" class="anion d-a3" />
+
+  <circle cx="275" cy="136" r="6" class="anion d-a1" />
+  <circle cx="252" cy="146" r="6" class="anion d-a2" />
+  <circle cx="295" cy="128" r="6" class="anion d-a3" />
+
+  <circle cx="275" cy="206" r="6" class="anion d-a1" />
+  <circle cx="252" cy="218" r="6" class="anion d-a2" />
+  <circle cx="295" cy="198" r="6" class="anion d-a3" />
+
+  <circle cx="275" cy="258" r="6" class="anion d-a4" />
+  <circle cx="252" cy="268" r="6" class="anion d-a2" />
+</svg>

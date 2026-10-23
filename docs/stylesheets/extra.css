@@ -214,3 +214,86 @@
     hyphens: manual;
   }
 }
+
+/* ---- Research project cards --------------------------------------------- */
+.md-typeset .project {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: 1.4rem;
+  align-items: center;
+  margin: 1.4rem 0;
+  padding: 1.2rem;
+  border: 1px solid color-mix(in srgb, var(--clay) 25%, transparent);
+  border-radius: 0.8rem;
+  background: color-mix(in srgb, var(--clay) 4%, transparent);
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+.md-typeset .project:hover {
+  border-color: color-mix(in srgb, var(--clay) 60%, transparent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+.md-typeset .project__media p { margin: 0; }
+.md-typeset .project__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.6rem;
+  background: color-mix(in srgb, var(--steel) 8%, transparent);
+}
+.md-typeset .project__body h3 { margin: 0.35em 0 0.1em; }
+.md-typeset .project__body > p:last-child { margin-bottom: 0; }
+.md-typeset .project__meta {
+  color: var(--md-default-fg-color--light);
+  font-size: 0.72rem;
+  font-style: italic;
+  margin: 0 0 0.6em;
+  text-align: left;
+}
+.md-typeset .project__status {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--steel);
+  color: var(--steel);
+}
+.md-typeset .project__status--live {
+  border-color: var(--clay);
+  color: var(--clay);
+}
+.md-typeset .project__status--live::before {
+  content: "";
+  display: inline-block;
+  width: 0.45em;
+  height: 0.45em;
+  margin-right: 0.4em;
+  border-radius: 50%;
+  background: var(--clay);
+  vertical-align: 0.1em;
+  animation: project-pulse 2s ease-in-out infinite;
+}
+@keyframes project-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+.md-typeset .project__note {
+  text-align: left !important;
+  hyphens: manual !important;
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--light);
+  border-left: 2px solid var(--clay);
+  padding-left: 0.7em;
+}
+/* stack image above text until the text column is wide enough to justify well */
+@media screen and (max-width: 59.9375em) {
+  .md-typeset .project { grid-template-columns: 1fr; }
+  .md-typeset .project__media { max-width: 26rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .md-typeset .project,
+  .md-typeset .project__status--live::before { transition: none; animation: none; }
+}
