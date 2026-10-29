@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300">
+  <title>NdFeB Permanent Magnet Domain Alignment and Magnetic Field</title>
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+    }
+    .field-bg {
+      fill: none;
+      stroke: #7c8a9a;
+      stroke-width: 2.5;
+      stroke-opacity: 0.45;
+    }
+    .field-flow {
+      fill: none;
+      stroke: #d97757;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-dasharray: 8 24;
+      animation: field-flow 4s linear infinite, field-strength 7s ease-in-out infinite;
+    }
+    @keyframes field-flow {
+      to { stroke-dashoffset: -64; }
+    }
+    @keyframes field-strength {
+      0%, 18% { opacity: 0.35; }
+      38%, 65% { opacity: 1; }
+      85%, 100% { opacity: 0.35; }
+    }
+    .grain-cell {
+      fill: none;
+      stroke: #7c8a9a;
+      stroke-width: 1.5;
+      stroke-opacity: 0.35;
+    }
+    .grain-arrow {
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      transform-box: fill-box;
+      transform-origin: center;
+      animation-duration: 7s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
+    .grain-n { stroke: #d97757; }
+    .grain-s { stroke: #7c8a9a; }
+    .rot-1 { animation-name: rot-1; }
+    .rot-2 { animation-name: rot-2; }
+    .rot-3 { animation-name: rot-3; }
+    .rot-4 { animation-name: rot-4; }
+    .rot-5 { animation-name: rot-5; }
+    .rot-6 { animation-name: rot-6; }
+
+    /* Aligns pointing from S toward N (leftwards, 0deg) */
+    @keyframes rot-1 { 0%, 18% { transform: rotate(-55deg); } 38%, 65% { transform: rotate(0deg); } 85%, 100% { transform: rotate(-55deg); } }
+    @keyframes rot-2 { 0%, 18% { transform: rotate(70deg); } 38%, 65% { transform: rotate(0deg); } 85%, 100% { transform: rotate(70deg); } }
+    @keyframes rot-3 { 0%, 18% { transform: rotate(-85deg); } 38%, 65% { transform: rotate(0deg); } 85%, 100% { transform: rotate(-85deg); } }
+    @keyframes rot-4 { 0%, 18% { transform: rotate(115deg); } 38%, 65% { transform: rotate(0deg); } 85%, 100% { transform: rotate(115deg); } }
+    @keyframes rot-5 { 0%, 18% { transform: rotate(-130deg); } 38%, 65% { transform: rotate(0deg); } 85%, 100% { transform: rotate(-130deg); } }
+    @keyframes rot-6 { 0%, 18% { transform: rotate(45deg); } 38%, 65% { transform: rotate(0deg); } 85%, 100% { transform: rotate(45deg); } }
+  </style>
+
+  <!-- Magnetic field lines background (static, strictly outside block) -->
+  <g class="field-bg">
+    <!-- Outer top -->
+    <path d="M 160 130 C 40 130, 40 22, 240 22 C 440 22, 440 130, 320 130" />
+    <!-- Mid top -->
+    <path d="M 160 115 C 70 115, 70 48, 240 48 C 410 48, 410 115, 320 115" />
+    <!-- Inner top -->
+    <path d="M 160 102 C 100 102, 110 70, 240 70 C 370 70, 380 102, 320 102" />
+    <!-- Inner bottom -->
+    <path d="M 160 198 C 100 198, 110 230, 240 230 C 370 230, 380 198, 320 198" />
+    <!-- Mid bottom -->
+    <path d="M 160 185 C 70 185, 70 252, 240 252 C 410 252, 410 185, 320 185" />
+    <!-- Outer bottom -->
+    <path d="M 160 170 C 40 170, 40 278, 240 278 C 440 278, 440 170, 320 170" />
+  </g>
+
+  <!-- Magnetic field lines animated dashes (flowing from N face around to S face) -->
+  <g class="field-flow">
+    <path d="M 160 130 C 40 130, 40 22, 240 22 C 440 22, 440 130, 320 130" />
+    <path d="M 160 115 C 70 115, 70 48, 240 48 C 410 48, 410 115, 320 115" />
+    <path d="M 160 102 C 100 102, 110 70, 240 70 C 370 70, 380 102, 320 102" />
+    <path d="M 160 198 C 100 198, 110 230, 240 230 C 370 230, 380 198, 320 198" />
+    <path d="M 160 185 C 70 185, 70 252, 240 252 C 410 252, 410 185, 320 185" />
+    <path d="M 160 170 C 40 170, 40 278, 240 278 C 440 278, 440 170, 320 170" />
+  </g>
+
+  <!-- Magnet block (scaled up, centered) -->
+  <!-- Left half (North - clay) -->
+  <rect x="160" y="90" width="80" height="120" rx="4" fill="#d97757" fill-opacity="0.22" stroke="#d97757" stroke-width="3" />
+  <!-- Right half (South - steel) -->
+  <rect x="240" y="90" width="80" height="120" rx="4" fill="#7c8a9a" fill-opacity="0.22" stroke="#7c8a9a" stroke-width="3" />
+  <!-- Center division line -->
+  <line x1="240" y1="90" x2="240" y2="210" stroke="#7c8a9a" stroke-width="2" stroke-dasharray="4 4" />
+
+  <!-- Labels -->
+  <text x="178" y="116" fill="#7c8a9a" font-family="system-ui, sans-serif" font-size="17" font-weight="600">N</text>
+  <text x="302" y="116" fill="#7c8a9a" font-family="system-ui, sans-serif" font-size="17" font-weight="600" text-anchor="end">S</text>
+
+  <!-- Microstructure grains and magnetic moment arrows -->
+  <!-- Row 1 -->
+  <g transform="translate(180, 136)">
+    <rect x="-14" y="-10" width="28" height="20" rx="3" class="grain-cell" />
+    <path class="grain-arrow grain-n rot-1" d="M 9 0 L -9 0 M -4 -4 L -9 0 L -4 4" />
+  </g>
+  <g transform="translate(215, 136)">
+    <rect x="-14" y="-10" width="28" height="20" rx="3" class="grain-cell" />
+    <path class="grain-arrow grain-n rot-2" d="M 9 0 L -9 0 M -4 -4 L -9 0 L -4 4" />
+  </g>
+  <g transform="translate(265, 136)">
+    <rect x="-14" y="-10" width="28" height="20" rx="3" class="grain-cell" />
+    <path class="grain-arrow grain-s rot-3" d="M 9 0 L -9 0 M -4 -4 L -9 0 L -4 4" />
+  </g>
+  <g transform="translate(300, 136)">
+    <rect x="-14" y="-10" width="28" height="20" rx="3" class="grain-cell" />
+    <path class="grain-arrow grain-s rot-4" d="M 9 0 L -9 0 M -4 -4 L -9 0 L -4 4" />
+  </g>
+
+  <!-- Row 2 -->
+  <g transform="translate(180, 164)">
+    <rect x="-14" y="-10" width="28" height="20" rx="3" class="grain-cell" />
+    <path class="grain-arrow grain-n rot-5" d="M 9 0 L -9 0 M -4 -4 L -9 0 L -4 4" />
+  </g>
+  <g transform="translate(215, 164)">
+    <rect x="-14" y="-10" width="28" height="20" rx="3" class="grain-cell" />
+    <path class="grain-arrow grain-n rot-6" d="M 9 0 L -9 0 M -4 -4 L -9 0 L -4 4" />
+  </g>
+  <g transform="translate(265, 164)">
+    <rect x="-14" y="-10" width="28" height="20" rx="3" class="grain-cell" />
+    <path class="grain-arrow grain-s rot-1" d="M 9 0 L -9 0 M -4 -4 L -9 0 L -4 4" />
+  </g>
+  <g transform="translate(300, 164)">
+    <rect x="-14" y="-10" width="28" height="20" rx="3" class="grain-cell" />
+    <path class="grain-arrow grain-s rot-2" d="M 9 0 L -9 0 M -4 -4 L -9 0 L -4 4" />
+  </g>
+
+  <!-- Row 3 -->
+  <g transform="translate(180, 192)">
+    <rect x="-14" y="-10" width="28" height="20" rx="3" class="grain-cell" />
+    <path class="grain-arrow grain-n rot-3" d="M 9 0 L -9 0 M -4 -4 L -9 0 L -4 4" />
+  </g>
+  <g transform="translate(215, 192)">
+    <rect x="-14" y="-10" width="28" height="20" rx="3" class="grain-cell" />
+    <path class="grain-arrow grain-n rot-4" d="M 9 0 L -9 0 M -4 -4 L -9 0 L -4 4" />
+  </g>
+  <g transform="translate(265, 192)">
+    <rect x="-14" y="-10" width="28" height="20" rx="3" class="grain-cell" />
+    <path class="grain-arrow grain-s rot-5" d="M 9 0 L -9 0 M -4 -4 L -9 0 L -4 4" />
+  </g>
+  <g transform="translate(300, 192)">
+    <rect x="-14" y="-10" width="28" height="20" rx="3" class="grain-cell" />
+    <path class="grain-arrow grain-s rot-6" d="M 9 0 L -9 0 M -4 -4 L -9 0 L -4 4" />
+  </g>
+</svg>

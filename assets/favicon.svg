@@ -1,0 +1,19 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Crystal lattice mark">
+  <!-- Unit-cell / crystal-lattice motif: 4 corner nodes + 1 body-centered node -->
+  <g stroke="#d97757" stroke-width="2" stroke-linecap="round">
+    <!-- cell edges -->
+    <path d="M12 12 L36 12 L36 36 L12 36 Z" fill="none"/>
+    <!-- body-centered bonds -->
+    <path d="M12 12 L24 24 M36 12 L24 24 M12 36 L24 24 M36 36 L24 24"/>
+  </g>
+  <g fill="#d97757">
+    <!-- corner atoms -->
+    <circle cx="12" cy="12" r="3.6"/>
+    <circle cx="36" cy="12" r="3.6"/>
+    <circle cx="12" cy="36" r="3.6"/>
+    <circle cx="36" cy="36" r="3.6"/>
+  </g>
+  <!-- body-centered atom (lighter to read as "inside") -->
+  <circle cx="24" cy="24" r="4.4" fill="#e8b4a0"/>
+  <circle cx="24" cy="24" r="4.4" fill="none" stroke="#d97757" stroke-width="1.5"/>
+</svg>

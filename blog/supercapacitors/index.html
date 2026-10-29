@@ -1,0 +1,1315 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="How supercapacitors store charge at surfaces, how commercial cells are manufactured, and how hybrid electrodes combine two storage mechanisms.">
+      
+      
+        <meta name="author" content="Yeasin Tarek">
+      
+      
+        <link rel="canonical" href="https://yatarek.github.io/blog/supercapacitors/">
+      
+      
+      
+        <link rel="next" href="../mgb2-superconducting-joints/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Supercapacitors: storing energy at the surface - Yeasin Tarek</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#supercapacitors-storing-energy-at-the-surface" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Yeasin Tarek" class="md-header__button md-logo" aria-label="Yeasin Tarek" data-md-component="logo">
+      <a href="https://yatarek.github.io/" class="md-header__button md-logo" aria-label="Yeasin Tarek" title="Yeasin Tarek">
+  <svg class="lattice-logo" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="50" height="50" aria-hidden="true">
+    <!-- center atom (anchor) -->
+    <circle class="atom-center" cx="24" cy="24" r="4.4" fill="#e8b4a0" stroke="#d97757" stroke-width="1.5"/>
+
+    <!-- each corner = atom + its 2 edges + its diagonal, grouped so they move together -->
+    <g class="corner corner-tl">
+      <path d="M12 12 L36 12 M12 12 L12 36 M12 12 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="12" cy="12" r="3.6" fill="#d97757"/>
+    </g>
+    <g class="corner corner-tr">
+      <path d="M36 12 L36 36 M36 12 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="36" cy="12" r="3.6" fill="#d97757"/>
+    </g>
+    <g class="corner corner-br">
+      <path d="M36 36 L12 36 M36 36 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="36" cy="36" r="3.6" fill="#d97757"/>
+    </g>
+    <g class="corner corner-bl">
+      <path d="M12 36 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="12" cy="36" r="3.6" fill="#d97757"/>
+    </g>
+  </svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Yeasin Tarek
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Supercapacitors: storing energy at the surface
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../research/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Research
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Blog
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contact/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contact
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Yeasin Tarek" class="md-nav__button md-logo" aria-label="Yeasin Tarek" data-md-component="logo">
+      <a href="https://yatarek.github.io/" class="md-header__button md-logo" aria-label="Yeasin Tarek" title="Yeasin Tarek">
+  <svg class="lattice-logo" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="50" height="50" aria-hidden="true">
+    <!-- center atom (anchor) -->
+    <circle class="atom-center" cx="24" cy="24" r="4.4" fill="#e8b4a0" stroke="#d97757" stroke-width="1.5"/>
+
+    <!-- each corner = atom + its 2 edges + its diagonal, grouped so they move together -->
+    <g class="corner corner-tl">
+      <path d="M12 12 L36 12 M12 12 L12 36 M12 12 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="12" cy="12" r="3.6" fill="#d97757"/>
+    </g>
+    <g class="corner corner-tr">
+      <path d="M36 12 L36 36 M36 12 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="36" cy="12" r="3.6" fill="#d97757"/>
+    </g>
+    <g class="corner corner-br">
+      <path d="M36 36 L12 36 M36 36 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="36" cy="36" r="3.6" fill="#d97757"/>
+    </g>
+    <g class="corner corner-bl">
+      <path d="M12 36 L24 24" stroke="#d97757" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <circle class="atom" cx="12" cy="36" r="3.6" fill="#d97757"/>
+    </g>
+  </svg>
+    </a>
+    Yeasin Tarek
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Blog
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Categories
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Categories
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../category/research/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contact
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#where-supercapacitors-fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where supercapacitors fit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#charge-stored-in-a-double-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Charge stored in a double layer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anatomy-of-a-commercial-cell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anatomy of a commercial cell
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-supercapacitors-are-made" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How supercapacitors are made
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#who-makes-supercapacitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Who makes supercapacitors?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pores-and-graphene" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pores and graphene
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-second-mechanism-pseudocapacitance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A second mechanism: pseudocapacitance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hybrid-electrodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hybrid electrodes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#my-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        My work
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../" class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2026-10-24 09:00:00+00:00" class="md-ellipsis">October 24, 2026</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/research/">Research</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              6 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">energy storage</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">nanomaterials</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">supercapacitors</span>
+      
+    
+  </nav>
+
+
+
+<h1 id="supercapacitors-storing-energy-at-the-surface">Supercapacitors: storing energy at the surface<a class="headerlink" href="#supercapacitors-storing-energy-at-the-surface" title="Permanent link">&para;</a></h1>
+<figure class="post-hero">
+<p><img alt="Animated ions charging and discharging a porous supercapacitor electrode" src="../../assets/research/supercap.svg" /></p>
+</figure>
+<p class="lede">Batteries store a lot of energy but release it slowly. Capacitors release
+energy almost instantly but hold very little. Supercapacitors sit in between. They charge
+in seconds and survive a very large number of cycles. The secret lies in surfaces, pores
+and a layer of ions just a few atoms thick.</p>
+
+<!-- more -->
+
+<h2 id="where-supercapacitors-fit">Where supercapacitors fit<a class="headerlink" href="#where-supercapacitors-fit" title="Permanent link">&para;</a></h2>
+<p>Energy storage devices are often compared on a Ragone plot. It shows how much energy a
+device stores against how quickly it can deliver that energy.<sup id="fnref:simon"><a class="footnote-ref" href="#fn:simon">1</a></sup></p>
+<figure>
+<p><img alt="Animated Ragone plot placing capacitors, supercapacitors, batteries and fuel cells by power and energy density" src="../../assets/blog/supercap/ragone.svg" /></p>
+<figcaption>Supercapacitors bridge the gap between conventional capacitors and batteries.</figcaption>
+</figure>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Supercapacitor (EDLC)</th>
+<th>Lithium-ion battery</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Storage mechanism</td>
+<td>Ions adsorb at surfaces (physical)</td>
+<td>Ions enter the electrode bulk (chemical)</td>
+</tr>
+<tr>
+<td>Charge time</td>
+<td>Seconds</td>
+<td>Tens of minutes to hours</td>
+</tr>
+<tr>
+<td>Cycle life</td>
+<td>Hundreds of thousands of cycles or more</td>
+<td>Typically thousands of cycles</td>
+</tr>
+<tr>
+<td>Energy density</td>
+<td>Low</td>
+<td>High</td>
+</tr>
+<tr>
+<td>Power density</td>
+<td>Very high</td>
+<td>Moderate</td>
+</tr>
+</tbody>
+</table>
+<p class="table-note">Qualitative comparison based on Simon and Gogotsi<sup id="fnref2:simon"><a class="footnote-ref" href="#fn:simon">1</a></sup> and Burke.<sup id="fnref:burke"><a class="footnote-ref" href="#fn:burke">2</a></sup></p>
+<p>Supercapacitors suit regenerative braking, backup power, cranes, wind-turbine pitch
+control and grid stabilisation, where bursts of energy matter more than duration.<sup id="fnref3:simon"><a class="footnote-ref" href="#fn:simon">1</a></sup><sup id="fnref2:burke"><a class="footnote-ref" href="#fn:burke">2</a></sup></p>
+<h2 id="charge-stored-in-a-double-layer">Charge stored in a double layer<a class="headerlink" href="#charge-stored-in-a-double-layer" title="Permanent link">&para;</a></h2>
+<p>When a voltage is applied, ions in the electrolyte move toward the oppositely charged
+electrode. They form a compact layer at the surface, called the <strong>electric double
+layer</strong>. Charge is stored electrostatically, with no chemical reaction.<sup id="fnref:conway"><a class="footnote-ref" href="#fn:conway">3</a></sup></p>
+<figure>
+<p><img alt="Animation of ions forming an electric double layer at a charged electrode surface" src="../../assets/blog/supercap/double-layer.svg" /></p>
+<figcaption>During charging, ions line up at the electrode surface; during discharge they drift back.</figcaption>
+</figure>
+<p>The capacitance follows the familiar parallel-plate relation</p>
+<div class="eq"><i>C</i> = <span class="frac"><span><i>ε</i><sub>r</sub> <i>ε</i><sub>0</sub> <i>A</i></span><span><i>d</i></span></span></div>
+
+<p>where <em>A</em> is the electrode surface area and <em>d</em> is the tiny charge separation. Because
+<em>d</em> is so small, the capacitance per unit area is large. So the goal is to maximise
+<em>A</em>, using porous carbons with enormous internal surface area.<sup id="fnref4:simon"><a class="footnote-ref" href="#fn:simon">1</a></sup><sup id="fnref2:conway"><a class="footnote-ref" href="#fn:conway">3</a></sup></p>
+<p>The stored energy is</p>
+<div class="eq"><i>E</i> = <span class="frac"><span>1</span><span>2</span></span> <i>C</i> <i>V</i><sup>2</sup></div>
+
+<p>so both capacitance and operating voltage <em>V</em> matter. Voltage is limited by the
+electrolyte. Water decomposes above about 1.2 V, so commercial cells mostly use organic
+electrolytes, which allow around 2.7 V per cell.<sup id="fnref5:simon"><a class="footnote-ref" href="#fn:simon">1</a></sup></p>
+<h2 id="anatomy-of-a-commercial-cell">Anatomy of a commercial cell<a class="headerlink" href="#anatomy-of-a-commercial-cell" title="Permanent link">&para;</a></h2>
+<p>A typical cylindrical supercapacitor contains:<sup id="fnref3:burke"><a class="footnote-ref" href="#fn:burke">2</a></sup></p>
+<ul>
+<li><strong>Two carbon electrodes</strong>, each a thin coating of activated carbon on aluminium foil.
+  The foil acts as the current collector.</li>
+<li><strong>A porous separator</strong> between them, which lets ions through but prevents short circuits.</li>
+<li><strong>An organic electrolyte</strong>, a salt dissolved in a solvent such as acetonitrile.</li>
+<li><strong>A sealed aluminium can</strong>, with terminals connected to the foils.</li>
+</ul>
+<p>Activated carbon is the workhorse electrode material. It is made by carbonising a
+precursor, such as coconut shell, then "activating" it to open up a network of pores.
+This gives surface areas of roughly 1,000 to 2,000 m<sup>2</sup> per gram.<sup id="fnref6:simon"><a class="footnote-ref" href="#fn:simon">1</a></sup></p>
+<h2 id="how-supercapacitors-are-made">How supercapacitors are made<a class="headerlink" href="#how-supercapacitors-are-made" title="Permanent link">&para;</a></h2>
+<figure class="figure-wide">
+<p><a href="../../assets/blog/supercap/process.svg" target="_blank" title="Open full size"><img alt="Isometric 3D schematic of supercapacitor manufacturing from activated carbon to cell testing" src="../../assets/blog/supercap/process.svg" /></a></p>
+<figcaption>The conventional manufacturing route for wound supercapacitor cells.</figcaption>
+</figure>
+<p>The process borrows heavily from lithium-ion battery manufacturing:<sup id="fnref4:burke"><a class="footnote-ref" href="#fn:burke">2</a></sup></p>
+<ol>
+<li><strong>Activated carbon production.</strong> A biomass precursor is carbonised, then activated with
+   steam or chemicals to create pores.</li>
+<li><strong>Slurry mixing.</strong> Activated carbon is mixed with a conductive carbon additive and a
+   polymer binder.</li>
+<li><strong>Electrode coating.</strong> The slurry is coated evenly onto aluminium foil.</li>
+<li><strong>Drying and calendering.</strong> The coating is dried, then pressed between rollers to
+   control thickness and density.</li>
+<li><strong>Slitting.</strong> The wide electrode roll is cut into narrow strips.</li>
+<li><strong>Winding.</strong> Two electrode strips and two separator layers are wound into a
+   "jelly roll".</li>
+<li><strong>Electrolyte filling and sealing.</strong> The roll is placed in a can, dried thoroughly,
+   filled with electrolyte and sealed. Moisture must be kept out, because water limits
+   the voltage and shortens life.</li>
+<li><strong>Formation and testing.</strong> Each cell is conditioned, then tested for capacitance,
+   internal resistance and leakage current.</li>
+</ol>
+<div class="video">
+<iframe allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" loading="lazy" src="https://www.youtube-nocookie.com/embed/1wuiue5OpUw" title="Automatic winding machine for supercapacitor manufacturing (TOB New Energy)"></iframe>
+</div>
+<p class="video__caption">Step 6 in action: an automatic winding machine for cylindrical supercapacitor cells (TOB New Energy).</p>
+
+<div class="video">
+<iframe allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" loading="lazy" src="https://www.youtube-nocookie.com/embed/-7T-6XdiRTw" title="Supercapacitors explained (Undecided with Matt Ferrell)"></iframe>
+</div>
+<p class="video__caption">A general-audience explainer on supercapacitors and their applications (Undecided with Matt Ferrell).</p>
+
+<h2 id="who-makes-supercapacitors">Who makes supercapacitors?<a class="headerlink" href="#who-makes-supercapacitors" title="Permanent link">&para;</a></h2>
+<p>Major manufacturers include Maxwell Technologies (United States), Eaton, Nippon
+Chemi-Con (Japan), LS Materials (South Korea) and CAP-XX (Australia).<sup id="fnref:market"><a class="footnote-ref" href="#fn:market">4</a></sup> Skeleton
+Technologies, founded in Estonia, makes its own carbon from curved, atom-thin sheets and
+has installed manufacturing in Germany.<sup id="fnref:eib"><a class="footnote-ref" href="#fn:eib">5</a></sup></p>
+<h2 id="pores-and-graphene">Pores and graphene<a class="headerlink" href="#pores-and-graphene" title="Permanent link">&para;</a></h2>
+<p>Surface area alone is not the full story. Chmiola and colleagues showed that carbon pores
+smaller than 1 nm give an unexpected rise in capacitance.<sup id="fnref:chmiola"><a class="footnote-ref" href="#fn:chmiola">6</a></sup> Ions partly shed
+their solvent shells to enter such pores, bringing charges closer together.</p>
+<p>Graphene, a single layer of carbon atoms, is attractive because both of its faces are
+exposed. Its theoretical surface area is about 2,630 m<sup>2</sup>/g.<sup id="fnref:stoller"><a class="footnote-ref" href="#fn:stoller">7</a></sup> In
+practice, graphene sheets tend to restack, which hides much of that surface.</p>
+<h2 id="a-second-mechanism-pseudocapacitance">A second mechanism: pseudocapacitance<a class="headerlink" href="#a-second-mechanism-pseudocapacitance" title="Permanent link">&para;</a></h2>
+<p>Some materials add fast, reversible redox reactions at or near their surface. This is
+called <strong>pseudocapacitance</strong>. Metal oxides and hydroxides, such as MnO<sub>2</sub> and
+Ni(OH)<sub>2</sub>, can store considerably more charge this way than carbon
+alone.<sup id="fnref:augustyn"><a class="footnote-ref" href="#fn:augustyn">8</a></sup><sup id="fnref:wang"><a class="footnote-ref" href="#fn:wang">9</a></sup> The trade-off is that they often conduct electrons poorly and
+can be less stable over many cycles.</p>
+<h2 id="hybrid-electrodes">Hybrid electrodes<a class="headerlink" href="#hybrid-electrodes" title="Permanent link">&para;</a></h2>
+<p>A natural idea is to combine both mechanisms. Conductive graphene provides surface area
+and electron pathways. Metal oxides and hydroxides add pseudocapacitance. The graphene
+also helps keep the oxide particles from aggregating.<sup id="fnref2:wang"><a class="footnote-ref" href="#fn:wang">9</a></sup></p>
+<h2 id="my-work">My work<a class="headerlink" href="#my-work" title="Permanent link">&para;</a></h2>
+<p>For my MSc at the Bangladesh University of Engineering and Technology, I developed a
+ternary hybrid electrode. It combined reduced graphene oxide (rGO) with
+Ni(OH)<sub>2</sub> and MnO<sub>2</sub>.<sup id="fnref:tarek"><a class="footnote-ref" href="#fn:tarek">10</a></sup> The material formed a wrinkled,
+flower-like structure that improved charge storage. I have since applied machine learning
+to carbon supercapacitor design; see my <a href="../../machine-learning.md">Machine Learning</a>
+page.</p>
+<div class="admonition tip">
+<p class="admonition-title">The big picture</p>
+<p>Supercapacitors will not replace batteries. They complement them, handling the fast,
+high-power jobs that batteries do poorly. Better electrode materials can extend their
+energy density while keeping their speed.</p>
+</div>
+<p><a class="md-button" href="../../research/#supercapacitor">Back to my research</a></p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:simon">
+<p>Simon, P., &amp; Gogotsi, Y. (2008). Materials for electrochemical capacitors. <em>Nature Materials</em>, 7, 845–854. <a href="https://doi.org/10.1038/nmat2297">doi:10.1038/nmat2297</a>&#160;<a class="footnote-backref" href="#fnref:simon" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:simon" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:simon" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:simon" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref5:simon" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref6:simon" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:burke">
+<p>Burke, A. (2000). Ultracapacitors: Why, how, and where is the technology. <em>Journal of Power Sources</em>, 91, 37–50. <a href="https://doi.org/10.1016/S0378-7753(00)00485-7">doi:10.1016/S0378-7753(00)00485-7</a>&#160;<a class="footnote-backref" href="#fnref:burke" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:burke" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:burke" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:burke" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:conway">
+<p>Conway, B. E. (1999). <em>Electrochemical Supercapacitors: Scientific Fundamentals and Technological Applications</em>. Springer. <a href="https://doi.org/10.1007/978-1-4757-3058-6">doi:10.1007/978-1-4757-3058-6</a>&#160;<a class="footnote-backref" href="#fnref:conway" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:conway" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:market">
+<p>MarketsandMarkets. <em>Supercapacitor market: Research insight</em>. <a href="https://marketsandmarkets.com/ResearchInsight/supercapacitor-market.asp">marketsandmarkets.com</a>&#160;<a class="footnote-backref" href="#fnref:market" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:eib">
+<p>European Investment Bank. <em>Supercapacitors and coconuts</em>. <a href="https://www.eib.org/en/stories/supercapacitors-and-coconuts">eib.org</a>&#160;<a class="footnote-backref" href="#fnref:eib" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:chmiola">
+<p>Chmiola, J., Yushin, G., Gogotsi, Y., Portet, C., Simon, P., &amp; Taberna, P. L. (2006). Anomalous increase in carbon capacitance at pore sizes less than 1 nanometer. <em>Science</em>, 313, 1760–1763. <a href="https://doi.org/10.1126/science.1132195">doi:10.1126/science.1132195</a>&#160;<a class="footnote-backref" href="#fnref:chmiola" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:stoller">
+<p>Stoller, M. D., Park, S., Zhu, Y., An, J., &amp; Ruoff, R. S. (2008). Graphene-based ultracapacitors. <em>Nano Letters</em>, 8, 3498–3502. <a href="https://doi.org/10.1021/nl802558y">doi:10.1021/nl802558y</a>&#160;<a class="footnote-backref" href="#fnref:stoller" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:augustyn">
+<p>Augustyn, V., Simon, P., &amp; Dunn, B. (2014). Pseudocapacitive oxide materials for high-rate electrochemical energy storage. <em>Energy &amp; Environmental Science</em>, 7, 1597–1614. <a href="https://doi.org/10.1039/c3ee44164d">doi:10.1039/c3ee44164d</a>&#160;<a class="footnote-backref" href="#fnref:augustyn" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+<li id="fn:wang">
+<p>Wang, G., Zhang, L., &amp; Zhang, J. (2012). A review of electrode materials for electrochemical supercapacitors. <em>Chemical Society Reviews</em>, 41, 797–828. <a href="https://doi.org/10.1039/c1cs15060j">doi:10.1039/c1cs15060j</a>&#160;<a class="footnote-backref" href="#fnref:wang" title="Jump back to footnote 9 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:wang" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+</li>
+<li id="fn:tarek">
+<p>Tarek, Y. A., Shakil, R., Reaz, A. H., Roy, C. K., Barai, H. R., &amp; Firoz, S. H. (2022). Wrinkled flower-like rGO intercalated with Ni(OH)<sub>2</sub> and MnO<sub>2</sub> as high-performing supercapacitor electrode. <em>ACS Omega</em>, 7(23), 20145–20154. <a href="https://doi.org/10.1021/acsomega.2c01986">doi:10.1021/acsomega.2c01986</a>&#160;<a class="footnote-backref" href="#fnref:tarek" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+        
+          
+          <a href="../mgb2-superconducting-joints/" class="md-footer__link md-footer__link--next" aria-label="Next: Closing the loop: MgB₂ superconducting joints for MRI">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Closing the loop: MgB₂ superconducting joints for MRI
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/YATAREK" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://scholar.google.com/citations?user=B3c5GJQAAAAJ" target="_blank" rel="noopener" title="scholar.google.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M390.9 298.5s0 .1.1.1c9.2 19.4 14.4 41.1 14.4 64C405.3 445.1 338.5 512 256 512s-149.3-66.9-149.3-149.3c0-22.9 5.2-44.6 14.4-64 1.7-3.6 3.6-7.2 5.6-10.7q6.6-11.4 15-21.3c27.4-32.6 68.5-53.3 114.4-53.3 33.6 0 64.6 11.1 89.6 29.9 9.1 6.9 17.4 14.7 24.8 23.5 5.6 6.6 10.6 13.8 15 21.3 2 3.4 3.8 7 5.5 10.5zm26.4-18.8c-30.1-58.4-91-98.4-161.3-98.4s-131.2 40-161.3 98.4L0 202.7 256 0l256 202.7-94.7 77.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://orcid.org/0000-0003-2113-2486" target="_blank" rel="noopener" title="orcid.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M294.7 188.2h-45.9V342h47.5c67.6 0 83.1-51.3 83.1-76.9 0-41.6-26.5-76.9-84.7-76.9M256 8a248 248 0 1 0 0 496 248 248 0 1 0 0-496m-80.8 360.8h-29.8V161.3h29.8zM160.3 98.5a19.6 19.6 0 1 1 0 39.2 19.6 19.6 0 1 1 0-39.2M300 369h-81V161.3h80.6c76.7 0 110.4 54.8 110.4 103.9 0 53.3-41.7 103.9-110 103.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/yatarek/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "navigation.instant", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../javascripts/ascii-portrait.js"></script>
+      
+        <script src="../../javascripts/popup.js"></script>
+      
+        <script src="../../javascripts/dots.js"></script>
+      
+    
+  </body>
+</html>

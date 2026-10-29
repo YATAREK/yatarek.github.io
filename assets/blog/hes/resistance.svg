@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+  <title>Superconducting Transition and Zero Resistance in High-Entropy Alloy</title>
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+    }
+    .axis {
+      stroke: #7c8a9a;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+    }
+    .axis-arrowhead {
+      fill: #7c8a9a;
+    }
+    .tick {
+      stroke: #7c8a9a;
+      stroke-width: 2.5;
+    }
+    .tc-line {
+      stroke: #7c8a9a;
+      stroke-width: 2;
+      stroke-dasharray: 6 5;
+      stroke-opacity: 0.6;
+    }
+    .normal-curve {
+      fill: none;
+      stroke: #5b8fb9;
+      stroke-width: 3.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .zero-segment {
+      fill: none;
+      stroke: #d97757;
+      stroke-width: 3.5;
+      stroke-linecap: round;
+    }
+    .zero-glow {
+      fill: none;
+      stroke: #d97757;
+      stroke-width: 11;
+      stroke-linecap: round;
+      animation: glow-pulse 8s ease-in-out infinite;
+    }
+    @keyframes glow-pulse {
+      0%, 45% { stroke-opacity: 0.15; }
+      55%, 82% { stroke-opacity: 0.75; }
+      92%, 100% { stroke-opacity: 0.15; }
+    }
+    .travel-dot {
+      offset-path: path("M 540 95 C 450 110, 360 128, 270 145 L 270 290 L 105 290");
+      animation: travel-cooling 8s cubic-bezier(0.35, 0, 0.25, 1) infinite;
+    }
+    @keyframes travel-cooling {
+      0% { offset-distance: 0%; opacity: 1; }
+      82% { offset-distance: 100%; opacity: 1; }
+      92%, 100% { offset-distance: 100%; opacity: 0; }
+    }
+    .label {
+      font-family: system-ui, sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      fill: #7c8a9a;
+    }
+    .label-clay {
+      font-family: system-ui, sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      fill: #d97757;
+    }
+  </style>
+
+  <!-- Dashed vertical line at Tc -->
+  <line x1="270" y1="290" x2="270" y2="70" class="tc-line" />
+
+  <!-- R and T Axes -->
+  <!-- Horizontal T axis -->
+  <line x1="100" y1="290" x2="570" y2="290" class="axis" />
+  <polygon points="580,290 566,284 566,296" class="axis-arrowhead" />
+  <text x="595" y="295" class="label">T</text>
+
+  <!-- Vertical R axis -->
+  <line x1="100" y1="290" x2="100" y2="50" class="axis" />
+  <polygon points="100,40 94,54 106,54" class="axis-arrowhead" />
+  <text x="100" y="28" text-anchor="middle" class="label">R</text>
+
+  <!-- Tc tick and label on T axis -->
+  <line x1="270" y1="290" x2="270" y2="298" class="tick" />
+  <text x="270" y="320" text-anchor="middle" class="label">T<tspan baseline-shift="sub" font-size="12">c</tspan></text>
+
+  <!-- Normal state curve (decreasing on cooling to Tc) -->
+  <path class="normal-curve" d="M 540 95 C 450 110, 360 128, 270 145 L 270 290" />
+
+  <!-- Zero resistance glow layer -->
+  <line x1="102" y1="290" x2="270" y2="290" class="zero-glow" />
+
+  <!-- Zero resistance line segment -->
+  <line x1="100" y1="290" x2="270" y2="290" class="zero-segment" />
+
+  <!-- Label: zero resistance -->
+  <text x="185" y="255" text-anchor="middle" class="label-clay">zero resistance</text>
+  <line x1="185" y1="262" x2="185" y2="278" stroke="#d97757" stroke-width="2" stroke-linecap="round" />
+  <polygon points="185,283 181,275 189,275" fill="#d97757" />
+
+  <!-- Traveling dot from high T to zero R -->
+  <circle cx="0" cy="0" r="6" fill="#c9a227" stroke="#d97757" stroke-width="2.5" class="travel-dot" />
+</svg>

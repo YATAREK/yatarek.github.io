@@ -1,0 +1,736 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560">
+  <title>Conventional manufacturing route for EDLC supercapacitor cells</title>
+  <defs>
+    <!-- Conveyor and structural gradients -->
+    <linearGradient id="belt-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#717d8c"/>
+      <stop offset="100%" stop-color="#5a6573"/>
+    </linearGradient>
+    <linearGradient id="turn-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#717d8c"/>
+      <stop offset="50%" stop-color="#828f9e"/>
+      <stop offset="100%" stop-color="#5a6573"/>
+    </linearGradient>
+    <linearGradient id="foil-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#cbd5e1"/>
+      <stop offset="50%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#94a3b8"/>
+    </linearGradient>
+    <linearGradient id="coated-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="50%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="glow-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffb703"/>
+      <stop offset="100%" stop-color="#d97757"/>
+    </linearGradient>
+
+    <!-- Shared 3D isometric cylinder template for roll / cell -->
+    <g id="iso-can">
+      <ellipse cx="0" cy="-14" rx="8" ry="4.5" fill="#a3aebb" stroke="#4a5360" stroke-width="1.2"/>
+      <path d="M -8 -14 v 22 a 8 4.5 0 0 0 16 0 v -22 Z" fill="#7c8a9a" stroke="#4a5360" stroke-width="1.2"/>
+      <path d="M 0 -9.5 v 22 a 8 4.5 0 0 0 8 -4.5 v -22 a 8 4.5 0 0 1 -8 4.5 Z" fill="#5f6b78"/>
+      <ellipse cx="0" cy="-14" rx="5" ry="2.8" fill="#cbd5e1"/>
+      <circle cx="0" cy="-14" r="1.8" fill="#d97757"/>
+    </g>
+
+    <g id="iso-jellyroll">
+      <ellipse cx="0" cy="-12" rx="7.5" ry="4.2" fill="#8fae7e" stroke="#4a5360" stroke-width="1"/>
+      <path d="M -7.5 -12 v 18 a 7.5 4.2 0 0 0 15 0 v -18 Z" fill="#334155" stroke="#4a5360" stroke-width="1"/>
+      <ellipse cx="0" cy="-12" rx="5" ry="2.8" fill="#1e293b"/>
+      <circle cx="0" cy="-12" r="1.6" fill="#cbd5e1"/>
+      <path d="M -2 -14 v -4 h 2 v 4 Z" fill="#cbd5e1"/>
+      <path d="M 1 -13 v -5 h 2 v 5 Z" fill="#ddb945"/>
+    </g>
+  </defs>
+
+  <style>
+    /* Typography */
+    .step-num { font-family: system-ui, -apple-system, sans-serif; font-size: 13px; font-weight: 700; fill: #f8fafc; text-anchor: middle; dominant-baseline: central; }
+    .label-title { font-family: system-ui, -apple-system, sans-serif; font-size: 15px; font-weight: 600; fill: #7c8a9a; text-anchor: middle; }
+    .label-param { font-family: system-ui, -apple-system, sans-serif; font-size: 13px; font-weight: 400; fill: #7c8a9a; text-anchor: middle; }
+    .badge-bg { fill: #334155; stroke: #7c8a9a; stroke-width: 1.5px; }
+
+    /* Machine isometric strokes */
+    .iso-stroke { stroke: #4a5360; stroke-width: 1.5px; stroke-linejoin: round; stroke-linecap: round; }
+    .iso-thin { stroke: #4a5360; stroke-width: 1px; stroke-linejoin: round; }
+    .arrow-mark { fill: none; stroke: #a3aebb; stroke-width: 2px; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* CSS Animations */
+    @keyframes furnace-pulse {
+      0%, 100% { fill: #ffb703; opacity: 0.85; filter: drop-shadow(0 0 3px #ea580c); }
+      50% { fill: #f97316; opacity: 1; filter: drop-shadow(0 0 8px #ef4444); }
+    }
+    .anim-furnace { animation: furnace-pulse 3s ease-in-out infinite; }
+
+    @keyframes spin-cw {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes spin-ccw {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(-360deg); }
+    }
+    .anim-spin-blade { transform-origin: 430px 105px; animation: spin-cw 3s linear infinite; }
+    .anim-roll-top { transform-origin: 994px 123px; animation: spin-ccw 4s linear infinite; }
+    .anim-roll-bot { transform-origin: 994px 145px; animation: spin-cw 4s linear infinite; }
+    .anim-slitter { transform-origin: 970px 376px; animation: spin-cw 2.5s linear infinite; }
+    .anim-mandrel { transform-origin: 700px 370px; animation: spin-cw 3s linear infinite; }
+
+    @keyframes foil-dash {
+      0% { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: -24; }
+    }
+    .anim-foil-move { stroke-dasharray: 6 3; animation: foil-dash 1.5s linear infinite; }
+
+    @keyframes drip-pulse {
+      0% { transform: translateY(0); opacity: 0.2; }
+      40% { opacity: 1; }
+      80%, 100% { transform: translateY(14px); opacity: 0; }
+    }
+    .anim-drip { animation: drip-pulse 2s ease-in infinite; }
+
+    @keyframes test-blink {
+      0%, 100% { fill: #10b981; filter: drop-shadow(0 0 2px #10b981); opacity: 0.6; }
+      50% { fill: #34d399; filter: drop-shadow(0 0 7px #10b981); opacity: 1; }
+    }
+    .anim-test-led { animation: test-blink 1.8s ease-in-out infinite; }
+
+    /* Conveyor particle/item flows */
+    @keyframes r1-move-a {
+      0% { transform: translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateX(170px); opacity: 0; }
+    }
+    @keyframes r1-move-b {
+      0% { transform: translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateX(170px); opacity: 0; }
+    }
+    .anim-flow-r1a { animation: r1-move-a 4s linear infinite; }
+    .anim-flow-r1b { animation: r1-move-b 4s linear infinite -2s; }
+
+    @keyframes uturn-flow {
+      0% { transform: translate(0px, 0px); opacity: 0; }
+      8% { opacity: 1; }
+      25% { transform: translate(45px, 25px); }
+      50% { transform: translate(68px, 120px); }
+      75% { transform: translate(45px, 215px); }
+      92% { opacity: 1; }
+      100% { transform: translate(0px, 240px); opacity: 0; }
+    }
+    .anim-flow-uturn1 { animation: uturn-flow 6s ease-in-out infinite; }
+    .anim-flow-uturn2 { animation: uturn-flow 6s ease-in-out infinite -3s; }
+
+    @keyframes r2-move-a {
+      0% { transform: translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateX(-170px); opacity: 0; }
+    }
+    @keyframes r2-move-b {
+      0% { transform: translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateX(-170px); opacity: 0; }
+    }
+    .anim-flow-r2a { animation: r2-move-a 4s linear infinite; }
+    .anim-flow-r2b { animation: r2-move-b 4s linear infinite -2s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+    }
+  </style>
+
+  <!-- ========================================== -->
+  <!-- LAYER 1: SHARED ISOMETRIC CONVEYOR TRACKS  -->
+  <!-- ========================================== -->
+  <g id="conveyor-infrastructure">
+    <!-- Row 1 Conveyor Support Legs (Y=160 baseline) -->
+    <g class="iso-stroke" fill="#4a5360">
+      <path d="M 160 174 v 18 h 5 v -18 Z M 295 174 v 18 h 5 v -18 Z M 430 174 v 18 h 5 v -18 Z M 565 174 v 18 h 5 v -18 Z M 700 174 v 18 h 5 v -18 Z M 835 174 v 18 h 5 v -18 Z M 970 174 v 18 h 5 v -18 Z"/>
+    </g>
+
+    <!-- Row 1 Conveyor Bed (Left to Right, X: 70 -> 1040) -->
+    <g class="iso-stroke">
+      <!-- Front Skirt / Lip -->
+      <path d="M 70 167 L 1040 167 v 7 L 70 174 Z" fill="#4a5360"/>
+      <!-- Top Track Surface -->
+      <path d="M 70 153 L 1040 153 L 1040 167 L 70 167 Z" fill="url(#belt-grad)"/>
+      <!-- Internal Guide Ribbons -->
+      <path d="M 70 160 L 1040 160" stroke="#4a5360" stroke-width="1" stroke-dasharray="8 6"/>
+    </g>
+
+    <!-- Row 1 Flow Arrows -->
+    <path class="arrow-mark" d="M 285 160 l 6 -3 l -6 -3 M 295 160 l 6 -3 l -6 -3"/>
+    <path class="arrow-mark" d="M 555 160 l 6 -3 l -6 -3 M 565 160 l 6 -3 l -6 -3"/>
+    <path class="arrow-mark" d="M 825 160 l 6 -3 l -6 -3 M 835 160 l 6 -3 l -6 -3"/>
+
+    <!-- Turnaround Conveyor Loop (Connects Row 1 at 1040,160 to Row 2 at 1040,400) -->
+    <g class="iso-stroke">
+      <!-- Support Plinths for Turn Curve -->
+      <path d="M 1095 240 v 26 h 5 v -26 Z M 1115 280 v 26 h 5 v -26 Z M 1095 320 v 26 h 5 v -26 Z" fill="#4a5360"/>
+      <!-- Curved Outer Skirt -->
+      <path d="M 1040 174 C 1145 174, 1145 393, 1040 393 v 7 C 1155 400, 1155 167, 1040 167 Z" fill="#4a5360"/>
+      <!-- Curved Conveyor Surface -->
+      <path d="M 1040 153 C 1145 153, 1145 407, 1040 407 L 1040 393 C 1130 393, 1130 167, 1040 167 Z" fill="url(#turn-grad)"/>
+      <!-- Curved Center Guide Line -->
+      <path d="M 1040 160 C 1138 160, 1138 400, 1040 400" stroke="#4a5360" stroke-width="1" stroke-dasharray="8 6" fill="none"/>
+    </g>
+    <!-- Turn Direction Chevron -->
+    <path class="arrow-mark" d="M 1118 274 l 4 6 l 4 -6 M 1118 284 l 4 6 l 4 -6"/>
+
+    <!-- Row 2 Conveyor Support Legs (Y=400 baseline) -->
+    <g class="iso-stroke" fill="#4a5360">
+      <path d="M 970 414 v 18 h 5 v -18 Z M 835 414 v 18 h 5 v -18 Z M 700 414 v 18 h 5 v -18 Z M 565 414 v 18 h 5 v -18 Z M 430 414 v 18 h 5 v -18 Z M 295 414 v 18 h 5 v -18 Z M 160 414 v 18 h 5 v -18 Z"/>
+    </g>
+
+    <!-- Row 2 Conveyor Bed (Right to Left, X: 1040 -> 70) -->
+    <g class="iso-stroke">
+      <!-- Front Skirt / Lip -->
+      <path d="M 70 407 L 1040 407 v 7 L 70 414 Z" fill="#4a5360"/>
+      <!-- Top Track Surface -->
+      <path d="M 70 393 L 1040 393 L 1040 407 L 70 407 Z" fill="url(#belt-grad)"/>
+      <!-- Internal Guide Ribbons -->
+      <path d="M 70 400 L 1040 400" stroke="#4a5360" stroke-width="1" stroke-dasharray="8 6"/>
+    </g>
+
+    <!-- Row 2 Flow Arrows (Pointing Left) -->
+    <path class="arrow-mark" d="M 845 400 l -6 -3 l 6 -3 M 835 400 l -6 -3 l 6 -3"/>
+    <path class="arrow-mark" d="M 575 400 l -6 -3 l 6 -3 M 565 400 l -6 -3 l 6 -3"/>
+    <path class="arrow-mark" d="M 305 400 l -6 -3 l 6 -3 M 295 400 l -6 -3 l 6 -3"/>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- LAYER 2: ANIMATED MATERIAL BETWEEN STEPS   -->
+  <!-- ========================================== -->
+  <g id="animated-conveyor-material">
+    <!-- Step 1 -> Step 2: Activated Carbon Granules on Row 1 -->
+    <g transform="translate(210, 158)">
+      <g class="anim-flow-r1a">
+        <polygon points="0,0 8,-4 16,0 8,4" fill="#1e293b"/>
+        <polygon points="4,-1 7,-7 11,-4 8,0" fill="#334155"/>
+        <circle cx="9" cy="-2" r="2.5" fill="#0f172a"/>
+      </g>
+      <g class="anim-flow-r1b">
+        <polygon points="0,0 7,-4 14,0 7,4" fill="#1e293b"/>
+        <circle cx="6" cy="-2" r="2.2" fill="#334155"/>
+      </g>
+    </g>
+
+    <!-- Step 2 -> Step 3: Mixed Slurry Transport Container -->
+    <g transform="translate(480, 158)">
+      <g class="anim-flow-r1a">
+        <ellipse cx="0" cy="0" rx="7" ry="4" fill="#334155" stroke="#4a5360" stroke-width="1"/>
+        <path d="M -7 0 v -7 a 7 4 0 0 1 14 0 v 7 Z" fill="#5b8fb9" stroke="#4a5360" stroke-width="1"/>
+        <ellipse cx="0" cy="-7" rx="7" ry="4" fill="#76a5cb"/>
+        <circle cx="0" cy="-7" r="4" fill="#0f172a"/>
+      </g>
+      <g class="anim-flow-r1b">
+        <ellipse cx="0" cy="0" rx="7" ry="4" fill="#334155" stroke="#4a5360" stroke-width="1"/>
+        <path d="M -7 0 v -7 a 7 4 0 0 1 14 0 v 7 Z" fill="#5b8fb9" stroke="#4a5360" stroke-width="1"/>
+        <ellipse cx="0" cy="-7" rx="7" ry="4" fill="#76a5cb"/>
+        <circle cx="0" cy="-7" r="4" fill="#0f172a"/>
+      </g>
+    </g>
+
+    <!-- Step 3 -> Step 4: Coated Wet Foil Strip Advancing -->
+    <g transform="translate(750, 158)">
+      <g class="anim-flow-r1a">
+        <polygon points="0,1 18,-8 34,0 16,9" fill="#1e293b" stroke="#cbd5e1" stroke-width="1"/>
+        <polygon points="3,0 18,-7 31,0 16,7" fill="#0f172a"/>
+      </g>
+      <g class="anim-flow-r1b">
+        <polygon points="0,1 18,-8 34,0 16,9" fill="#1e293b" stroke="#cbd5e1" stroke-width="1"/>
+        <polygon points="3,0 18,-7 31,0 16,7" fill="#0f172a"/>
+      </g>
+    </g>
+
+    <!-- Step 4 -> Step 5: Calendered Foil Coils navigating Turnaround -->
+    <g transform="translate(1015, 160)">
+      <g class="anim-flow-uturn1">
+        <ellipse cx="0" cy="0" rx="9" ry="5" fill="#334155" stroke="#4a5360" stroke-width="1"/>
+        <path d="M -9 0 v -10 a 9 5 0 0 1 18 0 v 10 Z" fill="#7c8a9a" stroke="#4a5360" stroke-width="1"/>
+        <ellipse cx="0" cy="-10" rx="9" ry="5" fill="#a3aebb"/>
+        <ellipse cx="0" cy="-10" rx="4.5" ry="2.5" fill="#0f172a"/>
+      </g>
+      <g class="anim-flow-uturn2">
+        <ellipse cx="0" cy="0" rx="9" ry="5" fill="#334155" stroke="#4a5360" stroke-width="1"/>
+        <path d="M -9 0 v -10 a 9 5 0 0 1 18 0 v 10 Z" fill="#7c8a9a" stroke="#4a5360" stroke-width="1"/>
+        <ellipse cx="0" cy="-10" rx="9" ry="5" fill="#a3aebb"/>
+        <ellipse cx="0" cy="-10" rx="4.5" ry="2.5" fill="#0f172a"/>
+      </g>
+    </g>
+
+    <!-- Step 5 -> Step 6: Slit Electrode Pancake Rolls on Row 2 -->
+    <g transform="translate(900, 398)">
+      <g class="anim-flow-r2a">
+        <ellipse cx="0" cy="0" rx="8" ry="4.5" fill="#1e293b" stroke="#4a5360" stroke-width="1"/>
+        <path d="M -8 0 v -5 a 8 4.5 0 0 1 16 0 v 5 Z" fill="#5f6b78" stroke="#4a5360" stroke-width="1"/>
+        <ellipse cx="0" cy="-5" rx="8" ry="4.5" fill="#ddb945"/>
+        <circle cx="0" cy="-5" r="2.5" fill="#0f172a"/>
+      </g>
+      <g class="anim-flow-r2b">
+        <ellipse cx="0" cy="0" rx="8" ry="4.5" fill="#1e293b" stroke="#4a5360" stroke-width="1"/>
+        <path d="M -8 0 v -5 a 8 4.5 0 0 1 16 0 v 5 Z" fill="#5f6b78" stroke="#4a5360" stroke-width="1"/>
+        <ellipse cx="0" cy="-5" rx="8" ry="4.5" fill="#ddb945"/>
+        <circle cx="0" cy="-5" r="2.5" fill="#0f172a"/>
+      </g>
+    </g>
+
+    <!-- Step 6 -> Step 7: Wound Jelly-Rolls heading into Filling -->
+    <g transform="translate(630, 398)">
+      <g class="anim-flow-r2a">
+        <use href="#iso-jellyroll"/>
+      </g>
+      <g class="anim-flow-r2b">
+        <use href="#iso-jellyroll"/>
+      </g>
+    </g>
+
+    <!-- Step 7 -> Step 8: Sealed Supercapacitor Cans entering Testing -->
+    <g transform="translate(360, 398)">
+      <g class="anim-flow-r2a">
+        <use href="#iso-can"/>
+      </g>
+      <g class="anim-flow-r2b">
+        <use href="#iso-can"/>
+      </g>
+    </g>
+
+    <!-- Exit of Step 8: Tested Certified Cells -->
+    <g transform="translate(100, 398)">
+      <g class="anim-flow-r2a">
+        <use href="#iso-can"/>
+        <circle cx="0" cy="-22" r="3" fill="#10b981"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- LAYER 3: THE 8 ISOMETRIC PROCESS MACHINES  -->
+  <!-- ========================================== -->
+
+  <!-- STEP 1: ACTIVATED CARBON FURNACE (X=160, Y=160) -->
+  <g id="step-1-machine" class="iso-stroke">
+    <!-- Plinth Base -->
+    <path d="M 125 150 L 160 167 L 195 150 L 160 133 Z" fill="#a3aebb"/>
+    <path d="M 125 150 L 160 167 v 8 L 125 158 Z" fill="#7c8a9a"/>
+    <path d="M 160 167 L 195 150 v 8 L 160 175 Z" fill="#5f6b78"/>
+
+    <!-- High-Temp Rotary/Retort Hearth Body -->
+    <g>
+      <!-- Left Face: Refractory Clay -->
+      <path d="M 130 144 L 160 159 L 160 108 L 130 93 Z" fill="#d97757"/>
+      <!-- Right Face: Deep Clay Shaded -->
+      <path d="M 160 159 L 190 144 L 190 93 L 160 108 Z" fill="#c15f3c"/>
+      <!-- Top Face: Light Heated Clay -->
+      <path d="M 130 93 L 160 108 L 190 93 L 160 78 Z" fill="#ea9577"/>
+      <!-- Steel Clamping Rings -->
+      <path d="M 130 130 L 160 145 L 190 130" fill="none" stroke="#4a5360" stroke-width="2"/>
+      <path d="M 130 115 L 160 130 L 190 115" fill="none" stroke="#4a5360" stroke-width="2"/>
+    </g>
+
+    <!-- Inspection Hearth Portal with Pulsing Glowing Core -->
+    <g>
+      <polygon points="138,131 152,138 152,118 138,111" fill="#4a5360"/>
+      <polygon class="anim-furnace" points="140,130 150,135 150,120 140,115" fill="#ffb703"/>
+    </g>
+
+    <!-- Raw Biomass (Coconut Shell) Feed Hopper -->
+    <g>
+      <path d="M 138 90 L 152 97 L 152 75 L 138 68 Z" fill="#7c8a9a"/>
+      <path d="M 152 97 L 166 90 L 166 68 L 152 75 Z" fill="#5f6b78"/>
+      <path d="M 138 68 L 152 75 L 166 68 L 152 61 Z" fill="#a3aebb"/>
+      <polygon points="142,67 152,72 162,67 152,62" fill="#334155"/>
+    </g>
+
+    <!-- Activation Steam Injector / Exhaust Flue Stack -->
+    <g>
+      <path d="M 172 88 v -30 a 5 2.5 0 0 1 10 0 v 30 Z" fill="#7c8a9a"/>
+      <path d="M 177 90 v -30 a 5 2.5 0 0 1 5 2.5 v 30 Z" fill="#5f6b78"/>
+      <ellipse cx="177" cy="58" rx="5" ry="2.5" fill="#a3aebb"/>
+      <ellipse cx="177" cy="58" rx="3" ry="1.5" fill="#334155"/>
+    </g>
+
+    <!-- Discharge Funnel -->
+    <path d="M 175 142 L 190 150 L 195 147 L 180 139 Z" fill="#ddb945"/>
+  </g>
+
+  <!-- STEP 2: SLURRY MIXING (X=430, Y=160) -->
+  <g id="step-2-machine" class="iso-stroke">
+    <!-- Plinth Base -->
+    <path d="M 395 150 L 430 167 L 465 150 L 430 133 Z" fill="#a3aebb"/>
+    <path d="M 395 150 L 430 167 v 8 L 395 158 Z" fill="#7c8a9a"/>
+    <path d="M 430 167 L 465 150 v 8 L 430 175 Z" fill="#5f6b78"/>
+
+    <!-- Cylindrical Mixing Tank -->
+    <g>
+      <!-- Lower Tank Body (Cylinder) -->
+      <path d="M 406 112 v 38 a 24 12 0 0 0 48 0 v -38 Z" fill="#5b8fb9"/>
+      <!-- Shaded Right Quadrant -->
+      <path d="M 430 124 v 38 a 24 12 0 0 0 24 -12 v -38 a 24 12 0 0 1 -24 12 Z" fill="#437299"/>
+      <!-- Top Cover Rim -->
+      <ellipse cx="430" cy="112" rx="24" ry="12" fill="#76a5cb"/>
+      <ellipse cx="430" cy="112" rx="19" ry="9.5" fill="#5b8fb9"/>
+      <!-- Sight Glass with Dark Slurry -->
+      <rect x="414" y="125" width="4" height="16" rx="2" fill="#1e293b" stroke="#4a5360" stroke-width="1"/>
+    </g>
+
+    <!-- Top Drive Motor & Reduction Gearbox -->
+    <g>
+      <path d="M 420 106 L 430 111 L 440 106 L 430 101 Z" fill="#a4c294"/>
+      <path d="M 420 106 L 430 111 v -16 L 420 90 Z" fill="#8fae7e"/>
+      <path d="M 430 111 L 440 106 v -16 L 430 95 Z" fill="#739263"/>
+      <path d="M 420 90 L 430 95 L 440 90 L 430 85 Z" fill="#a4c294"/>
+    </g>
+
+    <!-- Rotating Impeller Hub Animation -->
+    <g class="anim-spin-blade">
+      <ellipse cx="430" cy="105" rx="8" ry="4" fill="#ddb945" stroke="#4a5360" stroke-width="1"/>
+      <line x1="422" y1="105" x2="438" y2="105" stroke="#a8851a" stroke-width="2"/>
+      <line x1="430" y1="101" x2="430" y2="109" stroke="#a8851a" stroke-width="2"/>
+    </g>
+
+    <!-- Raw Material Feed Dosing Hoppers (Carbon, Binder, Solvent) -->
+    <g>
+      <!-- Feed 1 (Active Carbon) -->
+      <path d="M 410 98 v -16 l 6 -8 h 6 l -6 8 v 16 Z" fill="#7c8a9a"/>
+      <polygon points="416,74 422,74 425,71 419,71" fill="#334155"/>
+      <!-- Feed 2 (Binder Solution Tube) -->
+      <path d="M 445 106 c 8 -6, 6 -20, 15 -22" fill="none" stroke="#5b8fb9" stroke-width="3"/>
+    </g>
+  </g>
+
+  <!-- STEP 3: ELECTRODE COATING (X=700, Y=160) -->
+  <g id="step-3-machine" class="iso-stroke">
+    <!-- Plinth Base -->
+    <path d="M 665 150 L 700 167 L 735 150 L 700 133 Z" fill="#a3aebb"/>
+    <path d="M 665 150 L 700 167 v 8 L 665 158 Z" fill="#7c8a9a"/>
+    <path d="M 700 167 L 735 150 v 8 L 700 175 Z" fill="#5f6b78"/>
+
+    <!-- Gantry Arch / Support Stanchions -->
+    <g>
+      <!-- Left Stanchion -->
+      <path d="M 672 144 v -55 h 6 v 55 Z" fill="#7c8a9a"/>
+      <!-- Right Stanchion -->
+      <path d="M 722 136 v -55 h 6 v 55 Z" fill="#5f6b78"/>
+      <!-- Cross Bridge -->
+      <path d="M 670 89 L 728 73 v 8 L 670 97 Z" fill="#a3aebb"/>
+    </g>
+
+    <!-- Aluminium Foil Unwind Coil -->
+    <g>
+      <ellipse cx="678" cy="120" rx="9" ry="14" fill="#f8fafc" stroke="#4a5360" stroke-width="1.2"/>
+      <path d="M 678 106 h 12 v 28 h -12 Z" fill="#cbd5e1" stroke="#4a5360" stroke-width="1.2"/>
+      <ellipse cx="690" cy="120" rx="9" ry="14" fill="#94a3b8"/>
+      <circle cx="678" cy="120" r="3.5" fill="#4a5360"/>
+    </g>
+
+    <!-- Foil Web Running Between Rollers -->
+    <path d="M 685 130 L 735 142" stroke="#cbd5e1" stroke-width="5" fill="none"/>
+    <!-- Coated Layer on Foil (Moving texture) -->
+    <path class="anim-foil-move" d="M 705 135 L 735 142" stroke="#0f172a" stroke-width="4.5" fill="none"/>
+
+    <!-- Precision Slot-Die Coating Head -->
+    <g>
+      <!-- Die Body (Gold precision alloy) -->
+      <path d="M 694 92 L 712 87 L 712 115 L 704 124 L 694 122 Z" fill="#c9a227"/>
+      <path d="M 712 87 L 720 91 L 720 119 L 712 115 Z" fill="#a8851a"/>
+      <path d="M 694 92 L 702 96 L 720 91 L 712 87 Z" fill="#ddb945"/>
+      <!-- Slurry Feed Pipe to Die -->
+      <path d="M 706 72 v 18" fill="none" stroke="#1e293b" stroke-width="3"/>
+      <!-- Dispensing Meniscus / Slurry Ribbon -->
+      <polygon points="702,123 707,124 706,128 701,127" fill="#0f172a"/>
+    </g>
+  </g>
+
+  <!-- STEP 4: DRYING AND CALENDERING (X=970, Y=160) -->
+  <g id="step-4-machine" class="iso-stroke">
+    <!-- Plinth Base -->
+    <path d="M 935 150 L 970 167 L 1005 150 L 970 133 Z" fill="#a3aebb"/>
+    <path d="M 935 150 L 970 167 v 8 L 935 158 Z" fill="#7c8a9a"/>
+    <path d="M 970 167 L 1005 150 v 8 L 970 175 Z" fill="#5f6b78"/>
+
+    <!-- Section A: Infrared Tunnel Drying Oven (Sage green enclosure) -->
+    <g>
+      <path d="M 940 135 L 975 152 L 975 106 L 940 89 Z" fill="#8fae7e"/>
+      <path d="M 940 89 L 975 106 L 985 101 L 950 84 Z" fill="#a4c294"/>
+      <!-- Tunnel Inlet Arch -->
+      <polygon points="940,135 940,110 946,113 946,138" fill="#1e293b"/>
+      <!-- Oven Heat Exhaust Stack -->
+      <path d="M 955 86 v -14 h 6 v 14 Z" fill="#739263"/>
+      <ellipse cx="958" cy="72" rx="3" ry="1.5" fill="#a4c294"/>
+    </g>
+
+    <!-- Section B: Calendering Mill Stand (Heavy Roll Press) -->
+    <g>
+      <!-- Steel Mill Housing Pillar -->
+      <path d="M 985 147 v -50 h 18 v 50 Z" fill="#5f6b78"/>
+      <path d="M 985 97 L 994 92 h 18 L 1003 97 Z" fill="#7c8a9a"/>
+      <!-- Hydraulic Press Cylinders (Deep clay) -->
+      <rect x="990" y="82" width="8" height="12" fill="#c15f3c"/>
+      <rect x="990" y="78" width="8" height="4" fill="#d97757"/>
+
+      <!-- Counter-Rotating Heavy Calendering Rollers -->
+      <!-- Upper Roller -->
+      <g class="anim-roll-top">
+        <circle cx="994" cy="123" r="9" fill="#cbd5e1" stroke="#4a5360" stroke-width="1.2"/>
+        <line x1="994" y1="114" x2="994" y2="132" stroke="#5f6b78" stroke-width="1.5"/>
+        <line x1="985" y1="123" x2="1003" y2="123" stroke="#5f6b78" stroke-width="1.5"/>
+        <circle cx="994" cy="123" r="3" fill="#4a5360"/>
+      </g>
+      <!-- Compressed Electrode Web between Rolls -->
+      <line x1="975" y1="134" x2="1015" y2="134" stroke="#0f172a" stroke-width="3"/>
+      <!-- Lower Roller -->
+      <g class="anim-roll-bot">
+        <circle cx="994" cy="145" r="9" fill="#cbd5e1" stroke="#4a5360" stroke-width="1.2"/>
+        <line x1="994" y1="136" x2="994" y2="154" stroke="#5f6b78" stroke-width="1.5"/>
+        <line x1="985" y1="145" x2="1003" y2="145" stroke="#5f6b78" stroke-width="1.5"/>
+        <circle cx="994" cy="145" r="3" fill="#4a5360"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- STEP 5: SLITTING (X=970, Y=400) -->
+  <g id="step-5-machine" class="iso-stroke">
+    <!-- Plinth Base -->
+    <path d="M 935 390 L 970 407 L 1005 390 L 970 373 Z" fill="#a3aebb"/>
+    <path d="M 935 390 L 970 407 v 8 L 935 398 Z" fill="#7c8a9a"/>
+    <path d="M 970 407 L 1005 390 v 8 L 970 415 Z" fill="#5f6b78"/>
+
+    <!-- Machine Body / Arbor Mounts -->
+    <g>
+      <!-- Base Chassis -->
+      <path d="M 948 385 L 970 396 L 992 385 v -25 L 970 374 L 948 385 Z" fill="#7c8a9a"/>
+      <path d="M 970 396 L 992 385 v -25 L 970 374 Z" fill="#5f6b78"/>
+      <!-- Unwind Foil Feed -->
+      <path d="M 988 360 L 955 375" stroke="#0f172a" stroke-width="4" fill="none"/>
+    </g>
+
+    <!-- Rotating Rotary Slitting Blades (Gold circular shear knives) -->
+    <g>
+      <g class="anim-slitter">
+        <circle cx="970" cy="376" r="12" fill="#c9a227" stroke="#4a5360" stroke-width="1.2"/>
+        <circle cx="970" cy="376" r="9" fill="#ddb945"/>
+        <circle cx="970" cy="376" r="4" fill="#5f6b78"/>
+        <!-- Slitting blade teeth/spokes -->
+        <line x1="970" y1="364" x2="970" y2="388" stroke="#a8851a" stroke-width="1.2"/>
+        <line x1="958" y1="376" x2="982" y2="376" stroke="#a8851a" stroke-width="1.2"/>
+      </g>
+      <!-- Parallel Second Blade for Multi-Ribbon Slit -->
+      <circle cx="975" cy="373" r="10" fill="none" stroke="#ddb945" stroke-width="2"/>
+    </g>
+
+    <!-- Slit Ribbons Separating onto Rewind Spindles -->
+    <g>
+      <path d="M 970 380 L 940 395" stroke="#1e293b" stroke-width="1.8" fill="none"/>
+      <path d="M 970 376 L 940 390" stroke="#1e293b" stroke-width="1.8" fill="none"/>
+      <path d="M 970 372 L 940 385" stroke="#1e293b" stroke-width="1.8" fill="none"/>
+      <!-- Rewind Pancake Coils -->
+      <ellipse cx="942" cy="390" rx="4" ry="7" fill="#334155"/>
+      <ellipse cx="938" cy="394" rx="4" ry="7" fill="#334155"/>
+    </g>
+  </g>
+
+  <!-- STEP 6: JELLY-ROLL WINDING (X=700, Y=400) -->
+  <g id="step-6-machine" class="iso-stroke">
+    <!-- Plinth Base -->
+    <path d="M 665 390 L 700 407 L 735 390 L 700 373 Z" fill="#a3aebb"/>
+    <path d="M 665 390 L 700 407 v 8 L 665 398 Z" fill="#7c8a9a"/>
+    <path d="M 700 407 L 735 390 v 8 L 700 415 Z" fill="#5f6b78"/>
+
+    <!-- Automatic Winder Cabinet Enclosure -->
+    <g>
+      <path d="M 670 378 L 700 393 v -48 L 670 330 Z" fill="#5b8fb9"/>
+      <path d="M 700 393 L 730 378 v -48 L 700 345 Z" fill="#437299"/>
+      <path d="M 670 330 L 700 345 L 730 330 L 700 315 Z" fill="#76a5cb"/>
+      <!-- Inspection Chamber Bay -->
+      <polygon points="678,370 696,379 696,350 678,341" fill="#1e293b"/>
+    </g>
+
+    <!-- Multi-Strip Feeds (Anode, Cathode, 2x Separators) -->
+    <g>
+      <!-- Separator membrane rolls (Sage green) -->
+      <ellipse cx="718" cy="342" rx="4" ry="6" fill="#8fae7e"/>
+      <ellipse cx="724" cy="358" rx="4" ry="6" fill="#8fae7e"/>
+      <!-- Strip guide paths converging -->
+      <path d="M 718 344 L 700 365" stroke="#8fae7e" stroke-width="1.5" fill="none"/>
+      <path d="M 724 360 L 702 368" stroke="#8fae7e" stroke-width="1.5" fill="none"/>
+      <path d="M 710 380 L 700 372" stroke="#cbd5e1" stroke-width="2" fill="none"/>
+      <path d="M 690 384 L 698 373" stroke="#ddb945" stroke-width="2" fill="none"/>
+    </g>
+
+    <!-- Rotating Winding Mandrel (Winding the Jelly-Roll) -->
+    <g class="anim-mandrel">
+      <ellipse cx="700" cy="370" rx="9" ry="5" fill="#334155" stroke="#4a5360" stroke-width="1.2"/>
+      <ellipse cx="700" cy="370" rx="6" ry="3.2" fill="#8fae7e"/>
+      <ellipse cx="700" cy="370" rx="3" ry="1.6" fill="#0f172a"/>
+      <circle cx="700" cy="370" r="1.5" fill="#f8fafc"/>
+      <!-- Winding spindle slot -->
+      <line x1="693" y1="370" x2="707" y2="370" stroke="#f8fafc" stroke-width="1"/>
+    </g>
+  </g>
+
+  <!-- STEP 7: ELECTROLYTE FILLING AND SEALING (X=430, Y=400) -->
+  <g id="step-7-machine" class="iso-stroke">
+    <!-- Plinth Base -->
+    <path d="M 395 390 L 430 407 L 465 390 L 430 373 Z" fill="#a3aebb"/>
+    <path d="M 395 390 L 430 407 v 8 L 395 398 Z" fill="#7c8a9a"/>
+    <path d="M 430 407 L 465 390 v 8 L 430 415 Z" fill="#5f6b78"/>
+
+    <!-- Vacuum Enclosure Framework (Glovebox-Type Process Cell) -->
+    <g>
+      <path d="M 405 380 L 430 392 v -50 L 405 330 Z" fill="#7c8a9a" opacity="0.9"/>
+      <path d="M 430 392 L 455 380 v -50 L 430 342 Z" fill="#5f6b78" opacity="0.9"/>
+      <path d="M 405 330 L 430 342 L 455 330 L 430 318 Z" fill="#a3aebb"/>
+      <!-- Window Aperture -->
+      <polygon points="410,373 427,381 427,345 410,337" fill="#1e293b" opacity="0.85"/>
+    </g>
+
+    <!-- Electrolyte Supply Reservoir & Header -->
+    <g>
+      <rect x="424" y="306" width="12" height="15" rx="2" fill="#5b8fb9"/>
+      <rect x="426" y="308" width="8" height="11" rx="1" fill="#76a5cb"/>
+      <path d="M 430 321 v 22" stroke="#5b8fb9" stroke-width="2.5" fill="none"/>
+    </g>
+
+    <!-- Cell Can Positioned Under Needle -->
+    <g transform="translate(422, 382)">
+      <ellipse cx="0" cy="0" rx="7" ry="4" fill="#cbd5e1"/>
+      <path d="M -7 0 v -16 a 7 4 0 0 0 14 0 v 16 Z" fill="#94a3b8"/>
+      <ellipse cx="0" cy="-16" rx="7" ry="4" fill="#334155"/>
+      <circle cx="0" cy="-16" r="4" fill="#0f172a"/>
+    </g>
+
+    <!-- Precision Injection Nozzle & Pulsing Droplet -->
+    <g>
+      <!-- Gold Needle -->
+      <path d="M 422 342 v 16 l 1 3 h -2 l 1 -3 Z" fill="#ddb945" stroke="#a8851a" stroke-width="1"/>
+      <!-- Pulsing Liquid Electrolyte Stream -->
+      <circle class="anim-drip" cx="422" cy="360" r="2" fill="#38bdf8"/>
+    </g>
+
+    <!-- Mechanical Lid Crimping / Sealing Chuck Unit -->
+    <g>
+      <path d="M 440 350 v 15 h 8 v -15 Z" fill="#c15f3c"/>
+      <path d="M 438 365 h 12 v 4 h -12 Z" fill="#d97757"/>
+    </g>
+  </g>
+
+  <!-- STEP 8: FORMATION AND TESTING (X=160, Y=400) -->
+  <g id="step-8-machine" class="iso-stroke">
+    <!-- Plinth Base -->
+    <path d="M 125 390 L 160 407 L 195 390 L 160 373 Z" fill="#a3aebb"/>
+    <path d="M 125 390 L 160 407 v 8 L 125 398 Z" fill="#7c8a9a"/>
+    <path d="M 160 407 L 195 390 v 8 L 160 415 Z" fill="#5f6b78"/>
+
+    <!-- Instrument Testing Bay & Cabinet -->
+    <g>
+      <!-- Main Tester Unit -->
+      <path d="M 135 380 L 165 395 v -42 L 135 338 Z" fill="#7c8a9a"/>
+      <path d="M 165 395 L 188 384 v -42 L 158 327 Z" fill="#5f6b78"/>
+      <path d="M 135 338 L 165 353 L 188 342 L 158 327 Z" fill="#a3aebb"/>
+    </g>
+
+    <!-- Supercapacitor Cell Locked in Kelvin Test Socket -->
+    <g transform="translate(150, 386)">
+      <!-- Golden Test Socket -->
+      <polygon points="-9,-4 0,1 9,-4 0,-9" fill="#ddb945"/>
+      <use href="#iso-can"/>
+      <!-- Dual Four-Wire Test Probe Pins Descending -->
+      <path d="M -3 -22 v 6 M 3 -22 v 6" stroke="#ea580c" stroke-width="1.5"/>
+    </g>
+
+    <!-- Test Readout Panel, Formation Status Meter & LED Indicator -->
+    <g>
+      <!-- Digital Meter Display -->
+      <polygon points="140,366 158,375 158,348 140,339" fill="#1e293b"/>
+      <!-- Charge Level Graph Bars -->
+      <line x1="144" y1="362" x2="144" y2="355" stroke="#38bdf8" stroke-width="2"/>
+      <line x1="148" y1="364" x2="148" y2="352" stroke="#38bdf8" stroke-width="2"/>
+      <line x1="152" y1="366" x2="152" y2="348" stroke="#10b981" stroke-width="2"/>
+
+      <!-- Formation / Charge Status Pulsing LED -->
+      <circle class="anim-test-led" cx="172" cy="355" r="3.5" fill="#10b981"/>
+      <circle cx="172" cy="365" r="2.5" fill="#f59e0b"/>
+    </g>
+
+    <!-- Exit Slide Chute for Qualified Finished EDLC Cell -->
+    <path d="M 135 385 L 115 395 L 120 398 L 140 388 Z" fill="#5b8fb9"/>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- LAYER 4: LABELS, PARAMETERS AND BADGES     -->
+  <!-- ========================================== -->
+
+  <!-- STEP 1 LABELS -->
+  <g id="step-1-labels">
+    <!-- Numbered Badge (Circle r=13 centered at X=160, Y=198) -->
+    <circle class="badge-bg" cx="160" cy="198" r="13"/>
+    <text class="step-num" x="160" y="198">1</text>
+    <!-- Short Label (2-4 words) -->
+    <text class="label-title" x="160" y="226">Activated carbon</text>
+    <!-- Key Parameter -->
+    <text class="label-param" x="160" y="244">carbonise, then activate</text>
+  </g>
+
+  <!-- STEP 2 LABELS -->
+  <g id="step-2-labels">
+    <circle class="badge-bg" cx="430" cy="198" r="13"/>
+    <text class="step-num" x="430" y="198">2</text>
+    <text class="label-title" x="430" y="226">Slurry mixing</text>
+    <text class="label-param" x="430" y="244">carbon, binder and solvent</text>
+  </g>
+
+  <!-- STEP 3 LABELS -->
+  <g id="step-3-labels">
+    <circle class="badge-bg" cx="700" cy="198" r="13"/>
+    <text class="step-num" x="700" y="198">3</text>
+    <text class="label-title" x="700" y="226">Electrode coating</text>
+    <text class="label-param" x="700" y="244">slot-die on Al foil</text>
+  </g>
+
+  <!-- STEP 4 LABELS -->
+  <g id="step-4-labels">
+    <circle class="badge-bg" cx="970" cy="198" r="13"/>
+    <text class="step-num" x="970" y="198">4</text>
+    <text class="label-title" x="970" y="226">Drying and calendering</text>
+    <text class="label-param" x="970" y="244">oven then roll press</text>
+  </g>
+
+  <!-- STEP 5 LABELS -->
+  <g id="step-5-labels">
+    <circle class="badge-bg" cx="970" cy="438" r="13"/>
+    <text class="step-num" x="970" y="438">5</text>
+    <text class="label-title" x="970" y="466">Foil slitting</text>
+    <text class="label-param" x="970" y="484">foil cut into strips</text>
+  </g>
+
+  <!-- STEP 6 LABELS -->
+  <g id="step-6-labels">
+    <circle class="badge-bg" cx="700" cy="438" r="13"/>
+    <text class="step-num" x="700" y="438">6</text>
+    <text class="label-title" x="700" y="466">Jelly-roll winding</text>
+    <text class="label-param" x="700" y="484">electrodes and separator</text>
+  </g>
+
+  <!-- STEP 7 LABELS -->
+  <g id="step-7-labels">
+    <circle class="badge-bg" cx="430" cy="438" r="13"/>
+    <text class="step-num" x="430" y="438">7</text>
+    <text class="label-title" x="430" y="466">Filling and sealing</text>
+    <text class="label-param" x="430" y="484">organic electrolyte</text>
+  </g>
+
+  <!-- STEP 8 LABELS -->
+  <g id="step-8-labels">
+    <circle class="badge-bg" cx="160" cy="438" r="13"/>
+    <text class="step-num" x="160" y="438">8</text>
+    <text class="label-title" x="160" y="466">Cell testing</text>
+    <text class="label-param" x="160" y="484">formation and testing</text>
+  </g>
+</svg>

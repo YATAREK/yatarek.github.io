@@ -1,0 +1,861 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560">
+  <title>Conventional powder-in-tube (PIT) route for MgB2 wire and MRI coils</title>
+  <defs>
+    <!-- Steel Gradients -->
+    <linearGradient id="grad-steel-top" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#b4beca" />
+      <stop offset="100%" stop-color="#9aa6b4" />
+    </linearGradient>
+    <linearGradient id="grad-steel-left" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8896a6" />
+      <stop offset="100%" stop-color="#6e7b8a" />
+    </linearGradient>
+    <linearGradient id="grad-steel-right" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#63707e" />
+      <stop offset="100%" stop-color="#4d5763" />
+    </linearGradient>
+
+    <!-- Clay Gradients -->
+    <linearGradient id="grad-clay-top" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e48a6d" />
+      <stop offset="100%" stop-color="#d97757" />
+    </linearGradient>
+    <linearGradient id="grad-clay-left" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d97757" />
+      <stop offset="100%" stop-color="#c15f3c" />
+    </linearGradient>
+    <linearGradient id="grad-clay-right" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#c15f3c" />
+      <stop offset="100%" stop-color="#a04a2c" />
+    </linearGradient>
+
+    <!-- Blue Gradients -->
+    <linearGradient id="grad-blue-top" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#82b0d6" />
+      <stop offset="100%" stop-color="#6ea1c9" />
+    </linearGradient>
+    <linearGradient id="grad-blue-left" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5b8fb9" />
+      <stop offset="100%" stop-color="#4b7fa7" />
+    </linearGradient>
+    <linearGradient id="grad-blue-right" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#437199" />
+      <stop offset="100%" stop-color="#34597b" />
+    </linearGradient>
+
+    <!-- Sage Gradients -->
+    <linearGradient id="grad-sage-top" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#b6ceaa" />
+      <stop offset="100%" stop-color="#a0bd93" />
+    </linearGradient>
+    <linearGradient id="grad-sage-left" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8fae7e" />
+      <stop offset="100%" stop-color="#7c9b6b" />
+    </linearGradient>
+    <linearGradient id="grad-sage-right" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#729161" />
+      <stop offset="100%" stop-color="#59744c" />
+    </linearGradient>
+
+    <!-- Gold Gradients -->
+    <linearGradient id="grad-gold-top" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e2bf4b" />
+      <stop offset="100%" stop-color="#d4af33" />
+    </linearGradient>
+    <linearGradient id="grad-gold-left" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#c9a227" />
+      <stop offset="100%" stop-color="#b08c1c" />
+    </linearGradient>
+    <linearGradient id="grad-gold-right" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a6841c" />
+      <stop offset="100%" stop-color="#836611" />
+    </linearGradient>
+
+    <!-- Furnace Thermal Core -->
+    <radialGradient id="heat-core" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffd580" />
+      <stop offset="45%" stop-color="#e87a48" />
+      <stop offset="85%" stop-color="#c15f3c" />
+      <stop offset="100%" stop-color="#692211" />
+    </radialGradient>
+
+    <!-- Subtle Drop Shadow Filter for Glow -->
+    <filter id="glow-heat" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="glow-sc" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <style>
+    text {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      user-select: none;
+    }
+    .iso-stroke {
+      stroke: #4a5360;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .iso-stroke-subtle {
+      stroke: #4a5360;
+      stroke-width: 1.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .step-label {
+      font-size: 15px;
+      font-weight: 600;
+      fill: #7c8a9a;
+      text-anchor: middle;
+    }
+    .step-param {
+      font-size: 13px;
+      font-weight: 400;
+      fill: #7c8a9a;
+      text-anchor: middle;
+    }
+    .badge-bg {
+      fill: #d97757;
+      stroke: #4a5360;
+      stroke-width: 1.5;
+    }
+    .badge-text {
+      font-size: 13px;
+      font-weight: 700;
+      fill: #ffffff;
+      text-anchor: middle;
+      dominant-baseline: central;
+    }
+
+    /* Conveyor Dash and Material Animations */
+    .conveyor-track {
+      stroke: #4a5360;
+      stroke-width: 2;
+      stroke-dasharray: 6 5;
+      fill: none;
+      animation: beltMove 1.6s linear infinite;
+    }
+    .conveyor-transfer-track {
+      stroke: #5b8fb9;
+      stroke-width: 2.2;
+      stroke-dasharray: 7 6;
+      fill: none;
+      opacity: 0.75;
+      animation: transferMove 2.4s linear infinite;
+    }
+
+    @keyframes beltMove {
+      to { stroke-dashoffset: -11; }
+    }
+    @keyframes transferMove {
+      to { stroke-dashoffset: -26; }
+    }
+
+    /* Moving Material Tokens along Row 1 */
+    .token-r1-a {
+      animation: glideR1A 4s ease-in-out infinite;
+    }
+    .token-r1-b {
+      animation: glideR1B 4s ease-in-out infinite;
+      animation-delay: 1.33s;
+    }
+    .token-r1-c {
+      animation: glideR1C 4s ease-in-out infinite;
+      animation-delay: 2.66s;
+    }
+    @keyframes glideR1A {
+      0% { transform: translate(195px, 165px); opacity: 0; }
+      12% { opacity: 1; }
+      88% { opacity: 1; }
+      100% { transform: translate(405px, 165px); opacity: 0; }
+    }
+    @keyframes glideR1B {
+      0% { transform: translate(475px, 165px); opacity: 0; }
+      12% { opacity: 1; }
+      88% { opacity: 1; }
+      100% { transform: translate(685px, 165px); opacity: 0; }
+    }
+    @keyframes glideR1C {
+      0% { transform: translate(755px, 165px); opacity: 0; }
+      12% { opacity: 1; }
+      88% { opacity: 1; }
+      100% { transform: translate(965px, 165px); opacity: 0; }
+    }
+
+    /* Moving Material Tokens along Row 2 */
+    .token-r2-a {
+      animation: glideR2A 4s ease-in-out infinite;
+    }
+    .token-r2-b {
+      animation: glideR2B 4s ease-in-out infinite;
+      animation-delay: 1.33s;
+    }
+    .token-r2-c {
+      animation: glideR2C 4s ease-in-out infinite;
+      animation-delay: 2.66s;
+    }
+    @keyframes glideR2A {
+      0% { transform: translate(195px, 405px); opacity: 0; }
+      12% { opacity: 1; }
+      88% { opacity: 1; }
+      100% { transform: translate(405px, 405px); opacity: 0; }
+    }
+    @keyframes glideR2B {
+      0% { transform: translate(475px, 405px); opacity: 0; }
+      12% { opacity: 1; }
+      88% { opacity: 1; }
+      100% { transform: translate(685px, 405px); opacity: 0; }
+    }
+    @keyframes glideR2C {
+      0% { transform: translate(755px, 405px); opacity: 0; }
+      12% { opacity: 1; }
+      88% { opacity: 1; }
+      100% { transform: translate(965px, 405px); opacity: 0; }
+    }
+
+    /* In-machine Subtle Animations */
+    .anim-rock-vblender {
+      animation: rockMixer 6s ease-in-out infinite;
+    }
+    @keyframes rockMixer {
+      0%, 100% { transform: rotate(-18deg); }
+      50% { transform: rotate(18deg); }
+    }
+
+    .anim-powder-stream {
+      animation: streamFall 1.8s ease-in-out infinite;
+    }
+    @keyframes streamFall {
+      0% { transform: translateY(0); opacity: 0.1; }
+      30% { opacity: 1; }
+      75% { opacity: 0.95; }
+      100% { transform: translateY(18px); opacity: 0.1; }
+    }
+
+    .anim-roll-top {
+      animation: rollTop 2.5s linear infinite;
+    }
+    .anim-roll-btm {
+      animation: rollBtm 2.5s linear infinite;
+    }
+    @keyframes rollTop {
+      to { transform: rotate(360deg); }
+    }
+    @keyframes rollBtm {
+      to { transform: rotate(-360deg); }
+    }
+
+    .anim-bundle-glide {
+      animation: bundleInsert 4s ease-in-out infinite;
+    }
+    @keyframes bundleInsert {
+      0%, 100% { transform: translate(-5px, 3px); opacity: 0.75; }
+      50% { transform: translate(4px, -2.4px); opacity: 1; }
+    }
+
+    .anim-spool-spin {
+      animation: spoolRotate 3.6s linear infinite;
+    }
+    @keyframes spoolRotate {
+      to { transform: rotate(360deg); }
+    }
+
+    .anim-furnace-glow {
+      animation: furnaceBreathe 3.5s ease-in-out infinite;
+    }
+    @keyframes furnaceBreathe {
+      0%, 100% { opacity: 0.7; filter: drop-shadow(0 0 2px #d97757); }
+      50% { opacity: 1; filter: drop-shadow(0 0 9px #df8668); }
+    }
+
+    .anim-traverse-carriage {
+      animation: carriageWalk 5s ease-in-out infinite;
+    }
+    @keyframes carriageWalk {
+      0%, 100% { transform: translate(-8px, 4.6px); }
+      50% { transform: translate(8px, -4.6px); }
+    }
+
+    .anim-super-current {
+      animation: scCurrent 2.2s linear infinite;
+    }
+    @keyframes scCurrent {
+      to { stroke-dashoffset: -32; }
+    }
+
+    .anim-flux-ripple {
+      animation: fluxWave 4s ease-in-out infinite;
+    }
+    @keyframes fluxWave {
+      0%, 100% { opacity: 0.3; transform: scale(0.96); }
+      50% { opacity: 0.85; transform: scale(1.04); }
+    }
+
+    /* Accessibility: Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+      }
+    }
+  </style>
+
+  <!-- Title and Process Header -->
+  <g id="header-section">
+    <text x="60" y="38" font-size="16" font-weight="700" fill="#a3aebb" letter-spacing="1.2">
+      CONVENTIONAL POWDER-IN-TUBE (PIT) ROUTE FOR MgB2 WIRE &amp; MRI COILS
+    </text>
+    <text x="60" y="56" font-size="12" font-weight="500" fill="#7c8a9a" letter-spacing="0.4">
+      In situ reaction route: elemental Mg + 2B powders to barrier-sheathed multifilament wire to persistent-mode MRI magnet
+    </text>
+    <!-- Stage Boundaries Subtitle -->
+    <path d="M 60 67 L 540 67" stroke="#4a5360" stroke-width="1" stroke-dasharray="4 4" />
+    <text x="60" y="80" font-size="11" font-weight="600" fill="#5f6b78" letter-spacing="0.8">
+      STAGE 1 to 4: BILLET PREPARATION AND RESTACKING
+    </text>
+    <path d="M 660 67 L 1140 67" stroke="#4a5360" stroke-width="1" stroke-dasharray="4 4" />
+    <text x="660" y="80" font-size="11" font-weight="600" fill="#5f6b78" letter-spacing="0.8">
+      STAGE 5 to 8: DRAWING, HEAT TREATMENT AND MRI MAGNET
+    </text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- SHARED ISOMETRIC CONVEYORS and TRANSFER LINE -->
+  <!-- ========================================== -->
+  <g id="conveyor-network">
+    <!-- Row 1 Main Conveyor Track -->
+    <g id="row1-conveyors">
+      <!-- Section 1 to 2 -->
+      <polygon points="195,160 405,160 405,170 195,170" fill="url(#grad-steel-top)" class="iso-stroke" />
+      <polygon points="195,170 405,170 405,177 195,177" fill="url(#grad-steel-left)" class="iso-stroke" />
+      <line x1="205" y1="165" x2="395" y2="165" class="conveyor-track" />
+
+      <!-- Section 2 to 3 -->
+      <polygon points="475,160 685,160 685,170 475,170" fill="url(#grad-steel-top)" class="iso-stroke" />
+      <polygon points="475,170 685,170 685,177 475,177" fill="url(#grad-steel-left)" class="iso-stroke" />
+      <line x1="485" y1="165" x2="675" y2="165" class="conveyor-track" />
+
+      <!-- Section 3 to 4 -->
+      <polygon points="755,160 965,160 965,170 755,170" fill="url(#grad-steel-top)" class="iso-stroke" />
+      <polygon points="755,170 965,170 965,177 755,177" fill="url(#grad-steel-left)" class="iso-stroke" />
+      <line x1="765" y1="165" x2="955" y2="165" class="conveyor-track" />
+    </g>
+
+    <!-- Curved Transfer Line (Connecting Step 4 to Step 5) -->
+    <g id="curved-transfer-line">
+      <!-- Background Guide Path / Structural Beam -->
+      <path d="M 1035,165 
+               C 1120,165 1145,210 1145,260 
+               C 1145,305 1080,315 960,320 
+               L 300,345 
+               C 120,352 65,370 65,400 
+               C 65,405 75,405 125,405" 
+            fill="none" stroke="#373e48" stroke-width="12" stroke-linecap="round" />
+      <path d="M 1035,165 
+               C 1120,165 1145,210 1145,260 
+               C 1145,305 1080,315 960,320 
+               L 300,345 
+               C 120,352 65,370 65,400 
+               C 65,405 75,405 125,405" 
+            fill="none" stroke="#7c8a9a" stroke-width="7" stroke-linecap="round" />
+      <!-- Animated Conveyor Belt on Transfer Path -->
+      <path d="M 1035,165 
+               C 1120,165 1145,210 1145,260 
+               C 1145,305 1080,315 960,320 
+               L 300,345 
+               C 120,352 65,370 65,400 
+               C 65,405 75,405 125,405" 
+            class="conveyor-transfer-track" />
+      
+      <!-- Static Transfer Nodes / Billets on Track -->
+      <g transform="translate(1125, 240)">
+        <polygon points="0,-6 10,0 0,6 -10,0" fill="url(#grad-gold-top)" class="iso-stroke-subtle" />
+        <polygon points="-10,0 0,6 0,11 -10,5" fill="url(#grad-gold-left)" class="iso-stroke-subtle" />
+        <polygon points="0,6 10,0 10,5 0,11" fill="url(#grad-gold-right)" class="iso-stroke-subtle" />
+      </g>
+      <g transform="translate(680, 332)">
+        <polygon points="0,-5 12,0 0,5 -12,0" fill="url(#grad-clay-top)" class="iso-stroke-subtle" />
+        <polygon points="-12,0 0,5 0,9 -12,4" fill="url(#grad-clay-left)" class="iso-stroke-subtle" />
+        <polygon points="0,5 12,0 12,4 0,9" fill="url(#grad-clay-right)" class="iso-stroke-subtle" />
+      </g>
+      <g transform="translate(240, 350)">
+        <polygon points="0,-5 12,0 0,5 -12,0" fill="url(#grad-clay-top)" class="iso-stroke-subtle" />
+        <polygon points="-12,0 0,5 0,9 -12,4" fill="url(#grad-clay-left)" class="iso-stroke-subtle" />
+        <polygon points="0,5 12,0 12,4 0,9" fill="url(#grad-clay-right)" class="iso-stroke-subtle" />
+      </g>
+    </g>
+
+    <!-- Row 2 Main Conveyor Track -->
+    <g id="row2-conveyors">
+      <!-- Section 5 to 6 -->
+      <polygon points="195,400 405,400 405,410 195,410" fill="url(#grad-steel-top)" class="iso-stroke" />
+      <polygon points="195,410 405,410 405,417 195,417" fill="url(#grad-steel-left)" class="iso-stroke" />
+      <line x1="205" y1="405" x2="395" y2="405" class="conveyor-track" />
+
+      <!-- Section 6 to 7 -->
+      <polygon points="475,400 685,400 685,410 475,410" fill="url(#grad-steel-top)" class="iso-stroke" />
+      <polygon points="475,410 685,410 685,417 475,417" fill="url(#grad-steel-left)" class="iso-stroke" />
+      <line x1="485" y1="405" x2="675" y2="405" class="conveyor-track" />
+
+      <!-- Section 7 to 8 -->
+      <polygon points="755,400 965,400 965,410 755,410" fill="url(#grad-steel-top)" class="iso-stroke" />
+      <polygon points="755,410 965,410 965,417 755,417" fill="url(#grad-steel-left)" class="iso-stroke" />
+      <line x1="765" y1="405" x2="955" y2="405" class="conveyor-track" />
+    </g>
+
+    <!-- Animated Moving Material Tokens -->
+    <g class="token-r1-a">
+      <polygon points="0,-4 7,0 0,4 -7,0" fill="url(#grad-gold-top)" class="iso-stroke-subtle" />
+      <polygon points="-7,0 0,4 0,8 -7,4" fill="url(#grad-gold-left)" class="iso-stroke-subtle" />
+      <polygon points="0,4 7,0 7,4 0,8" fill="url(#grad-gold-right)" class="iso-stroke-subtle" />
+    </g>
+    <g class="token-r1-b">
+      <polygon points="0,-3 10,0 0,3 -10,0" fill="url(#grad-clay-top)" class="iso-stroke-subtle" />
+      <polygon points="-10,0 0,3 0,7 -10,4" fill="url(#grad-clay-left)" class="iso-stroke-subtle" />
+      <polygon points="0,3 10,0 10,4 0,7" fill="url(#grad-clay-right)" class="iso-stroke-subtle" />
+    </g>
+    <g class="token-r1-c">
+      <polygon points="0,-3 9,0 0,3 -9,0" fill="url(#grad-blue-top)" class="iso-stroke-subtle" />
+      <polygon points="-9,0 0,3 0,6 -9,3" fill="url(#grad-blue-left)" class="iso-stroke-subtle" />
+      <polygon points="0,3 9,0 9,3 0,6" fill="url(#grad-blue-right)" class="iso-stroke-subtle" />
+    </g>
+    <g class="token-r2-a">
+      <polygon points="0,-4 8,0 0,4 -8,0" fill="url(#grad-clay-top)" class="iso-stroke-subtle" />
+      <polygon points="-8,0 0,4 0,8 -8,4" fill="url(#grad-clay-left)" class="iso-stroke-subtle" />
+      <polygon points="0,4 8,0 8,4 0,8" fill="url(#grad-clay-right)" class="iso-stroke-subtle" />
+    </g>
+    <g class="token-r2-b">
+      <polygon points="0,-4 8,0 0,4 -8,0" fill="url(#grad-gold-top)" class="iso-stroke-subtle" />
+      <polygon points="-8,0 0,4 0,7 -8,3" fill="url(#grad-gold-left)" class="iso-stroke-subtle" />
+      <polygon points="0,4 8,0 8,3 0,7" fill="url(#grad-gold-right)" class="iso-stroke-subtle" />
+    </g>
+    <g class="token-r2-c">
+      <polygon points="0,-4 9,0 0,4 -9,0" fill="url(#grad-blue-top)" class="iso-stroke-subtle" />
+      <polygon points="-9,0 0,4 0,8 -9,4" fill="url(#grad-blue-left)" class="iso-stroke-subtle" />
+      <polygon points="0,4 9,0 9,4 0,8" fill="url(#grad-blue-right)" class="iso-stroke-subtle" />
+    </g>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- STEP 1: POWDER MIXING                      -->
+  <!-- ========================================== -->
+  <g id="step-1" transform="translate(160, 165)">
+    <!-- Base Isometric Plinth -->
+    <polygon points="0,-18 35,0 0,18 -35,0" fill="url(#grad-steel-top)" class="iso-stroke" />
+    <polygon points="-35,0 0,18 0,26 -35,8" fill="url(#grad-steel-left)" class="iso-stroke" />
+    <polygon points="0,18 35,0 35,8 0,26" fill="url(#grad-steel-right)" class="iso-stroke" />
+
+    <!-- A-Frame Trunnion Stands -->
+    <polygon points="-24,-5 -18,-5 -18,-42 -24,-42" fill="url(#grad-steel-left)" class="iso-stroke" />
+    <polygon points="18,-5 24,-5 24,-42 18,-42" fill="url(#grad-steel-right)" class="iso-stroke" />
+    <!-- Motor Housing -->
+    <polygon points="24,-38 34,-32 34,-20 24,-26" fill="url(#grad-blue-right)" class="iso-stroke" />
+    <polygon points="24,-38 30,-41 34,-32 24,-29" fill="url(#grad-blue-top)" class="iso-stroke" />
+
+    <!-- Trunnion Axis and Pivot Collars -->
+    <line x1="-22" y1="-40" x2="22" y2="-40" stroke="#4a5360" stroke-width="4" stroke-linecap="round" />
+    <circle cx="-18" cy="-40" r="4.5" fill="url(#grad-gold-top)" class="iso-stroke" />
+    <circle cx="18" cy="-40" r="4.5" fill="url(#grad-gold-top)" class="iso-stroke" />
+
+    <!-- Rotating / Rocking V-Blender Vessel -->
+    <g transform="translate(0, -40)">
+      <g class="anim-rock-vblender">
+        <!-- V-Blender Left Leg -->
+        <polygon points="-16,-22 -5,-28 -2,-5 -13,1" fill="url(#grad-clay-top)" class="iso-stroke" />
+        <polygon points="-13,1 -2,-5 -5,16 -16,22" fill="url(#grad-clay-left)" class="iso-stroke" />
+        <polygon points="-2,-5 0,-1 0,10 -5,16" fill="url(#grad-clay-right)" class="iso-stroke" />
+        <!-- V-Blender Right Leg -->
+        <polygon points="5,-28 16,-22 13,1 2,-5" fill="url(#grad-clay-top)" class="iso-stroke" />
+        <polygon points="2,-5 13,1 16,22 5,16" fill="url(#grad-clay-right)" class="iso-stroke" />
+        <polygon points="0,-1 2,-5 5,16 0,10" fill="url(#grad-clay-left)" class="iso-stroke" />
+
+        <!-- Top Ingress Caps (Gold / Brass) -->
+        <ellipse cx="-11" cy="-25" rx="6" ry="3.5" fill="url(#grad-gold-top)" class="iso-stroke-subtle" />
+        <ellipse cx="11" cy="-25" rx="6" ry="3.5" fill="url(#grad-gold-top)" class="iso-stroke-subtle" />
+        <!-- Bottom Discharge Valve -->
+        <polygon points="-4,18 4,18 2,24 -2,24" fill="url(#grad-gold-left)" class="iso-stroke-subtle" />
+        <circle cx="0" cy="25" r="2.5" fill="#4a5360" />
+
+        <!-- Viewport inspection window with powder -->
+        <circle cx="0" cy="5" r="3.5" fill="#2d333b" stroke="#a3aebb" stroke-width="1" />
+        <circle cx="-1" cy="6" r="1.5" fill="#e2bf4b" />
+      </g>
+    </g>
+
+    <!-- Powder Discharge Chute / Receiving Hopper -->
+    <polygon points="-10,8 10,8 6,15 -6,15" fill="url(#grad-steel-left)" class="iso-stroke-subtle" />
+
+    <!-- Number Badge and Labels -->
+    <circle cx="0" cy="56" r="12" class="badge-bg" />
+    <text x="0" y="56" class="badge-text">1</text>
+    <text x="0" y="80" class="step-label">Powder Mixing</text>
+    <text x="0" y="97" class="step-param">Mg + 2B in situ blend</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- STEP 2: TUBE FILLING                       -->
+  <!-- ========================================== -->
+  <g id="step-2" transform="translate(440, 165)">
+    <!-- Base Isometric Plinth -->
+    <polygon points="0,-18 35,0 0,18 -35,0" fill="url(#grad-steel-top)" class="iso-stroke" />
+    <polygon points="-35,0 0,18 0,26 -35,8" fill="url(#grad-steel-left)" class="iso-stroke" />
+    <polygon points="0,18 35,0 35,8 0,26" fill="url(#grad-steel-right)" class="iso-stroke" />
+
+    <!-- Vertical Filling Rig Column -->
+    <polygon points="-22,-5 -16,-5 -16,-70 -22,-70" fill="url(#grad-steel-left)" class="iso-stroke" />
+    <polygon points="-16,-5 -12,-8 -12,-73 -16,-70" fill="url(#grad-steel-right)" class="iso-stroke" />
+
+    <!-- Feed Hopper Funnel at Top -->
+    <polygon points="-18,-70 18,-70 24,-58 -12,-58" fill="url(#grad-clay-top)" class="iso-stroke" />
+    <polygon points="-14,-58 14,-58 5,-42 -5,-42" fill="url(#grad-clay-left)" class="iso-stroke" />
+    <polygon points="14,-58 20,-55 7,-39 5,-42" fill="url(#grad-clay-right)" class="iso-stroke" />
+    <!-- Hopper Dispense Nozzle -->
+    <rect x="-3" y="-42" width="6" height="7" fill="url(#grad-steel-left)" class="iso-stroke-subtle" />
+
+    <!-- Animated Powder Stream -->
+    <g class="anim-powder-stream">
+      <circle cx="0" cy="-32" r="1.3" fill="#e2bf4b" />
+      <circle cx="-1" cy="-28" r="1.1" fill="#df8668" />
+      <circle cx="1" cy="-24" r="1.2" fill="#e2bf4b" />
+      <circle cx="0" cy="-20" r="1.4" fill="#a3aebb" />
+    </g>
+
+    <!-- Clamped Metal Tube Being Filled -->
+    <!-- Upright Tube Sheath (Cutaway View) -->
+    <g transform="translate(0, -6)">
+      <!-- Tube Outer Cylinder: Copper/Monel Sheath -->
+      <polygon points="-7,-12 7,-12 7,16 -7,16" fill="url(#grad-clay-left)" class="iso-stroke" />
+      <!-- Niobium Barrier Lining (Blue) -->
+      <polygon points="-5,-12 -2,-12 -2,16 -5,16" fill="url(#grad-blue-left)" />
+      <polygon points="2,-12 5,-12 5,16 2,16" fill="url(#grad-blue-right)" />
+      <!-- Powder Packed Core (Mg + 2B) -->
+      <polygon points="-2,-10 2,-10 2,16 -2,16" fill="url(#grad-gold-top)" />
+      <!-- Top Tube Collar / Bevel -->
+      <ellipse cx="0" cy="-12" rx="7" ry="3.5" fill="url(#grad-steel-top)" class="iso-stroke-subtle" />
+      <ellipse cx="0" cy="-12" rx="4.5" ry="2.2" fill="url(#grad-blue-top)" />
+      <ellipse cx="0" cy="-12" rx="2.5" ry="1.2" fill="url(#grad-gold-top)" />
+    </g>
+
+    <!-- Pneumatic Clamping Table and Vibe Unit -->
+    <polygon points="-16,7 16,7 20,13 -12,13" fill="url(#grad-steel-top)" class="iso-stroke-subtle" />
+    <polygon points="-12,13 20,13 20,18 -12,18" fill="url(#grad-steel-left)" class="iso-stroke-subtle" />
+    <circle cx="15" cy="10" r="3" fill="#c9a227" class="iso-stroke-subtle" />
+
+    <!-- Number Badge and Labels -->
+    <circle cx="0" cy="56" r="12" class="badge-bg" />
+    <text x="0" y="56" class="badge-text">2</text>
+    <text x="0" y="80" class="step-label">Tube Filling</text>
+    <text x="0" y="97" class="step-param">Nb barrier, Cu sheath</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- STEP 3: DRAWING AND ROLLING               -->
+  <!-- ========================================== -->
+  <g id="step-3" transform="translate(720, 165)">
+    <!-- Base Isometric Plinth -->
+    <polygon points="0,-18 35,0 0,18 -35,0" fill="url(#grad-steel-top)" class="iso-stroke" />
+    <polygon points="-35,0 0,18 0,26 -35,8" fill="url(#grad-steel-left)" class="iso-stroke" />
+    <polygon points="0,18 35,0 35,8 0,26" fill="url(#grad-steel-right)" class="iso-stroke" />
+
+    <!-- Rolling Mill Housing Frame -->
+    <polygon points="-22,-5 -14,-5 -14,-60 -22,-60" fill="url(#grad-steel-left)" class="iso-stroke" />
+    <polygon points="-14,-5 -6,-8 -6,-63 -14,-60" fill="url(#grad-steel-right)" class="iso-stroke" />
+    <polygon points="12,-5 20,-5 20,-60 12,-60" fill="url(#grad-steel-left)" class="iso-stroke" />
+    <polygon points="20,-5 28,-8 28,-63 20,-60" fill="url(#grad-steel-right)" class="iso-stroke" />
+    <!-- Top Tie Bar -->
+    <polygon points="-22,-60 28,-63 28,-56 -22,-53" fill="url(#grad-steel-top)" class="iso-stroke" />
+
+    <!-- Grooved Work Rolls (Isometric Cylinders) -->
+    <!-- Top Roll -->
+    <g transform="translate(0, -42)">
+      <polygon points="-14,-6 14,-6 14,6 -14,6" fill="url(#grad-steel-top)" class="iso-stroke-subtle" />
+      <ellipse cx="-14" cy="0" rx="4" ry="7" fill="url(#grad-steel-left)" class="iso-stroke" />
+      <g class="anim-roll-top">
+        <line x1="-14" y1="-5" x2="-14" y2="5" stroke="#4a5360" stroke-width="1.8" />
+        <line x1="-18" y1="0" x2="-10" y2="0" stroke="#4a5360" stroke-width="1.8" />
+      </g>
+      <ellipse cx="14" cy="0" rx="4" ry="7" fill="url(#grad-gold-right)" class="iso-stroke" />
+    </g>
+
+    <!-- Bottom Roll -->
+    <g transform="translate(0, -25)">
+      <polygon points="-14,-6 14,-6 14,6 -14,6" fill="url(#grad-steel-top)" class="iso-stroke-subtle" />
+      <ellipse cx="-14" cy="0" rx="4" ry="7" fill="url(#grad-steel-left)" class="iso-stroke" />
+      <g class="anim-roll-btm">
+        <line x1="-14" y1="-5" x2="-14" y2="5" stroke="#4a5360" stroke-width="1.8" />
+        <line x1="-18" y1="0" x2="-10" y2="0" stroke="#4a5360" stroke-width="1.8" />
+      </g>
+      <ellipse cx="14" cy="0" rx="4" ry="7" fill="url(#grad-gold-right)" class="iso-stroke" />
+    </g>
+
+    <!-- Wire / Tube Passing Through: Enters Thick (left), Exits Thin (right) -->
+    <!-- Incoming Thick Tube -->
+    <polygon points="-32,-35 -14,-35 -14,-32 -32,-32" fill="url(#grad-clay-left)" class="iso-stroke-subtle" />
+    <!-- Conical Draw Die Block on Exit -->
+    <polygon points="16,-38 28,-36 28,-29 16,-27" fill="url(#grad-blue-top)" class="iso-stroke" />
+    <polygon points="28,-36 34,-35 34,-30 28,-29" fill="url(#grad-blue-right)" class="iso-stroke" />
+    <!-- Exiting Elongated Reduced Wire -->
+    <line x1="14" y1="-33.5" x2="38" y2="-33.5" stroke="#c9a227" stroke-width="3.2" stroke-linecap="round" />
+
+    <!-- Number Badge and Labels -->
+    <circle cx="0" cy="56" r="12" class="badge-bg" />
+    <text x="0" y="56" class="badge-text">3</text>
+    <text x="0" y="80" class="step-label">Drawing and Rolling</text>
+    <text x="0" y="97" class="step-param">Groove rolls to dies</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- STEP 4: RESTACKING                         -->
+  <!-- ========================================== -->
+  <g id="step-4" transform="translate(1000, 165)">
+    <!-- Base Isometric Plinth -->
+    <polygon points="0,-18 35,0 0,18 -35,0" fill="url(#grad-steel-top)" class="iso-stroke" />
+    <polygon points="-35,0 0,18 0,26 -35,8" fill="url(#grad-steel-left)" class="iso-stroke" />
+    <polygon points="0,18 35,0 35,8 0,26" fill="url(#grad-steel-right)" class="iso-stroke" />
+
+    <!-- Assembly Cradle Bed -->
+    <polygon points="-24,-5 16,-5 24,0 -16,0" fill="url(#grad-sage-top)" class="iso-stroke" />
+    <polygon points="-16,0 24,0 24,8 -16,8" fill="url(#grad-sage-left)" class="iso-stroke" />
+
+    <!-- Large Outer Billet Tube (Multifilament Restacking Sheath) -->
+    <g transform="translate(4, -34)">
+      <!-- Outer Sheath Cylinder Body -->
+      <polygon points="-12,-16 22,-16 22,16 -12,16" fill="url(#grad-clay-left)" class="iso-stroke" />
+      <polygon points="22,-16 28,-12 28,20 22,16" fill="url(#grad-clay-right)" class="iso-stroke" />
+      <ellipse cx="28" cy="4" rx="4" ry="16" fill="url(#grad-clay-right)" class="iso-stroke" />
+
+      <!-- Open Front Face Displaying Hexagonal Multifilament Bundle -->
+      <ellipse cx="-12" cy="0" rx="9" ry="16" fill="#2d333b" class="iso-stroke" />
+      <ellipse cx="-12" cy="0" rx="7.5" ry="14" fill="#5b8fb9" />
+
+      <!-- Filament Array (Honeycomb of 19 Sub-elements) -->
+      <g class="anim-bundle-glide">
+        <!-- Center Filament -->
+        <circle cx="-12" cy="0" r="2.2" fill="#c9a227" stroke="#363d47" stroke-width="0.8" />
+        <!-- Inner Ring (6 Filaments) -->
+        <circle cx="-12" cy="-5" r="2" fill="#c9a227" stroke="#363d47" stroke-width="0.8" />
+        <circle cx="-12" cy="5" r="2" fill="#c9a227" stroke="#363d47" stroke-width="0.8" />
+        <circle cx="-15" cy="-2.5" r="2" fill="#c9a227" stroke="#363d47" stroke-width="0.8" />
+        <circle cx="-15" cy="2.5" r="2" fill="#c9a227" stroke="#363d47" stroke-width="0.8" />
+        <circle cx="-9" cy="-2.5" r="2" fill="#c9a227" stroke="#363d47" stroke-width="0.8" />
+        <circle cx="-9" cy="2.5" r="2" fill="#c9a227" stroke="#363d47" stroke-width="0.8" />
+        <!-- Outer Ring (Selected Filaments) -->
+        <circle cx="-12" cy="-10" r="1.8" fill="#df8668" />
+        <circle cx="-12" cy="10" r="1.8" fill="#df8668" />
+        <circle cx="-16" cy="-7" r="1.8" fill="#df8668" />
+        <circle cx="-16" cy="7" r="1.8" fill="#df8668" />
+        <circle cx="-8" cy="-7" r="1.8" fill="#df8668" />
+        <circle cx="-8" cy="7" r="1.8" fill="#df8668" />
+      </g>
+    </g>
+
+    <!-- Laser Alignment Guide / Robotic Pusher Head -->
+    <polygon points="-30,-42 -22,-42 -22,-26 -30,-26" fill="url(#grad-steel-left)" class="iso-stroke" />
+    <line x1="-22" y1="-34" x2="-8" y2="-34" stroke="#5b8fb9" stroke-width="1.8" stroke-dasharray="2 2" />
+
+    <!-- Number Badge and Labels -->
+    <circle cx="0" cy="56" r="12" class="badge-bg" />
+    <text x="0" y="56" class="badge-text">4</text>
+    <text x="0" y="80" class="step-label">Restacking</text>
+    <text x="0" y="97" class="step-param">Multifilament bundle</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- STEP 5: FINAL DRAWING                      -->
+  <!-- ========================================== -->
+  <g id="step-5" transform="translate(160, 405)">
+    <!-- Base Isometric Plinth -->
+    <polygon points="0,-18 35,0 0,18 -35,0" fill="url(#grad-steel-top)" class="iso-stroke" />
+    <polygon points="-35,0 0,18 0,26 -35,8" fill="url(#grad-steel-left)" class="iso-stroke" />
+    <polygon points="0,18 35,0 35,8 0,26" fill="url(#grad-steel-right)" class="iso-stroke" />
+
+    <!-- Bull-Block Capstan Stand -->
+    <polygon points="-24,-5 -14,-5 -14,-45 -24,-45" fill="url(#grad-steel-left)" class="iso-stroke" />
+    <polygon points="-14,-5 -8,-8 -8,-48 -14,-45" fill="url(#grad-steel-right)" class="iso-stroke" />
+    <!-- Multi-Step Die Holder Block -->
+    <polygon points="-12,-42 2,-42 2,-28 -12,-28" fill="url(#grad-blue-top)" class="iso-stroke" />
+
+    <!-- Wire Take-up Spool / Reel (Rotating) -->
+    <g transform="translate(16, -34)">
+      <!-- Rear Spool Flange -->
+      <ellipse cx="-4" cy="-4" rx="14" ry="24" fill="url(#grad-steel-right)" class="iso-stroke" />
+      <!-- Wound Wire Drum (Gold MgB2 Wire) -->
+      <g>
+        <polygon points="-4,-14 6,-14 6,10 -4,10" fill="url(#grad-gold-left)" class="iso-stroke-subtle" />
+        <ellipse cx="6" cy="-2" rx="7" ry="12" fill="url(#grad-gold-top)" />
+      </g>
+      <!-- Front Spool Flange (Rotating Spokes) -->
+      <g class="anim-spool-spin">
+        <ellipse cx="6" cy="-4" rx="14" ry="24" fill="url(#grad-steel-top)" opacity="0.9" class="iso-stroke" />
+        <circle cx="6" cy="-4" r="5" fill="#4a5360" />
+        <!-- Cutout Flange Slots -->
+        <ellipse cx="6" cy="-15" rx="3" ry="5" fill="#363d47" />
+        <ellipse cx="6" cy="7" rx="3" ry="5" fill="#363d47" />
+        <ellipse cx="-1" cy="-4" rx="3" ry="5" fill="#363d47" />
+        <ellipse cx="13" cy="-4" rx="3" ry="5" fill="#363d47" />
+      </g>
+    </g>
+
+    <!-- Fine Wire Spooling In from Capstan -->
+    <path d="M -8,-32 L 6,-38" stroke="#c9a227" stroke-width="2.2" stroke-linecap="round" />
+
+    <!-- Number Badge and Labels -->
+    <circle cx="0" cy="56" r="12" class="badge-bg" />
+    <text x="0" y="56" class="badge-text">5</text>
+    <text x="0" y="80" class="step-label">Final Drawing</text>
+    <text x="0" y="97" class="step-param">Spool take-up spooling</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- STEP 6: REACTION HEAT TREATMENT            -->
+  <!-- ========================================== -->
+  <g id="step-6" transform="translate(440, 405)">
+    <!-- Base Isometric Plinth -->
+    <polygon points="0,-18 35,0 0,18 -35,0" fill="url(#grad-steel-top)" class="iso-stroke" />
+    <polygon points="-35,0 0,18 0,26 -35,8" fill="url(#grad-steel-left)" class="iso-stroke" />
+    <polygon points="0,18 35,0 35,8 0,26" fill="url(#grad-steel-right)" class="iso-stroke" />
+
+    <!-- Dual Heavy Pedestals for Horizontal Furnace -->
+    <polygon points="-24,-5 -16,-5 -16,-28 -24,-28" fill="url(#grad-steel-left)" class="iso-stroke" />
+    <polygon points="16,-5 24,-5 24,-28 16,-28" fill="url(#grad-steel-right)" class="iso-stroke" />
+
+    <!-- Cylindrical Tube Furnace Body -->
+    <g transform="translate(0, -36)">
+      <!-- Main Insulated Furnace Shell (Sage Green) -->
+      <polygon points="-26,-16 26,-16 26,14 -26,14" fill="url(#grad-sage-top)" class="iso-stroke" />
+      <polygon points="-26,14 26,14 26,18 -26,18" fill="url(#grad-sage-left)" class="iso-stroke" />
+      
+      <!-- Right End Flange and Quartz Process Tube Bore -->
+      <ellipse cx="26" cy="-1" rx="6" ry="15" fill="url(#grad-steel-right)" class="iso-stroke" />
+      
+      <!-- Left Opening showing Glowing Heating Chamber -->
+      <ellipse cx="-26" cy="-1" rx="7" ry="15" fill="#36201b" class="iso-stroke" />
+      <!-- Inner Radiant Hot Zone (about 600 to 700 °C) -->
+      <ellipse cx="-26" cy="-1" rx="5" ry="11" fill="url(#heat-core)" class="anim-furnace-glow" filter="url(#glow-heat)" />
+
+      <!-- Argon Gas Inlet System at Top -->
+      <rect x="0" y="-28" width="5" height="12" fill="url(#grad-steel-left)" class="iso-stroke-subtle" />
+      <polygon points="-6,-32 11,-32 8,-28 -3,-28" fill="url(#grad-blue-top)" class="iso-stroke-subtle" />
+      <!-- Pressure Gauge with Needle -->
+      <circle cx="2.5" cy="-35" r="5" fill="#ffffff" class="iso-stroke-subtle" />
+      <line x1="2.5" y1="-35" x2="5" y2="-37" stroke="#c15f3c" stroke-width="1.2" stroke-linecap="round" />
+      
+      <!-- Internal MgB2 Wire Coil being Heat Treated -->
+      <ellipse cx="-2" cy="-1" rx="4" ry="8" fill="none" stroke="#ffd580" stroke-width="1.8" />
+    </g>
+
+    <!-- Number Badge and Labels -->
+    <circle cx="0" cy="56" r="12" class="badge-bg" />
+    <text x="0" y="56" class="badge-text">6</text>
+    <text x="0" y="80" class="step-label">Reaction Heat Treatment</text>
+    <text x="0" y="97" class="step-param">about 600 to 700 °C, argon</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- STEP 7: COIL WINDING                       -->
+  <!-- ========================================== -->
+  <g id="step-7" transform="translate(720, 405)">
+    <!-- Base Isometric Plinth -->
+    <polygon points="0,-18 35,0 0,18 -35,0" fill="url(#grad-steel-top)" class="iso-stroke" />
+    <polygon points="-35,0 0,18 0,26 -35,8" fill="url(#grad-steel-left)" class="iso-stroke" />
+    <polygon points="0,18 35,0 35,8 0,26" fill="url(#grad-steel-right)" class="iso-stroke" />
+
+    <!-- Lathe Machine Bed -->
+    <polygon points="-28,-5 28,-5 32,2 -24,2" fill="url(#grad-steel-top)" class="iso-stroke" />
+    <polygon points="-24,2 32,2 32,8 -24,8" fill="url(#grad-steel-left)" class="iso-stroke" />
+
+    <!-- Headstock (Left) and Tailstock (Right) -->
+    <polygon points="-26,-36 -14,-36 -14,-5 -26,-5" fill="url(#grad-steel-left)" class="iso-stroke" />
+    <polygon points="-14,-36 -8,-40 -8,-9 -14,-5" fill="url(#grad-steel-right)" class="iso-stroke" />
+    <polygon points="20,-28 28,-28 28,-5 20,-5" fill="url(#grad-steel-left)" class="iso-stroke" />
+
+    <!-- Solenoid Coil Mandrel on Lathe Spindle -->
+    <g transform="translate(4, -26)">
+      <!-- Mandrel Spindle Shaft -->
+      <line x1="-14" y1="0" x2="20" y2="0" stroke="#7c8a9a" stroke-width="3" />
+      
+      <!-- Solenoid Coil Bobbin and Windings -->
+      <!-- Left Bobbin Flange -->
+      <ellipse cx="-8" cy="0" rx="4" ry="12" fill="url(#grad-steel-left)" class="iso-stroke" />
+      <!-- Wound Coil Body (Turns of MgB2 Superconductor) -->
+      <polygon points="-8,-10 12,-10 12,10 -8,10" fill="url(#grad-blue-top)" class="iso-stroke-subtle" />
+      <!-- Fine Winding Turns / Ridges -->
+      <line x1="-3" y1="-10" x2="-3" y2="10" stroke="#c9a227" stroke-width="1.8" />
+      <line x1="2" y1="-10" x2="2" y2="10" stroke="#c9a227" stroke-width="1.8" />
+      <line x1="7" y1="-10" x2="7" y2="10" stroke="#c9a227" stroke-width="1.8" />
+      <!-- Right Bobbin Flange -->
+      <ellipse cx="12" cy="0" rx="4" ry="12" fill="url(#grad-steel-right)" class="iso-stroke" />
+    </g>
+
+    <!-- Traversing Wire Payout Carriage -->
+    <g class="anim-traverse-carriage">
+      <polygon points="-4,-6 8,-6 4,-1 -8,-1" fill="url(#grad-clay-top)" class="iso-stroke-subtle" />
+      <polygon points="-8,-1 4,-1 4,4 -8,4" fill="url(#grad-clay-left)" class="iso-stroke-subtle" />
+      <!-- Payout Nozzle feeding wire to Solenoid -->
+      <line x1="0" y1="-6" x2="3" y2="-17" stroke="#c9a227" stroke-width="2" stroke-linecap="round" />
+    </g>
+
+    <!-- Number Badge and Labels -->
+    <circle cx="0" cy="56" r="12" class="badge-bg" />
+    <text x="0" y="56" class="badge-text">7</text>
+    <text x="0" y="80" class="step-label">Coil Winding</text>
+    <text x="0" y="97" class="step-param">Precision solenoid coil</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- STEP 8: JOINTS AND MAGNET                  -->
+  <!-- ========================================== -->
+  <g id="step-8" transform="translate(1000, 405)">
+    <!-- Base Isometric Plinth -->
+    <polygon points="0,-18 35,0 0,18 -35,0" fill="url(#grad-steel-top)" class="iso-stroke" />
+    <polygon points="-35,0 0,18 0,26 -35,8" fill="url(#grad-steel-left)" class="iso-stroke" />
+    <polygon points="0,18 35,0 35,8 0,26" fill="url(#grad-steel-right)" class="iso-stroke" />
+
+    <!-- MRI Magnet Cryostat Body (30 Degree Isometric Torus / Cylinder) -->
+    <g transform="translate(0, -36)">
+      <!-- Outer Vacuum Vessel (OVC) -->
+      <!-- Left Outer Shell -->
+      <polygon points="-24,-20 16,-20 16,18 -24,18" fill="url(#grad-steel-top)" class="iso-stroke" />
+      <polygon points="-24,18 16,18 16,24 -24,24" fill="url(#grad-steel-left)" class="iso-stroke" />
+      <!-- Right Cylindrical End Cap -->
+      <ellipse cx="16" cy="1" rx="8" ry="19" fill="url(#grad-steel-right)" class="iso-stroke" />
+
+      <!-- Central Patient / Testing Bore Hole -->
+      <ellipse cx="16" cy="1" rx="4.5" ry="9" fill="#1e242b" class="iso-stroke" />
+
+      <!-- Cutaway Window revealing Internal Superconducting Coil Pack -->
+      <polygon points="-20,-14 6,-14 6,12 -20,12" fill="#2d333b" class="iso-stroke-subtle" />
+      <!-- Internal MgB2 Coil Sections (Blue / Gold) -->
+      <polygon points="-16,-10 -6,-10 -6,8 -16,8" fill="url(#grad-blue-top)" class="iso-stroke-subtle" />
+      <polygon points="-2,-10 4,-10 4,8 -2,8" fill="url(#grad-blue-top)" class="iso-stroke-subtle" />
+
+      <!-- Persistent Joint Enclosure on Top of Cryostat -->
+      <polygon points="-12,-28 4,-28 8,-22 -8,-22" fill="url(#grad-gold-top)" class="iso-stroke" />
+      <polygon points="-8,-22 8,-22 8,-18 -8,-18" fill="url(#grad-gold-left)" class="iso-stroke" />
+
+      <!-- Cryocooler Cold Head Turret -->
+      <rect x="8" y="-36" width="6" height="16" fill="url(#grad-steel-left)" class="iso-stroke-subtle" />
+      <polygon points="5,-38 17,-38 15,-35 7,-35" fill="url(#grad-steel-top)" class="iso-stroke-subtle" />
+
+      <!-- Persistent Superconducting Current Loop Indicator -->
+      <ellipse cx="-6" cy="-1" rx="9" ry="7" fill="none" stroke="#ffd580" stroke-width="2.2" stroke-dasharray="6 4" class="anim-super-current" filter="url(#glow-sc)" />
+
+      <!-- Magnetic Flux Ripples Radiating from Bore -->
+      <g class="anim-flux-ripple">
+        <ellipse cx="22" cy="1" rx="8" ry="14" fill="none" stroke="#5b8fb9" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.6" />
+        <ellipse cx="27" cy="1" rx="12" ry="18" fill="none" stroke="#82b0d6" stroke-width="1" stroke-dasharray="4 4" opacity="0.4" />
+      </g>
+    </g>
+
+    <!-- Number Badge and Labels -->
+    <circle cx="0" cy="56" r="12" class="badge-bg" />
+    <text x="0" y="56" class="badge-text">8</text>
+    <text x="0" y="80" class="step-label">Joints and Magnet</text>
+    <text x="0" y="97" class="step-param">Persistent mode MRI</text>
+  </g>
+
+</svg>

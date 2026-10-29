@@ -1,0 +1,696 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560">
+  <title>Conventional route for multifilamentary superconducting wire for fusion magnets (as used for Nb-Ti and Nb3Sn, the template a ductile high-entropy alloy conductor would follow)</title>
+  <defs>
+    <!-- Conveyor flow marker -->
+    <marker id="flow-arrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 1 L 7 4 L 1 7 Z" fill="#7c8a9a" />
+    </marker>
+    <marker id="flow-arrow-gold" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 1 L 7 4 L 1 7 Z" fill="#c9a227" />
+    </marker>
+
+    <!-- Linear gradients for subtle material depth while maintaining solid opacity -->
+    <linearGradient id="arcGlowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="40%" stop-color="#70d6ff" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#ffbe0b" stop-opacity="0.9"/>
+    </linearGradient>
+
+    <linearGradient id="furnaceGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff7a45" stop-opacity="0.95"/>
+      <stop offset="60%" stop-color="#e65100" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#bf360c" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <linearGradient id="coilCurrent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c9a227" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#ffd54f" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#c9a227" stop-opacity="0.9"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+    }
+
+    /* Typography */
+    .hdr-title  { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13.5px; font-weight: 700; letter-spacing: 2px; fill: #7c8a9a; text-anchor: middle; }
+    .hdr-sub    { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11.5px; font-weight: 400; fill: #5f6b78; text-anchor: middle; }
+    .badge-circ { fill: #202630; stroke: #5b8fb9; stroke-width: 1.8; }
+    .badge-num  { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12.5px; font-weight: 700; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
+    .step-lbl   { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 15.5px; font-weight: 600; fill: #7c8a9a; text-anchor: middle; }
+    .step-prm   { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 400; fill: #7c8a9a; text-anchor: middle; }
+
+    /* Shading styles */
+    .strk        { stroke: #4a5360; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+    .strk-sm     { stroke: #4a5360; stroke-width: 1.2; stroke-linejoin: round; stroke-linecap: round; }
+    .strk-hi     { stroke: #5f6b78; stroke-width: 1.8; stroke-linejoin: round; stroke-linecap: round; }
+
+    /* Machine animations */
+    @keyframes arcPulse {
+      0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 3px #70d6ff); }
+      50%      { opacity: 1.0; filter: drop-shadow(0 0 7px #ffffff); }
+    }
+    @keyframes heatPulse {
+      0%, 100% { opacity: 0.82; }
+      50%      { opacity: 1.0; filter: drop-shadow(0 0 5px #ff7a45); }
+    }
+    @keyframes rollTurn {
+      0%   { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: 20; }
+    }
+    @keyframes rodInsert {
+      0%, 100% { transform: translate(0, 0); opacity: 0.85; }
+      50%      { transform: translate(-2.5px, -1.5px); opacity: 1.0; }
+    }
+    @keyframes ramCycle {
+      0%, 100% { transform: translateX(0); }
+      45%, 55% { transform: translateX(12px); }
+    }
+    @keyframes spoolRotate {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes strandTwist {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes coilPulse {
+      0%   { stroke-dashoffset: 0; opacity: 0.7; }
+      50%  { opacity: 1.0; }
+      100% { stroke-dashoffset: -260; opacity: 0.7; }
+    }
+
+    /* Conveyor tokens and travel */
+    @keyframes tokenMoveRow1 {
+      0%   { transform: translateX(0); opacity: 0; }
+      15%  { opacity: 1; }
+      85%  { opacity: 1; }
+      100% { transform: translateX(170px); opacity: 0; }
+    }
+    @keyframes tokenMoveRow2 {
+      0%   { transform: translateX(0); opacity: 0; }
+      15%  { opacity: 1; }
+      85%  { opacity: 1; }
+      100% { transform: translateX(170px); opacity: 0; }
+    }
+    @keyframes transferFlow {
+      0%   { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: -120; }
+    }
+    @keyframes transferBillet {
+      0%   { transform: translate(0, 0); opacity: 0; }
+      6%   { opacity: 1; }
+      94%  { opacity: 1; }
+      100% { transform: translate(-940px, 140px); opacity: 0; }
+    }
+
+    .anim-arc       { animation: arcPulse 2.4s infinite ease-in-out; }
+    .anim-heat      { animation: heatPulse 3.0s infinite ease-in-out; }
+    .anim-roll      { animation: rollTurn 2.4s infinite linear; }
+    .anim-insert    { animation: rodInsert 3.0s infinite ease-in-out; }
+    .anim-ram       { animation: ramCycle 3.6s infinite ease-in-out; }
+    .anim-spool     { animation: spoolRotate 4.0s infinite linear; transform-origin: 468px 382px; }
+    .anim-cabler    { animation: strandTwist 3.6s infinite linear; transform-origin: 688px 382px; }
+    .anim-coil      { animation: coilPulse 4.8s infinite linear; }
+    .anim-tok1      { animation: tokenMoveRow1 3.2s infinite linear; }
+    .anim-tok2      { animation: tokenMoveRow1 3.2s infinite linear 0.8s; }
+    .anim-tok3      { animation: tokenMoveRow1 3.2s infinite linear 1.6s; }
+    .anim-tok5      { animation: tokenMoveRow2 3.2s infinite linear; }
+    .anim-tok6      { animation: tokenMoveRow2 3.2s infinite linear 0.8s; }
+    .anim-tok7      { animation: tokenMoveRow2 3.2s infinite linear 1.6s; }
+    .anim-tr-line   { animation: transferFlow 6.0s infinite linear; }
+    .anim-tr-billet { animation: transferBillet 8.0s infinite linear; }
+  </style>
+
+  <!-- ==================== HEADER ==================== -->
+  <g id="header-group">
+    <text class="hdr-title" x="600" y="27">MULTIFILAMENTARY SUPERCONDUCTING WIRE FABRICATION ROUTE</text>
+    <text class="hdr-sub" x="600" y="44">Benchmark Process for Fusion Magnets (Nb-Ti &amp; Nb3Sn Template for High-Entropy Alloys)</text>
+  </g>
+
+  <!-- ==================== CONVEYOR PLINTHS and RAILS ==================== -->
+  <g id="conveyors">
+    <!-- Row 1 Equipment Foundation Pads -->
+    <g id="plinths-row1">
+      <!-- Step 1 Plinth -->
+      <polygon points="160,132 208,145 160,158 112,145" fill="#38404a" class="strk-sm" />
+      <polygon points="112,145 160,158 160,165 112,152" fill="#2d333b" class="strk-sm" />
+      <polygon points="160,158 208,145 208,152 160,165" fill="#23272e" class="strk-sm" />
+
+      <!-- Step 2 Plinth -->
+      <polygon points="440,132 488,145 440,158 392,145" fill="#38404a" class="strk-sm" />
+      <polygon points="392,145 440,158 440,165 392,152" fill="#2d333b" class="strk-sm" />
+      <polygon points="440,158 488,145 488,152 440,165" fill="#23272e" class="strk-sm" />
+
+      <!-- Step 3 Plinth -->
+      <polygon points="720,132 768,145 720,158 672,145" fill="#38404a" class="strk-sm" />
+      <polygon points="672,145 720,158 720,165 672,152" fill="#2d333b" class="strk-sm" />
+      <polygon points="720,158 768,145 768,152 720,165" fill="#23272e" class="strk-sm" />
+
+      <!-- Step 4 Plinth -->
+      <polygon points="1000,132 1048,145 1000,158 952,145" fill="#38404a" class="strk-sm" />
+      <polygon points="952,145 1000,158 1000,165 952,152" fill="#2d333b" class="strk-sm" />
+      <polygon points="1000,158 1048,145 1048,152 1000,165" fill="#23272e" class="strk-sm" />
+    </g>
+
+    <!-- Row 1 Conveyor Tracks (Isometric Bridges) -->
+    <!-- 1 -> 2 -->
+    <polygon points="208,143 392,143 380,149 196,149" fill="#4a5360" class="strk-sm" />
+    <polygon points="196,149 380,149 380,155 196,155" fill="#2d333b" class="strk-sm" />
+    <line x1="216" y1="146" x2="372" y2="146" stroke="#7c8a9a" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#flow-arrow)" />
+
+    <!-- 2 -> 3 -->
+    <polygon points="488,143 672,143 660,149 476,149" fill="#4a5360" class="strk-sm" />
+    <polygon points="476,149 660,149 660,155 476,155" fill="#2d333b" class="strk-sm" />
+    <line x1="496" y1="146" x2="652" y2="146" stroke="#7c8a9a" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#flow-arrow)" />
+
+    <!-- 3 -> 4 -->
+    <polygon points="768,143 952,143 940,149 756,149" fill="#4a5360" class="strk-sm" />
+    <polygon points="756,149 940,149 940,155 756,155" fill="#2d333b" class="strk-sm" />
+    <line x1="776" y1="146" x2="932" y2="146" stroke="#7c8a9a" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#flow-arrow)" />
+
+    <!-- Transfer Conveyor Loop (Row 1 Step 4 down to Row 2 Step 5) -->
+    <path d="M 1048 147 C 1115 147, 1135 175, 1135 210 C 1135 245, 1105 268, 1050 268 L 135 268 C 75 268, 52 295, 52 335 C 52 375, 75 397, 112 397"
+          fill="none" stroke="#38404a" stroke-width="10" stroke-linecap="round" />
+    <path d="M 1048 147 C 1115 147, 1135 175, 1135 210 C 1135 245, 1105 268, 1050 268 L 135 268 C 75 268, 52 295, 52 335 C 52 375, 75 397, 112 397"
+          fill="none" stroke="#2d333b" stroke-width="6" stroke-linecap="round" />
+    <path class="anim-tr-line" d="M 1048 147 C 1115 147, 1135 175, 1135 210 C 1135 245, 1105 268, 1050 268 L 135 268 C 75 268, 52 295, 52 335 C 52 375, 75 397, 112 397"
+          fill="none" stroke="#c9a227" stroke-width="2" stroke-dasharray="10 8" />
+
+    
+
+    <!-- Row 2 Equipment Foundation Pads -->
+    <g id="plinths-row2">
+      <!-- Step 5 Plinth -->
+      <polygon points="160,382 208,395 160,408 112,395" fill="#38404a" class="strk-sm" />
+      <polygon points="112,395 160,408 160,415 112,402" fill="#2d333b" class="strk-sm" />
+      <polygon points="160,408 208,395 208,402 160,415" fill="#23272e" class="strk-sm" />
+
+      <!-- Step 6 Plinth -->
+      <polygon points="440,382 488,395 440,408 392,395" fill="#38404a" class="strk-sm" />
+      <polygon points="392,395 440,408 440,415 392,402" fill="#2d333b" class="strk-sm" />
+      <polygon points="440,408 488,395 488,402 440,415" fill="#23272e" class="strk-sm" />
+
+      <!-- Step 7 Plinth -->
+      <polygon points="720,382 768,395 720,408 672,395" fill="#38404a" class="strk-sm" />
+      <polygon points="672,395 720,408 720,415 672,402" fill="#2d333b" class="strk-sm" />
+      <polygon points="720,408 768,395 768,402 720,415" fill="#23272e" class="strk-sm" />
+
+      <!-- Step 8 Plinth -->
+      <polygon points="1000,382 1048,395 1000,408 952,395" fill="#38404a" class="strk-sm" />
+      <polygon points="952,395 1000,408 1000,415 952,402" fill="#2d333b" class="strk-sm" />
+      <polygon points="1000,408 1048,395 1048,402 1000,415" fill="#23272e" class="strk-sm" />
+    </g>
+
+    <!-- Row 2 Conveyor Tracks -->
+    <!-- 5 -> 6 -->
+    <polygon points="208,393 392,393 380,399 196,399" fill="#4a5360" class="strk-sm" />
+    <polygon points="196,399 380,399 380,405 196,405" fill="#2d333b" class="strk-sm" />
+    <line x1="216" y1="396" x2="372" y2="396" stroke="#7c8a9a" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#flow-arrow)" />
+
+    <!-- 6 -> 7 -->
+    <polygon points="488,393 672,393 660,399 476,399" fill="#4a5360" class="strk-sm" />
+    <polygon points="476,399 660,399 660,405 476,405" fill="#2d333b" class="strk-sm" />
+    <line x1="496" y1="396" x2="652" y2="396" stroke="#7c8a9a" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#flow-arrow)" />
+
+    <!-- 7 -> 8 -->
+    <polygon points="768,393 952,393 940,399 756,399" fill="#4a5360" class="strk-sm" />
+    <polygon points="756,399 940,399 940,405 756,405" fill="#2d333b" class="strk-sm" />
+    <line x1="776" y1="396" x2="932" y2="396" stroke="#7c8a9a" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#flow-arrow)" />
+  </g>
+
+  <!-- ==================== ANIMATED CONVEYOR TOKENS ==================== -->
+  <g id="conveyor-material-tokens">
+    <!-- Row 1 Token 1: Ingot travelling 1 -> 2 -->
+    <g transform="translate(215, 146)">
+      <g class="anim-tok1">
+        <polygon points="0,-6 10,-1 0,4 -10,-1" fill="#e0b838" class="strk-sm" />
+        <polygon points="-10,-1 0,4 0,9 -10,4" fill="#c9a227" class="strk-sm" />
+        <polygon points="0,4 10,-1 10,4 0,9" fill="#9e7c18" class="strk-sm" />
+      </g>
+    </g>
+
+    <!-- Row 1 Token 2: Hot Ingot travelling 2 -> 3 -->
+    <g transform="translate(495, 146)">
+      <g class="anim-tok2">
+        <polygon points="0,-6 10,-1 0,4 -10,-1" fill="#e58e70" class="strk-sm" />
+        <polygon points="-10,-1 0,4 0,9 -10,4" fill="#d97757" class="strk-sm" />
+        <polygon points="0,4 10,-1 10,4 0,9" fill="#c15f3c" class="strk-sm" />
+      </g>
+    </g>
+
+    <!-- Row 1 Token 3: Hexagonal Rod travelling 3 -> 4 -->
+    <g transform="translate(775, 146)">
+      <g class="anim-tok3">
+        <polygon points="-7,-3 0,-6 7,-3 7,0 0,3 -7,0" fill="#a8c499" class="strk-sm" />
+        <polygon points="-7,0 0,3 0,7 -7,4" fill="#8fae7e" class="strk-sm" />
+        <polygon points="0,3 7,0 7,4 0,7" fill="#6d8c5d" class="strk-sm" />
+      </g>
+    </g>
+
+    <!-- Transfer Billet travelling 4 -> 5 -->
+    <g transform="translate(1048, 146)">
+      <g class="anim-tr-billet">
+        <ellipse cx="0" cy="0" rx="9" ry="5.5" fill="#e58e70" stroke="#c15f3c" stroke-width="1.2" />
+        <polygon points="-3,-1.5 0,-3 3,-1.5 3,1.5 0,3 -3,1.5" fill="#c9a227" />
+      </g>
+    </g>
+
+    <!-- Row 2 Token 5: Extruded Rod travelling 5 -> 6 -->
+    <g transform="translate(215, 396)">
+      <g class="anim-tok5">
+        <line x1="-10" y1="0" x2="10" y2="0" stroke="#c9a227" stroke-width="4" stroke-linecap="round" />
+      </g>
+    </g>
+
+    <!-- Row 2 Token 6: Spooled Fine Wire travelling 6 -> 7 -->
+    <g transform="translate(495, 396)">
+      <g class="anim-tok6">
+        <ellipse cx="0" cy="0" rx="7" ry="4" fill="#7aaad0" class="strk-sm" />
+        <circle cx="0" cy="0" r="2.5" fill="#c9a227" />
+      </g>
+    </g>
+
+    <!-- Row 2 Token 7: CICC Conduit Cable travelling 7 -> 8 -->
+    <g transform="translate(775, 396)">
+      <g class="anim-tok7">
+        <rect x="-8" y="-3.5" width="16" height="7" rx="2" fill="#a3aebb" class="strk-sm" />
+        <circle cx="0" cy="0" r="2" fill="#c9a227" />
+      </g>
+    </g>
+  </g>
+
+  <!-- ==================== PROCESS STEP MACHINES ==================== -->
+
+  <!-- STEP 1: ALLOY MELTING (X = 160, Y = 145) -->
+  <g id="step1-alloy-melting">
+    <!-- Vacuum Chamber Body (Hexagonal Isometric Vessel) -->
+    <!-- Top Face (Lighter steel) -->
+    <polygon points="160,82 192,94 192,110 160,122 128,110 128,94" fill="#a3aebb" class="strk" />
+    <!-- Left Face (Medium steel) -->
+    <polygon points="128,110 160,122 160,146 128,134" fill="#7c8a9a" class="strk" />
+    <!-- Right Face (Darker steel) -->
+    <polygon points="160,122 192,110 192,134 160,146" fill="#5f6b78" class="strk" />
+
+    <!-- Top Vacuum Flange and Ports -->
+    <ellipse cx="160" cy="98" rx="14" ry="7" fill="#5f6b78" class="strk-sm" />
+    <ellipse cx="160" cy="98" rx="9" ry="4.5" fill="#363d47" class="strk-sm" />
+
+    <!-- Vertical Arc / Electron Beam Ram Column -->
+    <polygon points="160,48 168,52 168,82 160,78" fill="#c15f3c" class="strk-sm" />
+    <polygon points="160,48 152,52 152,82 160,78" fill="#d97757" class="strk-sm" />
+    <polygon points="160,44 168,48 160,52 152,48" fill="#e58e70" class="strk-sm" />
+    <!-- Power Leads (Clay) -->
+    <path d="M 152 58 C 138 58, 134 66, 126 66" fill="none" stroke="#d97757" stroke-width="2.5" stroke-linecap="round" />
+    <path d="M 152 64 C 140 64, 138 72, 130 72" fill="none" stroke="#c15f3c" stroke-width="2.5" stroke-linecap="round" />
+
+    <!-- Viewport Chamber Window (Front-Left Face) -->
+    <ellipse cx="144" cy="122" rx="7" ry="9" fill="#1f242b" stroke="#363d47" stroke-width="1.8" />
+    <!-- Molten Crucible Base inside Viewport -->
+    <ellipse cx="144" cy="127" rx="5" ry="2.5" fill="#ffbe0b" />
+    <!-- Electric Arc Plasma (Animated Glowing Arc) -->
+    <path class="anim-arc" d="M 144 116 L 142 120 L 146 123 L 144 127" fill="none" stroke="url(#arcGlowGrad)" stroke-width="2.6" stroke-linecap="round" />
+
+    <!-- Emerging Cast Ingot on Right Side of Machine -->
+    <polygon points="198,138 208,142 208,148 198,144" fill="#9e7c18" class="strk-sm" />
+    <polygon points="190,142 198,138 198,144 190,148" fill="#c9a227" class="strk-sm" />
+    <polygon points="198,134 208,138 198,142 188,138" fill="#e0b838" class="strk-sm" />
+  </g>
+
+  <!-- STEP 2: HOMOGENISATION FURNACE (X = 440, Y = 145) -->
+  <g id="step2-homogenisation">
+    <!-- Box Furnace Outer Enclosure -->
+    <!-- Top Face (Lighter steel) -->
+    <polygon points="440,68 478,84 440,100 402,84" fill="#a3aebb" class="strk" />
+    <!-- Left Face (Medium steel with structural ribs) -->
+    <polygon points="402,84 440,100 440,152 402,136" fill="#7c8a9a" class="strk" />
+    <!-- Vertical Ribs on Left Face -->
+    <line x1="414" y1="89" x2="414" y2="141" stroke="#5f6b78" stroke-width="2" />
+    <line x1="428" y1="95" x2="428" y2="147" stroke="#5f6b78" stroke-width="2" />
+
+    <!-- Right Face (Darker steel casing surround) -->
+    <polygon points="440,100 478,84 478,136 440,152" fill="#5f6b78" class="strk" />
+
+    <!-- Exhaust Chimney on Top -->
+    <polygon points="440,54 447,57 447,68 440,65" fill="#5f6b78" class="strk-sm" />
+    <polygon points="440,54 433,57 433,68 440,65" fill="#7c8a9a" class="strk-sm" />
+    <ellipse cx="440" cy="54" rx="7" ry="3.5" fill="#a3aebb" class="strk-sm" />
+
+    <!-- Furnace Interior Cavity (Glowing Radiant Chamber) -->
+    <polygon points="444,103 472,91 472,131 444,143" fill="#bf360c" class="strk-sm" />
+    <polygon points="446,105 470,94 470,129 446,140" fill="url(#furnaceGlow)" class="anim-heat" />
+
+    <!-- Internal Heating Coils (Zigzags) -->
+    <path d="M 448 111 L 452 109 L 456 111 L 460 109 L 464 111 L 468 109" fill="none" stroke="#ffe082" stroke-width="1.5" stroke-linecap="round" />
+    <path d="M 448 135 L 452 133 L 456 135 L 460 133 L 464 135 L 468 133" fill="none" stroke="#ffe082" stroke-width="1.5" stroke-linecap="round" />
+
+    <!-- Ingot Undergoing High-Temp Soak  inside Furnace -->
+    <polygon points="450,120 464,114 464,124 450,130" fill="#e65100" />
+    <polygon points="450,116 464,110 458,107 444,113" fill="#ffb74d" />
+
+    <!-- Suspended Furnace Door (Vertical Lift) -->
+    <polygon points="444,76 472,64 472,78 444,90" fill="#7c8a9a" class="strk-sm" />
+    <polygon points="444,74 472,62 470,60 442,72" fill="#a3aebb" class="strk-sm" />
+    <line x1="452" y1="56" x2="452" y2="72" stroke="#4a5360" stroke-width="1.5" />
+    <line x1="464" y1="51" x2="464" y2="67" stroke="#4a5360" stroke-width="1.5" />
+  </g>
+
+  <!-- STEP 3: ROD MAKING / ROLLING MILL (X = 720, Y = 145) -->
+  <g id="step3-rod-making">
+    <!-- Left Mill Stand (Housing in Blue) -->
+    <polygon points="692,86 708,94 708,150 692,142" fill="#5b8fb9" class="strk" />
+    <polygon points="708,94 716,90 716,146 708,150" fill="#3f6d91" class="strk" />
+    <polygon points="692,86 700,82 716,90 708,94" fill="#7aaad0" class="strk" />
+    <rect x="696" y="104" width="8" height="28" rx="2" fill="#2d333b" class="strk-sm" />
+
+    <!-- Right Mill Stand (Housing in Blue) -->
+    <polygon points="732,86 748,94 748,150 732,142" fill="#5b8fb9" class="strk" />
+    <polygon points="748,94 756,90 756,146 748,150" fill="#3f6d91" class="strk" />
+    <polygon points="732,86 740,82 756,90 748,94" fill="#7aaad0" class="strk" />
+    <rect x="736" y="104" width="8" height="28" rx="2" fill="#2d333b" class="strk-sm" />
+
+    <!-- Top Heavy Tie Beam Bridging Housings -->
+    <polygon points="698,78 750,78 742,86 690,86" fill="#7aaad0" class="strk-sm" />
+    <polygon points="690,86 742,86 742,92 690,92" fill="#5b8fb9" class="strk-sm" />
+
+    <!-- Cylindrical Rolling Rolls (Polished Steel) -->
+    <!-- Upper Roll -->
+    <rect x="704" y="106" width="32" height="12" rx="4" fill="#a3aebb" class="strk-sm" />
+    <ellipse cx="736" cy="112" rx="3.5" ry="6" fill="#7c8a9a" stroke="#4a5360" stroke-width="1.2" />
+    <line class="anim-roll" x1="706" y1="112" x2="734" y2="112" stroke="#5f6b78" stroke-width="1.6" stroke-dasharray="4 4" />
+
+    <!-- Lower Roll -->
+    <rect x="704" y="124" width="32" height="12" rx="4" fill="#7c8a9a" class="strk-sm" />
+    <ellipse cx="736" cy="130" rx="3.5" ry="6" fill="#5f6b78" stroke="#4a5360" stroke-width="1.2" />
+
+    <!-- Infeed Ingot (Left, Round Rod) -->
+    <rect x="674" y="117" width="28" height="8" rx="3" fill="#e0b838" stroke="#c9a227" stroke-width="1.4" />
+
+    <!-- Outfeed Hexagonal Rod (Right, Sage / Gold) -->
+    <!-- Hex rod extending from roll bite to the right -->
+    <polygon points="742,120 766,120 768,123 744,123" fill="#a8c499" class="strk-sm" />
+    <polygon points="744,123 768,123 768,126 744,126" fill="#8fae7e" class="strk-sm" />
+    <polygon points="768,118 772,120 772,124 768,126 764,124 764,120" fill="#6d8c5d" stroke="#4a5360" stroke-width="1" />
+  </g>
+
+  <!-- STEP 4: BILLET ASSEMBLY (X = 1000, Y = 145) -->
+  <g id="step4-billet-assembly">
+    <!-- Assembly V-Cradle Support Base -->
+    <polygon points="976,140 1024,140 1018,150 970,150" fill="#5f6b78" class="strk-sm" />
+    <polygon points="984,134 996,140 988,142 978,136" fill="#7c8a9a" class="strk-sm" />
+    <polygon points="1016,134 1004,140 1012,142 1022,136" fill="#7c8a9a" class="strk-sm" />
+
+    <!-- Large Cylindrical Copper Can (Extending back-left in isometric) -->
+    <!-- Cylinder Body Shell -->
+    <path d="M 960,110 L 1002,128 L 1002,144 L 960,126 Z" fill="#c15f3c" class="strk" />
+    <path d="M 960,110 L 980,98 L 1022,116 L 1002,128 Z" fill="#e58e70" class="strk" />
+
+    <!-- Front Circular / Isometric Cross-Section Face of Copper Can -->
+    <!-- Outer Copper Rim -->
+    <ellipse cx="1002" cy="130" rx="27" ry="17" fill="#d97757" stroke="#c15f3c" stroke-width="2" />
+    <!-- Inner Can Bore (Matrix Cavity) -->
+    <ellipse cx="1002" cy="130" rx="21" ry="13" fill="#2d333b" stroke="#4a5360" stroke-width="1.4" />
+
+    <!-- MULTIFILAMENTARY HEXAGONAL ROD HONEYCOMB ARRAY INSIDE CAN -->
+    <g id="hex-rods-array">
+      <!-- Center Rod (Animated Insertion Highlight) -->
+      <polygon class="anim-insert" points="1002,127 1005,128.5 1005,131.5 1002,133 999,131.5 999,128.5" fill="#ffd54f" stroke="#9e7c18" stroke-width="0.8" />
+
+      <!-- Ring 1 Hex Rods (6 rods) -->
+      <polygon points="1008,124 1011,125.5 1011,128.5 1008,130 1005,128.5 1005,125.5" fill="#c9a227" stroke="#9e7c18" stroke-width="0.8" />
+      <polygon points="996,124 999,125.5 999,128.5 996,130 993,128.5 993,125.5" fill="#c9a227" stroke="#9e7c18" stroke-width="0.8" />
+      <polygon points="1008,133 1011,134.5 1011,137.5 1008,139 1005,137.5 1005,134.5" fill="#c9a227" stroke="#9e7c18" stroke-width="0.8" />
+      <polygon points="996,133 999,134.5 999,137.5 996,139 993,137.5 993,134.5" fill="#c9a227" stroke="#9e7c18" stroke-width="0.8" />
+      <polygon points="1002,121 1005,122.5 1005,125.5 1002,127 999,125.5 999,122.5" fill="#c9a227" stroke="#9e7c18" stroke-width="0.8" />
+      <polygon points="1002,133 1005,134.5 1005,137.5 1002,139 999,137.5 999,134.5" fill="#c9a227" stroke="#9e7c18" stroke-width="0.8" />
+
+      <!-- Ring 2 Hex Rods (Selected peripheral rods to show dense packing) -->
+      <polygon points="1014,121 1017,122.5 1017,125.5 1014,127 1011,125.5 1011,122.5" fill="#c9a227" stroke="#9e7c18" stroke-width="0.8" />
+      <polygon points="990,121 993,122.5 993,125.5 990,127 987,125.5 987,122.5" fill="#c9a227" stroke="#9e7c18" stroke-width="0.8" />
+      <polygon points="1014,130 1017,131.5 1017,134.5 1014,136 1011,134.5 1011,131.5" fill="#c9a227" stroke="#9e7c18" stroke-width="0.8" />
+      <polygon points="990,130 993,131.5 993,134.5 990,136 987,134.5 987,131.5" fill="#c9a227" stroke="#9e7c18" stroke-width="0.8" />
+      <polygon points="1014,139 1017,140.5 1017,143.5 1014,145 1011,143.5 1011,140.5" fill="#c9a227" stroke="#9e7c18" stroke-width="0.8" />
+      <polygon points="990,139 993,140.5 993,143.5 990,145 987,143.5 987,140.5" fill="#c9a227" stroke="#9e7c18" stroke-width="0.8" />
+    </g>
+
+    <!-- Collar / Assembly Jig Clamp -->
+    <path d="M 1010,108 C 1032,118 1032,138 1010,148" fill="none" stroke="#7c8a9a" stroke-width="3" stroke-linecap="round" />
+    <circle cx="1024" cy="128" r="2.5" fill="#a3aebb" class="strk-sm" />
+  </g>
+
+  <!-- STEP 5: HOT EXTRUSION (X = 160, Y = 395) -->
+  <g id="step5-hot-extrusion">
+    <!-- Hydraulic Press Cylinder (Blue Steel) -->
+    <!-- Cylinder Base -->
+    <polygon points="100,364 132,374 132,400 100,390" fill="#5b8fb9" class="strk" />
+    <polygon points="100,364 114,356 146,366 132,374" fill="#7aaad0" class="strk" />
+    <polygon points="132,374 146,366 146,392 132,400" fill="#3f6d91" class="strk" />
+
+    <!-- Hydraulic Fluid Ports -->
+    <circle cx="116" cy="380" r="3.5" fill="#2d333b" class="strk-sm" />
+    <path d="M 116 380 L 116 360 L 106 355" fill="none" stroke="#3f6d91" stroke-width="2" />
+
+    <!-- Hydraulic Ram Shaft (Polished Steel Stem) with Reciprocating Cycle -->
+    <g class="anim-ram">
+      <rect x="132" y="378" width="22" height="12" rx="2" fill="#a3aebb" class="strk-sm" />
+      <line x1="134" y1="384" x2="152" y2="384" stroke="#ffffff" stroke-width="1.5" />
+    </g>
+
+    <!-- Heated Extrusion Container (Billet Barrel) -->
+    <polygon points="156,366 190,376 190,402 156,392" fill="#d97757" class="strk" />
+    <polygon points="156,366 168,360 202,370 190,376" fill="#e58e70" class="strk" />
+    <polygon points="190,376 202,370 202,396 190,402" fill="#c15f3c" class="strk" />
+
+    <!-- Heating Bands on Container  -->
+    <line x1="168" y1="371" x2="168" y2="395" stroke="#ffe082" stroke-width="2.5" />
+    <line x1="178" y1="374" x2="178" y2="398" stroke="#ffe082" stroke-width="2.5" />
+
+    <!-- Heavy Extrusion Die Bolster Block -->
+    <polygon points="192,372 206,376 206,398 192,394" fill="#5f6b78" class="strk" />
+    <!-- Die Exit Orifice -->
+    <ellipse cx="206" cy="386" rx="2.5" ry="4.5" fill="#1f242b" />
+
+    <!-- Thin Consolidated Rod Emerging from Die (True Area Reduction!) -->
+    <line x1="206" y1="386" x2="236" y2="386" stroke="#c9a227" stroke-width="3" stroke-linecap="round" />
+  </g>
+
+  <!-- STEP 6: WIRE DRAWING (X = 440, Y = 395) -->
+  <g id="step6-wire-drawing">
+    <!-- Drawing Die Bench Basin (Steel Enclosure) -->
+    <polygon points="388,374 434,374 424,396 378,396" fill="#7c8a9a" class="strk" />
+    <polygon points="378,396 424,396 424,402 378,402" fill="#5f6b78" class="strk" />
+    <polygon points="424,396 434,374 434,380 424,402" fill="#4a5360" class="strk" />
+
+    <!-- Multi-Pass Drawing Dies (3 Stepped Reduction Die Cassettes) -->
+    <!-- Die 1 (Coarse pass) -->
+    <polygon points="392,370 398,370 396,388 390,388" fill="#5f6b78" class="strk-sm" />
+    <ellipse cx="394" cy="379" rx="1.5" ry="3" fill="#1f242b" />
+
+    <!-- Die 2 (Medium pass) -->
+    <polygon points="406,372 412,372 410,388 404,388" fill="#5f6b78" class="strk-sm" />
+    <ellipse cx="408" cy="380" rx="1.2" ry="2.5" fill="#1f242b" />
+
+    <!-- Die 3 (Fine pass) -->
+    <polygon points="420,374 426,374 424,388 418,388" fill="#5f6b78" class="strk-sm" />
+    <ellipse cx="422" cy="381" rx="0.9" ry="2" fill="#1f242b" />
+
+    <!-- Progressive Wire Thinning Path Across Dies -->
+    <line x1="376" y1="378" x2="394" y2="379" stroke="#c9a227" stroke-width="3.2" stroke-linecap="round" />
+    <line x1="394" y1="379" x2="408" y2="380" stroke="#c9a227" stroke-width="2.2" stroke-linecap="round" />
+    <line x1="408" y1="380" x2="422" y2="381" stroke="#c9a227" stroke-width="1.6" stroke-linecap="round" />
+    <line x1="422" y1="381" x2="452" y2="382" stroke="#c9a227" stroke-width="1.2" stroke-linecap="round" />
+
+    <!-- Bull-Block Capstan / Rotating Wire Spool -->
+    <g id="drawing-spool">
+      <!-- Rear Spool Flange -->
+      <ellipse cx="462" cy="380" rx="14" ry="22" fill="#3f6d91" class="strk-sm" />
+      <!-- Wound Superconducting Wire Pack on Spool Hub -->
+      <rect x="460" y="366" width="12" height="32" rx="4" fill="#c9a227" class="strk-sm" />
+      <line x1="462" y1="372" x2="470" y2="372" stroke="#ffd54f" stroke-width="1" />
+      <line x1="462" y1="378" x2="470" y2="378" stroke="#ffd54f" stroke-width="1" />
+      <line x1="462" y1="384" x2="470" y2="384" stroke="#ffd54f" stroke-width="1" />
+      <line x1="462" y1="390" x2="470" y2="390" stroke="#ffd54f" stroke-width="1" />
+
+      <!-- Front Rotating Spool Flange (Blue, with Spoke Marks) -->
+      <ellipse cx="472" cy="384" rx="14" ry="22" fill="#5b8fb9" class="strk" />
+      <ellipse cx="472" cy="384" rx="5" ry="8" fill="#7aaad0" class="strk-sm" />
+
+      <!-- Animated Spoke Indicators -->
+      <g class="anim-spool">
+        <line x1="472" y1="372" x2="472" y2="396" stroke="#2d333b" stroke-width="2" />
+        <line x1="464" y1="384" x2="480" y2="384" stroke="#2d333b" stroke-width="2" />
+      </g>
+    </g>
+  </g>
+
+  <!-- STEP 7: CABLING (X = 720, Y = 395) -->
+  <g id="step7-cabling">
+    <!-- Planetary Cabler Support Stanchion -->
+    <polygon points="668,368 678,364 678,404 668,408" fill="#5f6b78" class="strk-sm" />
+
+    <!-- Planetary Rotating Cage Rotor Head -->
+    <ellipse cx="688" cy="382" rx="16" ry="24" fill="#2d333b" stroke="#5b8fb9" stroke-width="2" />
+
+    <!-- 6 Planetary Supply Bobbins on Rotor (Animated Orbit) -->
+    <g class="anim-cabler">
+      <ellipse cx="688" cy="364" rx="4" ry="3" fill="#c9a227" stroke="#4a5360" stroke-width="1" />
+      <ellipse cx="688" cy="400" rx="4" ry="3" fill="#c9a227" stroke="#4a5360" stroke-width="1" />
+      <ellipse cx="676" cy="373" rx="4" ry="3" fill="#d97757" stroke="#4a5360" stroke-width="1" />
+      <ellipse cx="700" cy="373" rx="4" ry="3" fill="#d97757" stroke="#4a5360" stroke-width="1" />
+      <ellipse cx="676" cy="391" rx="4" ry="3" fill="#e0b838" stroke="#4a5360" stroke-width="1" />
+      <ellipse cx="700" cy="391" rx="4" ry="3" fill="#e0b838" stroke="#4a5360" stroke-width="1" />
+    </g>
+
+    <!-- Wire Strands Converging into Closing Die -->
+    <line x1="688" y1="364" x2="714" y2="382" stroke="#c9a227" stroke-width="1.2" />
+    <line x1="688" y1="400" x2="714" y2="382" stroke="#c9a227" stroke-width="1.2" />
+    <line x1="676" y1="373" x2="714" y2="382" stroke="#d97757" stroke-width="1.2" />
+    <line x1="700" y1="373" x2="714" y2="382" stroke="#d97757" stroke-width="1.2" />
+    <line x1="676" y1="391" x2="714" y2="382" stroke="#e0b838" stroke-width="1.2" />
+    <line x1="700" y1="391" x2="714" y2="382" stroke="#e0b838" stroke-width="1.2" />
+
+    <!-- Stranding Die / Twist Bushing -->
+    <polygon points="712,376 718,376 718,388 712,388" fill="#5f6b78" class="strk-sm" />
+
+    <!-- Twisted Multi-Strand Helical Cable -->
+    <path d="M 718 381 Q 724 378, 730 381 T 742 381" fill="none" stroke="#c9a227" stroke-width="2.8" />
+    <path d="M 718 383 Q 724 386, 730 383 T 742 383" fill="none" stroke="#d97757" stroke-width="2.2" />
+
+    <!-- Conduit Insertion and Forming Unit (Cable-in-Conduit Conductor - CICC) -->
+    <!-- Steel Conduit Tube Shell -->
+    <polygon points="742,374 766,374 760,392 736,392" fill="#a3aebb" class="strk-sm" />
+    <polygon points="736,392 760,392 760,398 736,398" fill="#5f6b78" class="strk-sm" />
+    <polygon points="760,392 766,374 766,380 760,398" fill="#4a5360" class="strk-sm" />
+
+    <!-- Conduit End Cross-Section Face showing Jacket and Central Cable Core -->
+    <ellipse cx="766" cy="382" rx="4" ry="7" fill="#2d333b" stroke="#4a5360" stroke-width="1.4" />
+    <circle cx="766" cy="382" r="2.2" fill="#c9a227" />
+  </g>
+
+  <!-- STEP 8: MAGNET WINDING (X = 1000, Y = 395) -->
+  <g id="step8-magnet-winding">
+    <!-- Rotary Table Winding Bed (Isometric Foundation) -->
+    <polygon points="1000,358 1046,372 1000,386 954,372" fill="#3f4752" class="strk-sm" />
+    <polygon points="954,372 1000,386 1000,394 954,380" fill="#2d333b" class="strk-sm" />
+    <polygon points="1000,386 1046,372 1046,380 1000,394" fill="#1f242b" class="strk-sm" />
+
+    <!-- Conductor Infeed Tensioner Guide Head -->
+    <rect x="946" y="378" width="16" height="8" rx="2" fill="#7c8a9a" class="strk-sm" />
+    <circle cx="952" cy="382" r="2" fill="#a3aebb" />
+    <circle cx="958" cy="382" r="2" fill="#a3aebb" />
+    <line x1="936" y1="382" x2="964" y2="382" stroke="#c9a227" stroke-width="2.5" />
+
+    <!-- LARGE D-SHAPED TOROIDAL FIELD (TF) COIL -->
+    <!-- Lower / Outer 3D Isometric Thickness Edge of D-Coil -->
+    <path d="M 972,348 L 972,354
+             C 1012,352 1044,368 1044,388
+             C 1044,408 1012,424 972,422
+             L 972,416
+             C 1008,418 1038,403 1038,385
+             C 1038,367 1008,352 972,348 Z"
+          fill="#9e7c18" class="strk-sm" />
+
+    <!-- Main Top Face of D-Shaped Winding Pack (Superconducting Gold) -->
+    <path d="M 972,346
+             L 972,416
+             C 1010,418 1040,402 1040,383
+             C 1040,364 1010,348 972,346 Z"
+          fill="#c9a227" class="strk" />
+
+    <!-- Inner Mandrel / Core of D-Coil (Central Window) -->
+    <path d="M 984,357
+             L 984,405
+             C 1005,406 1022,395 1022,382
+             C 1022,369 1005,358 984,357 Z"
+          fill="#38404a" class="strk-sm" />
+
+    <!-- Multiple Conduit Turn Lines on D-Coil -->
+    <path d="M 976,350 C 1008,352 1034,366 1034,383 C 1034,400 1008,414 976,413" fill="none" stroke="#ffd54f" stroke-width="1.2" />
+    <path d="M 980,354 C 1006,356 1028,368 1028,383 C 1028,397 1006,409 980,409" fill="none" stroke="#ffd54f" stroke-width="1.2" />
+
+    <!-- Radial Structural Reinforcement Plates / Casing Flanges -->
+    <line x1="972" y1="346" x2="984" y2="357" stroke="#5f6b78" stroke-width="2.5" />
+    <line x1="972" y1="416" x2="984" y2="405" stroke="#5f6b78" stroke-width="2.5" />
+    <line x1="1040" y1="383" x2="1022" y2="382" stroke="#5f6b78" stroke-width="2.5" />
+    <line x1="1026" y1="363" x2="1012" y2="368" stroke="#5f6b78" stroke-width="2" />
+    <line x1="1026" y1="403" x2="1012" y2="397" stroke="#5f6b78" stroke-width="2" />
+
+    <!-- Superconducting Energy Pulse (Animated Dash along the D-Loop) -->
+    <path class="anim-coil"
+          d="M 978,352 C 1009,354 1032,367 1032,383 C 1032,399 1009,411 978,411 L 978,352"
+          fill="none" stroke="#ffffff" stroke-width="2.2" stroke-dasharray="16 120" stroke-linecap="round" />
+  </g>
+
+  <!-- ==================== NUMBERED BADGES and LABELS ==================== -->
+  <g id="labels-and-badges">
+    <!-- ROW 1 LABELS -->
+
+    <!-- Step 1 Badge and Label -->
+    <g transform="translate(160, 196)">
+      <circle class="badge-circ" cx="0" cy="0" r="13" />
+      <text class="badge-num" x="0" y="0">1</text>
+      <text class="step-lbl" x="0" y="27">Alloy Melting</text>
+      <text class="step-prm" x="0" y="45">Arc or EB melting</text>
+    </g>
+
+    <!-- Step 2 Badge and Label -->
+    <g transform="translate(440, 196)">
+      <circle class="badge-circ" cx="0" cy="0" r="13" />
+      <text class="badge-num" x="0" y="0">2</text>
+      <text class="step-lbl" x="0" y="27">Homogenisation</text>
+      <text class="step-prm" x="0" y="45">long high-temperature soak</text>
+    </g>
+
+    <!-- Step 3 Badge and Label -->
+    <g transform="translate(720, 196)">
+      <circle class="badge-circ" cx="0" cy="0" r="13" />
+      <text class="badge-num" x="0" y="0">3</text>
+      <text class="step-lbl" x="0" y="27">Rod Making</text>
+      <text class="step-prm" x="0" y="45">Rolling to hex rods</text>
+    </g>
+
+    <!-- Step 4 Badge and Label -->
+    <g transform="translate(1000, 196)">
+      <circle class="badge-circ" cx="0" cy="0" r="13" />
+      <text class="badge-num" x="0" y="0">4</text>
+      <text class="step-lbl" x="0" y="27">Billet Assembly</text>
+      <text class="step-prm" x="0" y="45">Hex rods in Cu can</text>
+    </g>
+
+    <!-- ROW 2 LABELS -->
+
+    <!-- Step 5 Badge and Label -->
+    <g transform="translate(160, 446)">
+      <circle class="badge-circ" cx="0" cy="0" r="13" />
+      <text class="badge-num" x="0" y="0">5</text>
+      <text class="step-lbl" x="0" y="27">Hot Extrusion</text>
+      <text class="step-prm" x="0" y="45">heated billet through a die</text>
+    </g>
+
+    <!-- Step 6 Badge and Label -->
+    <g transform="translate(440, 446)">
+      <circle class="badge-circ" cx="0" cy="0" r="13" />
+      <text class="badge-num" x="0" y="0">6</text>
+      <text class="step-lbl" x="0" y="27">Wire Drawing</text>
+      <text class="step-prm" x="0" y="45">Multi-pass reduction</text>
+    </g>
+
+    <!-- Step 7 Badge and Label -->
+    <g transform="translate(720, 446)">
+      <circle class="badge-circ" cx="0" cy="0" r="13" />
+      <text class="badge-num" x="0" y="0">7</text>
+      <text class="step-lbl" x="0" y="27">Cabling</text>
+      <text class="step-prm" x="0" y="45">Cable-in-conduit</text>
+    </g>
+
+    <!-- Step 8 Badge and Label -->
+    <g transform="translate(1000, 446)">
+      <circle class="badge-circ" cx="0" cy="0" r="13" />
+      <text class="badge-num" x="0" y="0">8</text>
+      <text class="step-lbl" x="0" y="27">Magnet Winding</text>
+      <text class="step-prm" x="0" y="45">Toroidal field coil</text>
+    </g>
+  </g>
+</svg>

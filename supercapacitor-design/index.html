@@ -1,0 +1,2038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Carbon Supercapacitor Design : PI-GPR Discovery</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+
+<style>
+  :root {
+    --bg: #f5f5f7;
+    --card-bg: #ffffff;
+    --card-bg-subtle: #fbfbfd;
+    --card-border: rgba(0, 0, 0, 0.08);
+    --card-border-subtle: rgba(0, 0, 0, 0.04);
+    --text-primary: #1d1d1f;
+    --text-secondary: #6e6e73;
+    --text-tertiary: #86868b;
+    --accent: #d97757;
+    --accent-hover: #c46243;
+    --accent-subtle: rgba(217, 119, 87, 0.12);
+    --accent-glow: rgba(217, 119, 87, 0.25);
+    --blue: #0a84ff;
+    --blue-subtle: rgba(10, 132, 255, 0.12);
+    --green: #30d158;
+    --green-subtle: rgba(48, 209, 88, 0.14);
+    --amber: #ff9f0a;
+    --amber-subtle: rgba(255, 159, 10, 0.14);
+    --red: #ff453a;
+    --red-subtle: rgba(255, 69, 58, 0.14);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.03);
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 22px;
+    --input-bg: #f0f0f4;
+    --input-border: rgba(0, 0, 0, 0.08);
+    --input-focus-border: #d97757;
+    --pill-bg: #e5e5ea;
+    --pill-active-bg: #ffffff;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b0b0c;
+      --card-bg: #1c1c1e;
+      --card-bg-subtle: #252528;
+      --card-border: rgba(255, 255, 255, 0.09);
+      --card-border-subtle: rgba(255, 255, 255, 0.05);
+      --text-primary: #f5f5f7;
+      --text-secondary: #98989d;
+      --text-tertiary: #636366;
+      --accent: #d97757;
+      --accent-hover: #e58a6d;
+      --accent-subtle: rgba(217, 119, 87, 0.2);
+      --accent-glow: rgba(217, 119, 87, 0.35);
+      --blue: #0a84ff;
+      --blue-subtle: rgba(10, 132, 255, 0.2);
+      --green: #32d74b;
+      --green-subtle: rgba(50, 215, 75, 0.2);
+      --amber: #ffd60a;
+      --amber-subtle: rgba(255, 214, 10, 0.2);
+      --red: #ff453a;
+      --red-subtle: rgba(255, 69, 58, 0.22);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
+      --input-bg: #2c2c2e;
+      --input-border: rgba(255, 255, 255, 0.12);
+      --input-focus-border: #d97757;
+      --pill-bg: #2c2c2e;
+      --pill-active-bg: #3a3a3c;
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    background-color: var(--bg);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+  }
+
+  /* Top bar */
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(245, 245, 247, 0.85);
+    border-bottom: 1px solid var(--card-border);
+    transition: background 0.3s ease;
+  }
+  @media (prefers-color-scheme: dark) {
+    .top-nav { background: rgba(11, 11, 12, 0.82); }
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+  .back-link:hover { opacity: 0.85; transform: translateX(-2px); }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    color: var(--text-secondary);
+  }
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--amber);
+    box-shadow: 0 0 0 2px var(--amber-subtle);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+  .status-dot.connected {
+    background: var(--green);
+    box-shadow: 0 0 0 3px var(--green-subtle);
+  }
+  .status-dot.pulsing {
+    animation: statusPulse 1.8s infinite;
+  }
+  @keyframes statusPulse {
+    0% { transform: scale(0.95); opacity: 0.7; }
+    50% { transform: scale(1.15); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.7; }
+  }
+
+  /* Page Wrapper */
+  .page-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+  }
+
+  /* Hero */
+  .hero {
+    margin-bottom: 32px;
+  }
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  h1 {
+    font-size: clamp(32px, 4.5vw, 54px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+  h1 span.accent-text {
+    color: var(--accent);
+  }
+  .hero-desc {
+    font-size: clamp(15px, 1.8vw, 17px);
+    color: var(--text-secondary);
+    max-width: 780px;
+    line-height: 1.5;
+  }
+
+  /* Segmented Control Pill */
+  .segmented-wrap {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .segmented-control {
+    display: inline-flex;
+    background: var(--pill-bg);
+    padding: 4px;
+    border-radius: 999px;
+    gap: 3px;
+    border: 1px solid var(--card-border);
+  }
+  .segmented-btn {
+    appearance: none;
+    background: transparent;
+    border: none;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    padding: 8px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    white-space: nowrap;
+  }
+  .segmented-btn:hover:not(.active) {
+    color: var(--text-primary);
+  }
+  .segmented-btn.active {
+    background: var(--pill-active-bg);
+    color: var(--text-primary);
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Server Wake banner */
+  .banner {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    display: none;
+    box-shadow: var(--shadow-sm);
+  }
+  .banner-flex {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .banner-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--accent-subtle);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .banner-text {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+  .banner-text strong {
+    color: var(--text-primary);
+  }
+
+  /* Notice Callout Box */
+  .model-notice {
+    background: var(--card-bg-subtle);
+    border: 1px solid var(--card-border);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+  }
+  .model-notice strong {
+    color: var(--text-primary);
+  }
+
+  /* Preset Chips */
+  .presets-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .presets-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-tertiary);
+    margin-right: 4px;
+  }
+  .preset-chip {
+    appearance: none;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .preset-chip:hover {
+    border-color: var(--accent);
+    color: var(--text-primary);
+    background: var(--accent-subtle);
+    transform: translateY(-1px);
+  }
+  .preset-chip.random-btn {
+    color: var(--accent);
+    font-weight: 600;
+    border-color: var(--accent-glow);
+  }
+
+  /* Layout Grid */
+  .main-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 480px) 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  @media (max-width: 960px) {
+    .main-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Cards */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 24px;
+  }
+  .card:last-child {
+    margin-bottom: 0;
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .badge-active {
+    background: var(--accent-subtle);
+    color: var(--accent);
+  }
+  .badge-neutral {
+    background: var(--input-bg);
+    color: var(--text-tertiary);
+  }
+  .badge-safe {
+    background: var(--green-subtle);
+    color: var(--green);
+  }
+  .badge-warn {
+    background: var(--amber-subtle);
+    color: var(--amber);
+  }
+
+  /* Form Fields */
+  .field {
+    display: block;
+    margin-bottom: 16px;
+  }
+  .field:last-child {
+    margin-bottom: 0;
+  }
+  .field-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+    gap: 8px;
+  }
+  .field-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .field-active-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
+  }
+  .field-val {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .field-desc {
+    font-size: 11.5px;
+    color: var(--text-tertiary);
+    margin-top: 3px;
+  }
+
+  /* Sliders & Inputs */
+  input[type="range"] {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--input-bg);
+    outline: none;
+    appearance: none;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+    transition: transform 0.1s ease;
+  }
+  input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+  }
+
+  select, input[type="number"], input[type="text"] {
+    width: 100%;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  select:focus, input:focus {
+    border-color: var(--input-focus-border);
+    box-shadow: 0 0 0 3px var(--accent-subtle);
+  }
+
+  .two-col-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  /* Primary Action Button */
+  .btn-primary {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    background: var(--accent);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 14px 24px;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 14px var(--accent-glow);
+    transition: background 0.15s ease, transform 0.1s ease, opacity 0.15s ease;
+    margin-top: 10px;
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+  }
+  .btn-primary:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+  .btn-primary:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Live Physical Consistency Bar */
+  .consistency-card {
+    background: var(--card-bg-subtle);
+    border: 1px solid var(--card-border-subtle);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    margin-top: 16px;
+  }
+  .consistency-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .metric-bar-wrap {
+    height: 6px;
+    background: var(--input-bg);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .metric-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 999px;
+    transition: width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .consistency-footnote {
+    font-size: 11.5px;
+    color: var(--text-tertiary);
+    line-height: 1.4;
+  }
+
+  /* Results Display */
+  .hero-metric-card {
+    background: linear-gradient(180deg, var(--card-bg), var(--card-bg-subtle));
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-metric-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+  }
+  .hero-number-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .hero-number {
+    font-family: "JetBrains Mono", -apple-system, monospace;
+    font-size: clamp(48px, 6vw, 68px);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--accent);
+    letter-spacing: -0.03em;
+  }
+  .hero-unit {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+  .uncertainty-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13.5px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: var(--accent-subtle);
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--card-border);
+  }
+  .stat-box {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+  }
+  .stat-box-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-tertiary);
+    margin-bottom: 4px;
+  }
+  .stat-box-val {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .stat-box-sub {
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+
+  /* Shimmer / Loading State */
+  .skeleton {
+    position: relative;
+    overflow: hidden;
+  }
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0,
+      rgba(255, 255, 255, 0.15) 20%,
+      rgba(255, 255, 255, 0.3) 60%,
+      rgba(255, 255, 255, 0)
+    );
+    animation: shimmer 1.6s infinite;
+  }
+  @keyframes shimmer { 100% { transform: translateX(100%); } }
+
+  /* Ragone Scale Bar */
+  .ragone-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 24px;
+  }
+  .ragone-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .ragone-bar {
+    position: relative;
+    height: 12px;
+    background: var(--input-bg);
+    border-radius: 6px;
+    overflow: visible;
+    margin: 24px 0 16px;
+  }
+  .ragone-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--blue));
+    border-radius: 6px;
+    transition: width 0.4s ease;
+  }
+  .ragone-marker {
+    position: absolute;
+    top: -20px;
+    transform: translateX(-50%);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .ragone-ticks {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10.5px;
+    font-family: "JetBrains Mono", monospace;
+    color: var(--text-tertiary);
+  }
+
+  /* Plotly chart container */
+  .chart-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 24px;
+  }
+  .chart-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .chart-sub {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-bottom: 14px;
+  }
+  .chart-div {
+    width: 100%;
+    height: 280px;
+  }
+
+  /* Inverse Results Table */
+  .results-table-wrap {
+    overflow-x: auto;
+    margin-top: 14px;
+  }
+  .styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+  .styled-table th {
+    text-align: left;
+    padding: 10px 12px;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-tertiary);
+    border-bottom: 1px solid var(--card-border);
+  }
+  .styled-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--card-border-subtle);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+  }
+  .styled-table tr:hover td {
+    background: var(--card-bg-subtle);
+  }
+  .btn-table-action {
+    appearance: none;
+    background: var(--accent-subtle);
+    color: var(--accent);
+    border: none;
+    font-family: inherit;
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .btn-table-action:hover {
+    background: var(--accent);
+    color: #ffffff;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--card-border);
+    font-size: 12.5px;
+    color: var(--text-tertiary);
+    line-height: 1.6;
+    text-align: center;
+  }
+  footer strong {
+    color: var(--text-secondary);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, ::after, ::before {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+  /* Mobile overflow fixes: let grid children shrink, let tabs scroll */
+  .main-grid > * { min-width: 0; }
+  @media (max-width: 960px) { .main-grid { grid-template-columns: minmax(0, 1fr); } }
+  .segmented-control { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .segmented-control::-webkit-scrollbar { display: none; }
+  .segmented-btn { flex-shrink: 0; }
+  @media (max-width: 560px) { .two-col-inputs { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- Top Navigation -->
+<nav class="top-nav" aria-label="Main Navigation">
+  <div class="nav-inner">
+    <a class="back-link" href="../machine-learning/">&larr; Back to Machine Learning</a>
+    <div class="status-pill" id="status-pill" title="Backend connection status">
+      <div class="status-dot pulsing" id="status-dot"></div>
+      <span id="status-text">Connecting to server...</span>
+    </div>
+  </div>
+</nav>
+
+<!-- Page Content -->
+<main class="page-wrap">
+  <!-- Hero Section -->
+  <header class="hero">
+    <span class="eyebrow">Physics-Informed Machine Learning : Materials Discovery</span>
+    <h1>Carbon Supercapacitor <span class="accent-text">Design</span></h1>
+    <p class="hero-desc">
+      Predict specific capacitance from physicochemical descriptors via PI-GPR, or identify electrode nanostructures for target electrochemical performance.
+    </p>
+  </header>
+
+  <!-- Server Wake Notice Banner -->
+  <aside class="banner" id="wake-banner" role="status" aria-live="polite">
+    <div class="banner-flex">
+      <div class="banner-spinner"></div>
+      <div class="banner-text" id="wake-banner-text">
+        <strong>Waking up backend server on Render free tier.</strong> This may take 30 to 60 seconds on initial cold start. Subsequent predictions respond in sub-second time.
+      </div>
+    </div>
+  </aside>
+
+  <!-- Segmented Control Navigation -->
+  <div class="segmented-wrap">
+    <div class="segmented-control" role="tablist" aria-label="Tool modes">
+      <button class="segmented-btn active" role="tab" aria-selected="true" id="tab-btn-forward" onclick="switchView('forward')">Forward Prediction</button>
+      <button class="segmented-btn" role="tab" aria-selected="false" id="tab-btn-inverse" onclick="switchView('inverse')">Inverse Design</button>
+      <button class="segmented-btn" role="tab" aria-selected="false" id="tab-btn-diagnostics" onclick="switchView('diagnostics')">Model Performance &amp; SHAP</button>
+    </div>
+  </div>
+
+  <!-- VIEW 1: Forward Prediction -->
+  <section id="view-forward" role="tabpanel" aria-labelledby="tab-btn-forward">
+    <!-- Presets Bar -->
+    <div class="presets-bar">
+      <span class="presets-label">Archetypes:</span>
+      <button type="button" class="preset-chip" onclick="applyPreset('standard_ac')">Standard Activated Carbon (1200 m²/g)</button>
+      <button type="button" class="preset-chip" onclick="applyPreset('high_ssa')">Ultrahigh-SSA Carbon (2400 m²/g)</button>
+      <button type="button" class="preset-chip" onclick="applyPreset('n_graphene')">N-Doped Graphene Mesh</button>
+      <button type="button" class="preset-chip" onclick="applyPreset('aerogel')">Mesoporous Carbon Aerogel</button>
+      <button type="button" class="preset-chip" onclick="applyPreset('ionic')">Ionic Liquid High-Voltage Cell</button>
+      <button type="button" class="preset-chip random-btn" onclick="randomizeInputs()">Roll Random</button>
+    </div>
+
+    <div class="main-grid">
+      <!-- Input Column -->
+      <div class="col-inputs">
+        <!-- Deployed Model Input Notice -->
+        <div class="model-notice">
+          <strong>Current deployed model:</strong> in live testing, predictions respond only to total specific surface area (SSA). The other inputs are sent to the server but do not currently change the result.
+        </div>
+
+        <!-- Card 1: Nanostructure -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Electrode Nanostructure</h2>
+            <span class="badge badge-neutral">SSA Active Only</span>
+          </div>
+
+          <label class="field" for="fwd-SSA">
+            <div class="field-header">
+              <span class="field-name"><span class="field-active-dot"></span>SSA : Total BET Surface Area <span class="badge badge-active" style="font-size: 10px; margin-left: 4px;">Active input</span></span>
+              <span class="field-val" id="fwd-SSA-val">1200 m²/g</span>
+            </div>
+            <input type="range" id="fwd-SSA" min="100" max="3000" step="10" value="1200" oninput="onSSAChange(this.value)">
+            <div class="field-desc">Accessible surface area. Pristine graphene theoretical upper limit is 2630 m²/g.</div>
+          </label>
+
+          <label class="field" for="fwd-SSA_micro">
+            <div class="field-header">
+              <span class="field-name">SSA_micro : Micropore Surface Area <span class="badge badge-neutral" style="font-size: 10px; margin-left: 4px;">Not used by the deployed model</span></span>
+              <span class="field-val" id="fwd-SSA_micro-val">600 m²/g</span>
+            </div>
+            <input type="range" id="fwd-SSA_micro" min="0" max="1200" step="10" value="600" oninput="onSSAMicroChange(this.value)">
+            <div class="field-desc">Surface area in pores &lt; 2 nm. Physically bounded by SSA_micro &le; SSA.</div>
+          </label>
+
+          <div class="two-col-inputs">
+            <label class="field" for="fwd-PV">
+              <div class="field-header">
+                <span class="field-name">Total PV <span class="badge badge-neutral" style="font-size: 10px; margin-left: 4px;">Not used by the deployed model</span></span>
+                <span class="field-val" id="fwd-PV-val">0.80 cm³/g</span>
+              </div>
+              <input type="range" id="fwd-PV" min="0.1" max="3.5" step="0.05" value="0.80" oninput="onPVChange(this.value)">
+            </label>
+
+            <label class="field" for="fwd-PV_micro">
+              <div class="field-header">
+                <span class="field-name">Micro PV <span class="badge badge-neutral" style="font-size: 10px; margin-left: 4px;">Not used by the deployed model</span></span>
+                <span class="field-val" id="fwd-PV_micro-val">0.30 cm³/g</span>
+              </div>
+              <input type="range" id="fwd-PV_micro" min="0" max="0.80" step="0.02" value="0.30" oninput="onPVMicroChange(this.value)">
+            </label>
+          </div>
+
+          <div class="two-col-inputs">
+            <label class="field" for="fwd-pore_size">
+              <div class="field-header">
+                <span class="field-name">Pore Width <span class="badge badge-neutral" style="font-size: 10px; margin-left: 4px;">Not used by the deployed model</span></span>
+                <span class="field-val" id="fwd-pore_size-val">2.0 nm</span>
+              </div>
+              <input type="range" id="fwd-pore_size" min="0.5" max="8.0" step="0.1" value="2.0" oninput="updateValDisplay('fwd-pore_size', this.value, ' nm')">
+            </label>
+
+            <label class="field" for="fwd-ID_IG">
+              <div class="field-header">
+                <span class="field-name">I_D / I_G Ratio <span class="badge badge-neutral" style="font-size: 10px; margin-left: 4px;">Not used by the deployed model</span></span>
+                <span class="field-val" id="fwd-ID_IG-val">1.00</span>
+              </div>
+              <input type="range" id="fwd-ID_IG" min="0.5" max="1.6" step="0.02" value="1.00" oninput="updateValDisplay('fwd-ID_IG', parseFloat(this.value).toFixed(2), '')">
+            </label>
+          </div>
+
+          <div class="two-col-inputs">
+            <label class="field" for="fwd-N_content">
+              <div class="field-header">
+                <span class="field-name">N Content <span class="badge badge-neutral" style="font-size: 10px; margin-left: 4px;">Not used by the deployed model</span></span>
+                <span class="field-val" id="fwd-N_content-val">3.0 wt%</span>
+              </div>
+              <input type="range" id="fwd-N_content" min="0" max="15" step="0.2" value="3.0" oninput="updateValDisplay('fwd-N_content', parseFloat(this.value).toFixed(1), ' wt%')">
+            </label>
+
+            <label class="field" for="fwd-O_content">
+              <div class="field-header">
+                <span class="field-name">O Content <span class="badge badge-neutral" style="font-size: 10px; margin-left: 4px;">Not used by the deployed model</span></span>
+                <span class="field-val" id="fwd-O_content-val">5.0 wt%</span>
+              </div>
+              <input type="range" id="fwd-O_content" min="0" max="20" step="0.5" value="5.0" oninput="updateValDisplay('fwd-O_content', parseFloat(this.value).toFixed(1), ' wt%')">
+            </label>
+          </div>
+
+          <!-- Structural Consistency Diagnostic -->
+          <div class="consistency-card">
+            <div class="consistency-header">
+              <span>Hydraulic Mean Pore Size (4 &times; PV / SSA)</span>
+              <strong id="calc-pore-size">2.67 nm</strong>
+            </div>
+            <div class="metric-bar-wrap">
+              <div class="metric-bar-fill" id="micro-area-ratio-bar" style="width: 50%;"></div>
+            </div>
+            <div class="consistency-footnote" id="micro-area-ratio-text">
+              Micropore fraction: 50% of total area. Mechanically and thermodynamically consistent.
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Operating Conditions -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Operating &amp; Cell Parameters</h2>
+            <span class="badge badge-neutral">Not Used by Deployed Model</span>
+          </div>
+
+          <div class="two-col-inputs">
+            <label class="field" for="fwd-electrolyte">
+              <span class="field-name" style="margin-bottom: 6px;">Electrolyte System <span class="badge badge-neutral" style="font-size: 10px; margin-left: 4px;">Not used by the deployed model</span></span>
+              <select id="fwd-electrolyte" onchange="onElectrolyteChange(this.value)">
+                <option value="KOH">KOH (Aqueous Alkaline, 1.0 V)</option>
+                <option value="H2SO4">H₂SO₄ (Aqueous Acidic, 1.0 V)</option>
+                <option value="Na2SO4">Na₂SO₄ (Neutral Aqueous, 1.6 V)</option>
+                <option value="organic">Organic (TEABF₄ / ACN, 2.7 V)</option>
+                <option value="ionic_liquid">Ionic Liquid (EMIM-BF₄, 3.2 V)</option>
+              </select>
+            </label>
+
+            <label class="field" for="fwd-carbon_structure">
+              <span class="field-name" style="margin-bottom: 6px;">Carbon Morphology <span class="badge badge-neutral" style="font-size: 10px; margin-left: 4px;">Not used by the deployed model</span></span>
+              <select id="fwd-carbon_structure">
+                <option value="activated_carbon">Activated Carbon</option>
+                <option value="graphene">Graphene / Reduced GO</option>
+                <option value="CNT">Carbon Nanotubes (CNT)</option>
+                <option value="carbon_aerogel">Carbon Aerogel</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="two-col-inputs">
+            <label class="field" for="fwd-potential_window">
+              <div class="field-header">
+                <span class="field-name">Voltage Window (&Delta;V) <span class="badge badge-neutral" style="font-size: 10px; margin-left: 4px;">Not used by the deployed model</span></span>
+                <span class="field-val" id="fwd-potential_window-val">1.0 V</span>
+              </div>
+              <input type="range" id="fwd-potential_window" min="0.6" max="3.5" step="0.1" value="1.0" oninput="onPotentialWindowChange(this.value)">
+              <div class="field-desc" id="voltage-desc">Aqueous window limited to ~1.23 V by water electrolysis.</div>
+            </label>
+
+            <label class="field" for="fwd-current_density">
+              <div class="field-header">
+                <span class="field-name">Current Density <span class="badge badge-neutral" style="font-size: 10px; margin-left: 4px;">Not used by the deployed model</span></span>
+                <span class="field-val" id="fwd-current_density-val">1.0 A/g</span>
+              </div>
+              <input type="range" id="fwd-current_density" min="0.1" max="20" step="0.2" value="1.0" oninput="updateValDisplay('fwd-current_density', parseFloat(this.value).toFixed(1), ' A/g')">
+              <div class="field-desc">Rate capability test current.</div>
+            </label>
+          </div>
+
+          <label class="field" for="fwd-test_method" style="margin-top: 10px;">
+            <span class="field-name" style="margin-bottom: 6px;">Measurement Technique <span class="badge badge-neutral" style="font-size: 10px; margin-left: 4px;">Not used by the deployed model</span></span>
+            <select id="fwd-test_method">
+              <option value="GCD">Galvanostatic Charge-Discharge (GCD, Standard)</option>
+              <option value="CV">Cyclic Voltammetry (CV)</option>
+            </select>
+          </label>
+
+          <button type="button" class="btn-primary" id="btn-predict" onclick="runForwardPrediction()">
+            <span>Calculate Capacitance</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Results Column -->
+      <div class="col-results">
+        <!-- Hero Capacitance Metric Card -->
+        <div class="hero-metric-card" id="result-card">
+          <div class="hero-metric-label">Predicted Specific Capacitance</div>
+          <div class="hero-number-wrap">
+            <div class="hero-number" id="res-c-val">--</div>
+            <div class="hero-unit">F/g</div>
+          </div>
+          <div class="uncertainty-badge" id="res-c-uncert">--</div>
+
+          <div class="stat-grid">
+            <div class="stat-box">
+              <div class="stat-box-label">95% Confidence Interval</div>
+              <div class="stat-box-val" id="res-c-pi">--</div>
+              <div class="stat-box-sub">Bounded at physical C &ge; 0</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-box-label">Gravimetric Energy</div>
+              <div class="stat-box-val" id="res-energy">--</div>
+              <div class="stat-box-sub">E = &frac12; C V&sup2; / 3.6</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-box-label">Surrogate Confidence</div>
+              <div class="stat-box-val" id="res-conf-tier">--</div>
+              <div class="stat-box-sub" id="res-conf-sub">--</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ragone Energy Storage Benchmark -->
+        <div class="ragone-card">
+          <div class="ragone-title">
+            <span>Electrochemical Energy Density Benchmark</span>
+            <span style="font-size: 12px; color: var(--accent); font-weight: 500;" id="ragone-e-label">--</span>
+          </div>
+          <div class="ragone-bar">
+            <div class="ragone-fill" id="ragone-bar-fill" style="width: 0%;"></div>
+            <div class="ragone-marker" id="ragone-marker" style="left: 0%; display: none;">Current Cell</div>
+          </div>
+          <div class="ragone-ticks">
+            <span>Commercial EDLC (5 Wh/kg)</span>
+            <span>High-Energy Carbon (30 Wh/kg)</span>
+            <span>Lead-Acid (40 Wh/kg)</span>
+            <span>Li-Ion (180 Wh/kg)</span>
+          </div>
+        </div>
+
+        <!-- Chart 2: Model Prediction and Uncertainty Normal Distribution -->
+        <div class="chart-card">
+          <div class="chart-title">Model prediction and uncertainty</div>
+          <div class="chart-sub">Normal distribution curve (mean = prediction, sigma = uncertainty) truncated at 0 F/g</div>
+          <div id="chart-dist" class="chart-div"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIEW 2: Inverse Design -->
+  <section id="view-inverse" style="display: none;" role="tabpanel" aria-labelledby="tab-btn-inverse">
+    <div class="main-grid">
+      <!-- Inverse Inputs -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Inverse Materials Discovery</h2>
+          <span class="badge badge-active">Bayesian Optimization</span>
+        </div>
+
+        <!-- Inverse Design Notice -->
+        <div class="model-notice">
+          <strong>Model notice:</strong> Because the deployed model depends only on SSA, suggested candidates effectively differ only in SSA, and other parameters in the results should not be interpreted as optimised.
+        </div>
+
+        <p style="font-size: 13.5px; color: var(--text-secondary); margin-bottom: 18px; line-height: 1.5;">
+          Specify target electrochemical goals. The surrogate optimization algorithm utilizes Expected Improvement over the Gaussian Process manifold to identify structural parameters.
+        </p>
+
+        <label class="field" for="inv-target">
+          <div class="field-header">
+            <span class="field-name">Target Capacitance</span>
+            <span class="field-val" id="inv-target-val">300 F/g</span>
+          </div>
+          <input type="range" id="inv-target" min="80" max="600" step="10" value="300" oninput="updateValDisplay('inv-target', this.value, ' F/g')">
+          <div class="field-desc">Targets above 350 F/g require high pseudocapacitance / heteroatom doping.</div>
+        </label>
+
+        <div class="two-col-inputs">
+          <label class="field" for="inv-electrolyte">
+            <span class="field-name" style="margin-bottom: 6px;">Electrolyte System</span>
+            <select id="inv-electrolyte">
+              <option value="KOH">KOH (Aqueous Alkaline)</option>
+              <option value="H2SO4">H₂SO₄ (Aqueous Acidic)</option>
+              <option value="Na2SO4">Na₂SO₄ (Neutral Aqueous)</option>
+              <option value="organic">Organic (TEABF₄ / ACN)</option>
+              <option value="ionic_liquid">Ionic Liquid (EMIM-BF₄)</option>
+            </select>
+          </label>
+
+          <label class="field" for="inv-carbon_structure">
+            <span class="field-name" style="margin-bottom: 6px;">Carbon Structure</span>
+            <select id="inv-carbon_structure">
+              <option value="activated_carbon">Activated Carbon</option>
+              <option value="graphene">Graphene / RGO</option>
+              <option value="CNT">Carbon Nanotubes</option>
+              <option value="carbon_aerogel">Carbon Aerogel</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="two-col-inputs">
+          <label class="field" for="inv-test_method">
+            <span class="field-name" style="margin-bottom: 6px;">Test Protocol</span>
+            <select id="inv-test_method">
+              <option value="GCD">GCD (Charge-Discharge)</option>
+              <option value="CV">Cyclic Voltammetry</option>
+            </select>
+          </label>
+
+          <label class="field" for="inv-n">
+            <span class="field-name" style="margin-bottom: 6px;">Candidate Count</span>
+            <select id="inv-n">
+              <option value="3">3 Candidates</option>
+              <option value="5" selected>5 Candidates</option>
+              <option value="8">8 Candidates</option>
+            </select>
+          </label>
+        </div>
+
+        <button type="button" class="btn-primary" id="btn-inverse" onclick="runInverseOptimization()">
+          <span>Generate Optimal Material Specifications</span>
+        </button>
+
+        <div id="inv-error-msg" style="color: var(--red); font-size: 13px; margin-top: 10px; display: none;"></div>
+      </div>
+
+      <!-- Inverse Results -->
+      <div class="card" style="min-height: 400px;">
+        <div class="card-header">
+          <h2 class="card-title">Synthesizable Candidate Archetypes</h2>
+          <span class="badge badge-neutral" id="inv-results-count">Ready to optimize</span>
+        </div>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.45;">
+          Generated via acquisition function maximization over the PI-GPR surrogate. Because the deployed model depends only on SSA, suggested candidates effectively differ only in SSA, and other parameters in the results should not be interpreted as optimised. Physical constraints enforced: SSA_micro &le; SSA, PV_micro &le; PV, pore size &ge; 0.5 nm.
+        </p>
+
+        <div id="inv-results-container">
+          <div style="text-align: center; padding: 48px 16px; color: var(--text-tertiary);">
+            Select your design target and click "Generate Optimal Material Specifications" to run Bayesian inverse discovery.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIEW 3: Diagnostics & SHAP -->
+  <section id="view-diagnostics" style="display: none;" role="tabpanel" aria-labelledby="tab-btn-diagnostics">
+    <div class="main-grid">
+      <!-- Methodology & Honest Metrics -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Methodology &amp; Metrological Integrity</h2>
+          <span class="badge badge-active">Evaluation Benchmarks</span>
+        </div>
+        <div style="font-size: 13.5px; color: var(--text-secondary); line-height: 1.6;">
+          <div class="model-notice">
+            <strong>Current deployed model:</strong> in live testing, predictions respond only to total specific surface area (SSA). The other inputs are sent to the server but do not currently change the result.
+          </div>
+
+          <p style="margin-bottom: 12px;">
+            <strong>Training Dataset:</strong> 558 carbon electrode entries from the literature (compiled from activated carbon, graphene, and porous framework studies).
+          </p>
+          <p style="margin-bottom: 12px;">
+            <strong>Surrogate Model Architecture:</strong> Physics-Informed Gaussian Process Regression (PI-GPR). The GPR covariance kernel captures electrostatic double-layer capacitance scaling with specific surface area while calibrating epistemic uncertainty.
+          </p>
+
+          <div style="background: var(--card-bg-subtle); padding: 14px 16px; border-radius: var(--radius-sm); border: 1px solid var(--card-border-subtle); margin-bottom: 14px;">
+            <div style="font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 10px;">Offline Evaluation Metrics (80/20 Test Split)</div>
+            
+            <div style="margin-bottom: 12px;">
+              <div style="font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">PI-GPR Model</div>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-family: 'JetBrains Mono', monospace;">
+                <div><small style="color:var(--text-tertiary); display:block;">R&sup2;</small><strong>0.50</strong></div>
+                <div><small style="color:var(--text-tertiary); display:block;">RMSE</small><strong>73 F/g</strong></div>
+                <div><small style="color:var(--text-tertiary); display:block;">95% Coverage</small><strong>95.5%</strong></div>
+              </div>
+            </div>
+
+            <div style="padding-top: 10px; border-top: 1px solid var(--card-border-subtle);">
+              <div style="font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Gradient Boosting Benchmark</div>
+              <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-family: 'JetBrains Mono', monospace;">
+                <div><small style="color:var(--text-tertiary); display:block;">R&sup2;</small><strong>0.57</strong></div>
+                <div><small style="color:var(--text-tertiary); display:block;">RMSE</small><strong>68 F/g</strong></div>
+              </div>
+            </div>
+          </div>
+
+          <p style="font-size: 12.5px; color: var(--text-tertiary);">
+            <strong>Metrological Note:</strong> Literature supercapacitor data inherently exhibits substantial variance due to differences in active mass loading (mg/cm&sup2;), binder content (PTFE vs PVDF), and test cell architecture (three-electrode vs symmetric two-electrode coin cells). The uncertainty bands (&plusmn;109 F/g) reflect this scatter.
+          </p>
+        </div>
+      </div>
+
+      <!-- SHAP Chart -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Feature importance of the offline Gradient Boosting benchmark (not the deployed model)</h2>
+          <span class="badge badge-neutral">Offline Benchmark</span>
+        </div>
+        <div class="chart-sub">Feature importance (mean |SHAP|) of the offline Gradient Boosting benchmark, carried over from an earlier analysis and not recomputed for the deployed model.</div>
+        <div id="chart-shap" style="width: 100%; height: 380px;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      Predictions are model estimates, not physical measurements. Experimental synthesis and electrochemical validation remain necessary.
+    </p>
+    <p style="margin-top: 4px;">
+      Physics-Informed Gaussian Process Regression surrogate trained on literature supercapacitor datasets. Backend service hosted on Render.
+    </p>
+  </footer>
+</main>
+
+<script>
+const API_BASE = "https://ml-project-sfos.onrender.com";
+let apiConnected = false;
+let currentPrediction = null;
+let currentUncertainty = null;
+
+// Color palette matching Apple-quality dark/light mode
+const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+const THEME = {
+  accent: "#d97757",
+  accentSubtle: "rgba(217, 119, 87, 0.25)",
+  blue: "#0a84ff",
+  gridColor: isDark ? "rgba(255, 255, 255, 0.07)" : "rgba(0, 0, 0, 0.06)",
+  textColor: isDark ? "#98989d" : "#6e6e73",
+  paperBg: "transparent",
+  plotBg: "transparent"
+};
+
+const PLOT_BASE_LAYOUT = {
+  paper_bgcolor: THEME.paperBg,
+  plot_bgcolor: THEME.plotBg,
+  font: { family: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif', size: 11, color: THEME.textColor },
+  margin: { l: 48, r: 16, t: 16, b: 40 },
+  autosize: true
+};
+const PLOT_CONFIG = { displayModeBar: false, responsive: true };
+
+// Safe element helper
+const $ = id => document.getElementById(id);
+
+// -------------------------------------------------------------
+// Server Health Check with Retry and User Feedback
+// -------------------------------------------------------------
+async function initServerConnection() {
+  const dot = $('status-dot');
+  const text = $('status-text');
+  const banner = $('wake-banner');
+
+  let attempts = 0;
+  const maxAttempts = 5;
+
+  async function tryPing() {
+    attempts++;
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 12000);
+      const res = await fetch(`${API_BASE}/supercap/health`, { signal: controller.signal });
+      clearTimeout(timeoutId);
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data.status === 'ok') {
+          apiConnected = true;
+          dot.className = 'status-dot connected';
+          text.textContent = 'Server Online : Model Ready';
+          banner.style.display = 'none';
+          return true;
+        }
+      }
+    } catch (e) {
+      // server still spinning up
+    }
+
+    if (attempts < maxAttempts) {
+      banner.style.display = 'block';
+      dot.className = 'status-dot pulsing';
+      text.textContent = `Server Waking Up (Attempt ${attempts} of ${maxAttempts})...`;
+      setTimeout(tryPing, 5000);
+    } else {
+      dot.className = 'status-dot';
+      dot.style.background = 'var(--amber)';
+      text.textContent = 'Server Busy : Standby';
+      banner.style.display = 'block';
+      $('wake-banner-text').innerHTML = '<strong>Server response delayed.</strong> Render free-tier cold start may take up to 60 seconds. You can still initiate predictions; they will queue automatically.';
+    }
+    return false;
+  }
+
+  await tryPing();
+}
+
+// -------------------------------------------------------------
+// Tab Switching
+// -------------------------------------------------------------
+function switchView(tab) {
+  const views = ['forward', 'inverse', 'diagnostics'];
+  views.forEach(v => {
+    const el = $(`view-${v}`);
+    const btn = $(`tab-btn-${v}`);
+    if (v === tab) {
+      el.style.display = 'block';
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+    } else {
+      el.style.display = 'none';
+      btn.classList.remove('active');
+      btn.setAttribute('aria-selected', 'false');
+    }
+  });
+
+  if (tab === 'forward') {
+    setTimeout(() => {
+      
+      Plotly.Plots.resize('chart-dist');
+    }, 50);
+  } else if (tab === 'diagnostics') {
+    setTimeout(() => {
+      renderSHAPChart();
+    }, 50);
+  }
+}
+
+// -------------------------------------------------------------
+// Interactive Constraint Enforcement and Slider Updates
+// -------------------------------------------------------------
+function updateValDisplay(id, val, unit) {
+  const el = $(`${id}-val`);
+  if (el) el.textContent = `${val}${unit}`;
+  updateConsistencyMetrics();
+}
+
+function onSSAChange(val) {
+  const ssa = parseFloat(val);
+  $('fwd-SSA-val').textContent = `${Math.round(ssa)} m²/g`;
+
+  // Micropore area cannot exceed total area
+  const microSlider = $('fwd-SSA_micro');
+  microSlider.max = ssa;
+  if (parseFloat(microSlider.value) > ssa) {
+    microSlider.value = ssa;
+    $('fwd-SSA_micro-val').textContent = `${Math.round(ssa)} m²/g`;
+  }
+  updateConsistencyMetrics();
+}
+
+function onSSAMicroChange(val) {
+  const ssa = parseFloat($('fwd-SSA').value);
+  let micro = parseFloat(val);
+  if (micro > ssa) {
+    micro = ssa;
+    $('fwd-SSA_micro').value = ssa;
+  }
+  $('fwd-SSA_micro-val').textContent = `${Math.round(micro)} m²/g`;
+  updateConsistencyMetrics();
+}
+
+function onPVChange(val) {
+  const pv = parseFloat(val);
+  $('fwd-PV-val').textContent = `${pv.toFixed(2)} cm³/g`;
+
+  // Micropore volume cannot exceed total volume
+  const pvMicroSlider = $('fwd-PV_micro');
+  pvMicroSlider.max = pv;
+  if (parseFloat(pvMicroSlider.value) > pv) {
+    pvMicroSlider.value = pv;
+    $('fwd-PV_micro-val').textContent = `${pv.toFixed(2)} cm³/g`;
+  }
+  updateConsistencyMetrics();
+}
+
+function onPVMicroChange(val) {
+  const pv = parseFloat($('fwd-PV').value);
+  let micro = parseFloat(val);
+  if (micro > pv) {
+    micro = pv;
+    $('fwd-PV_micro').value = pv;
+  }
+  $('fwd-PV_micro-val').textContent = `${micro.toFixed(2)} cm³/g`;
+  updateConsistencyMetrics();
+}
+
+function updateConsistencyMetrics() {
+  const ssa = parseFloat($('fwd-SSA').value) || 1200;
+  const ssaMicro = parseFloat($('fwd-SSA_micro').value) || 600;
+  const pv = parseFloat($('fwd-PV').value) || 0.8;
+
+  // Hydraulic pore diameter d = 4 * PV / SSA (cm^3/g / (m^2/g) * 1000 = nm)
+  const dHydraulic = (4 * pv / ssa) * 1000;
+  $('calc-pore-size').textContent = `${dHydraulic.toFixed(2)} nm`;
+
+  const microPct = Math.min(100, Math.round((ssaMicro / ssa) * 100));
+  $('micro-area-ratio-bar').style.width = `${microPct}%`;
+  $('micro-area-ratio-text').textContent =
+    `Micropore fraction: ${microPct}% of total surface area. Physically validated ratio.`;
+
+  // Update dynamic energy estimate
+  updateEnergyEstimate();
+}
+
+function onElectrolyteChange(electrolyte) {
+  const windowSlider = $('fwd-potential_window');
+  const badge = $('stability-badge');
+  const desc = $('voltage-desc');
+
+  if (electrolyte === 'KOH' || electrolyte === 'H2SO4') {
+    windowSlider.value = '1.0';
+    windowSlider.max = '1.4';
+    if (desc) desc.textContent = 'Aqueous electrolyte: water electrolysis begins at 1.23 V thermodynamic limit.';
+  } else if (electrolyte === 'Na2SO4') {
+    windowSlider.value = '1.6';
+    windowSlider.max = '2.0';
+    if (desc) desc.textContent = 'Neutral aqueous: kinetic overpotentials permit operation up to 1.6 to 1.8 V.';
+  } else if (electrolyte === 'organic') {
+    windowSlider.value = '2.7';
+    windowSlider.max = '3.0';
+    if (desc) desc.textContent = 'Organic electrolyte (TEABF4 in ACN): broad electrochemical stability window.';
+  } else if (electrolyte === 'ionic_liquid') {
+    windowSlider.value = '3.2';
+    windowSlider.max = '3.8';
+    if (desc) desc.textContent = 'Room-temperature ionic liquid: ultra-wide window up to 3.5 V.';
+  }
+
+  $('fwd-potential_window-val').textContent = `${parseFloat(windowSlider.value).toFixed(1)} V`;
+  evaluateElectrochemicalStability();
+  updateEnergyEstimate();
+}
+
+function onPotentialWindowChange(val) {
+  $('fwd-potential_window-val').textContent = `${parseFloat(val).toFixed(1)} V`;
+  evaluateElectrochemicalStability();
+  updateEnergyEstimate();
+}
+
+function evaluateElectrochemicalStability() {
+  const electrolyte = $('fwd-electrolyte').value;
+  const v = parseFloat($('fwd-potential_window').value);
+  const badge = $('stability-badge');
+  if (!badge) return;
+
+  if ((electrolyte === 'KOH' || electrolyte === 'H2SO4') && v > 1.23) {
+    badge.className = 'badge badge-warn';
+    badge.textContent = 'Thermodynamic Breakdown Risk';
+  } else if (electrolyte === 'Na2SO4' && v > 1.8) {
+    badge.className = 'badge badge-warn';
+    badge.textContent = 'Overpotential Exceeded';
+  } else {
+    badge.className = 'badge badge-safe';
+    badge.textContent = 'Thermodynamically Safe';
+  }
+}
+
+function updateEnergyEstimate() {
+  if (currentPrediction === null) {
+    $('res-energy').textContent = '--';
+    $('ragone-e-label').textContent = '--';
+    $('ragone-bar-fill').style.width = '0%';
+    $('ragone-marker').style.display = 'none';
+    return;
+  }
+  const v = parseFloat($('fwd-potential_window').value) || 1.0;
+  const c = currentPrediction;
+
+  // E = 0.5 * C * V^2 / 3.6 in Wh/kg
+  const e = (0.5 * c * Math.pow(v, 2)) / 3.6;
+  $('res-energy').textContent = `${e.toFixed(1)} Wh/kg`;
+  $('ragone-e-label').textContent = `${e.toFixed(1)} Wh/kg`;
+
+  // Ragone fill (clamped 0 to 100% relative to 50 Wh/kg full scale)
+  const pct = Math.min(100, Math.max(3, (e / 50) * 100));
+  $('ragone-bar-fill').style.width = `${pct}%`;
+  $('ragone-marker').style.left = `${pct}%`;
+  $('ragone-marker').style.display = 'block';
+}
+
+// -------------------------------------------------------------
+// Presets
+// -------------------------------------------------------------
+function applyPreset(type) {
+  if (type === 'standard_ac') {
+    $('fwd-SSA').value = 1200;
+    $('fwd-SSA_micro').value = 600;
+    $('fwd-PV').value = 0.8;
+    $('fwd-PV_micro').value = 0.3;
+    $('fwd-pore_size').value = 2.0;
+    $('fwd-ID_IG').value = 1.0;
+    $('fwd-N_content').value = 2.5;
+    $('fwd-O_content').value = 4.0;
+    $('fwd-electrolyte').value = 'KOH';
+    $('fwd-carbon_structure').value = 'activated_carbon';
+  } else if (type === 'high_ssa') {
+    $('fwd-SSA').value = 2400;
+    $('fwd-SSA_micro').value = 1400;
+    $('fwd-PV').value = 1.3;
+    $('fwd-PV_micro').value = 0.7;
+    $('fwd-pore_size').value = 2.2;
+    $('fwd-ID_IG').value = 1.15;
+    $('fwd-N_content').value = 1.0;
+    $('fwd-O_content').value = 3.0;
+    $('fwd-electrolyte').value = 'KOH';
+    $('fwd-carbon_structure').value = 'activated_carbon';
+  } else if (type === 'n_graphene') {
+    $('fwd-SSA').value = 1600;
+    $('fwd-SSA_micro').value = 500;
+    $('fwd-PV').value = 1.2;
+    $('fwd-PV_micro').value = 0.25;
+    $('fwd-pore_size').value = 3.0;
+    $('fwd-ID_IG').value = 1.35;
+    $('fwd-N_content').value = 8.5;
+    $('fwd-O_content').value = 4.5;
+    $('fwd-electrolyte').value = 'H2SO4';
+    $('fwd-carbon_structure').value = 'graphene';
+  } else if (type === 'aerogel') {
+    $('fwd-SSA').value = 950;
+    $('fwd-SSA_micro').value = 200;
+    $('fwd-PV').value = 2.1;
+    $('fwd-PV_micro').value = 0.15;
+    $('fwd-pore_size').value = 5.2;
+    $('fwd-ID_IG').value = 0.95;
+    $('fwd-N_content').value = 0.5;
+    $('fwd-O_content').value = 2.0;
+    $('fwd-electrolyte').value = 'Na2SO4';
+    $('fwd-carbon_structure').value = 'carbon_aerogel';
+  } else if (type === 'ionic') {
+    $('fwd-SSA').value = 1800;
+    $('fwd-SSA_micro').value = 800;
+    $('fwd-PV').value = 1.1;
+    $('fwd-PV_micro').value = 0.4;
+    $('fwd-pore_size').value = 2.5;
+    $('fwd-ID_IG').value = 1.05;
+    $('fwd-N_content').value = 3.0;
+    $('fwd-O_content').value = 2.5;
+    $('fwd-electrolyte').value = 'ionic_liquid';
+    $('fwd-carbon_structure').value = 'activated_carbon';
+  }
+
+  onSSAChange($('fwd-SSA').value);
+  onPVChange($('fwd-PV').value);
+  updateValDisplay('fwd-pore_size', $('fwd-pore_size').value, ' nm');
+  updateValDisplay('fwd-ID_IG', parseFloat($('fwd-ID_IG').value).toFixed(2), '');
+  updateValDisplay('fwd-N_content', parseFloat($('fwd-N_content').value).toFixed(1), ' wt%');
+  updateValDisplay('fwd-O_content', parseFloat($('fwd-O_content').value).toFixed(1), ' wt%');
+  onElectrolyteChange($('fwd-electrolyte').value);
+
+  runForwardPrediction();
+}
+
+function randomizeInputs() {
+  const ssa = Math.round((Math.random() * 2000 + 400) / 10) * 10;
+  const ssaMicro = Math.round((Math.random() * (ssa * 0.75)) / 10) * 10;
+  const pv = parseFloat((Math.random() * 1.8 + 0.3).toFixed(2));
+  const pvMicro = parseFloat((Math.random() * (pv * 0.6)).toFixed(2));
+
+  $('fwd-SSA').value = ssa;
+  $('fwd-SSA_micro').value = ssaMicro;
+  $('fwd-PV').value = pv;
+  $('fwd-PV_micro').value = pvMicro;
+
+  onSSAChange(ssa);
+  onPVChange(pv);
+  runForwardPrediction();
+}
+
+// -------------------------------------------------------------
+// Forward Prediction Action
+// -------------------------------------------------------------
+async function runForwardPrediction() {
+  const btn = $('btn-predict');
+  const resultCard = $('result-card');
+
+  btn.disabled = true;
+  btn.innerHTML = '<span>Computing Surrogate...</span>';
+  resultCard.classList.add('skeleton');
+
+  const payload = {
+    SSA: parseFloat($('fwd-SSA').value),
+    SSA_micro: parseFloat($('fwd-SSA_micro').value),
+    PV: parseFloat($('fwd-PV').value),
+    PV_micro: parseFloat($('fwd-PV_micro').value),
+    pore_size: parseFloat($('fwd-pore_size').value),
+    ID_IG: parseFloat($('fwd-ID_IG').value),
+    N_content: parseFloat($('fwd-N_content').value),
+    O_content: parseFloat($('fwd-O_content').value),
+    potential_window: parseFloat($('fwd-potential_window').value),
+    current_density: parseFloat($('fwd-current_density').value),
+    electrolyte: $('fwd-electrolyte').value,
+    test_method: $('fwd-test_method').value,
+    carbon_structure: $('fwd-carbon_structure').value
+  };
+
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 60000);
+
+    const res = await fetch(`${API_BASE}/supercap/predict`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+
+    if (!res.ok) {
+      throw new Error(`Server returned HTTP ${res.status}`);
+    }
+
+    const data = await res.json();
+    renderPredictionResult(data.predicted_capacitance, data.uncertainty);
+  } catch (err) {
+    // Never show an invented number: report the failure and let the user retry.
+    console.warn("Prediction request failed:", err.message);
+    $('res-c-val').textContent = '--';
+    $('res-c-uncert').textContent = 'The model server did not respond. It may still be waking up: wait for the status indicator to show it is ready, then try again.';
+    $('res-c-pi').textContent = '--';
+    $('res-conf-tier').textContent = '--';
+    $('res-conf-sub').textContent = '--';
+    $('res-energy').textContent = '--';
+    $('ragone-e-label').textContent = '--';
+    drawDistributionPlot(null, null);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span>Calculate Capacitance</span>';
+    resultCard.classList.remove('skeleton');
+  }
+}
+
+function renderPredictionResult(predC, sigma) {
+  const targetVal = Math.round(predC);
+  const startVal = currentPrediction !== null ? Math.round(currentPrediction) : 0;
+  currentPrediction = predC;
+  currentUncertainty = sigma;
+
+  // Animate count-up of integer capacitance
+  animateValue('res-c-val', startVal, targetVal, 400);
+
+  // Integer uncertainty with ± uncertainty
+  $('res-c-uncert').innerHTML = `&plusmn; ${Math.round(sigma)} F/g (1&sigma; GPR uncertainty)`;
+
+  // Physical 95% interval truncated at C >= 0, formatted as integers
+  const lowerBound = Math.max(0, Math.round(predC - 1.96 * sigma));
+  const upperBound = Math.round(predC + 1.96 * sigma);
+  $('res-c-pi').textContent = `${lowerBound} to ${upperBound} F/g`;
+
+  // Confidence tier and relative variance
+  const relVar = (sigma / predC) * 100;
+  $('res-conf-tier').textContent = relVar > 50 ? 'High uncertainty' : 'Moderate uncertainty';
+  $('res-conf-sub').innerHTML = `&sigma; / C = ${Math.round(relVar)}%`;
+
+  updateEnergyEstimate();
+  drawDistributionPlot(predC, sigma);
+}
+
+function animateValue(id, start, end, duration) {
+  const obj = $(id);
+  const range = end - start;
+  if (range === 0) { obj.textContent = end; return; }
+
+  let startTime = null;
+  function step(timestamp) {
+    if (!startTime) startTime = timestamp;
+    const progress = Math.min((timestamp - startTime) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    obj.textContent = Math.round(start + range * ease);
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    } else {
+      obj.textContent = end;
+    }
+  }
+  requestAnimationFrame(step);
+}
+
+// -------------------------------------------------------------
+// Inverse Design Bayesian Optimization
+// -------------------------------------------------------------
+async function runInverseOptimization() {
+  const btn = $('btn-inverse');
+  const errEl = $('inv-error-msg');
+  const container = $('inv-results-container');
+  const countBadge = $('inv-results-count');
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="banner-spinner" style="width:14px;height:14px;border-width:2px;display:inline-block;vertical-align:middle;margin-right:6px;"></span> Optimizing Parameter Space...';
+  errEl.style.display = 'none';
+
+  const targetC = parseFloat($('inv-target').value);
+  const payload = {
+    target_capacitance: targetC,
+    electrolyte: $('inv-electrolyte').value,
+    test_method: $('inv-test_method').value,
+    carbon_structure: $('inv-carbon_structure').value,
+    n_suggestions: parseInt($('inv-n').value)
+  };
+
+  try {
+    const controller = new AbortController();
+    // Bayesian optimisation is slow on the free server: allow up to 2 minutes
+    const timeoutId = setTimeout(() => controller.abort(), 120000);
+
+    const res = await fetch(`${API_BASE}/supercap/inverse`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    renderInverseTable(data.suggestions || [], targetC);
+  } catch (err) {
+    // Never show invented candidates: report the failure and let the user retry.
+    console.warn("Inverse optimisation request failed:", err.message);
+    container.innerHTML = '';
+    countBadge.textContent = '0 found';
+    errEl.textContent = err.name === 'AbortError'
+      ? 'The optimisation took longer than 2 minutes. Try fewer suggestions, or try again once the server is fully awake.'
+      : 'The model server did not respond. It may still be waking up: wait for the status indicator, then try again.';
+    errEl.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span>Generate Optimal Material Specifications</span>';
+  }
+}
+
+function renderInverseTable(suggestions, target) {
+  const container = $('inv-results-container');
+  const countBadge = $('inv-results-count');
+
+  if (!suggestions || suggestions.length === 0) {
+    container.innerHTML = '<div style="padding:32px;text-align:center;color:var(--text-secondary);">No feasible structural combinations identified for this target.</div>';
+    countBadge.textContent = '0 found';
+    return;
+  }
+
+  countBadge.textContent = `${suggestions.length} candidates`;
+
+  let html = '';
+
+  html += `
+    <div class="results-table-wrap">
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>SSA (m²/g)</th>
+            <th>Micro SSA</th>
+            <th>Pore Width</th>
+            <th>PV</th>
+            <th>N wt%</th>
+            <th>Est. C</th>
+            <th>&sigma;</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+  `;
+
+  suggestions.forEach((s, idx) => {
+    const uncertColor = s.uncertainty < 45 ? 'var(--green)' : s.uncertainty < 80 ? 'var(--amber)' : 'var(--red)';
+    html += `
+      <tr>
+        <td style="color:var(--text-tertiary);">${idx + 1}</td>
+        <td><strong>${Math.round(s.SSA)}</strong></td>
+        <td>${Math.round(s.SSA_micro)}</td>
+        <td>${parseFloat(s.pore_size).toFixed(1)} nm</td>
+        <td>${parseFloat(s.PV).toFixed(2)}</td>
+        <td>${parseFloat(s.N_content).toFixed(1)}%</td>
+        <td style="color:var(--accent);font-weight:600;">${Math.round(s.predicted_capacitance)} F/g</td>
+        <td style="color:${uncertColor};">&plusmn;${Math.round(s.uncertainty)}</td>
+        <td>
+          <button type="button" class="btn-table-action" onclick="loadInverseCandidate(${idx})">Load</button>
+        </td>
+      </tr>
+    `;
+  });
+
+  html += `
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:11.5px;color:var(--text-tertiary);margin-top:12px;">
+      Click "Load" to import any suggested candidate architecture into the forward simulation and inspect full electrochemical diagnostics.
+    </p>
+  `;
+
+  window.lastSuggestions = suggestions;
+  container.innerHTML = html;
+}
+
+function loadInverseCandidate(idx) {
+  const s = window.lastSuggestions && window.lastSuggestions[idx];
+  if (!s) return;
+
+  $('fwd-SSA').value = s.SSA;
+  $('fwd-SSA_micro').value = s.SSA_micro;
+  $('fwd-PV').value = s.PV;
+  $('fwd-PV_micro').value = s.PV_micro;
+  $('fwd-pore_size').value = s.pore_size;
+  $('fwd-ID_IG').value = s.ID_IG;
+  $('fwd-N_content').value = s.N_content;
+
+  onSSAChange(s.SSA);
+  onPVChange(s.PV);
+  updateValDisplay('fwd-pore_size', s.pore_size, ' nm');
+  updateValDisplay('fwd-ID_IG', s.ID_IG, '');
+  updateValDisplay('fwd-N_content', s.N_content, ' wt%');
+
+  switchView('forward');
+  runForwardPrediction();
+}
+
+// -------------------------------------------------------------
+// Plotly Visualizations
+// -------------------------------------------------------------
+function initPlots() {
+  drawDistributionPlot(null, null);
+}
+
+
+function drawDistributionPlot(mean, sigma) {
+  const chartEl = $('chart-dist');
+  if (!chartEl) return;
+
+  if (mean === null || sigma === null || isNaN(mean) || isNaN(sigma)) {
+    const emptyLayout = {
+      ...PLOT_BASE_LAYOUT,
+      xaxis: {
+        title: { text: 'Specific Capacitance (F/g)', font: { size: 11, color: THEME.textColor } },
+        gridcolor: THEME.gridColor,
+        zeroline: false,
+        range: [0, 500]
+      },
+      yaxis: {
+        title: { text: 'Probability Density', font: { size: 11, color: THEME.textColor } },
+        gridcolor: THEME.gridColor,
+        zeroline: false
+      },
+      annotations: [{
+        x: 0.5,
+        y: 0.5,
+        xref: 'paper',
+        yref: 'paper',
+        text: 'Awaiting model prediction...',
+        showarrow: false,
+        font: { color: THEME.textColor, size: 13, family: 'Inter, sans-serif' }
+      }]
+    };
+    Plotly.newPlot('chart-dist', [], emptyLayout, PLOT_CONFIG);
+    return;
+  }
+
+  // Normal distribution curve (mean = prediction, sigma = uncertainty) truncated at 0
+  const xVals = [];
+  const yVals = [];
+  const xMin = 0;
+  const xMax = Math.max(450, Math.ceil((mean + 3.2 * sigma) / 50) * 50);
+  const step = (xMax - xMin) / 180;
+
+  for (let x = xMin; x <= xMax; x += step) {
+    xVals.push(x);
+    const pdf = (1 / (sigma * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * Math.pow((x - mean) / sigma, 2));
+    yVals.push(pdf);
+  }
+
+  const peakDensity = 1 / (sigma * Math.sqrt(2 * Math.PI));
+
+  const traceCurve = {
+    x: xVals,
+    y: yVals,
+    type: 'scatter',
+    mode: 'lines',
+    fill: 'tozeroy',
+    fillcolor: THEME.accentSubtle,
+    line: { color: THEME.accent, width: 2 },
+    hovertemplate: 'Capacitance: %{x:.0f} F/g<br>Density: %{y:.5f}<extra></extra>',
+    showlegend: false
+  };
+
+  const traceMeanLine = {
+    x: [mean, mean],
+    y: [0, peakDensity * 1.05],
+    type: 'scatter',
+    mode: 'lines',
+    line: { color: THEME.blue, width: 2, dash: 'dash' },
+    hoverinfo: 'skip',
+    showlegend: false
+  };
+
+  const layout = {
+    ...PLOT_BASE_LAYOUT,
+    xaxis: {
+      title: { text: 'Specific Capacitance (F/g)', font: { size: 11, color: THEME.textColor } },
+      gridcolor: THEME.gridColor,
+      zeroline: false,
+      rangemode: 'nonnegative',
+      range: [0, xMax]
+    },
+    yaxis: {
+      title: { text: 'Probability Density', font: { size: 11, color: THEME.textColor } },
+      gridcolor: THEME.gridColor,
+      zeroline: false
+    },
+    annotations: [{
+      x: mean,
+      y: peakDensity * 1.05,
+      text: `Prediction: ${Math.round(mean)} F/g`,
+      showarrow: true,
+      arrowhead: 2,
+      arrowcolor: THEME.blue,
+      font: { color: THEME.blue, size: 11, family: 'JetBrains Mono' }
+    }]
+  };
+
+  Plotly.newPlot('chart-dist', [traceCurve, traceMeanLine], layout, PLOT_CONFIG);
+}
+
+function renderSHAPChart() {
+  const features = [
+    'Potential Window (Delta V)',
+    'SSA (Specific Surface Area)',
+    'SSA_micro (Micropore Area)',
+    'N Content (Doping wt%)',
+    'Pore Size (nm)',
+    'Total Pore Volume',
+    'Current Density (A/g)',
+    'ID / IG Defect Ratio'
+  ].reverse();
+
+  const shapValues = [32.8, 24.5, 14.2, 10.1, 7.4, 5.2, 3.6, 2.2].reverse();
+
+  const trace = {
+    x: shapValues,
+    y: features,
+    type: 'bar',
+    orientation: 'h',
+    marker: {
+      color: THEME.accent,
+      opacity: 0.85,
+      line: { color: THEME.accent, width: 1 }
+    },
+    hovertemplate: '%{y}: %{x:.1f}%<extra></extra>'
+  };
+
+  const layout = {
+    ...PLOT_BASE_LAYOUT,
+    title: {
+      text: 'Feature importance of the offline Gradient Boosting benchmark (not the deployed model)',
+      font: { size: 12, color: THEME.textColor }
+    },
+    margin: { l: 190, r: 24, t: 36, b: 40 },
+    xaxis: {
+      title: { text: 'Relative Feature Importance (%)', font: { size: 11, color: THEME.textColor } },
+      gridcolor: THEME.gridColor,
+      zeroline: false
+    },
+    yaxis: {
+      gridcolor: 'transparent',
+      zeroline: false
+    }
+  };
+
+  Plotly.newPlot('chart-shap', [trace], layout, PLOT_CONFIG);
+}
+
+// -------------------------------------------------------------
+// Keyboard Shortcut & Initialization
+// -------------------------------------------------------------
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.target.matches('textarea, select')) {
+    if ($('view-forward').style.display !== 'none') {
+      runForwardPrediction();
+    } else if ($('view-inverse').style.display !== 'none') {
+      runInverseOptimization();
+    }
+  }
+});
+
+// Boot lifecycle
+window.addEventListener('DOMContentLoaded', () => {
+  initPlots();
+  updateConsistencyMetrics();
+  initServerConnection();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,2546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>High-entropy superconductor Tc predictor · Materials Informatics</title>
+
+<!-- Fonts & Plotly CDN -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+
+<style>
+  /* -------------------------------------------------------------
+     Apple-grade design tokens (Light & Dark with Clay accent)
+  ------------------------------------------------------------- */
+  :root {
+    --bg: #f5f5f7;
+    --card: #ffffff;
+    --card-subtle: #fbfbfd;
+    --card-hover: #ffffff;
+    --text: #1d1d1f;
+    --text-secondary: #6e6e73;
+    --text-tertiary: #86868b;
+    --border: rgba(0, 0, 0, 0.08);
+    --border-subtle: rgba(0, 0, 0, 0.04);
+    --border-focus: rgba(217, 119, 87, 0.45);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.03);
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.08);
+
+    /* Accents */
+    --accent: #d97757;             /* Signature site clay */
+    --accent-hover: #c86849;
+    --accent-subtle: rgba(217, 119, 87, 0.10);
+    --accent-border: rgba(217, 119, 87, 0.25);
+    
+    --sc-blue: #0a84ff;            /* Superconducting cold blue */
+    --sc-blue-subtle: rgba(10, 132, 255, 0.10);
+    --sc-cyan: #22c55e;            /* Stable / BCC confirmation */
+    --amber: #d97706;              /* Calm domain / magnetic notice */
+    --amber-bg: rgba(217, 119, 6, 0.09);
+    --amber-border: rgba(217, 119, 6, 0.28);
+    
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-card: 22px;
+    
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --trans-fast: 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    --trans-smooth: 350ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --card: #1c1c1e;
+      --card-subtle: #242426;
+      --card-hover: #222224;
+      --text: #f5f5f7;
+      --text-secondary: #86868b;
+      --text-tertiary: #636366;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-subtle: rgba(255, 255, 255, 0.04);
+      --border-focus: rgba(217, 119, 87, 0.55);
+      --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.6);
+
+      --accent: #e08466;
+      --accent-hover: #f09578;
+      --accent-subtle: rgba(224, 132, 102, 0.16);
+      --accent-border: rgba(224, 132, 102, 0.32);
+
+      --sc-blue: #0a84ff;
+      --sc-blue-subtle: rgba(10, 132, 255, 0.16);
+      --amber: #f59e0b;
+      --amber-bg: rgba(245, 158, 11, 0.12);
+      --amber-border: rgba(245, 158, 11, 0.32);
+    }
+  }
+
+  /* -------------------------------------------------------------
+     Base Reset & Typography
+  ------------------------------------------------------------- */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  html {
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    padding-bottom: 72px;
+  }
+
+  a { color: var(--accent); text-decoration: none; transition: opacity var(--trans-fast); }
+  a:hover { opacity: 0.8; }
+
+  /* -------------------------------------------------------------
+     Sticky Frosted Glass Navigation Bar
+  ------------------------------------------------------------- */
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(245, 245, 247, 0.82);
+    border-bottom: 1px solid var(--border);
+    transition: background-color var(--trans-smooth);
+  }
+  @media (prefers-color-scheme: dark) {
+    .top-nav { background: rgba(0, 0, 0, 0.78); }
+  }
+
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: all var(--trans-fast);
+  }
+  .back-link:hover {
+    color: var(--text);
+    background: var(--border-subtle);
+  }
+
+  .server-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+  .server-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+  }
+  .server-dot.waking {
+    background: var(--amber);
+    animation: pulse 1.4s infinite ease-in-out;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.25); }
+  }
+
+  /* -------------------------------------------------------------
+     Layout Container & Hero
+  ------------------------------------------------------------- */
+  .wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  header.hero {
+    padding: 44px 0 28px;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  h1.hero-title {
+    font-size: clamp(32px, 5.2vw, 54px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 19px);
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    max-width: 760px;
+  }
+
+  /* -------------------------------------------------------------
+     Server Wake Notice Banner (Friendly, Animated)
+  ------------------------------------------------------------- */
+  .waking-banner {
+    display: none;
+    align-items: center;
+    gap: 14px;
+    background: var(--amber-bg);
+    border: 1px solid var(--amber-border);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .waking-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--amber);
+    border-top-color: transparent;
+    animation: spin 0.9s linear infinite;
+    flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* -------------------------------------------------------------
+     Two-Column Grid
+  ------------------------------------------------------------- */
+  .grid-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 24px;
+    align-items: start;
+  }
+  @media (max-width: 960px) {
+    .grid-container { grid-template-columns: 1fr; }
+  }
+
+  /* -------------------------------------------------------------
+     Card Styles (Apple Polish)
+  ------------------------------------------------------------- */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: 26px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--trans-smooth), border-color var(--trans-smooth);
+    margin-bottom: 24px;
+  }
+  .card:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+
+  .card-title {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--text);
+  }
+
+  .card-badge {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: var(--border-subtle);
+    color: var(--text-secondary);
+  }
+
+  /* -------------------------------------------------------------
+     Formula Input & Composition Bar
+  ------------------------------------------------------------- */
+  .field-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+
+  .input-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  input[type="text"].formula-input {
+    flex: 1;
+    background: var(--card-subtle);
+    border: 1.5px solid var(--border);
+    color: var(--text);
+    border-radius: var(--radius-md);
+    padding: 13px 16px;
+    font-size: 17px;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    outline: none;
+    transition: border-color var(--trans-fast), box-shadow var(--trans-fast);
+  }
+  input[type="text"].formula-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--border-focus);
+  }
+
+  .btn-roll {
+    background: var(--card-subtle);
+    border: 1.5px solid var(--border);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 13.5px;
+    padding: 0 18px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all var(--trans-fast);
+    white-space: nowrap;
+  }
+  .btn-roll:hover {
+    border-color: var(--text-tertiary);
+    background: var(--border-subtle);
+  }
+  .btn-roll:active { transform: scale(0.97); }
+
+  /* Example Chips */
+  .examples-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+  .examples-caption {
+    font-size: 11.5px;
+    color: var(--text-tertiary);
+    font-weight: 500;
+    margin-right: 2px;
+  }
+  .chip-example {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--border-subtle);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--trans-fast);
+  }
+  .chip-example:hover {
+    color: var(--accent);
+    border-color: var(--accent-border);
+    background: var(--accent-subtle);
+  }
+
+  /* Live Composition Stacked Bar & Chips */
+  .composition-preview {
+    background: var(--card-subtle);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    margin-bottom: 20px;
+  }
+  .composition-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .elem-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 4px 9px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+  }
+  .elem-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .elem-pct {
+    color: var(--text-secondary);
+    font-size: 11px;
+  }
+
+  .stacked-bar-wrap {
+    height: 10px;
+    border-radius: 6px;
+    background: var(--border-subtle);
+    overflow: hidden;
+    display: flex;
+    margin-bottom: 10px;
+  }
+  .stacked-seg {
+    height: 100%;
+    transition: width var(--trans-smooth);
+  }
+
+  .entropy-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12.5px;
+    color: var(--text-secondary);
+  }
+  .entropy-value {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* -------------------------------------------------------------
+     Amber Notices (Domain & Magnetic)
+  ------------------------------------------------------------- */
+  .notice-box {
+    display: none;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--amber-bg);
+    border: 1px solid var(--amber-border);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--text);
+  }
+  .notice-badge-icon {
+    background: var(--amber);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* -------------------------------------------------------------
+     Model Segmented Control (Pill Tabs)
+  ------------------------------------------------------------- */
+  .seg-control-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+
+  .seg-control {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    background: var(--card-subtle);
+    padding: 6px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+  }
+  @media (max-width: 520px) {
+    .seg-control { grid-template-columns: 1fr; }
+  }
+
+  .seg-btn {
+    background: transparent;
+    border: none;
+    padding: 10px 8px;
+    border-radius: 9px;
+    cursor: pointer;
+    text-align: center;
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+    font-size: 12.5px;
+    font-weight: 500;
+    transition: all var(--trans-fast);
+  }
+  .seg-btn:hover {
+    color: var(--text);
+    background: var(--border-subtle);
+  }
+  .seg-btn.active {
+    background: var(--card);
+    color: var(--text);
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  }
+  .seg-btn-mae {
+    display: block;
+    font-size: 10.5px;
+    color: var(--text-tertiary);
+    margin-top: 2px;
+  }
+  .seg-btn.active .seg-btn-mae {
+    color: var(--accent);
+  }
+
+  /* -------------------------------------------------------------
+     Primary Action Button
+  ------------------------------------------------------------- */
+  .btn-primary {
+    width: 100%;
+    background: var(--accent);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: var(--font-sans);
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(217, 119, 87, 0.28);
+    transition: all var(--trans-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .btn-primary:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 6px 18px rgba(217, 119, 87, 0.36);
+  }
+  .btn-primary:active { transform: scale(0.985); }
+  .btn-primary:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* -------------------------------------------------------------
+     Stage 2: Critical Temperature (Tc) Readout
+  ------------------------------------------------------------- */
+  .tc-hero {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .tc-meta-eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-tertiary);
+    margin-bottom: 6px;
+  }
+
+  .tc-display-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+
+  .tc-number-box {
+    display: inline-flex;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: clamp(48px, 8vw, 68px);
+    line-height: 1;
+    color: var(--text);
+    letter-spacing: -0.03em;
+  }
+
+  .tc-unit {
+    font-size: 0.45em;
+    font-weight: 500;
+    color: var(--accent);
+    margin-left: 6px;
+  }
+
+  .tc-uncertainty {
+    font-family: var(--font-mono);
+    font-size: clamp(18px, 3.2vw, 24px);
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  .tc-supercon-assumption {
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--text-secondary);
+    background: var(--card-subtle);
+    border-left: 3px solid var(--accent);
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin: 12px 0 20px;
+  }
+
+  /* Cross-Model Spread Range Strip */
+  .spread-strip-box {
+    background: var(--card-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    margin-bottom: 22px;
+  }
+  .spread-strip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+  }
+  .spread-strip-title {
+    font-weight: 600;
+    color: var(--text);
+  }
+  .spread-strip-track {
+    position: relative;
+    height: 8px;
+    background: var(--border-subtle);
+    border-radius: 999px;
+    margin: 18px 8px 14px;
+  }
+  .spread-strip-range {
+    position: absolute;
+    height: 100%;
+    background: rgba(217, 119, 87, 0.25);
+    border-radius: 999px;
+  }
+  .spread-model-dot {
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--text-secondary);
+    border: 2px solid var(--card);
+    transform: translate(-50%, -50%);
+    transition: transform var(--trans-fast);
+    cursor: pointer;
+  }
+  .spread-model-dot.active {
+    width: 16px;
+    height: 16px;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-subtle);
+    z-index: 2;
+  }
+
+  /* Cryogenic Temperature Scale (0 to 25 K) */
+  .cryo-scale-card {
+    margin: 20px 0;
+  }
+  .cryo-svg {
+    width: 100%;
+    height: 84px;
+    display: block;
+  }
+
+  /* -------------------------------------------------------------
+     Stage 1: Phase Stability Card
+  ------------------------------------------------------------- */
+  .phase-card {
+    background: var(--card-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 18px;
+    margin-top: 22px;
+    transition: opacity var(--trans-smooth), filter var(--trans-smooth);
+  }
+  .phase-card.dimmed {
+    opacity: 0.42;
+    pointer-events: none;
+    filter: grayscale(0.8);
+  }
+
+  .phase-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .phase-badge-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .phase-pill {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+  .phase-pill.bcc {
+    background: rgba(34, 197, 94, 0.12);
+    color: #16a34a;
+    border: 1px solid rgba(34, 197, 94, 0.28);
+  }
+  @media (prefers-color-scheme: dark) {
+    .phase-pill.bcc { color: #4ade80; }
+  }
+  .phase-pill.neutral {
+    background: var(--border-subtle);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+
+  .phase-bcc-bar-wrap {
+    height: 8px;
+    background: var(--border-subtle);
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 8px 0 14px;
+  }
+  .phase-bcc-bar {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 999px;
+    transition: width var(--trans-smooth);
+  }
+
+  .phase-breakdown-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 6px;
+    margin: 12px 0;
+  }
+  .phase-prob-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 8px;
+    font-size: 11.5px;
+    font-family: var(--font-mono);
+  }
+  .phase-prob-item.active {
+    border-color: var(--accent-border);
+    background: var(--accent-subtle);
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .phase-statement {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.45;
+    margin-top: 8px;
+  }
+  .phase-note-text {
+    font-size: 11.5px;
+    color: var(--text-tertiary);
+    font-style: italic;
+    margin-top: 6px;
+  }
+
+  /* -------------------------------------------------------------
+     Right Column: Model Performance & Insights
+  ------------------------------------------------------------- */
+  .perf-stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .stat-card {
+    background: var(--card-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    text-align: center;
+  }
+  .stat-val {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .stat-lbl {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  .perf-dataset-box {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    background: var(--card-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  .perf-dataset-box strong { color: var(--text); font-weight: 600; }
+  .perf-dataset-box .hea-caveat {
+    display: block;
+    margin-top: 6px;
+    font-size: 11.5px;
+    color: var(--amber);
+  }
+
+  .chart-box {
+    width: 100%;
+    height: 290px;
+    margin-bottom: 14px;
+  }
+  .chart-box-sm {
+    height: 260px;
+  }
+
+  .chart-caption {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    line-height: 1.45;
+    margin-bottom: 24px;
+  }
+
+  /* -------------------------------------------------------------
+     Footer & Attributions
+  ------------------------------------------------------------- */
+  footer.site-footer {
+    margin-top: 54px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* -------------------------------------------------------------
+     Accessibility & Motion Preferences
+  ------------------------------------------------------------- */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--border-focus);
+  }
+
+  /* ---- Literature k-NN panel ---- */
+  .knn-list { display: flex; flex-direction: column; gap: 10px; margin: 16px 0 4px; }
+  .knn-item {
+    display: grid;
+    grid-template-columns: 20px 1fr auto 68px;
+    gap: 8px 12px;
+    align-items: center;
+    padding: 11px 13px;
+    background: var(--card-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    transition: border-color var(--trans-fast);
+  }
+  .knn-item:hover { border-color: var(--accent-border); }
+  .knn-rank {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-tertiary);
+    text-align: center;
+  }
+  .knn-formula {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .knn-meta { font-size: 11px; color: var(--text-secondary); margin-top: 1px; }
+  .knn-ref { font-size: 10.5px; color: var(--text-tertiary); font-style: italic; margin-top: 1px; }
+  .knn-bar-wrap { display: flex; align-items: center; gap: 5px; }
+  .knn-bar-track {
+    width: 56px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .knn-bar-fill { height: 100%; border-radius: 2px; transition: width 0.45s ease; }
+  .knn-bar-pct {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-secondary);
+    width: 28px;
+    text-align: right;
+  }
+  .knn-tc-badge {
+    font-family: var(--font-mono);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--sc-blue);
+    text-align: right;
+    line-height: 1;
+  }
+  .knn-tc-unit { font-size: 10.5px; font-weight: 500; opacity: 0.7; }
+  .knn-estimate-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    padding: 14px;
+    background: var(--sc-blue-subtle);
+    border: 1px solid rgba(10, 132, 255, 0.2);
+    border-radius: var(--radius-md);
+    margin-bottom: 14px;
+  }
+  .knn-estimate-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+  .knn-estimate-val {
+    font-family: var(--font-mono);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--sc-blue);
+  }
+  .knn-estimate-unit { font-size: 14px; color: var(--text-secondary); font-weight: 500; }
+  .knn-estimate-note { font-size: 11px; color: var(--text-tertiary); margin-left: auto; }
+
+  /* ---- Materials Project panel ---- */
+  .mp-key-panel { padding: 4px 0 12px; }
+  .mp-key-row { display: flex; gap: 10px; margin: 10px 0 6px; }
+  .mp-binary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(154px, 1fr));
+    gap: 8px;
+    margin: 10px 0 6px;
+  }
+  .mp-compound {
+    padding: 10px 12px;
+    background: var(--card-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    transition: border-color var(--trans-fast);
+  }
+  .mp-compound.metallic { border-color: var(--accent-border); }
+  .mp-formula { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--text); }
+  .mp-meta { font-size: 11px; color: var(--text-tertiary); margin-top: 3px; line-height: 1.4; }
+  .mp-hull-chip {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 5px;
+    margin-top: 5px;
+  }
+  .mp-hull-chip.stable { background: rgba(34,197,94,0.12); color: var(--sc-cyan); }
+  .mp-hull-chip.meta   { background: var(--amber-bg); color: var(--amber); }
+  .mp-status { font-size: 12.5px; color: var(--text-tertiary); padding: 14px 0; text-align: center; }
+  .mp-key-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .mp-key-change {
+    font-size: 11.5px; color: var(--text-tertiary); cursor: pointer;
+    text-decoration: underline; background: none; border: none; padding: 0;
+  }
+  .mp-key-change:hover { color: var(--accent); }
+
+  /* ── Physics Model Panel ─────────────────────────────────── */
+  #physicsSection { grid-column: 1 / -1; }
+  .phys-main-row {
+    display: flex; flex-wrap: wrap; align-items: center;
+    gap: 20px; margin-bottom: 16px;
+  }
+  .phys-pred-block {
+    display: flex; align-items: baseline; gap: 8px; flex-shrink: 0;
+  }
+  .phys-pred-label { font-size: 12px; color: var(--text-secondary); font-weight: 500; white-space: nowrap; }
+  .phys-pred-val {
+    font-family: var(--font-mono); font-size: 32px; font-weight: 700;
+    color: var(--accent); font-variant-numeric: tabular-nums;
+  }
+  .phys-pred-unit { font-size: 16px; color: var(--text-secondary); }
+  .phys-pred-unc { font-size: 12.5px; color: var(--text-tertiary); margin-left: 4px; }
+  .phys-confidence { flex: 1; min-width: 160px; }
+  .phys-conf-label { font-size: 11.5px; color: var(--text-tertiary); display: block; margin-bottom: 6px; }
+  .confidence-bar-wrap {
+    height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-bottom: 4px;
+  }
+  .confidence-bar-fill {
+    height: 100%; border-radius: 3px; transition: width 0.4s ease;
+    background: linear-gradient(90deg, #3b82f6, #10b981);
+  }
+  .confidence-bar-fill.low  { background: #ef4444; }
+  .confidence-bar-fill.mid  { background: #f59e0b; }
+  .phys-conf-pct { font-size: 11px; color: var(--text-tertiary); }
+  .phys-desc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px; margin-bottom: 14px;
+  }
+  .phys-desc-item {
+    background: var(--surface-secondary, rgba(255,255,255,0.04));
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .phys-desc-key { font-size: 11px; color: var(--text-tertiary); display: block; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.07em; }
+  .phys-desc-val { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--text-primary); display: block; }
+  .phys-desc-note { font-size: 10.5px; color: var(--text-tertiary); display: block; margin-top: 2px; }
+  .phys-desc-item.good .phys-desc-val { color: #10b981; }
+  .phys-desc-item.warn .phys-desc-val { color: #f59e0b; }
+  .phys-desc-item.bad  .phys-desc-val { color: #ef4444; }
+  .phys-extrapolation-warning {
+    background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.3);
+    border-radius: 8px; padding: 9px 12px; font-size: 12px; color: #b45309;
+    margin-bottom: 12px; display: none;
+  }
+  .phys-extrapolation-warning.visible { display: block; }
+</style>
+</head>
+<body>
+
+<!-- Sticky Frosted Navigation -->
+<nav class="top-nav">
+  <div class="nav-inner">
+    <a href="../machine-learning/" class="back-link">
+      <span>&larr;</span> Back to Machine Learning
+    </a>
+    <div class="server-pill" id="serverPill">
+      <span class="server-dot" id="serverDot"></span>
+      <span id="serverStatusText">Connecting to server...</span>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- Hero Header -->
+  <header class="hero">
+    <div class="eyebrow">Forward design &middot; two-stage machine learning</div>
+    <h1 class="hero-title">High-entropy superconductor<br>Tc predictor</h1>
+    <p class="hero-sub">
+      Explore multicomponent alloy superconductors. Predict phase stability and the
+      superconducting critical temperature (Tc) from composition alone.
+    </p>
+  </header>
+
+  <!-- Waking Server Banner -->
+  <div id="wakingBanner" class="waking-banner">
+    <div class="waking-icon"></div>
+    <div>
+      <strong>Waking up inference server&hellip;</strong>
+      <div id="wakingBannerMsg">
+        The free-tier compute instance is spinning up. This usually takes 30 to 60 seconds on cold start. Thank you for your patience.
+      </div>
+    </div>
+  </div>
+
+  <!-- Two-Column Main Workspace -->
+  <main class="grid-container">
+
+    <!-- LEFT COLUMN: Formula Input, Live Analysis & Predictions -->
+    <section>
+
+      <!-- Composition & Input Card -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Composition</h2>
+          <span class="card-badge">Stage 1 &amp; 2 Input</span>
+        </div>
+
+        <div class="field-label">
+          <span>High-entropy alloy formula</span>
+          <span id="formulaValidationMsg" style="font-size:11.5px; color:var(--text-tertiary)">Enter formula</span>
+        </div>
+
+        <div class="input-group">
+          <input
+            id="formulaInput"
+            type="text"
+            class="formula-input"
+            value="NbTaTiZrHf"
+            spellcheck="false"
+            autocomplete="off"
+            placeholder="e.g. NbTaTiZrHf, Ta0.34Nb0.33Hf0.08Zr0.14Ti0.11"
+          />
+          <button id="btnRoll" class="btn-roll" type="button" title="Roll a random high-entropy alloy">
+            <span>&bull;</span> Roll
+          </button>
+        </div>
+
+        <!-- Preset Example Chips -->
+        <div class="examples-bar">
+          <span class="examples-caption">Presets:</span>
+          <button type="button" class="chip-example" data-formula="NbTaTiZrHf">NbTaTiZrHf</button>
+          <button type="button" class="chip-example" data-formula="Ta0.34Nb0.33Hf0.08Zr0.14Ti0.11">Ta0.34Nb0.33Hf0.08Zr0.14Ti0.11</button>
+          <button type="button" class="chip-example" data-formula="Hf0.21Nb0.25Ta0.24Ti0.15Zr0.15">Hf0.21Nb0.25Ta0.24Ti0.15Zr0.15</button>
+          <button type="button" class="chip-example" data-formula="MoNbTaTiW">MoNbTaTiW</button>
+        </div>
+
+        <!-- Live Composition Breakdown -->
+        <div class="composition-preview">
+          <div class="composition-chips" id="elemChips"></div>
+          <div class="stacked-bar-wrap" id="stackedCompositionBar"></div>
+          <div class="entropy-row">
+            <span>Configurational entropy &Delta;S<sub>conf</sub>:</span>
+            <span class="entropy-value" id="entropyVal">-- R</span>
+          </div>
+        </div>
+
+        <!-- Domain Notice (Amber Calm Alert) -->
+        <div id="domainNotice" class="notice-box">
+          <div class="notice-badge-icon">i</div>
+          <div>
+            <strong>Outside Applicability Domain</strong>
+            <p style="margin-top:2px;">
+              Outside the high-entropy alloy domain (4 to 6 elements, each 5 to 35 at.%).
+              Predictions are extrapolations and the phase classifier does not apply.
+            </p>
+          </div>
+        </div>
+
+        <!-- Magnetic Elements Warning -->
+        <div id="magneticNotice" class="notice-box">
+          <div class="notice-badge-icon">i</div>
+          <div>
+            <strong id="magneticNoticeTitle">High Magnetic-Element Content</strong>
+            <p style="margin-top:2px;">
+              High magnetic-element content. Local magnetic moments tend to break Cooper pairs and suppress superconductivity,
+              but this model was trained only on superconductors and cannot predict that an alloy does not superconduct.
+            </p>
+          </div>
+        </div>
+
+        <!-- Segmented Model Control -->
+        <label class="seg-control-label">Superconducting Tc regression model</label>
+        <div id="modelSelector" class="seg-control" role="tablist"></div>
+
+        <!-- Action Button -->
+        <button id="btnPredict" class="btn-primary" type="button">
+          Predict Superconducting Tc
+        </button>
+
+        <!-- Primary Output: Stage 2 Tc Hero -->
+        <div class="tc-hero">
+          <div class="tc-meta-eyebrow">Estimated Critical Temperature</div>
+          <div class="tc-display-row">
+            <div class="tc-number-box">
+              <span id="tcValue">--</span>
+              <span class="tc-unit">K</span>
+            </div>
+            <div class="tc-uncertainty" id="tcUncertainty">&plusmn; -- K</div>
+          </div>
+
+          <!-- Scientific disclaimer required by contract -->
+          <div class="tc-supercon-assumption">
+            Predicted Tc assumes the alloy superconducts. The model was trained only on known superconductors.
+          </div>
+
+          <!-- Cross-Model Spread Range Strip -->
+          <div class="spread-strip-box">
+            <div class="spread-strip-header">
+              <span class="spread-strip-title">Cross-Model Spread (6 Models)</span>
+              <span id="spreadStatsText">Mean: -- K · Spread: -- to -- K</span>
+            </div>
+            <div class="spread-strip-track" id="spreadStripTrack">
+              <div class="spread-strip-range" id="spreadStripRange" style="left:0; width:0;"></div>
+            </div>
+          </div>
+
+          <!-- Cryogenic Temperature Scale (0 to 25 K) -->
+          <div class="cryo-scale-card">
+            <svg id="cryoScale" class="cryo-svg" viewBox="0 0 540 84" preserveAspectRatio="none"></svg>
+          </div>
+        </div>
+
+        <!-- Stage 1: Phase Stability Card -->
+        <div id="phaseCard" class="phase-card">
+          <div class="phase-header-row">
+            <div class="phase-badge-title">
+              <span>Phase Stability</span>
+              <span id="phasePill" class="phase-pill neutral">Evaluating&hellip;</span>
+            </div>
+            <div id="bccProbabilityLabel" style="font-size:12.5px; font-weight:600; color:var(--text-secondary);">
+              BCC prob: --%
+            </div>
+          </div>
+
+          <div class="phase-bcc-bar-wrap">
+            <div id="phaseBccBar" class="phase-bcc-bar" style="width: 0%;"></div>
+          </div>
+
+          <div class="phase-breakdown-grid" id="phaseBreakdownGrid"></div>
+
+          <p class="phase-statement">
+            Stage 1 classification: most known high-entropy superconductors are body-centred cubic (BCC), though other structures exist.
+          </p>
+          <div class="phase-note-text" id="phaseNoteText"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- RIGHT COLUMN: Model Performance & Cross-Validation Insights -->
+    <section>
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Model Performance</h2>
+          <span class="card-badge" id="activeModelLabel">Model CV</span>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="perf-stats-row">
+          <div class="stat-card">
+            <div class="stat-val" id="metricMAE">--</div>
+            <div class="stat-lbl">MAE (K)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val" id="metricRMSE">--</div>
+            <div class="stat-lbl">RMSE (K)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val" id="metricR2">--</div>
+            <div class="stat-lbl">R&sup2; Score</div>
+          </div>
+        </div>
+
+        <!-- Training Dataset & HEA Accuracy Caveat -->
+        <div class="perf-dataset-box">
+          <strong>Cross-validation on 3,319 superconductors (3,253 conventional metallic SuperCon entries + 66 high-entropy alloys).</strong>
+          <span class="hea-caveat">
+            Because only 66 training samples are high-entropy alloys, accuracy on new high-entropy compositions is likely lower than these figures.
+          </span>
+        </div>
+
+        <!-- Parity Chart -->
+        <div style="font-size:13px; font-weight:600; margin-bottom:6px;">Parity Plot (Out-of-Fold Cross-Validation)</div>
+        <div id="parityChart" class="chart-box"></div>
+        <p class="chart-caption">
+          Dashed line indicates perfect agreement (y = x). Evaluates generalisation on known metallic superconductors.
+        </p>
+
+        <!-- Distribution Chart -->
+        <div style="font-size:13px; font-weight:600; margin-bottom:6px;">Training Set Tc Distribution &amp; Prediction Marker</div>
+        <div id="distChart" class="chart-box"></div>
+        <p class="chart-caption">
+          Histogram of Tc across the 3,319 training samples (0.001 to 22.8 K). Vertical indicator highlights your current prediction.
+        </p>
+
+        <!-- Feature Importances Chart -->
+        <div style="font-size:13px; font-weight:600; margin-bottom:6px;">Top 8 Magpie Composition Feature Importances</div>
+        <div id="importanceChart" class="chart-box chart-box-sm"></div>
+        <p class="chart-caption">
+          Key chemical and electronic descriptors driving this model (Ward et al. Magpie features).
+        </p>
+
+      </div>
+    </section>
+
+
+    <!-- Physics-Informed GPR Model -->
+    <section id="physicsSection" style="display:none">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">HEA-Specific Estimate</h2>
+          <span class="card-badge">37 verified HEA superconductors &middot; leave-one-out error 0.78 K</span>
+        </div>
+        <div class="phys-extrapolation-warning" id="physExtrapWarn">
+          This composition is unlike anything in the 37-entry training set. The estimate below is an extrapolation and should be treated with caution.
+        </div>
+        <div class="phys-main-row">
+          <div class="phys-pred-block">
+            <span class="phys-pred-label">Estimated T<sub>c</sub></span>
+            <span class="phys-pred-val" id="physTcVal">--</span>
+            <span class="phys-pred-unit">K</span>
+            <span class="phys-pred-unc" id="physTcUnc"></span>
+          </div>
+          <div class="phys-confidence">
+            <span class="phys-conf-label">How close is this to known HEA superconductors?</span>
+            <div class="confidence-bar-wrap">
+              <div class="confidence-bar-fill" id="physConfBar" style="width:0%"></div>
+            </div>
+            <span class="phys-conf-pct" id="physConfPct"></span>
+          </div>
+        </div>
+        <div class="phys-desc-grid">
+          <div class="phys-desc-item" id="physVecItem">
+            <span class="phys-desc-key">Valence electrons (avg)</span>
+            <span class="phys-desc-val" id="physVecVal">--</span>
+            <span class="phys-desc-note">4.5&ndash;5.5 favours superconductivity</span>
+          </div>
+          <div class="phys-desc-item" id="physDosItem">
+            <span class="phys-desc-key">Electron density at Fermi level</span>
+            <span class="phys-desc-val" id="physDosVal">--</span>
+            <span class="phys-desc-note">states/eV/atom &mdash; higher is better for Tc</span>
+          </div>
+          <div class="phys-desc-item" id="physDeltaItem">
+            <span class="phys-desc-key">Atom size mismatch</span>
+            <span class="phys-desc-val" id="physDeltaVal">--</span>
+            <span class="phys-desc-note">distorts the crystal lattice</span>
+          </div>
+          <div class="phys-desc-item" id="physEntropyItem">
+            <span class="phys-desc-key">Mixing entropy</span>
+            <span class="phys-desc-val" id="physEntropyVal">--</span>
+            <span class="phys-desc-note">measure of how "high-entropy" the alloy is</span>
+          </div>
+        </div>
+        <p class="chart-caption">
+          <strong>How this works:</strong> A Gaussian process model was trained on the 37 experimentally measured HEA superconductors shown in the literature panel below.
+          It estimates Tc by interpolating between the compositions it has seen. The "how close" bar measures compositional similarity to those 37 entries &mdash; low similarity means the prediction is unreliable.
+          Leave-one-out cross-validation error: 0.78 K. R<sup>2</sup> = 0.63.
+          <strong>Limitation:</strong> 37 samples is a very small dataset. The server model above was trained on 3,319 superconductors but only 66 of them are HEAs, so neither model is definitive for this class of materials.
+        </p>
+      </div>
+    </section>
+
+    <!-- Literature Nearest Neighbours -->
+    <section id="litSection" style="display:none">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Literature Nearest Neighbours</h2>
+          <span class="card-badge">46 entries</span>
+        </div>
+        <div class="knn-estimate-row">
+          <span class="knn-estimate-label">k-NN Tc (k=5)</span>
+          <span class="knn-estimate-val" id="knnEstimate">--</span>
+          <span class="knn-estimate-unit">K</span>
+          <span class="knn-estimate-note">inverse-distance weighted</span>
+        </div>
+        <div class="knn-list" id="knnList"></div>
+        <p class="chart-caption">Nearest experimentally verified HEA superconductors by Euclidean distance in composition space. Sources: NIMS SuperCon (CC BY 4.0) and peer-reviewed literature.</p>
+      </div>
+    </section>
+
+    <!-- Materials Project Reference -->
+    <section id="mpSection" style="display:none">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Materials Project</h2>
+          <span class="card-badge" id="mpBadge">API key required</span>
+        </div>
+        <div id="mpKeyPanel" class="mp-key-panel">
+          <p style="font-size:13px; color:var(--text-secondary);">Query binary sub-compounds and phase stability for your elements. Free key at <a href="https://next-gen.materialsproject.org/" target="_blank" rel="noopener">materialsproject.org</a>.</p>
+          <div class="mp-key-row">
+            <input type="password" id="mpKeyInput" class="formula-input" placeholder="your-mp-api-key" style="flex:1; font-family:var(--font-mono); font-size:13px" autocomplete="off" />
+            <button id="btnSaveMpKey" class="btn-primary" style="white-space:nowrap; padding:0 18px">Save</button>
+          </div>
+          <p class="chart-caption" style="margin-bottom:0">Stored in your browser only. Never sent elsewhere.</p>
+        </div>
+        <div id="mpResultsPanel" style="display:none">
+          <div class="mp-key-header">
+            <p style="font-size:12.5px; color:var(--text-secondary); margin:0">Metallic binary sub-compounds of your elements (Materials Project, stable/metastable).</p>
+            <button class="mp-key-change" id="btnChangeMpKey">Change key</button>
+          </div>
+          <div id="mpStatus" class="mp-status" style="display:none">Querying Materials Project&hellip;</div>
+          <div id="mpBinaryGrid" class="mp-binary-grid"></div>
+          <p class="chart-caption" style="margin-top:4px">Metallic phases with low formation energy support the superconducting hypothesis. Data: <a href="https://materialsproject.org" target="_blank" rel="noopener">Materials Project</a> (CC BY 4.0).</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Attributions Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>
+        Phase classifier trained on 11,247 high-entropy alloys (Peivaste et al., Scientific Reports, 2023).
+        Server Tc model trained on 3,319 superconductors (66 HEAs) using Magpie composition descriptors (Ward et al., 2016).
+        HEA-specific estimate trained on 37 verified HEA superconductors from the literature.
+        All predictions are model estimates, not measurements. Neither model is specific enough to be relied upon for this class of materials.
+      </p>
+      <div>
+        <a href="../machine-learning/" class="back-link" style="padding-left:0;">
+          <span>&larr;</span> Back to Machine Learning
+        </a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- -------------------------------------------------------------
+     Client-Side Logic & Application Script
+------------------------------------------------------------- -->
+<script>
+const API_BASE = "https://ml-project-sfos.onrender.com";
+
+// Elements set for formula parser
+const KNOWN_ELEMENTS = new Set([
+  "H","He","Li","Be","B","C","N","O","F","Ne","Na","Mg","Al","Si","P","S","Cl","Ar",
+  "K","Ca","Sc","Ti","V","Cr","Mn","Fe","Co","Ni","Cu","Zn","Ga","Ge","As","Se","Br","Kr",
+  "Rb","Sr","Y","Zr","Nb","Mo","Tc","Ru","Rh","Pd","Ag","Cd","In","Sn","Sb","Te","I","Xe",
+  "Cs","Ba","La","Ce","Pr","Nd","Pm","Sm","Eu","Gd","Tb","Dy","Ho","Er","Tm","Yb","Lu",
+  "Hf","Ta","W","Re","Os","Ir","Pt","Au","Hg","Tl","Pb","Bi","Po","At","Rn",
+  "Fr","Ra","Ac","Th","Pa","U","Np","Pu","Am","Cm","Bk","Cf","Es","Fm","Md","No","Lr",
+  "Rf","Db","Sg","Bh","Hs","Mt","Ds","Rg","Cn","Nh","Fl","Mc","Lv","Ts","Og"
+]);
+
+// Harmonious palette for composition stacked bar
+const CHIP_PALETTE = [
+  "#d97757", "#3b82f6", "#10b981", "#8b5cf6", "#f59e0b",
+  "#06b6d4", "#ec4899", "#6366f1", "#14b8a6", "#f97316"
+];
+
+let META = null;
+let selectedModelId = null;
+let currentParsed = null;
+let latestTc = null;
+let isPredicting = false;
+let wakeInterval = null;
+let wakeStart = null;
+
+const $ = id => document.getElementById(id);
+
+/* ---------- Text Sanitiser (Ensures ZERO Em Dashes) ---------- */
+function sanitizeText(str) {
+  if (!str) return "";
+  return str
+    .replace(/\u2014/g, ": ")      // Em dash -> colon space
+    .replace(/\u2013/g, " to ")    // En dash -> "to"
+    .replace(/--/g, ": ")
+    .trim();
+}
+
+/* ---------- Theme Detection for Plotly Charts ---------- */
+function isDarkMode() {
+  return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+}
+
+function getPlotTheme() {
+  const dark = isDarkMode();
+  return {
+    textColor: dark ? "#86868b" : "#6e6e73",
+    gridColor: dark ? "rgba(255, 255, 255, 0.07)" : "rgba(0, 0, 0, 0.06)",
+    zerolineColor: dark ? "rgba(255, 255, 255, 0.12)" : "rgba(0, 0, 0, 0.12)",
+    accent: dark ? "#e08466" : "#d97757",
+    scBlue: "#0a84ff",
+    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif'
+  };
+}
+
+const CFG = { displayModeBar: false, responsive: true };
+
+/* ---------- Client-side Chemical Formula Parser ---------- */
+function parseFormula(raw) {
+  if (!raw || typeof raw !== "string") return null;
+  const clean = raw.trim().replace(/\s+/g, "");
+  if (!clean) return null;
+
+  const regex = /^([A-Z][a-z]?)([\d.]*)/;
+  let remaining = clean;
+  const counts = {};
+
+  while (remaining.length > 0) {
+    const match = remaining.match(regex);
+    if (!match) return null;
+    const elem = match[1];
+    const qtyStr = match[2];
+    if (!KNOWN_ELEMENTS.has(elem)) return null;
+
+    let qty = 1;
+    if (qtyStr.length > 0) {
+      qty = parseFloat(qtyStr);
+      if (isNaN(qty) || qty <= 0) return null;
+    }
+    counts[elem] = (counts[elem] || 0) + qty;
+    remaining = remaining.slice(match[0].length);
+  }
+
+  const elements = Object.keys(counts);
+  if (elements.length === 0) return null;
+
+  const totalAtoms = Object.values(counts).reduce((a, b) => a + b, 0);
+  if (totalAtoms <= 0) return null;
+
+  const fractions = {};
+  for (const el of elements) {
+    fractions[el] = counts[el] / totalAtoms;
+  }
+
+  // Configurational entropy in units of R: dS_conf = -sum(x * ln(x))
+  let dS_conf_R = 0;
+  for (const el of elements) {
+    const x = fractions[el];
+    if (x > 0) dS_conf_R -= x * Math.log(x);
+  }
+
+  // Applicability domain check: 4 to 6 elements, each 5 to 35 at.%
+  const numElements = elements.length;
+  let inDomain = (numElements >= 4 && numElements <= 6);
+  if (inDomain) {
+    for (const el of elements) {
+      const pct = fractions[el] * 100;
+      if (pct < 4.99 || pct > 35.01) {
+        inDomain = false;
+        break;
+      }
+    }
+  }
+
+  // Magnetic elements check: Fe + Co + Ni + Mn > 10 at.%
+  const magElems = ["Fe", "Co", "Ni", "Mn"];
+  let magneticPct = 0;
+  for (const m of magElems) {
+    if (fractions[m]) magneticPct += fractions[m] * 100;
+  }
+  const isHighMagnetic = magneticPct > 10.0;
+
+  return {
+    raw: clean,
+    counts,
+    fractions,
+    elements,
+    numElements,
+    dS_conf_R,
+    inDomain,
+    magneticPct,
+    isHighMagnetic
+  };
+}
+
+/* ---------- Resilient Fetch with Waking Notice ---------- */
+async function fetchJsonWithWake(url, options = {}, maxWaitMs = 65000) {
+  const start = Date.now();
+  let attempt = 0;
+
+  while (Date.now() - start < maxWaitMs) {
+    attempt++;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 16000);
+
+    // If server takes longer than 2.5s, trigger friendly waking notice
+    const slowTimer = setTimeout(() => {
+      showWakingNotice(true);
+    }, 2500);
+
+    try {
+      const res = await fetch(url, { ...options, signal: controller.signal });
+      clearTimeout(timeoutId);
+      clearTimeout(slowTimer);
+
+      if (!res.ok) {
+        const text = await res.text();
+        let detail = text;
+        try { detail = JSON.parse(text).detail || JSON.parse(text).error || text; } catch (e) {}
+        throw new Error(detail || `Server status ${res.status}`);
+      }
+
+      showWakingNotice(false);
+      return await res.json();
+    } catch (err) {
+      clearTimeout(timeoutId);
+      clearTimeout(slowTimer);
+
+      // If aborted or network dropped, show friendly waking message and retry
+      showWakingNotice(true);
+      await new Promise(r => setTimeout(r, Math.min(2500 * attempt, 6000)));
+    }
+  }
+
+  showWakingNotice(false);
+  throw new Error("The server is taking longer than usual to wake. Please try again shortly.");
+}
+
+function showWakingNotice(show) {
+  const banner = $("wakingBanner");
+  const dot = $("serverDot");
+  const statusTxt = $("serverStatusText");
+
+  if (show) {
+    banner.style.display = "flex";
+    dot.className = "server-dot waking";
+    if (!wakeStart) wakeStart = Date.now();
+    if (!wakeInterval) {
+      wakeInterval = setInterval(() => {
+        const secs = Math.round((Date.now() - wakeStart) / 1000);
+        statusTxt.textContent = `Waking server (${secs}s)...`;
+      }, 1000);
+    }
+  } else {
+    banner.style.display = "none";
+    dot.className = "server-dot";
+    if (wakeInterval) {
+      clearInterval(wakeInterval);
+      wakeInterval = null;
+    }
+    wakeStart = null;
+    statusTxt.textContent = "Server Ready";
+  }
+}
+
+/* ---------- Live Formula Input Handling ---------- */
+function onFormulaInput() {
+  const raw = $("formulaInput").value;
+  const parsed = parseFormula(raw);
+  currentParsed = parsed;
+
+  const chipsContainer = $("elemChips");
+  const barContainer = $("stackedCompositionBar");
+  const entropyVal = $("entropyVal");
+  const domainNotice = $("domainNotice");
+  const magneticNotice = $("magneticNotice");
+  const validationMsg = $("formulaValidationMsg");
+  const phaseCard = $("phaseCard");
+  const btnPredict = $("btnPredict");
+
+  if (!parsed) {
+    chipsContainer.innerHTML = "";
+    barContainer.innerHTML = "";
+    entropyVal.textContent = "-- R";
+    domainNotice.style.display = "none";
+    magneticNotice.style.display = "none";
+    validationMsg.textContent = "Invalid formula format";
+    validationMsg.style.color = "var(--amber)";
+    btnPredict.disabled = true;
+    renderLitKnn(null);
+    renderPhysicsModel(null);
+    $("mpSection").style.display = "none";
+    return;
+  }
+
+  btnPredict.disabled = false;
+  renderLitKnn(parsed.fractions);
+  renderPhysicsModel(parsed.fractions);
+  $("mpSection").style.display = "";
+  updateMPKeyUX();
+  validationMsg.textContent = `${parsed.numElements} elements detected`;
+  validationMsg.style.color = "var(--text-tertiary)";
+
+  // Render chips and stacked composition bar
+  let chipsHtml = "";
+  let barHtml = "";
+  const sorted = Object.entries(parsed.fractions).sort((a, b) => b[1] - a[1]);
+
+  sorted.forEach(([elem, frac], idx) => {
+    const color = CHIP_PALETTE[idx % CHIP_PALETTE.length];
+    const pct = (frac * 100).toFixed(1);
+    chipsHtml += `
+      <div class="elem-chip">
+        <span class="elem-dot" style="background:${color}"></span>
+        <strong>${elem}</strong>
+        <span class="elem-pct">${pct}%</span>
+      </div>`;
+    barHtml += `
+      <div class="stacked-seg" style="width:${pct}%; background:${color}" title="${elem}: ${pct}%"></div>`;
+  });
+
+  chipsContainer.innerHTML = chipsHtml;
+  barContainer.innerHTML = barHtml;
+
+  // Configurational entropy
+  entropyVal.textContent = `${parsed.dS_conf_R.toFixed(2)} R`;
+
+  // Applicability Domain notice
+  if (!parsed.inDomain) {
+    domainNotice.style.display = "flex";
+    phaseCard.classList.add("dimmed");
+    $("phasePill").className = "phase-pill neutral";
+    $("phasePill").textContent = "Not in HEA domain";
+  } else {
+    domainNotice.style.display = "none";
+    phaseCard.classList.remove("dimmed");
+  }
+
+  // Magnetic elements notice
+  if (parsed.isHighMagnetic) {
+    $("magneticNoticeTitle").textContent = `High Magnetic-Element Content (${parsed.magneticPct.toFixed(1)} at.%)`;
+    magneticNotice.style.display = "flex";
+  } else {
+    magneticNotice.style.display = "none";
+  }
+}
+
+/* ---------- Model Selection & Control Rendering ---------- */
+function renderModelSelector() {
+  const container = $("modelSelector");
+  container.innerHTML = "";
+
+  META.models.forEach(m => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = `seg-btn ${m.id === selectedModelId ? "active" : ""}`;
+    btn.setAttribute("role", "tab");
+    btn.setAttribute("aria-selected", m.id === selectedModelId ? "true" : "false");
+    btn.innerHTML = `
+      <span>${m.label}</span>
+      <span class="seg-btn-mae">MAE &plusmn;${m.metrics.MAE.toFixed(1)} K</span>
+    `;
+    btn.onclick = () => selectModel(m.id);
+    container.appendChild(btn);
+  });
+}
+
+function selectModel(id) {
+  selectedModelId = id;
+  const m = META.models.find(x => x.id === id);
+  if (!m) return;
+
+  // Update segmented control buttons
+  const buttons = $("modelSelector").querySelectorAll(".seg-btn");
+  META.models.forEach((mod, idx) => {
+    if (mod.id === id) {
+      buttons[idx].classList.add("active");
+      buttons[idx].setAttribute("aria-selected", "true");
+    } else {
+      buttons[idx].classList.remove("active");
+      buttons[idx].setAttribute("aria-selected", "false");
+    }
+  });
+
+  // Update metrics
+  $("activeModelLabel").textContent = m.label;
+  $("metricMAE").textContent = m.metrics.MAE.toFixed(2);
+  $("metricRMSE").textContent = m.metrics.RMSE.toFixed(2);
+  $("metricR2").textContent = m.metrics.R2.toFixed(3);
+
+  // Update uncertainty on Tc hero if we have a current prediction
+  if (latestTc !== null) {
+    $("tcUncertainty").textContent = `\u00B1 ${m.metrics.MAE.toFixed(1)} K`;
+    drawCryoScale(latestTc, m.metrics.MAE);
+  }
+
+  // Redraw charts for selected model
+  drawParity(id);
+  drawImportances(id);
+  highlightSpreadModel(id);
+}
+
+/* ---------- Number Count-Up Animation ---------- */
+function animateTcValue(targetVal) {
+  const el = $("tcValue");
+  const startVal = latestTc !== null ? latestTc : 0;
+  latestTc = targetVal;
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    el.textContent = targetVal.toFixed(1);
+    return;
+  }
+
+  const duration = 480;
+  const startTime = performance.now();
+
+  function step(now) {
+    const progress = Math.min((now - startTime) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+    const current = startVal + (targetVal - startVal) * ease;
+    el.textContent = Math.max(0, current).toFixed(1);
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    } else {
+      el.textContent = targetVal.toFixed(1);
+    }
+  }
+  requestAnimationFrame(step);
+}
+
+/* ---------- Cross-Model Spread Range Strip ---------- */
+let latestSpreadData = [];
+
+function renderSpreadStrip(predictions) {
+  latestSpreadData = predictions;
+  const track = $("spreadStripTrack");
+  const rangeBar = $("spreadStripRange");
+  const statsLabel = $("spreadStatsText");
+
+  // Remove old dots
+  track.querySelectorAll(".spread-model-dot").forEach(d => d.remove());
+
+  const tcs = predictions.map(p => p.tc);
+  const min = Math.min(...tcs);
+  const max = Math.max(...tcs);
+  const mean = tcs.reduce((a, b) => a + b, 0) / tcs.length;
+
+  statsLabel.textContent = `Mean: ${mean.toFixed(1)} K · Spread: ${min.toFixed(1)} to ${max.toFixed(1)} K`;
+
+  const domain = Math.max(0.5, max - min);
+  const pad = domain * 0.15;
+  const leftBound = Math.max(0, min - pad);
+  const rightBound = max + pad;
+  const fullSpan = Math.max(0.1, rightBound - leftBound);
+
+  const rangeLeft = ((min - leftBound) / fullSpan) * 100;
+  const rangeWidth = ((max - min) / fullSpan) * 100;
+  rangeBar.style.left = `${rangeLeft}%`;
+  rangeBar.style.width = `${rangeWidth}%`;
+
+  predictions.forEach(p => {
+    const dot = document.createElement("div");
+    dot.className = `spread-model-dot ${p.modelId === selectedModelId ? "active" : ""}`;
+    dot.dataset.modelId = p.modelId;
+    const pos = ((p.tc - leftBound) / fullSpan) * 100;
+    dot.style.left = `${pos}%`;
+    dot.title = `${p.label}: ${p.tc.toFixed(1)} K`;
+    dot.onclick = () => selectModel(p.modelId);
+    track.appendChild(dot);
+  });
+}
+
+function highlightSpreadModel(modelId) {
+  $("spreadStripTrack").querySelectorAll(".spread-model-dot").forEach(dot => {
+    if (dot.dataset.modelId === modelId) {
+      dot.classList.add("active");
+    } else {
+      dot.classList.remove("active");
+    }
+  });
+}
+
+/* ---------- Horizontal Cryogenic Temperature Scale (0 to 25 K) ---------- */
+function drawCryoScale(tc, mae = 0.8) {
+  const svg = $("cryoScale");
+  const W = 540;
+  const H = 84;
+  const x0 = 24;
+  const x1 = W - 24;
+  const axisY = 46;
+  const maxK = 25.0;
+
+  const scaleX = k => x0 + ((Math.min(maxK, Math.max(0, k)) / maxK) * (x1 - x0));
+
+  const dark = isDarkMode();
+  const theme = getPlotTheme();
+
+  // Reference markers: Liquid Helium (4.2 K), Liquid Hydrogen (20.3 K), Max SuperCon (22.8 K)
+  const markers = [
+    { k: 4.2, label: "LHe 4.2 K" },
+    { k: 20.3, label: "LH2 20.3 K" },
+    { k: 22.8, label: "training max 22.8 K", above: true }
+  ];
+
+  const markerSvg = markers.map(m => {
+    const mx = scaleX(m.k);
+    return `
+      <line x1="${mx}" x2="${mx}" y1="${axisY - 8}" y2="${axisY + 8}" stroke="${theme.textColor}" stroke-width="1.2" stroke-dasharray="2,2" opacity="0.6"/>
+      <text x="${mx}" y="${m.above ? axisY - 13 : axisY + 22}" fill="${theme.textColor}" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="${m.above ? 'end' : 'middle'}" opacity="0.85">${m.label}</text>
+    `;
+  }).join("");
+
+  // Superconducting state region & Prediction marker
+  const px = scaleX(tc);
+  const uncLo = scaleX(Math.max(0, tc - mae));
+  const uncHi = scaleX(Math.min(maxK, tc + mae));
+
+  svg.innerHTML = `
+    <defs>
+      <linearGradient id="scGradient" x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0%" stop-color="${theme.accent}" stop-opacity="0.40" />
+        <stop offset="100%" stop-color="${theme.accent}" stop-opacity="0.08" />
+      </linearGradient>
+    </defs>
+
+    <!-- Superconducting Cold Zone -->
+    <rect x="${x0}" y="${axisY - 6}" width="${Math.max(0, px - x0)}" height="12" rx="6" fill="url(#scGradient)" />
+
+    <!-- Scale Track -->
+    <line x1="${x0}" x2="${x1}" y1="${axisY}" y2="${axisY}" stroke="${theme.gridColor}" stroke-width="2" />
+
+    <!-- 0K and 25K Boundary Labels -->
+    <text x="${x0}" y="${axisY - 14}" fill="${theme.textColor}" font-size="10" font-family="JetBrains Mono, monospace" opacity="0.7">0 K</text>
+    <text x="${x1}" y="${axisY - 14}" fill="${theme.textColor}" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end" opacity="0.7">25 K</text>
+
+    <!-- Reference Markers -->
+    ${markerSvg}
+
+    <!-- Uncertainty Band -->
+    <rect x="${uncLo}" y="${axisY - 10}" width="${Math.max(2, uncHi - uncLo)}" height="20" rx="4" fill="${theme.accent}" opacity="0.22" />
+
+    <!-- Current Prediction Glow Pin -->
+    <line x1="${px}" x2="${px}" y1="14" y2="${axisY + 8}" stroke="${theme.accent}" stroke-width="2.5" />
+    <circle cx="${px}" cy="14" r="5" fill="${theme.accent}" />
+    <circle cx="${px}" cy="14" r="9" fill="${theme.accent}" opacity="0.2" />
+    <text x="${px}" y="8" fill="${theme.accent}" font-size="11.5" font-weight="600" font-family="JetBrains Mono, monospace" text-anchor="middle">
+      ${tc.toFixed(1)} K
+    </text>
+  `;
+}
+
+/* ---------- Stage 1: Phase Stability Rendering ---------- */
+function renderPhaseCard(data) {
+  const card = $("phaseCard");
+  const isBcc = data.is_single_phase_bcc;
+  const bccProb = data.bcc_probability || 0;
+  const phase = data.predicted_phase || "Unknown";
+
+  const pill = $("phasePill");
+  if (isBcc) {
+    pill.className = "phase-pill bcc";
+    pill.textContent = "BCC Solid Solution";
+  } else {
+    // Contract requirement: non-BCC gets a neutral info badge, NOT a warning symbol
+    pill.className = "phase-pill neutral";
+    pill.textContent = `Predicted: ${phase}`;
+  }
+
+  $("bccProbabilityLabel").textContent = `BCC probability: ${(bccProb * 100).toFixed(0)}%`;
+  $("phaseBccBar").style.width = `${Math.min(100, Math.max(0, bccProb * 100))}%`;
+
+  // Phase probabilities breakdown
+  const probs = data.phase_probabilities || {};
+  const sortedProbs = Object.entries(probs).sort((a, b) => b[1] - a[1]);
+
+  $("phaseBreakdownGrid").innerHTML = sortedProbs.map(([pName, pVal]) => {
+    const isCurrent = pName === phase;
+    return `
+      <div class="phase-prob-item ${isCurrent ? "active" : ""}">
+        <span style="opacity:0.8">${pName}</span>
+        <strong style="float:right">${(pVal * 100).toFixed(0)}%</strong>
+      </div>
+    `;
+  }).join("");
+
+  // Sanitised phase note (zero em dashes)
+  $("phaseNoteText").textContent = sanitizeText(data.phase_note || "");
+}
+
+/* ---------- Multi-Model Parallel Prediction Execution ---------- */
+async function executePrediction() {
+  if (isPredicting) return;
+  const rawFormula = $("formulaInput").value.trim();
+  const parsed = parseFormula(rawFormula);
+  if (!parsed) return;
+
+  isPredicting = true;
+  const btn = $("btnPredict");
+  btn.disabled = true;
+  btn.textContent = "Predicting across models\u2026";
+
+  try {
+    // Parallel prediction across all 6 models
+    const promises = META.models.map(m =>
+      fetchJsonWithWake(`${API_BASE}/predict`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ formula: parsed.raw, model: m.id })
+      }).then(res => ({ modelId: m.id, label: m.label, res }))
+        .catch(err => ({ modelId: m.id, label: m.label, err }))
+    );
+
+    const outcomes = await Promise.all(promises);
+
+    const validPredictions = outcomes
+      .filter(o => o.res && typeof o.res.tc === "number")
+      .map(o => ({
+        modelId: o.modelId,
+        label: o.label,
+        tc: Math.max(0, o.res.tc), // Clamped at 0 K minimum
+        full: o.res
+      }));
+
+    if (validPredictions.length === 0) {
+      throw new Error("Unable to obtain predictions from server.");
+    }
+
+    // Selected model outcome
+    const selectedOutcome = validPredictions.find(p => p.modelId === selectedModelId) || validPredictions[0];
+    const selModelMeta = META.models.find(m => m.id === selectedOutcome.modelId);
+    const mae = selModelMeta ? selModelMeta.metrics.MAE : 0.8;
+
+    // Stage 2 Tc Hero Update
+    animateTcValue(selectedOutcome.tc);
+    $("tcUncertainty").textContent = `\u00B1 ${mae.toFixed(1)} K`;
+
+    // Cross-model spread range strip
+    renderSpreadStrip(validPredictions);
+
+    // Materials Project binary query (if API key saved)
+    if (getMPKey() && parsed) { queryMPBinaries(parsed.fractions); }
+
+    // Cryogenic temperature scale
+    drawCryoScale(selectedOutcome.tc, mae);
+
+    // Stage 1 Phase Stability
+    if (parsed.inDomain) {
+      $("phaseCard").classList.remove("dimmed");
+      renderPhaseCard(selectedOutcome.full);
+    } else {
+      $("phaseCard").classList.add("dimmed");
+      $("phasePill").className = "phase-pill neutral";
+      $("phasePill").textContent = "Extrapolation (outside domain)";
+      $("bccProbabilityLabel").textContent = "Phase classifier does not apply";
+      $("phaseBreakdownGrid").innerHTML = "";
+      $("phaseNoteText").textContent = "Phase classification is suppressed because composition is outside the HEA domain (4 to 6 elements, 5 to 35 at.%).";
+    }
+
+    // Update distribution chart marker
+    drawDistribution();
+
+  } catch (err) {
+    $("tcValue").textContent = "--";
+    $("tcUncertainty").textContent = "";
+    console.error("Prediction failed:", err);
+  } finally {
+    isPredicting = false;
+    btn.disabled = false;
+    btn.textContent = "Predict Superconducting Tc";
+  }
+}
+
+/* ---------- Random High-Entropy Alloy Action ---------- */
+async function fetchRandomAlloy() {
+  const btn = $("btnRoll");
+  btn.disabled = true;
+  btn.textContent = "Rolling\u2026";
+  try {
+    const data = await fetchJsonWithWake(`${API_BASE}/random_hes`);
+    if (data && data.formula) {
+      $("formulaInput").value = data.formula;
+      onFormulaInput();
+      executePrediction();
+    }
+  } catch (err) {
+    console.error("Random alloy fetch failed:", err);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = `<span>&bull;</span> Roll`;
+  }
+}
+
+/* ---------- Plotly Charts: Parity, Distribution, Importances ---------- */
+function drawParity(modelId) {
+  if (!META || !META.parity || !META.parity[modelId]) return;
+  const p = META.parity[modelId];
+  const theme = getPlotTheme();
+
+  const minVal = Math.min(...p.actual, ...p.predicted);
+  const maxVal = Math.max(...p.actual, ...p.predicted);
+  const pad = (maxVal - minVal) * 0.05 || 1;
+
+  const data = [
+    {
+      x: [minVal - pad, maxVal + pad],
+      y: [minVal - pad, maxVal + pad],
+      mode: "lines",
+      line: { color: theme.textColor, dash: "dash", width: 1.5 },
+      hoverinfo: "skip",
+      showlegend: false
+    },
+    {
+      x: p.actual,
+      y: p.predicted,
+      mode: "markers",
+      marker: {
+        color: theme.accent,
+        size: 6,
+        opacity: 0.65,
+        line: { color: isDarkMode() ? "#1c1c1e" : "#ffffff", width: 0.5 }
+      },
+      hovertemplate: "Measured: %{x:.2f} K<br>CV Predicted: %{y:.2f} K<extra></extra>",
+      showlegend: false
+    }
+  ];
+
+  const layout = {
+    paper_bgcolor: "transparent",
+    plot_bgcolor: "transparent",
+    font: { color: theme.textColor, family: theme.fontFamily, size: 11 },
+    margin: { l: 48, r: 16, t: 12, b: 42 },
+    xaxis: {
+      title: "Measured Tc (K)",
+      gridcolor: theme.gridColor,
+      zerolinecolor: theme.zerolineColor,
+      range: [minVal - pad, maxVal + pad]
+    },
+    yaxis: {
+      title: "CV Predicted Tc (K)",
+      gridcolor: theme.gridColor,
+      zerolinecolor: theme.zerolineColor,
+      range: [minVal - pad, maxVal + pad]
+    }
+  };
+
+  Plotly.react("parityChart", data, layout, CFG);
+}
+
+function drawDistribution() {
+  if (!META || !META.tc_distribution) return;
+  const theme = getPlotTheme();
+
+  const data = [{
+    x: META.tc_distribution,
+    type: "histogram",
+    nbinsx: 48,
+    marker: {
+      color: theme.accent,
+      opacity: 0.38,
+      line: { color: theme.accent, width: 1 }
+    },
+    hovertemplate: "%{y} alloys<br>Tc: %{x:.1f} K<extra></extra>"
+  }];
+
+  const layout = {
+    paper_bgcolor: "transparent",
+    plot_bgcolor: "transparent",
+    font: { color: theme.textColor, family: theme.fontFamily, size: 11 },
+    margin: { l: 48, r: 16, t: 16, b: 42 },
+    bargap: 0.05,
+    xaxis: {
+      title: "Superconducting Tc (K)",
+      gridcolor: theme.gridColor,
+      zeroline: false
+    },
+    yaxis: {
+      title: "Count",
+      gridcolor: theme.gridColor,
+      zeroline: false
+    },
+    shapes: [],
+    annotations: []
+  };
+
+  if (latestTc !== null && !isNaN(latestTc)) {
+    layout.shapes.push({
+      type: "line",
+      x0: latestTc,
+      x1: latestTc,
+      yref: "paper",
+      y0: 0,
+      y1: 1,
+      line: { color: theme.scBlue, width: 2.5 }
+    });
+    layout.annotations.push({
+      x: latestTc,
+      yref: "paper",
+      y: 1,
+      text: `Your Prediction: ${latestTc.toFixed(1)} K`,
+      showarrow: false,
+      yanchor: "bottom",
+      font: { color: theme.scBlue, size: 11, family: theme.fontFamily, weight: 600 }
+    });
+  }
+
+  Plotly.react("distChart", data, layout, CFG);
+}
+
+function drawImportances(modelId) {
+  if (!META || !META.importances || !META.importances[modelId]) return;
+  const rawList = META.importances[modelId];
+  const theme = getPlotTheme();
+
+  // Strip 'MagpieData ' and take top 8
+  const top8 = [...rawList]
+    .sort((a, b) => b.importance - a.importance)
+    .slice(0, 8)
+    .reverse(); // For horizontal bar ascending display
+
+  const yLabels = top8.map(d => d.feature.replace(/^MagpieData\s*/, ""));
+  const xValues = top8.map(d => d.importance);
+
+  const data = [{
+    type: "bar",
+    orientation: "h",
+    x: xValues,
+    y: yLabels,
+    marker: {
+      color: theme.accent,
+      opacity: 0.85,
+      line: { color: theme.accent, width: 1 }
+    },
+    hovertemplate: "%{y}: %{x:.4f}<extra></extra>"
+  }];
+
+  const layout = {
+    paper_bgcolor: "transparent",
+    plot_bgcolor: "transparent",
+    font: { color: theme.textColor, family: theme.fontFamily, size: 10.5 },
+    margin: { l: 140, r: 16, t: 10, b: 36 },
+    xaxis: {
+      title: "Relative Importance",
+      gridcolor: theme.gridColor,
+      zeroline: false
+    },
+    yaxis: {
+      gridcolor: "transparent",
+      automargin: true
+    }
+  };
+
+  Plotly.react("importanceChart", data, layout, CFG);
+}
+
+
+/* =========================================================
+   HEA Literature Dataset (46 entries, experimental Tc)
+   Sources: NIMS SuperCon CC BY 4.0 + peer-reviewed literature
+   ========================================================= */
+// ── Physics-informed GPR model (trained on 37 HEA superconductors) ──────────────────
+// LOO-CV MAE = 0.78 K | R² = 0.63 | kernel: RBF in 16-element composition space
+// Elemental N(E_F) from Papaconstantopoulos band-structure theory
+const HEA_ELEM_DATA = {
+  Nb:{dos_ef:3.60,debye:275,vec:5,radius:146},
+  Ta:{dos_ef:2.36,debye:240,vec:5,radius:146},
+  Hf:{dos_ef:1.38,debye:252,vec:4,radius:159},
+  Ti:{dos_ef:1.89,debye:420,vec:4,radius:147},
+  Zr:{dos_ef:1.57,debye:291,vec:4,radius:160},
+  V: {dos_ef:2.18,debye:380,vec:5,radius:134},
+  Re:{dos_ef:2.77,debye:430,vec:7,radius:137},
+  Mo:{dos_ef:1.52,debye:450,vec:6,radius:139},
+  Sc:{dos_ef:0.92,debye:360,vec:3,radius:162},
+  Ge:{dos_ef:0.08,debye:374,vec:4,radius:122},
+  Al:{dos_ef:0.45,debye:428,vec:3,radius:143},
+  Rh:{dos_ef:1.77,debye:480,vec:9,radius:134},
+  Si:{dos_ef:0.12,debye:640,vec:4,radius:117},
+  Ru:{dos_ef:2.22,debye:600,vec:8,radius:134},
+  Pd:{dos_ef:1.24,debye:274,vec:10,radius:137},
+  Fe:{dos_ef:2.62,debye:470,vec:8,radius:126},
+};
+const HEA_GPR_ELEM_ORDER = ["Nb","Ta","Hf","Ti","Zr","V","Re","Mo","Sc","Ge","Al","Rh","Si","Ru","Pd","Fe"];
+const HEA_GPR = {
+  amplitudeSq: 1.863186,
+  ls:          0.288222,
+  yMean:       6.024054,
+  alpha: [-3.086686,4.851186,5.387367,2.624715,1.017353,-6.076936,-1.177221,1.268735,3.260253,0.935099,-0.769129,-0.666307,-0.409304,-1.573721,-3.80502,-0.852073,-0.981603,1.058664,0.951097,-0.36637,0.246777,-0.113743,0.16525,-0.487712,-2.332311,2.918907,-1.635197,-1.338884,0.136144,-0.569496,0.329031,-0.008753,-0.580461,-0.249677,-0.834817,0.763334,1.112322],
+  Xtrain: [[0.33,0.34,0.08,0.11,0.14,0,0,0,0,0,0,0,0,0,0,0],[0.2,0.2,0.2,0.2,0.2,0,0,0,0,0,0,0,0,0,0,0],[0.35,0.35,0.1,0.1,0.1,0,0,0,0,0,0,0,0,0,0,0],[0.335,0.335,0.11,0.11,0.11,0,0,0,0,0,0,0,0,0,0,0],[0.3003,0.3003,0.13313,0.13313,0.13313,0,0,0,0,0,0,0,0,0,0,0],[0.24975,0.24975,0.16683,0.16683,0.16683,0,0,0,0,0,0,0,0,0,0,0],[0.08,0.08,0.28,0.28,0.28,0,0,0,0,0,0,0,0,0,0,0],[0.33333,0.16667,0.16667,0.16667,0.16667,0,0,0,0,0,0,0,0,0,0,0],[0.34,0.11,0.08,0.33,0.14,0,0,0,0,0,0,0,0,0,0,0],[0.2,0,0.2,0.2,0.2,0,0.2,0,0,0,0,0,0,0,0,0],[0.25,0.05,0.25,0.35,0,0,0.1,0,0,0,0,0,0,0,0,0],[0.35,0.05,0.2,0.3,0,0,0.1,0,0,0,0,0,0,0,0,0],[0.35,0.15,0.15,0.25,0,0,0.1,0,0,0,0,0,0,0,0,0],[0.35,0.25,0.1,0.2,0,0,0.1,0,0,0,0,0,0,0,0,0],[0.35,0.35,0.05,0.15,0,0,0.1,0,0,0,0,0,0,0,0,0],[0.2,0,0.2,0.2,0.2,0,0,0.2,0,0,0,0,0,0,0,0],[0.2,0.2,0.2,0.2,0,0,0,0.2,0,0,0,0,0,0,0,0],[0.2,0.2,0.2,0.2,0,0.2,0,0,0,0,0,0,0,0,0,0],[0.2,0.2,0.2,0.2,0,0,0,0,0.2,0,0,0,0,0,0,0],[0.2,0.2,0.2,0,0.2,0,0,0,0.2,0,0,0,0,0,0,0],[0.2,0.2,0,0.2,0.2,0,0,0,0.2,0,0,0,0,0,0,0],[0.16667,0.16667,0.16667,0.16667,0.16667,0,0,0,0.16667,0,0,0,0,0,0,0],[0.2,0.2,0,0.2,0.2,0,0,0,0,0,0,0,0,0,0,0.2],[0.2,0.2,0,0.2,0.2,0,0,0,0,0.2,0,0,0,0,0,0],[0.16667,0.16667,0.16667,0.16667,0.16667,0.16667,0,0,0,0,0,0,0,0,0,0],[0.16667,0.16667,0,0.16667,0.16667,0.16667,0,0,0,0.16667,0,0,0,0,0,0],[0.16667,0.16667,0,0.16667,0.16667,0.16667,0,0,0,0,0,0,0.16667,0,0,0],[0.24,0,0,0.4,0.26,0.05,0,0,0,0,0.05,0,0,0,0,0],[0.14,0,0,0.35,0.41,0.05,0,0,0,0,0.05,0,0,0,0,0],[0.24,0,0,0.35,0.31,0.05,0,0,0,0,0.05,0,0,0,0,0],[0.34,0,0,0.35,0.21,0.05,0,0,0,0,0.05,0,0,0,0,0],[0.44,0,0,0.35,0.11,0.05,0,0,0,0,0.05,0,0,0,0,0],[0.44,0,0,0.15,0.31,0.05,0,0,0,0,0.05,0,0,0,0,0],[0.3765,0,0.1235,0.1235,0,0.3765,0,0,0,0,0,0,0,0,0,0],[0.2,0,0,0,0,0,0.2,0.2,0,0,0,0.2,0,0.2,0,0],[0.2,0,0,0.2,0,0,0.2,0.2,0,0,0,0.2,0,0,0,0],[0.21678,0,0,0,0.21678,0,0,0,0.21678,0,0,0.17483,0,0,0.17483,0]],
+  looMae: 0.776, looR2: 0.625, nTrain: 37
+};
+
+function gprCompVec(fractions) {
+  return HEA_GPR_ELEM_ORDER.map(el => fractions[el] || 0);
+}
+
+function gprPredict(fractions) {
+  const x = gprCompVec(fractions);
+  let pred = HEA_GPR.yMean;
+  let maxK = 0;
+  for (let i = 0; i < HEA_GPR.Xtrain.length; i++) {
+    let d2 = 0;
+    for (let j = 0; j < x.length; j++) d2 += (x[j] - HEA_GPR.Xtrain[i][j]) ** 2;
+    const k = HEA_GPR.amplitudeSq * Math.exp(-d2 / (2 * HEA_GPR.ls ** 2));
+    pred += k * HEA_GPR.alpha[i];
+    if (k > maxK) maxK = k;
+  }
+  // Normalised similarity: k_max / amplitude^2 (= 1 when query is identical to training)
+  const similarity = Math.min(1, maxK / HEA_GPR.amplitudeSq);
+  return { tc: pred, similarity };
+}
+
+function vcaFeatures(fractions) {
+  const elems = Object.keys(fractions);
+  const xs = elems.map(e => fractions[e]);
+  const d = elems.map(e => HEA_ELEM_DATA[e] || { dos_ef: 1.5, vec: 5, radius: 140 });
+  const vecArr = d.map(x => x.vec);
+  const rArr   = d.map(x => x.radius);
+  const dosArr = d.map(x => x.dos_ef);
+
+  const vecMean = xs.reduce((s, x, i) => s + x * vecArr[i], 0);
+  const dosMix  = xs.reduce((s, x, i) => s + x * dosArr[i], 0);
+  const rMean   = xs.reduce((s, x, i) => s + x * rArr[i], 0);
+  const deltaR  = Math.sqrt(xs.reduce((s, x, i) => s + x * (1 - rArr[i] / rMean) ** 2, 0));
+  const sMix    = -xs.reduce((s, x) => s + (x > 0 ? x * Math.log(x) : 0), 0);
+  return { vecMean, dosMix, deltaR, sMix };
+}
+
+function renderPhysicsModel(fractions) {
+  const sec = $("physicsSection");
+  if (!fractions) { sec.style.display = "none"; return; }
+  sec.style.display = "";
+
+  const { tc, similarity } = gprPredict(fractions);
+  const { vecMean, dosMix, deltaR, sMix } = vcaFeatures(fractions);
+
+  // Prediction display
+  const tcClamped = Math.max(0.1, Math.min(20, tc));
+  $("physTcVal").textContent = tcClamped.toFixed(2);
+  $("physTcUnc").textContent = `± ${HEA_GPR.looMae.toFixed(2)} K (LOO-CV)`;
+
+  // Confidence / similarity bar
+  const pct = Math.round(similarity * 100);
+  const bar = $("physConfBar");
+  bar.style.width = pct + "%";
+  bar.className = "confidence-bar-fill" + (pct < 30 ? " low" : pct < 60 ? " mid" : "");
+  $("physConfPct").textContent = `${pct}% — ${pct < 30 ? "extrapolation" : pct < 60 ? "moderate" : "well-covered"}`;
+  $("physExtrapWarn").classList.toggle("visible", pct < 35);
+
+  // VEC descriptor
+  const vecItem = $("physVecItem");
+  $("physVecVal").textContent = vecMean.toFixed(2);
+  vecItem.className = "phys-desc-item" + (vecMean >= 4.3 && vecMean <= 5.7 ? " good" : vecMean < 4.0 || vecMean > 6.5 ? " bad" : " warn");
+
+  // DOS descriptor
+  $("physDosVal").textContent = dosMix.toFixed(2);
+  const dosItem = $("physDosItem");
+  dosItem.className = "phys-desc-item" + (dosMix > 2.0 ? " good" : dosMix > 1.4 ? " warn" : " bad");
+
+  // Size mismatch
+  $("physDeltaVal").textContent = (deltaR * 100).toFixed(1) + "%";
+  const dItem = $("physDeltaItem");
+  dItem.className = "phys-desc-item" + (deltaR < 0.04 ? " good" : deltaR < 0.07 ? " warn" : " bad");
+
+  // Mixing entropy
+  $("physEntropyVal").textContent = (sMix).toFixed(2);
+  const entropyItem = $("physEntropyItem");
+  entropyItem.className = "phys-desc-item" + (sMix > 1.4 ? " good" : " warn");
+}
+
+const HEA_LITERATURE = [{"label": "Ta₃₄Nb₃₃Hf₈Zr₁₄Ti₁₁", "f": {"Ta": 0.34, "Nb": 0.33, "Hf": 0.08, "Zr": 0.14, "Ti": 0.11}, "tc": 7.3, "st": "BCC", "ref": "Kozelj et al. (2014) PRL 113, 107001"}, {"label": "Ta₂₀Nb₂₀Hf₂₀Zr₂₀Ti₂₀", "f": {"Ta": 0.2, "Nb": 0.2, "Hf": 0.2, "Zr": 0.2, "Ti": 0.2}, "tc": 7.12, "st": "BCC", "ref": "Vrtnik et al. (2016)"}, {"label": "(TaNb)₇₀(ZrHfTi)₃₀", "f": {"Ta": 0.35, "Nb": 0.35, "Hf": 0.1, "Zr": 0.1, "Ti": 0.1}, "tc": 8.03, "st": "BCC", "ref": "von Rohr et al. (2016)"}, {"label": "(TaNb)₆₇(ZrHfTi)₃₃", "f": {"Ta": 0.335, "Nb": 0.335, "Hf": 0.11, "Zr": 0.11, "Ti": 0.11}, "tc": 7.75, "st": "BCC", "ref": "von Rohr et al. (2016)"}, {"label": "(TaNb)₆₀(ZrHfTi)₄₀", "f": {"Ta": 0.3003, "Nb": 0.3003, "Hf": 0.13313, "Zr": 0.13313, "Ti": 0.13313}, "tc": 7.56, "st": "BCC", "ref": "von Rohr et al. (2016)"}, {"label": "(TaNb)₅₀(ZrHfTi)₅₀", "f": {"Ta": 0.24975, "Nb": 0.24975, "Hf": 0.16683, "Zr": 0.16683, "Ti": 0.16683}, "tc": 6.46, "st": "BCC", "ref": "von Rohr et al. (2016)"}, {"label": "(TaNb)₁₆(ZrHfTi)₈₄", "f": {"Ta": 0.08, "Nb": 0.08, "Hf": 0.28, "Zr": 0.28, "Ti": 0.28}, "tc": 4.52, "st": "BCC", "ref": "von Rohr et al. (2016)"}, {"label": "Ta₁/₆Nb₂/₆Hf₁/₆Zr₁/₆Ti₁/₆", "f": {"Ta": 0.16667, "Nb": 0.33333, "Hf": 0.16667, "Zr": 0.16667, "Ti": 0.16667}, "tc": 7.85, "st": "BCC", "ref": "Kim et al. (2019)"}, {"label": "Nb₃₄Ti₃₃Zr₁₄Ta₁₁Hf₈", "f": {"Nb": 0.34, "Ti": 0.33, "Zr": 0.14, "Ta": 0.11, "Hf": 0.08}, "tc": 7.5, "st": "BCC", "ref": "Sun et al. (2019)"}, {"label": "Re₂₀Nb₂₀Hf₂₀Zr₂₀Ti₂₀", "f": {"Re": 0.2, "Nb": 0.2, "Hf": 0.2, "Zr": 0.2, "Ti": 0.2}, "tc": 5.3, "st": "BCC", "ref": "Marik et al. (2018)"}, {"label": "Ta₅Nb₂₅Hf₂₅Re₁₀Ti₃₅", "f": {"Ta": 0.05, "Nb": 0.25, "Hf": 0.25, "Re": 0.1, "Ti": 0.35}, "tc": 3.95, "st": "BCC", "ref": "Hattori et al. (2020)"}, {"label": "Ta₅Nb₃₅Hf₂₀Re₁₀Ti₃₀", "f": {"Ta": 0.05, "Nb": 0.35, "Hf": 0.2, "Re": 0.1, "Ti": 0.3}, "tc": 4.38, "st": "BCC", "ref": "Hattori et al. (2020)"}, {"label": "Ta₁₅Nb₃₅Hf₁₅Re₁₀Ti₂₅", "f": {"Ta": 0.15, "Nb": 0.35, "Hf": 0.15, "Re": 0.1, "Ti": 0.25}, "tc": 4.1, "st": "BCC", "ref": "Hattori et al. (2020)"}, {"label": "Ta₂₅Nb₃₅Hf₁₀Re₁₀Ti₂₀", "f": {"Ta": 0.25, "Nb": 0.35, "Hf": 0.1, "Re": 0.1, "Ti": 0.2}, "tc": 3.62, "st": "BCC", "ref": "Hattori et al. (2020)"}, {"label": "Ta₃₅Nb₃₅Hf₅Re₁₀Ti₁₅", "f": {"Ta": 0.35, "Nb": 0.35, "Hf": 0.05, "Re": 0.1, "Ti": 0.15}, "tc": 3.25, "st": "BCC", "ref": "Hattori et al. (2020)"}, {"label": "Mo₂₀Nb₂₀Hf₂₀Zr₂₀Ti₂₀", "f": {"Mo": 0.2, "Nb": 0.2, "Hf": 0.2, "Zr": 0.2, "Ti": 0.2}, "tc": 4.1, "st": "BCC", "ref": "Ma et al. (2021)"}, {"label": "Ta₂₀Nb₂₀Hf₂₀Mo₂₀Ti₂₀", "f": {"Ta": 0.2, "Nb": 0.2, "Hf": 0.2, "Mo": 0.2, "Ti": 0.2}, "tc": 3.42, "st": "BCC", "ref": "Zeng et al. (2021)"}, {"label": "Ta₂₀Nb₂₀Hf₂₀V₂₀Ti₂₀", "f": {"Ta": 0.2, "Nb": 0.2, "Hf": 0.2, "V": 0.2, "Ti": 0.2}, "tc": 4.93, "st": "BCC", "ref": "Shuai et al. (2020)"}, {"label": "Ta₂₀Nb₂₀Hf₂₀Sc₂₀Ti₂₀", "f": {"Ta": 0.2, "Nb": 0.2, "Hf": 0.2, "Sc": 0.2, "Ti": 0.2}, "tc": 6.6, "st": "BCC", "ref": "Krnel et al. (2022)"}, {"label": "Ta₂₀Nb₂₀Hf₂₀Zr₂₀Sc₂₀", "f": {"Ta": 0.2, "Nb": 0.2, "Hf": 0.2, "Zr": 0.2, "Sc": 0.2}, "tc": 7.7, "st": "BCC", "ref": "Krnel et al. (2022)"}, {"label": "Ta₂₀Nb₂₀Sc₂₀Zr₂₀Ti₂₀", "f": {"Ta": 0.2, "Nb": 0.2, "Sc": 0.2, "Zr": 0.2, "Ti": 0.2}, "tc": 7.9, "st": "BCC", "ref": "Krnel et al. (2022)"}, {"label": "Ta₁/₆Nb₁/₆Hf₁/₆Zr₁/₆Ti₁/₆Sc₁/₆", "f": {"Ta": 0.16667, "Nb": 0.16667, "Hf": 0.16667, "Zr": 0.16667, "Ti": 0.16667, "Sc": 0.16667}, "tc": 7.2, "st": "BCC", "ref": "Krnel et al. (2022)"}, {"label": "Ta₂₀Nb₂₀Fe₂₀Zr₂₀Ti₂₀", "f": {"Ta": 0.2, "Nb": 0.2, "Fe": 0.2, "Zr": 0.2, "Ti": 0.2}, "tc": 6.87, "st": "BCC", "ref": "Kim et al. (2021)"}, {"label": "Ta₂₀Nb₂₀Ge₂₀Zr₂₀Ti₂₀", "f": {"Ta": 0.2, "Nb": 0.2, "Ge": 0.2, "Zr": 0.2, "Ti": 0.2}, "tc": 8.46, "st": "BCC", "ref": "Kim et al. (2021)"}, {"label": "Ta₁/₆Nb₁/₆Hf₁/₆Zr₁/₆Ti₁/₆V₁/₆", "f": {"Ta": 0.16667, "Nb": 0.16667, "Hf": 0.16667, "Zr": 0.16667, "Ti": 0.16667, "V": 0.16667}, "tc": 5.09, "st": "BCC", "ref": "Kim et al. (2021)"}, {"label": "Ta₁/₆Nb₁/₆Ge₁/₆V₁/₆Zr₁/₆Ti₁/₆", "f": {"Ta": 0.16667, "Nb": 0.16667, "Ge": 0.16667, "V": 0.16667, "Zr": 0.16667, "Ti": 0.16667}, "tc": 8.4, "st": "BCC", "ref": "Kim et al. (2021)"}, {"label": "Ta₁/₆Nb₁/₆Si₁/₆V₁/₆Zr₁/₆Ti₁/₆", "f": {"Ta": 0.16667, "Nb": 0.16667, "Si": 0.16667, "V": 0.16667, "Zr": 0.16667, "Ti": 0.16667}, "tc": 4.29, "st": "BCC", "ref": "Kim et al. (2021)"}, {"label": "Al₅Nb₂₄V₅Zr₂₆Ti₄₀", "f": {"Al": 0.05, "Nb": 0.24, "V": 0.05, "Zr": 0.26, "Ti": 0.4}, "tc": 5.36, "st": "BCC", "ref": "Harayama et al. (2021)"}, {"label": "Al₅Nb₁₄V₅Zr₄₁Ti₃₅", "f": {"Al": 0.05, "Nb": 0.14, "V": 0.05, "Zr": 0.41, "Ti": 0.35}, "tc": 4.73, "st": "BCC", "ref": "Harayama et al. (2021)"}, {"label": "Al₅Nb₂₄V₅Zr₃₁Ti₃₅", "f": {"Al": 0.05, "Nb": 0.24, "V": 0.05, "Zr": 0.31, "Ti": 0.35}, "tc": 5.45, "st": "BCC", "ref": "Harayama et al. (2021)"}, {"label": "Al₅Nb₃₄V₅Zr₂₁Ti₃₅", "f": {"Al": 0.05, "Nb": 0.34, "V": 0.05, "Zr": 0.21, "Ti": 0.35}, "tc": 6.47, "st": "BCC", "ref": "Harayama et al. (2021)"}, {"label": "Al₅Nb₄₄V₅Zr₁₁Ti₃₅", "f": {"Al": 0.05, "Nb": 0.44, "V": 0.05, "Zr": 0.11, "Ti": 0.35}, "tc": 6.75, "st": "BCC", "ref": "Harayama et al. (2021)"}, {"label": "Al₅Nb₄₄V₅Zr₃₁Ti₁₅", "f": {"Al": 0.05, "Nb": 0.44, "V": 0.05, "Zr": 0.31, "Ti": 0.15}, "tc": 6.98, "st": "BCC", "ref": "Harayama et al. (2021)"}, {"label": "(VNb)₀.₇₅(TiHf)₀.₂₅", "f": {"V": 0.3765, "Nb": 0.3765, "Ti": 0.1235, "Hf": 0.1235}, "tc": 5.2, "st": "BCC", "ref": "Sobota et al. (2025)"}, {"label": "Mo₂₀Nb₂₀Re₂₀Rh₂₀Ru₂₀", "f": {"Mo": 0.2, "Nb": 0.2, "Re": 0.2, "Rh": 0.2, "Ru": 0.2}, "tc": 4.0, "st": "FCC (Type-B)", "ref": "Sun & Cava (2019)"}, {"label": "Mo₂₀Nb₂₀Re₂₀Rh₂₀Ti₂₀", "f": {"Mo": 0.2, "Nb": 0.2, "Re": 0.2, "Rh": 0.2, "Ti": 0.2}, "tc": 5.0, "st": "FCC (Type-B)", "ref": "Sun & Cava (2019)"}, {"label": "(ScZrNb)₆₅(RhPd)₃₅", "f": {"Sc": 0.21678, "Zr": 0.21678, "Nb": 0.21678, "Rh": 0.17483, "Pd": 0.17483}, "tc": 9.3, "st": "CsCl (Type-C)", "ref": "Stolze et al. (2018)"}];
+
+/* ---------- k-NN Composition Similarity ---------- */
+function compositionDist(f1, f2) {
+  const elems = new Set([...Object.keys(f1), ...Object.keys(f2)]);
+  let sum = 0;
+  for (const el of elems) { const d = (f1[el] || 0) - (f2[el] || 0); sum += d * d; }
+  return Math.sqrt(sum);
+}
+
+function findKnn(fractions, k) {
+  return HEA_LITERATURE
+    .map(e => ({ ...e, dist: compositionDist(fractions, e.f) }))
+    .sort((a, b) => a.dist - b.dist)
+    .slice(0, k);
+}
+
+function knnTcEstimate(neighbors) {
+  if (!neighbors.length) return null;
+  if (neighbors[0].dist < 0.001) return neighbors[0].tc;
+  let wSum = 0, tcSum = 0;
+  for (const n of neighbors) { const w = 1 / (n.dist + 0.01); wSum += w; tcSum += w * n.tc; }
+  return tcSum / wSum;
+}
+
+function knnMatchScore(dist) {
+  return Math.max(0, Math.round((1 - dist / 0.7) * 100));
+}
+
+function renderLitKnn(fractions) {
+  const sec = $("litSection");
+  if (!fractions) { sec.style.display = "none"; return; }
+  sec.style.display = "";
+
+  const top5 = findKnn(fractions, 5);
+  const top3 = top5.slice(0, 3);
+  const est = knnTcEstimate(top5);
+  $("knnEstimate").textContent = est !== null ? est.toFixed(2) : "--";
+
+  $("knnList").innerHTML = top3.map((n, i) => {
+    const score = knnMatchScore(n.dist);
+    const col = score >= 75 ? "var(--sc-blue)" : score >= 45 ? "var(--accent)" : "var(--amber)";
+    return `<div class="knn-item">
+      <div class="knn-rank">${i + 1}</div>
+      <div>
+        <div class="knn-formula">${n.label}</div>
+        <div class="knn-meta">${n.st}</div>
+        <div class="knn-ref">${n.ref}</div>
+      </div>
+      <div>
+        <div class="knn-bar-wrap">
+          <div class="knn-bar-track">
+            <div class="knn-bar-fill" style="width:${score}%;background:${col}"></div>
+          </div>
+          <div class="knn-bar-pct">${score}%</div>
+        </div>
+      </div>
+      <div class="knn-tc-badge">${n.tc.toFixed(2)}<span class="knn-tc-unit"> K</span></div>
+    </div>`;
+  }).join("");
+}
+
+/* =========================================================
+   Materials Project API Integration
+   ========================================================= */
+const MP_API = "https://api.materialsproject.org";
+
+function getMPKey() { try { return localStorage.getItem("hes_mp_key") || ""; } catch(e) { return ""; } }
+function saveMPKey(k) { try { localStorage.setItem("hes_mp_key", k.trim()); } catch(e) {} }
+
+function updateMPKeyUX() {
+  const key = getMPKey();
+  const badge = $("mpBadge");
+  if (key) {
+    $("mpKeyPanel").style.display = "none";
+    $("mpResultsPanel").style.display = "";
+    badge.textContent = "Connected";
+    badge.style.cssText = "background:rgba(34,197,94,0.14);color:var(--sc-cyan);border-color:rgba(34,197,94,0.25)";
+  } else {
+    $("mpKeyPanel").style.display = "";
+    $("mpResultsPanel").style.display = "none";
+    badge.textContent = "API key required";
+    badge.style.cssText = "";
+  }
+}
+
+async function queryMPBinaries(fractions) {
+  if (!getMPKey()) return;
+  const elements = Object.keys(fractions);
+  $("mpSection").style.display = "";
+  updateMPKeyUX();
+
+  const pairs = [];
+  for (let i = 0; i < elements.length; i++)
+    for (let j = i + 1; j < elements.length; j++)
+      pairs.push(`${elements[i]}-${elements[j]}`);
+
+  $("mpStatus").style.display = "";
+  $("mpBinaryGrid").innerHTML = "";
+
+  const key = getMPKey();
+  const results = await Promise.all(pairs.map(async chemsys => {
+    try {
+      const url = `${MP_API}/materials/summary/?chemsys=${chemsys}&_fields=material_id,formula_pretty,is_metal,e_above_hull,symmetry,band_gap&_limit=3`;
+      const res = await fetch(url, { headers: { "X-API-KEY": key, "Accept": "application/json" } });
+      if (!res.ok) return [];
+      const json = await res.json();
+      return (json.data || []).map(c => ({ ...c, chemsys }));
+    } catch { return []; }
+  }));
+
+  $("mpStatus").style.display = "none";
+
+  const compounds = results.flat()
+    .filter(c => c.is_metal)
+    .sort((a, b) => (a.e_above_hull || 0) - (b.e_above_hull || 0));
+
+  if (!compounds.length) {
+    $("mpBinaryGrid").innerHTML = `<p class="mp-status">No metallic binary sub-compounds found in Materials Project.</p>`;
+    return;
+  }
+
+  $("mpBinaryGrid").innerHTML = compounds.map(c => {
+    const stable = (c.e_above_hull || 0) < 0.01;
+    const crystal = c.symmetry ? (c.symmetry.crystal_system || "") : "";
+    const hull = `${(c.e_above_hull || 0).toFixed(3)} eV/atom`;
+    return `<div class="mp-compound metallic">
+      <div class="mp-formula">${c.formula_pretty}</div>
+      <div class="mp-meta">${crystal}</div>
+      <div class="mp-meta">${hull} above hull</div>
+      <span class="mp-hull-chip ${stable ? 'stable' : 'meta'}">${stable ? 'Stable' : 'Metastable'}</span>
+    </div>`;
+  }).join("");
+}
+
+/* ---------- Application Bootstrap ---------- */
+async function boot() {
+  $("formulaInput").addEventListener("input", onFormulaInput);
+  $("formulaInput").addEventListener("keydown", e => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      executePrediction();
+    }
+  });
+
+  $("btnRoll").onclick = fetchRandomAlloy;
+
+  // Materials Project key UX
+  if (getMPKey()) { $("mpSection").style.display = ""; updateMPKeyUX(); }
+  $("btnSaveMpKey").onclick = () => {
+    const k = $("mpKeyInput").value.trim();
+    if (!k) return;
+    saveMPKey(k);
+    updateMPKeyUX();
+    $("mpSection").style.display = "";
+    if (currentParsed) queryMPBinaries(currentParsed.fractions);
+  };
+  $("btnChangeMpKey").onclick = () => { saveMPKey(""); updateMPKeyUX(); };
+  $("btnPredict").onclick = executePrediction;
+
+  document.querySelectorAll(".chip-example").forEach(chip => {
+    chip.onclick = () => {
+      $("formulaInput").value = chip.dataset.formula;
+      onFormulaInput();
+      executePrediction();
+    };
+  });
+
+  // Watch system color-scheme changes to redraw charts cleanly
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+    if (selectedModelId) {
+      drawParity(selectedModelId);
+      drawDistribution();
+      drawImportances(selectedModelId);
+      if (latestTc !== null) {
+        const m = META.models.find(x => x.id === selectedModelId);
+        drawCryoScale(latestTc, m ? m.metrics.MAE : 0.8);
+      }
+    }
+  });
+
+  // Fetch Metadata from Render API
+  try {
+    META = await fetchJsonWithWake(`${API_BASE}/meta`);
+    if (META && META.models && META.models.length > 0) {
+      selectedModelId = META.models[0].id;
+      renderModelSelector();
+      selectModel(selectedModelId);
+      drawDistribution();
+    }
+  } catch (err) {
+    console.error("Meta initialization failed:", err);
+  }
+
+  // Initial parse and baseline prediction
+  onFormulaInput();
+  drawCryoScale(0.0, 0.8);
+}
+
+boot();
+</script>
+</body>
+</html>
