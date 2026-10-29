@@ -1311,21 +1311,21 @@
     <section id="physicsSection" style="display:none">
       <div class="card">
         <div class="card-header">
-          <h2 class="card-title">HEA Physics Model</h2>
-          <span class="card-badge">GPR &middot; 37 HEA entries &middot; LOO-MAE 0.78 K</span>
+          <h2 class="card-title">HEA-Specific Estimate</h2>
+          <span class="card-badge">37 verified HEA superconductors &middot; leave-one-out error 0.78 K</span>
         </div>
         <div class="phys-extrapolation-warning" id="physExtrapWarn">
-          Composition is far from all 37 training entries. Prediction is an extrapolation and less reliable.
+          This composition is unlike anything in the 37-entry training set. The estimate below is an extrapolation and should be treated with caution.
         </div>
         <div class="phys-main-row">
           <div class="phys-pred-block">
-            <span class="phys-pred-label">GPR T<sub>c</sub></span>
+            <span class="phys-pred-label">Estimated T<sub>c</sub></span>
             <span class="phys-pred-val" id="physTcVal">--</span>
             <span class="phys-pred-unit">K</span>
             <span class="phys-pred-unc" id="physTcUnc"></span>
           </div>
           <div class="phys-confidence">
-            <span class="phys-conf-label">Similarity to training data</span>
+            <span class="phys-conf-label">How close is this to known HEA superconductors?</span>
             <div class="confidence-bar-wrap">
               <div class="confidence-bar-fill" id="physConfBar" style="width:0%"></div>
             </div>
@@ -1334,30 +1334,31 @@
         </div>
         <div class="phys-desc-grid">
           <div class="phys-desc-item" id="physVecItem">
-            <span class="phys-desc-key">VEC (mean)</span>
+            <span class="phys-desc-key">Valence electrons (avg)</span>
             <span class="phys-desc-val" id="physVecVal">--</span>
-            <span class="phys-desc-note">optimal 4.5&ndash;5.5 for BCC</span>
+            <span class="phys-desc-note">4.5&ndash;5.5 favours superconductivity</span>
           </div>
           <div class="phys-desc-item" id="physDosItem">
-            <span class="phys-desc-key">N(E<sub>F</sub>) mix (VCA)</span>
+            <span class="phys-desc-key">Electron density at Fermi level</span>
             <span class="phys-desc-val" id="physDosVal">--</span>
-            <span class="phys-desc-note">states/eV/atom (BCS key)</span>
+            <span class="phys-desc-note">states/eV/atom &mdash; higher is better for Tc</span>
           </div>
           <div class="phys-desc-item" id="physDeltaItem">
-            <span class="phys-desc-key">&delta; size mismatch</span>
+            <span class="phys-desc-key">Atom size mismatch</span>
             <span class="phys-desc-val" id="physDeltaVal">--</span>
-            <span class="phys-desc-note">lattice distortion</span>
+            <span class="phys-desc-note">distorts the crystal lattice</span>
           </div>
           <div class="phys-desc-item" id="physEntropyItem">
-            <span class="phys-desc-key">S<sub>mix</sub> / R</span>
+            <span class="phys-desc-key">Mixing entropy</span>
             <span class="phys-desc-val" id="physEntropyVal">--</span>
-            <span class="phys-desc-note">configurational entropy</span>
+            <span class="phys-desc-note">measure of how "high-entropy" the alloy is</span>
           </div>
         </div>
         <p class="chart-caption">
-          Gaussian Process Regression trained on 37 experimentally verified HEA superconductors.
-          Features: composition fractions in 16-element space (BCC-family). VCA N(E<sub>F</sub>) from Papaconstantopoulos band-structure theory.
-          LOO-CV MAE 0.78 K, R<sup>2</sup> 0.63. Confidence = max kernel similarity to training set.
+          <strong>How this works:</strong> A Gaussian process model was trained on the 37 experimentally measured HEA superconductors shown in the literature panel below.
+          It estimates Tc by interpolating between the compositions it has seen. The "how close" bar measures compositional similarity to those 37 entries &mdash; low similarity means the prediction is unreliable.
+          Leave-one-out cross-validation error: 0.78 K. R<sup>2</sup> = 0.63.
+          <strong>Limitation:</strong> 37 samples is a very small dataset. The server model above was trained on 3,319 superconductors but only 66 of them are HEAs, so neither model is definitive for this class of materials.
         </p>
       </div>
     </section>
@@ -1412,9 +1413,10 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <p>
-        Phase classifier trained on 11,247 experimentally observed high-entropy alloys (Peivaste et al., Scientific Reports, 2023).
-        Tc models use 138 Magpie composition descriptors (Ward et al., 2016).
-        Predictions are model estimates, not measurements.
+        Phase classifier trained on 11,247 high-entropy alloys (Peivaste et al., Scientific Reports, 2023).
+        Server Tc model trained on 3,319 superconductors (66 HEAs) using Magpie composition descriptors (Ward et al., 2016).
+        HEA-specific estimate trained on 37 verified HEA superconductors from the literature.
+        All predictions are model estimates, not measurements. Neither model is specific enough to be relied upon for this class of materials.
       </p>
       <div>
         <a href="../machine-learning/" class="back-link" style="padding-left:0;">

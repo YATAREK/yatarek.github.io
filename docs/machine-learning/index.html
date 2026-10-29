@@ -1028,7 +1028,7 @@ details.refs-toggle[open] summary::after { content: "−"; }
   <div class="next-box" style="margin-top:48px">
     <div>
       <div class="next-title">Ongoing development</div>
-      <p class="next-body">A physics-informed HEA-specific model is in development, combining DFT electronic structure data from LeMaterial with the 46-entry experimental dataset to produce a model grounded in BCS theory. An active learning loop and a retrained supercapacitor surrogate are planned next.</p>
+      <p class="next-body">An HEA-specific Gaussian process model trained on 37 verified HEA superconductors is now live in the Tc predictor. It interpolates between known compositions rather than learning general physics, because only 37 experimental HEA Tc values exist in the literature. A retrained supercapacitor surrogate and active learning to expand the HEA dataset are planned next.</p>
     </div>
     <a href="../contact/" class="next-cta">Contact me</a>
   </div>
@@ -1064,7 +1064,6 @@ details.refs-toggle[open] summary::after { content: "−"; }
         <li>von Rohr et al. (2016). Chemical tuning of Tc in superconducting BCC-HEAs. <em>APL Materials</em>, 4, 026102.</li>
         <li>Stolze et al. (2018). High-entropy alloy superconductors with CsCl structure. <em>Chemistry of Materials</em>, 30, 906.</li>
         <li>Kozelj et al. (2014). Discovery of a superconducting high-entropy alloy. <em>PRL</em>, 113, 107001.</li>
-        <li>Duval et al. (2024). LeMaterial: an open source initiative to accelerate materials discovery. Hugging Face blog.</li>
         <li>NIMS Materials Data Repository. SuperCon database, version 240322. CC BY 4.0. <a href="https://mdr.nims.go.jp" target="_blank" rel="noopener">mdr.nims.go.jp</a></li>
       </ul>
     </div>
