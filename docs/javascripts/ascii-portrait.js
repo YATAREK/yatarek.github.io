@@ -70,11 +70,21 @@
 
       function paint(maxRow, jitter) {
         ctx.clearRect(0, 0, W, W);
+        const light = document.body.getAttribute("data-md-color-scheme") !== "slate";
+        if (light) {
+          // dark backdrop only behind the person, so the photo area reads as a screen
+          ctx.globalAlpha = 1;
+          ctx.fillStyle = "#141312";
+          for (const cell of cells) {
+            if (cell.bg || cell.r > maxRow) continue;
+            ctx.fillRect(cell.x - cw / 2 - 0.5, cell.y - ch / 2 - 0.5, cw + 1, ch + 1);
+          }
+        }
         for (const cell of cells) {
           if (cell.r > maxRow) continue;
           if (cell.bg) {
-            ctx.globalAlpha = 0.10;
-            ctx.fillStyle = "#9ecbf0";
+            ctx.globalAlpha = light ? 0.18 : 0.10;
+            ctx.fillStyle = light ? "#5b8fb9" : "#9ecbf0";
             ctx.fillText(".", cell.x, cell.y);
             continue;
           }
@@ -87,7 +97,15 @@
         ctx.globalAlpha = 1;
       }
 
-      if (reduced) { paint(ROWS, false); return; }
+      if (reduced) {
+        paint(ROWS, false);
+        // repaint when the visitor switches between light and dark mode
+        const mo = new MutationObserver(() => paint(ROWS, false));
+        mo.observe(document.body, { attributes: true, attributeFilter: ["data-md-color-scheme"] });
+        const prevCleanup = cleanup;
+        cleanup = () => { mo.disconnect(); prevCleanup(); };
+        return;
+      }
 
       // print row by row
       const PRINT_MS = 1500;
