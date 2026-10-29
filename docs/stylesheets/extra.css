@@ -465,3 +465,178 @@
   .md-typeset .tl-item { padding-left: 4.2rem; }
   .md-typeset .tl-logo { left: 1.3rem; width: 2.4rem; height: 2.4rem; }
 }
+
+/* ---- Holographic talking portrait (Home hero) ----------------------------- */
+:root { --holo: #6fd3ff; --holo-deep: #2e8fd6; }
+.holo {
+  position: relative;
+  width: 210px;
+  flex-shrink: 0;
+  padding-bottom: 34px;           /* room for the projector base */
+  perspective: 700px;
+}
+.holo__stage {
+  position: relative;
+  width: 210px;
+  height: 210px;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.25s ease-out;
+  animation: holo-float 5s ease-in-out infinite;
+}
+@keyframes holo-float {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -6px; }
+}
+
+/* caption ring */
+.holo__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  animation: holo-spin 28s linear infinite;
+}
+@keyframes holo-spin { to { rotate: 360deg; } }
+.holo__track {
+  fill: none;
+  stroke: var(--holo);
+  stroke-width: 1;
+  stroke-dasharray: 2 5;
+  opacity: 0.55;
+}
+.holo__pulse {
+  fill: none;
+  stroke: var(--holo);
+  stroke-width: 1.5;
+  opacity: 0;
+  transform-origin: 110px 110px;
+}
+.holo.is-talking .holo__pulse { animation: holo-voice 0.9s ease-out infinite; }
+@keyframes holo-voice {
+  0%   { opacity: 0.7; transform: scale(0.96); }
+  100% { opacity: 0;   transform: scale(1.06); }
+}
+.holo__orbit {
+  position: absolute;
+  inset: 0;
+  animation: holo-spin 28s linear infinite;
+}
+.holo__caption { position: absolute; inset: 0; }
+.holo__caption span {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  height: 50%;
+  width: 1ch;
+  margin-left: -0.5ch;
+  transform-origin: 50% 100%;
+  text-align: center;
+  color: var(--holo);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: 0 0 4px rgba(111, 211, 255, 0.85);
+}
+[data-md-color-scheme="default"] .holo__caption span { text-shadow: none; }
+
+/* the projected portrait */
+.holo__frame {
+  position: absolute;
+  inset: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  transform: translateZ(30px);
+  box-shadow:
+    0 0 0 1px rgba(111, 211, 255, 0.55),
+    0 0 18px rgba(111, 211, 255, 0.45),
+    inset 0 0 22px rgba(111, 211, 255, 0.35);
+  animation: holo-flicker 6s steps(1) infinite;
+}
+.holo__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.15) brightness(1.1);
+  opacity: 0.92;
+}
+.holo__tint {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(111, 211, 255, 0.55), rgba(46, 143, 214, 0.55));
+  mix-blend-mode: color;
+}
+.holo__scan {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(111, 211, 255, 0.18) 0 1px,
+    transparent 1px 3px
+  );
+  animation: holo-scan 3s linear infinite;
+  mix-blend-mode: screen;
+}
+@keyframes holo-scan { to { background-position: 0 30px; } }
+.holo__sweep {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 30%;
+  top: -30%;
+  background: linear-gradient(180deg, transparent, rgba(160, 230, 255, 0.35), transparent);
+  animation: holo-sweep 4.5s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+@keyframes holo-sweep {
+  0%   { top: -30%; }
+  60%  { top: 100%; }
+  100% { top: 100%; }
+}
+@keyframes holo-flicker {
+  0%, 100% { opacity: 1; }
+  41%      { opacity: 0.82; }
+  42%      { opacity: 1; }
+  77%      { opacity: 0.9; transform: translateZ(30px) translateX(1px); }
+  78%      { opacity: 1; transform: translateZ(30px); }
+}
+
+/* light cone and projector base */
+.holo__beam {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  width: 150px;
+  height: 120px;
+  translate: -50% 0;
+  background: radial-gradient(ellipse at 50% 100%, rgba(111, 211, 255, 0.28), transparent 70%);
+  clip-path: polygon(15% 0, 85% 0, 100% 100%, 0 100%);
+  pointer-events: none;
+  animation: holo-beam 3s ease-in-out infinite;
+}
+@keyframes holo-beam { 50% { opacity: 0.6; } }
+.holo__base {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  width: 140px;
+  height: 22px;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(111, 211, 255, 0.55), rgba(46, 143, 214, 0.15) 60%, transparent 72%);
+  box-shadow: 0 0 24px rgba(111, 211, 255, 0.35);
+}
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+[data-md-color-scheme="default"] .holo { --holo: #2a8fd0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .holo__stage, .holo__ring, .holo__orbit, .holo__scan, .holo__sweep, .holo__frame, .holo__beam,
+  .holo.is-talking .holo__pulse { animation: none; }
+}
