@@ -4,43 +4,43 @@ hide:
   - toc
 ---
 
-<div class="hero" markdown>
-<div class="holo" markdown="0" role="img" aria-label="Holographic portrait of Yeasin Tarek">
-<div class="holo__stage">
-<svg class="holo__ring" viewBox="0 0 220 220" aria-hidden="true">
-<circle class="holo__track" cx="110" cy="110" r="104"/>
-<circle class="holo__pulse" cx="110" cy="110" r="108"/>
-</svg>
-<div class="holo__orbit" aria-hidden="true">
-<div class="holo__caption" id="holo-text">
+<h1 class="sr-only">Yeasin Tarek</h1>
+<div class="term" markdown="0">
+<div class="term__bar"><span class="term__dot"></span><span class="term__dot"></span><span class="term__dot"></span><span class="term__title">yeasin@tarek: ~</span></div>
+<div class="term__body">
+<pre class="term__ascii" role="img" aria-label="ASCII art portrait of Yeasin Tarek"><span style="--i:0"> </span><span style="--i:1">                      ~;:::;-----</span><span style="--i:2">                   ;---;:------~-::`&#x27;</span><span style="--i:3">                 -,;::,,&#x27;:~`;~~=~;:`,`</span><span style="--i:4">                 -;;:;;-;;-;,:,,;~:,,:`</span><span style="--i:5">               ::--~+*=~---~~*x*xax++;,</span><span style="--i:6">               ,+xaaaOOOaoooO000O000O=;</span><span style="--i:7">               :+=xooa00#%#00#%#00#aox~</span><span style="--i:8">               :~+=xaO00%@%0#%%%#OOox*-</span><span style="--i:9">              +-=-;;-:,-*xox*~;~+~+xx+=x</span><span style="--i:10">              ~;*+-,:;+;,;0o+:::-~=xo=*a*</span><span style="--i:11">              +~=xaaaax+~x%00OaoaOOao*oo</span><span style="--i:12">               +=xa0#0xooa%%0OO##%%Ox*o</span><span style="--i:13">                -+*oo=;::=ao*o*-*aox+</span><span style="--i:14">                :;~~:`:;;-~*+=~-,++=-</span><span style="--i:15">                 ;-=~~:+xxx**+*;~=~-</span><span style="--i:16">                  :;+*x~-++*o0o++;-+</span><span style="--i:17">                  *;:+xooxoOOo+~;=xo</span><span style="--i:18">               ;-oO*~~~~+++++++*ooa0o-;</span><span style="--i:19">            ;--~~o00Oo=====**xooaO00o~~--;</span><span style="--i:20">       ;---~~~+++*00000ax==**xoO0000*+++~~~---;;</span><span style="--i:21"> ;;;---~~++++=====a0000OaoxxxaO0000O=====++++~~~--;;;</span><span style="--i:22">-~~~~++++=======**oOOax******xoooaOo**=======++++~~~--</span><span style="--i:23">+++++========*************==*************========+++++</span><span style="--i:24">+==========***************==****************=========+</span><span style="--i:25">========******************==******************========</span><span style="--i:26">======********************==********************======</span><span style="--i:27">=====*********************==*********************=====</span><span style="--i:28">=====*********************==*********************=====</span><span style="--i:29">=====*********************==*********************=====</span><span style="--i:30">====**********************==**********************====</span><span style="--i:31">====**********************==**********************====</span></pre>
+<div class="term__info">
+<div class="term__head" style="--i:0"><span><span class="term__user">yeasin</span>@<span class="term__host">tarek</span></span><span class="term__rule"></span></div>
+<div class="term__row" style="--i:1"><span class="term__key">OS</span><span class="term__dots"></span><span class="term__val">Materials Science, Chemistry</span></div>
+<div class="term__row" style="--i:2"><span class="term__key">Host</span><span class="term__dots"></span><span class="term__val">The University of Queensland</span></div>
+<div class="term__row" style="--i:3"><span class="term__key">Role</span><span class="term__dots"></span><span class="term__val">Senior Research Assistant</span></div>
+<div class="term__row" style="--i:4"><span class="term__key">Also</span><span class="term__dots"></span><span class="term__val">Assistant Scientist, EnviroForce</span></div>
+<div class="term__row" style="--i:5"><span class="term__key">Location</span><span class="term__dots"></span><span class="term__val">Brisbane, Australia</span></div>
+<div class="term__row" style="--i:6"><span class="term__key">Uptime</span><span class="term__dots"></span><span class="term__val">PhD 2022 to 2026 · MSc · BSc</span></div>
+<div class="term__gap" style="--i:7"></div>
+<div class="term__row" style="--i:8"><span class="term__key">Research.Now</span><span class="term__dots"></span><span class="term__val">NdFeB magnets, HEA superconductors</span></div>
+<div class="term__row" style="--i:9"><span class="term__key">Research.PhD</span><span class="term__dots"></span><span class="term__val">MgB₂ joints for MRI magnets</span></div>
+<div class="term__row" style="--i:10"><span class="term__key">Research.MSc</span><span class="term__dots"></span><span class="term__val">Hybrid supercapacitor electrodes</span></div>
+<div class="term__row" style="--i:11"><span class="term__key">Tools.Lab</span><span class="term__dots"></span><span class="term__val">Arc melting, SPS, XRD, SEM, TEM, FIB</span></div>
+<div class="term__row" style="--i:12"><span class="term__key">Tools.Code</span><span class="term__dots"></span><span class="term__val">Python, machine learning</span></div>
+<div class="term__head" style="--i:13"><span>Contact</span><span class="term__rule"></span></div>
+<div class="term__row" style="--i:14"><span class="term__key">Email</span><span class="term__dots"></span><span class="term__val"><a href="mailto:m.tarek@uq.edu.au">m.tarek@uq.edu.au</a></span></div>
+<div class="term__row" style="--i:15"><span class="term__key">LinkedIn</span><span class="term__dots"></span><span class="term__val"><a href="https://www.linkedin.com/in/yatarek/">yatarek</a></span></div>
+<div class="term__row" style="--i:16"><span class="term__key">GitHub</span><span class="term__dots"></span><span class="term__val"><a href="https://github.com/YATAREK">YATAREK</a></span></div>
+<div class="term__row" style="--i:17"><span class="term__key">ORCID</span><span class="term__dots"></span><span class="term__val"><a href="https://orcid.org/0000-0003-2113-2486">0000-0003-2113-2486</a></span></div>
+<div class="term__head" style="--i:18"><span>Stats</span><span class="term__rule"></span></div>
+<div class="term__row term__row--pair" style="--i:19"><span class="term__key">Publications</span><span class="term__dots"></span><span class="term__val"><a href="publications/">10</a></span><span class="term__sep">|</span><span class="term__key">Blog posts</span><span class="term__dots"></span><span class="term__val"><a href="blog/">4</a></span></div>
+<div class="term__row term__row--pair" style="--i:20"><span class="term__key">Research projects</span><span class="term__dots"></span><span class="term__val"><a href="research/">4</a></span><span class="term__sep">|</span><span class="term__key">ML tools</span><span class="term__dots"></span><span class="term__val"><a href="machine-learning/">3</a></span></div>
+<div class="term__cursor" style="--i:21"><span class="term__user">yeasin</span>@<span class="term__host">tarek</span>:~$ <span class="term__blink"></span></div>
 </div>
 </div>
-<canvas class="holo__canvas" data-src="assets/portrait-holo.png" width="240" height="235"></canvas>
 </div>
-<div class="holo__beam" aria-hidden="true"></div>
-<p class="sr-only" aria-live="polite" id="holo-live"></p>
-</div>
-<div class="hero__body" markdown>
 
-# Yeasin Tarek
-
-Materials scientist based in Brisbane. I develop permanent magnets and superconductors at
-The University of Queensland, and work as an Assistant Scientist at EnviroForce. My work
-combines synthesis, characterisation and machine learning.
-
-<span class="chips" markdown>
-<span class="chip">Superconductivity</span>
-<span class="chip">Energy Storage</span>
-<span class="chip">Magnetic Materials</span>
-<span class="chip">Advanced Characterisation</span>
-<span class="chip">Nanomaterials</span>
-<span class="chip">Machine Learning</span>
-</span>
+<div class="term-actions" markdown>
 
 [Read my research](research.md){ .md-button .md-button--primary }
 [View publications](publications.md){ .md-button }
 
-</div>
 </div>
 
 ---
