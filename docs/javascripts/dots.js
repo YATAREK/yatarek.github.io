@@ -5,6 +5,17 @@
 // Home only; pauses when hidden; static when prefers-reduced-motion is set.
 // Works with Material's instant navigation.
 (function () {
+  // areas the dashes must never cover
+  const KEEP_CLEAR = [
+    ".term__portrait",
+    ".term__info",
+    ".term-actions .md-button",
+    ".md-content__inner > h1:not(.sr-only)",
+    ".md-content__inner > h2",
+    ".md-content__inner > p",
+    ".md-content__inner > ul",
+    ".md-content__inner > ol",
+  ].join(",");
   let cleanup = null;
 
 
@@ -86,6 +97,23 @@
         ctx.stroke();
       }
       ctx.globalAlpha = 1;
+
+      // keep content clear: erase the portrait (circle), text and buttons
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.fillStyle = "#000";
+      const PAD = 10;
+      for (const el of document.querySelectorAll(KEEP_CLEAR)) {
+        const b = el.getBoundingClientRect();
+        if (b.bottom < -PAD || b.top > H + PAD || b.width === 0) continue;
+        ctx.beginPath();
+        if (el.classList.contains("term__portrait")) {
+          ctx.arc(b.left + b.width / 2, b.top + b.height / 2, b.width / 2 + PAD, 0, Math.PI * 2);
+        } else {
+          ctx.rect(b.left - PAD, b.top - PAD, b.width + PAD * 2, b.height + PAD * 2);
+        }
+        ctx.fill();
+      }
+      ctx.globalCompositeOperation = "source-over";
     }
 
     function frame(now) {
