@@ -479,11 +479,6 @@
   --t-val: #9ecbf0;
   --t-mute: #6e675f;
   margin: 0.4rem 0 1.4rem;
-  border-radius: 14px;
-  background: var(--t-bg);
-  border: 1px solid #2c2925;
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
-  overflow: hidden;
   font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   color: var(--t-fg);
 }
@@ -503,7 +498,7 @@
   display: flex;
   gap: 1.6rem;
   align-items: flex-start;
-  padding: 1.1rem 1.3rem 1.3rem;
+  padding: 0.6rem 0 0.4rem;
 }
 .md-typeset .term__ascii {
   flex: 0 0 auto;
@@ -583,3 +578,39 @@
   .md-typeset .term__ascii span, .md-typeset .term__info > * { animation: none; opacity: 1; }
   .md-typeset .term__blink { animation: none; }
 }
+
+.md-typeset .term__name { font-size: 1.05rem; font-weight: 700; color: var(--t-key); letter-spacing: 0.01em; }
+[data-md-color-scheme="default"] .md-typeset .term { --t-fg: #3b3631; --t-key: #b8572f; --t-val: #2f6f9f; --t-mute: #9a9087; }
+[data-md-color-scheme="default"] .md-typeset .term__ascii { color: #3b3631; }
+
+/* ---- Pop-up page viewer (Experience button) -------------------------------- */
+.popup {
+  width: min(860px, calc(100vw - 32px));
+  max-height: min(86vh, 900px);
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--clay) 35%, transparent);
+  border-radius: 16px;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+.popup::backdrop { background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(3px); }
+.popup[open] { animation: popup-in 0.28s cubic-bezier(.2,.8,.2,1); }
+@keyframes popup-in { from { opacity: 0; transform: translateY(14px) scale(0.98); } to { opacity: 1; transform: none; } }
+.popup__bar {
+  position: sticky; top: 0; z-index: 1;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.7rem 1.1rem;
+  background: var(--md-default-bg-color);
+  border-bottom: 1px solid color-mix(in srgb, var(--steel) 30%, transparent);
+  font-weight: 700;
+}
+.popup__close {
+  border: 0; background: none; cursor: pointer; color: inherit;
+  font-size: 1.4rem; line-height: 1; padding: 0.1rem 0.4rem; border-radius: 8px;
+}
+.popup__close:hover { background: color-mix(in srgb, var(--clay) 15%, transparent); }
+.popup__body { overflow-y: auto; max-height: calc(min(86vh, 900px) - 3.2rem); padding: 0.4rem 1.4rem 1.4rem; }
+.popup__body h1 { display: none; }
+@media (prefers-reduced-motion: reduce) { .popup[open] { animation: none; } }
