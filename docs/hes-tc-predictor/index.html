@@ -1014,6 +1014,57 @@
     text-decoration: underline; background: none; border: none; padding: 0;
   }
   .mp-key-change:hover { color: var(--accent); }
+
+  /* ── Physics Model Panel ─────────────────────────────────── */
+  #physicsSection { grid-column: 1 / -1; }
+  .phys-main-row {
+    display: flex; flex-wrap: wrap; align-items: center;
+    gap: 20px; margin-bottom: 16px;
+  }
+  .phys-pred-block {
+    display: flex; align-items: baseline; gap: 8px; flex-shrink: 0;
+  }
+  .phys-pred-label { font-size: 12px; color: var(--text-secondary); font-weight: 500; white-space: nowrap; }
+  .phys-pred-val {
+    font-family: var(--font-mono); font-size: 32px; font-weight: 700;
+    color: var(--accent); font-variant-numeric: tabular-nums;
+  }
+  .phys-pred-unit { font-size: 16px; color: var(--text-secondary); }
+  .phys-pred-unc { font-size: 12.5px; color: var(--text-tertiary); margin-left: 4px; }
+  .phys-confidence { flex: 1; min-width: 160px; }
+  .phys-conf-label { font-size: 11.5px; color: var(--text-tertiary); display: block; margin-bottom: 6px; }
+  .confidence-bar-wrap {
+    height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-bottom: 4px;
+  }
+  .confidence-bar-fill {
+    height: 100%; border-radius: 3px; transition: width 0.4s ease;
+    background: linear-gradient(90deg, #3b82f6, #10b981);
+  }
+  .confidence-bar-fill.low  { background: #ef4444; }
+  .confidence-bar-fill.mid  { background: #f59e0b; }
+  .phys-conf-pct { font-size: 11px; color: var(--text-tertiary); }
+  .phys-desc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px; margin-bottom: 14px;
+  }
+  .phys-desc-item {
+    background: var(--surface-secondary, rgba(255,255,255,0.04));
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .phys-desc-key { font-size: 11px; color: var(--text-tertiary); display: block; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.07em; }
+  .phys-desc-val { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--text-primary); display: block; }
+  .phys-desc-note { font-size: 10.5px; color: var(--text-tertiary); display: block; margin-top: 2px; }
+  .phys-desc-item.good .phys-desc-val { color: #10b981; }
+  .phys-desc-item.warn .phys-desc-val { color: #f59e0b; }
+  .phys-desc-item.bad  .phys-desc-val { color: #ef4444; }
+  .phys-extrapolation-warning {
+    background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.3);
+    border-radius: 8px; padding: 9px 12px; font-size: 12px; color: #b45309;
+    margin-bottom: 12px; display: none;
+  }
+  .phys-extrapolation-warning.visible { display: block; }
 </style>
 </head>
 <body>
@@ -1255,6 +1306,61 @@
       </div>
     </section>
 
+
+    <!-- Physics-Informed GPR Model -->
+    <section id="physicsSection" style="display:none">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">HEA Physics Model</h2>
+          <span class="card-badge">GPR &middot; 37 HEA entries &middot; LOO-MAE 0.78 K</span>
+        </div>
+        <div class="phys-extrapolation-warning" id="physExtrapWarn">
+          Composition is far from all 37 training entries. Prediction is an extrapolation and less reliable.
+        </div>
+        <div class="phys-main-row">
+          <div class="phys-pred-block">
+            <span class="phys-pred-label">GPR T<sub>c</sub></span>
+            <span class="phys-pred-val" id="physTcVal">--</span>
+            <span class="phys-pred-unit">K</span>
+            <span class="phys-pred-unc" id="physTcUnc"></span>
+          </div>
+          <div class="phys-confidence">
+            <span class="phys-conf-label">Similarity to training data</span>
+            <div class="confidence-bar-wrap">
+              <div class="confidence-bar-fill" id="physConfBar" style="width:0%"></div>
+            </div>
+            <span class="phys-conf-pct" id="physConfPct"></span>
+          </div>
+        </div>
+        <div class="phys-desc-grid">
+          <div class="phys-desc-item" id="physVecItem">
+            <span class="phys-desc-key">VEC (mean)</span>
+            <span class="phys-desc-val" id="physVecVal">--</span>
+            <span class="phys-desc-note">optimal 4.5&ndash;5.5 for BCC</span>
+          </div>
+          <div class="phys-desc-item" id="physDosItem">
+            <span class="phys-desc-key">N(E<sub>F</sub>) mix (VCA)</span>
+            <span class="phys-desc-val" id="physDosVal">--</span>
+            <span class="phys-desc-note">states/eV/atom (BCS key)</span>
+          </div>
+          <div class="phys-desc-item" id="physDeltaItem">
+            <span class="phys-desc-key">&delta; size mismatch</span>
+            <span class="phys-desc-val" id="physDeltaVal">--</span>
+            <span class="phys-desc-note">lattice distortion</span>
+          </div>
+          <div class="phys-desc-item" id="physEntropyItem">
+            <span class="phys-desc-key">S<sub>mix</sub> / R</span>
+            <span class="phys-desc-val" id="physEntropyVal">--</span>
+            <span class="phys-desc-note">configurational entropy</span>
+          </div>
+        </div>
+        <p class="chart-caption">
+          Gaussian Process Regression trained on 37 experimentally verified HEA superconductors.
+          Features: composition fractions in 16-element space (BCC-family). VCA N(E<sub>F</sub>) from Papaconstantopoulos band-structure theory.
+          LOO-CV MAE 0.78 K, R<sup>2</sup> 0.63. Confidence = max kernel similarity to training set.
+        </p>
+      </div>
+    </section>
 
     <!-- Literature Nearest Neighbours -->
     <section id="litSection" style="display:none">
@@ -1555,12 +1661,14 @@ function onFormulaInput() {
     validationMsg.style.color = "var(--amber)";
     btnPredict.disabled = true;
     renderLitKnn(null);
+    renderPhysicsModel(null);
     $("mpSection").style.display = "none";
     return;
   }
 
   btnPredict.disabled = false;
   renderLitKnn(parsed.fractions);
+  renderPhysicsModel(parsed.fractions);
   $("mpSection").style.display = "";
   updateMPKeyUX();
   validationMsg.textContent = `${parsed.numElements} elements detected`;
@@ -2122,6 +2230,115 @@ function drawImportances(modelId) {
    HEA Literature Dataset (46 entries, experimental Tc)
    Sources: NIMS SuperCon CC BY 4.0 + peer-reviewed literature
    ========================================================= */
+// ── Physics-informed GPR model (trained on 37 HEA superconductors) ──────────────────
+// LOO-CV MAE = 0.78 K | R² = 0.63 | kernel: RBF in 16-element composition space
+// Elemental N(E_F) from Papaconstantopoulos band-structure theory
+const HEA_ELEM_DATA = {
+  Nb:{dos_ef:3.60,debye:275,vec:5,radius:146},
+  Ta:{dos_ef:2.36,debye:240,vec:5,radius:146},
+  Hf:{dos_ef:1.38,debye:252,vec:4,radius:159},
+  Ti:{dos_ef:1.89,debye:420,vec:4,radius:147},
+  Zr:{dos_ef:1.57,debye:291,vec:4,radius:160},
+  V: {dos_ef:2.18,debye:380,vec:5,radius:134},
+  Re:{dos_ef:2.77,debye:430,vec:7,radius:137},
+  Mo:{dos_ef:1.52,debye:450,vec:6,radius:139},
+  Sc:{dos_ef:0.92,debye:360,vec:3,radius:162},
+  Ge:{dos_ef:0.08,debye:374,vec:4,radius:122},
+  Al:{dos_ef:0.45,debye:428,vec:3,radius:143},
+  Rh:{dos_ef:1.77,debye:480,vec:9,radius:134},
+  Si:{dos_ef:0.12,debye:640,vec:4,radius:117},
+  Ru:{dos_ef:2.22,debye:600,vec:8,radius:134},
+  Pd:{dos_ef:1.24,debye:274,vec:10,radius:137},
+  Fe:{dos_ef:2.62,debye:470,vec:8,radius:126},
+};
+const HEA_GPR_ELEM_ORDER = ["Nb","Ta","Hf","Ti","Zr","V","Re","Mo","Sc","Ge","Al","Rh","Si","Ru","Pd","Fe"];
+const HEA_GPR = {
+  amplitudeSq: 1.863186,
+  ls:          0.288222,
+  yMean:       6.024054,
+  alpha: [-3.086686,4.851186,5.387367,2.624715,1.017353,-6.076936,-1.177221,1.268735,3.260253,0.935099,-0.769129,-0.666307,-0.409304,-1.573721,-3.80502,-0.852073,-0.981603,1.058664,0.951097,-0.36637,0.246777,-0.113743,0.16525,-0.487712,-2.332311,2.918907,-1.635197,-1.338884,0.136144,-0.569496,0.329031,-0.008753,-0.580461,-0.249677,-0.834817,0.763334,1.112322],
+  Xtrain: [[0.33,0.34,0.08,0.11,0.14,0,0,0,0,0,0,0,0,0,0,0],[0.2,0.2,0.2,0.2,0.2,0,0,0,0,0,0,0,0,0,0,0],[0.35,0.35,0.1,0.1,0.1,0,0,0,0,0,0,0,0,0,0,0],[0.335,0.335,0.11,0.11,0.11,0,0,0,0,0,0,0,0,0,0,0],[0.3003,0.3003,0.13313,0.13313,0.13313,0,0,0,0,0,0,0,0,0,0,0],[0.24975,0.24975,0.16683,0.16683,0.16683,0,0,0,0,0,0,0,0,0,0,0],[0.08,0.08,0.28,0.28,0.28,0,0,0,0,0,0,0,0,0,0,0],[0.33333,0.16667,0.16667,0.16667,0.16667,0,0,0,0,0,0,0,0,0,0,0],[0.34,0.11,0.08,0.33,0.14,0,0,0,0,0,0,0,0,0,0,0],[0.2,0,0.2,0.2,0.2,0,0.2,0,0,0,0,0,0,0,0,0],[0.25,0.05,0.25,0.35,0,0,0.1,0,0,0,0,0,0,0,0,0],[0.35,0.05,0.2,0.3,0,0,0.1,0,0,0,0,0,0,0,0,0],[0.35,0.15,0.15,0.25,0,0,0.1,0,0,0,0,0,0,0,0,0],[0.35,0.25,0.1,0.2,0,0,0.1,0,0,0,0,0,0,0,0,0],[0.35,0.35,0.05,0.15,0,0,0.1,0,0,0,0,0,0,0,0,0],[0.2,0,0.2,0.2,0.2,0,0,0.2,0,0,0,0,0,0,0,0],[0.2,0.2,0.2,0.2,0,0,0,0.2,0,0,0,0,0,0,0,0],[0.2,0.2,0.2,0.2,0,0.2,0,0,0,0,0,0,0,0,0,0],[0.2,0.2,0.2,0.2,0,0,0,0,0.2,0,0,0,0,0,0,0],[0.2,0.2,0.2,0,0.2,0,0,0,0.2,0,0,0,0,0,0,0],[0.2,0.2,0,0.2,0.2,0,0,0,0.2,0,0,0,0,0,0,0],[0.16667,0.16667,0.16667,0.16667,0.16667,0,0,0,0.16667,0,0,0,0,0,0,0],[0.2,0.2,0,0.2,0.2,0,0,0,0,0,0,0,0,0,0,0.2],[0.2,0.2,0,0.2,0.2,0,0,0,0,0.2,0,0,0,0,0,0],[0.16667,0.16667,0.16667,0.16667,0.16667,0.16667,0,0,0,0,0,0,0,0,0,0],[0.16667,0.16667,0,0.16667,0.16667,0.16667,0,0,0,0.16667,0,0,0,0,0,0],[0.16667,0.16667,0,0.16667,0.16667,0.16667,0,0,0,0,0,0,0.16667,0,0,0],[0.24,0,0,0.4,0.26,0.05,0,0,0,0,0.05,0,0,0,0,0],[0.14,0,0,0.35,0.41,0.05,0,0,0,0,0.05,0,0,0,0,0],[0.24,0,0,0.35,0.31,0.05,0,0,0,0,0.05,0,0,0,0,0],[0.34,0,0,0.35,0.21,0.05,0,0,0,0,0.05,0,0,0,0,0],[0.44,0,0,0.35,0.11,0.05,0,0,0,0,0.05,0,0,0,0,0],[0.44,0,0,0.15,0.31,0.05,0,0,0,0,0.05,0,0,0,0,0],[0.3765,0,0.1235,0.1235,0,0.3765,0,0,0,0,0,0,0,0,0,0],[0.2,0,0,0,0,0,0.2,0.2,0,0,0,0.2,0,0.2,0,0],[0.2,0,0,0.2,0,0,0.2,0.2,0,0,0,0.2,0,0,0,0],[0.21678,0,0,0,0.21678,0,0,0,0.21678,0,0,0.17483,0,0,0.17483,0]],
+  looMae: 0.776, looR2: 0.625, nTrain: 37
+};
+
+function gprCompVec(fractions) {
+  return HEA_GPR_ELEM_ORDER.map(el => fractions[el] || 0);
+}
+
+function gprPredict(fractions) {
+  const x = gprCompVec(fractions);
+  let pred = HEA_GPR.yMean;
+  let maxK = 0;
+  for (let i = 0; i < HEA_GPR.Xtrain.length; i++) {
+    let d2 = 0;
+    for (let j = 0; j < x.length; j++) d2 += (x[j] - HEA_GPR.Xtrain[i][j]) ** 2;
+    const k = HEA_GPR.amplitudeSq * Math.exp(-d2 / (2 * HEA_GPR.ls ** 2));
+    pred += k * HEA_GPR.alpha[i];
+    if (k > maxK) maxK = k;
+  }
+  // Normalised similarity: k_max / amplitude^2 (= 1 when query is identical to training)
+  const similarity = Math.min(1, maxK / HEA_GPR.amplitudeSq);
+  return { tc: pred, similarity };
+}
+
+function vcaFeatures(fractions) {
+  const elems = Object.keys(fractions);
+  const xs = elems.map(e => fractions[e]);
+  const d = elems.map(e => HEA_ELEM_DATA[e] || { dos_ef: 1.5, vec: 5, radius: 140 });
+  const vecArr = d.map(x => x.vec);
+  const rArr   = d.map(x => x.radius);
+  const dosArr = d.map(x => x.dos_ef);
+
+  const vecMean = xs.reduce((s, x, i) => s + x * vecArr[i], 0);
+  const dosMix  = xs.reduce((s, x, i) => s + x * dosArr[i], 0);
+  const rMean   = xs.reduce((s, x, i) => s + x * rArr[i], 0);
+  const deltaR  = Math.sqrt(xs.reduce((s, x, i) => s + x * (1 - rArr[i] / rMean) ** 2, 0));
+  const sMix    = -xs.reduce((s, x) => s + (x > 0 ? x * Math.log(x) : 0), 0);
+  return { vecMean, dosMix, deltaR, sMix };
+}
+
+function renderPhysicsModel(fractions) {
+  const sec = $("physicsSection");
+  if (!fractions) { sec.style.display = "none"; return; }
+  sec.style.display = "";
+
+  const { tc, similarity } = gprPredict(fractions);
+  const { vecMean, dosMix, deltaR, sMix } = vcaFeatures(fractions);
+
+  // Prediction display
+  const tcClamped = Math.max(0.1, Math.min(20, tc));
+  $("physTcVal").textContent = tcClamped.toFixed(2);
+  $("physTcUnc").textContent = `± ${HEA_GPR.looMae.toFixed(2)} K (LOO-CV)`;
+
+  // Confidence / similarity bar
+  const pct = Math.round(similarity * 100);
+  const bar = $("physConfBar");
+  bar.style.width = pct + "%";
+  bar.className = "confidence-bar-fill" + (pct < 30 ? " low" : pct < 60 ? " mid" : "");
+  $("physConfPct").textContent = `${pct}% — ${pct < 30 ? "extrapolation" : pct < 60 ? "moderate" : "well-covered"}`;
+  $("physExtrapWarn").classList.toggle("visible", pct < 25);
+
+  // VEC descriptor
+  const vecItem = $("physVecItem");
+  $("physVecVal").textContent = vecMean.toFixed(2);
+  vecItem.className = "phys-desc-item" + (vecMean >= 4.3 && vecMean <= 5.7 ? " good" : vecMean < 4.0 || vecMean > 6.5 ? " bad" : " warn");
+
+  // DOS descriptor
+  $("physDosVal").textContent = dosMix.toFixed(2);
+  const dosItem = $("physDosItem");
+  dosItem.className = "phys-desc-item" + (dosMix > 2.0 ? " good" : dosMix > 1.4 ? " warn" : " bad");
+
+  // Size mismatch
+  $("physDeltaVal").textContent = (deltaR * 100).toFixed(1) + "%";
+  const dItem = $("physDeltaItem");
+  dItem.className = "phys-desc-item" + (deltaR < 0.04 ? " good" : deltaR < 0.07 ? " warn" : " bad");
+
+  // Mixing entropy
+  $("physEntropyVal").textContent = (sMix).toFixed(2);
+  const entropyItem = $("physEntropyItem");
+  entropyItem.className = "phys-desc-item" + (sMix > 1.4 ? " good" : " warn");
+}
+
 const HEA_LITERATURE = [{"label": "Ta₃₄Nb₃₃Hf₈Zr₁₄Ti₁₁", "f": {"Ta": 0.34, "Nb": 0.33, "Hf": 0.08, "Zr": 0.14, "Ti": 0.11}, "tc": 7.3, "st": "BCC", "ref": "Kozelj et al. (2014) PRL 113, 107001"}, {"label": "Ta₂₀Nb₂₀Hf₂₀Zr₂₀Ti₂₀", "f": {"Ta": 0.2, "Nb": 0.2, "Hf": 0.2, "Zr": 0.2, "Ti": 0.2}, "tc": 7.12, "st": "BCC", "ref": "Vrtnik et al. (2016)"}, {"label": "(TaNb)₇₀(ZrHfTi)₃₀", "f": {"Ta": 0.35, "Nb": 0.35, "Hf": 0.1, "Zr": 0.1, "Ti": 0.1}, "tc": 8.03, "st": "BCC", "ref": "von Rohr et al. (2016)"}, {"label": "(TaNb)₆₇(ZrHfTi)₃₃", "f": {"Ta": 0.335, "Nb": 0.335, "Hf": 0.11, "Zr": 0.11, "Ti": 0.11}, "tc": 7.75, "st": "BCC", "ref": "von Rohr et al. (2016)"}, {"label": "(TaNb)₆₀(ZrHfTi)₄₀", "f": {"Ta": 0.3003, "Nb": 0.3003, "Hf": 0.13313, "Zr": 0.13313, "Ti": 0.13313}, "tc": 7.56, "st": "BCC", "ref": "von Rohr et al. (2016)"}, {"label": "(TaNb)₅₀(ZrHfTi)₅₀", "f": {"Ta": 0.24975, "Nb": 0.24975, "Hf": 0.16683, "Zr": 0.16683, "Ti": 0.16683}, "tc": 6.46, "st": "BCC", "ref": "von Rohr et al. (2016)"}, {"label": "(TaNb)₁₆(ZrHfTi)₈₄", "f": {"Ta": 0.08, "Nb": 0.08, "Hf": 0.28, "Zr": 0.28, "Ti": 0.28}, "tc": 4.52, "st": "BCC", "ref": "von Rohr et al. (2016)"}, {"label": "Ta₁/₆Nb₂/₆Hf₁/₆Zr₁/₆Ti₁/₆", "f": {"Ta": 0.16667, "Nb": 0.33333, "Hf": 0.16667, "Zr": 0.16667, "Ti": 0.16667}, "tc": 7.85, "st": "BCC", "ref": "Kim et al. (2019)"}, {"label": "Nb₃₄Ti₃₃Zr₁₄Ta₁₁Hf₈", "f": {"Nb": 0.34, "Ti": 0.33, "Zr": 0.14, "Ta": 0.11, "Hf": 0.08}, "tc": 7.5, "st": "BCC", "ref": "Sun et al. (2019)"}, {"label": "Re₂₀Nb₂₀Hf₂₀Zr₂₀Ti₂₀", "f": {"Re": 0.2, "Nb": 0.2, "Hf": 0.2, "Zr": 0.2, "Ti": 0.2}, "tc": 5.3, "st": "BCC", "ref": "Marik et al. (2018)"}, {"label": "Ta₅Nb₂₅Hf₂₅Re₁₀Ti₃₅", "f": {"Ta": 0.05, "Nb": 0.25, "Hf": 0.25, "Re": 0.1, "Ti": 0.35}, "tc": 3.95, "st": "BCC", "ref": "Hattori et al. (2020)"}, {"label": "Ta₅Nb₃₅Hf₂₀Re₁₀Ti₃₀", "f": {"Ta": 0.05, "Nb": 0.35, "Hf": 0.2, "Re": 0.1, "Ti": 0.3}, "tc": 4.38, "st": "BCC", "ref": "Hattori et al. (2020)"}, {"label": "Ta₁₅Nb₃₅Hf₁₅Re₁₀Ti₂₅", "f": {"Ta": 0.15, "Nb": 0.35, "Hf": 0.15, "Re": 0.1, "Ti": 0.25}, "tc": 4.1, "st": "BCC", "ref": "Hattori et al. (2020)"}, {"label": "Ta₂₅Nb₃₅Hf₁₀Re₁₀Ti₂₀", "f": {"Ta": 0.25, "Nb": 0.35, "Hf": 0.1, "Re": 0.1, "Ti": 0.2}, "tc": 3.62, "st": "BCC", "ref": "Hattori et al. (2020)"}, {"label": "Ta₃₅Nb₃₅Hf₅Re₁₀Ti₁₅", "f": {"Ta": 0.35, "Nb": 0.35, "Hf": 0.05, "Re": 0.1, "Ti": 0.15}, "tc": 3.25, "st": "BCC", "ref": "Hattori et al. (2020)"}, {"label": "Mo₂₀Nb₂₀Hf₂₀Zr₂₀Ti₂₀", "f": {"Mo": 0.2, "Nb": 0.2, "Hf": 0.2, "Zr": 0.2, "Ti": 0.2}, "tc": 4.1, "st": "BCC", "ref": "Ma et al. (2021)"}, {"label": "Ta₂₀Nb₂₀Hf₂₀Mo₂₀Ti₂₀", "f": {"Ta": 0.2, "Nb": 0.2, "Hf": 0.2, "Mo": 0.2, "Ti": 0.2}, "tc": 3.42, "st": "BCC", "ref": "Zeng et al. (2021)"}, {"label": "Ta₂₀Nb₂₀Hf₂₀V₂₀Ti₂₀", "f": {"Ta": 0.2, "Nb": 0.2, "Hf": 0.2, "V": 0.2, "Ti": 0.2}, "tc": 4.93, "st": "BCC", "ref": "Shuai et al. (2020)"}, {"label": "Ta₂₀Nb₂₀Hf₂₀Sc₂₀Ti₂₀", "f": {"Ta": 0.2, "Nb": 0.2, "Hf": 0.2, "Sc": 0.2, "Ti": 0.2}, "tc": 6.6, "st": "BCC", "ref": "Krnel et al. (2022)"}, {"label": "Ta₂₀Nb₂₀Hf₂₀Zr₂₀Sc₂₀", "f": {"Ta": 0.2, "Nb": 0.2, "Hf": 0.2, "Zr": 0.2, "Sc": 0.2}, "tc": 7.7, "st": "BCC", "ref": "Krnel et al. (2022)"}, {"label": "Ta₂₀Nb₂₀Sc₂₀Zr₂₀Ti₂₀", "f": {"Ta": 0.2, "Nb": 0.2, "Sc": 0.2, "Zr": 0.2, "Ti": 0.2}, "tc": 7.9, "st": "BCC", "ref": "Krnel et al. (2022)"}, {"label": "Ta₁/₆Nb₁/₆Hf₁/₆Zr₁/₆Ti₁/₆Sc₁/₆", "f": {"Ta": 0.16667, "Nb": 0.16667, "Hf": 0.16667, "Zr": 0.16667, "Ti": 0.16667, "Sc": 0.16667}, "tc": 7.2, "st": "BCC", "ref": "Krnel et al. (2022)"}, {"label": "Ta₂₀Nb₂₀Fe₂₀Zr₂₀Ti₂₀", "f": {"Ta": 0.2, "Nb": 0.2, "Fe": 0.2, "Zr": 0.2, "Ti": 0.2}, "tc": 6.87, "st": "BCC", "ref": "Kim et al. (2021)"}, {"label": "Ta₂₀Nb₂₀Ge₂₀Zr₂₀Ti₂₀", "f": {"Ta": 0.2, "Nb": 0.2, "Ge": 0.2, "Zr": 0.2, "Ti": 0.2}, "tc": 8.46, "st": "BCC", "ref": "Kim et al. (2021)"}, {"label": "Ta₁/₆Nb₁/₆Hf₁/₆Zr₁/₆Ti₁/₆V₁/₆", "f": {"Ta": 0.16667, "Nb": 0.16667, "Hf": 0.16667, "Zr": 0.16667, "Ti": 0.16667, "V": 0.16667}, "tc": 5.09, "st": "BCC", "ref": "Kim et al. (2021)"}, {"label": "Ta₁/₆Nb₁/₆Ge₁/₆V₁/₆Zr₁/₆Ti₁/₆", "f": {"Ta": 0.16667, "Nb": 0.16667, "Ge": 0.16667, "V": 0.16667, "Zr": 0.16667, "Ti": 0.16667}, "tc": 8.4, "st": "BCC", "ref": "Kim et al. (2021)"}, {"label": "Ta₁/₆Nb₁/₆Si₁/₆V₁/₆Zr₁/₆Ti₁/₆", "f": {"Ta": 0.16667, "Nb": 0.16667, "Si": 0.16667, "V": 0.16667, "Zr": 0.16667, "Ti": 0.16667}, "tc": 4.29, "st": "BCC", "ref": "Kim et al. (2021)"}, {"label": "Al₅Nb₂₄V₅Zr₂₆Ti₄₀", "f": {"Al": 0.05, "Nb": 0.24, "V": 0.05, "Zr": 0.26, "Ti": 0.4}, "tc": 5.36, "st": "BCC", "ref": "Harayama et al. (2021)"}, {"label": "Al₅Nb₁₄V₅Zr₄₁Ti₃₅", "f": {"Al": 0.05, "Nb": 0.14, "V": 0.05, "Zr": 0.41, "Ti": 0.35}, "tc": 4.73, "st": "BCC", "ref": "Harayama et al. (2021)"}, {"label": "Al₅Nb₂₄V₅Zr₃₁Ti₃₅", "f": {"Al": 0.05, "Nb": 0.24, "V": 0.05, "Zr": 0.31, "Ti": 0.35}, "tc": 5.45, "st": "BCC", "ref": "Harayama et al. (2021)"}, {"label": "Al₅Nb₃₄V₅Zr₂₁Ti₃₅", "f": {"Al": 0.05, "Nb": 0.34, "V": 0.05, "Zr": 0.21, "Ti": 0.35}, "tc": 6.47, "st": "BCC", "ref": "Harayama et al. (2021)"}, {"label": "Al₅Nb₄₄V₅Zr₁₁Ti₃₅", "f": {"Al": 0.05, "Nb": 0.44, "V": 0.05, "Zr": 0.11, "Ti": 0.35}, "tc": 6.75, "st": "BCC", "ref": "Harayama et al. (2021)"}, {"label": "Al₅Nb₄₄V₅Zr₃₁Ti₁₅", "f": {"Al": 0.05, "Nb": 0.44, "V": 0.05, "Zr": 0.31, "Ti": 0.15}, "tc": 6.98, "st": "BCC", "ref": "Harayama et al. (2021)"}, {"label": "(VNb)₀.₇₅(TiHf)₀.₂₅", "f": {"V": 0.3765, "Nb": 0.3765, "Ti": 0.1235, "Hf": 0.1235}, "tc": 5.2, "st": "BCC", "ref": "Sobota et al. (2025)"}, {"label": "Mo₂₀Nb₂₀Re₂₀Rh₂₀Ru₂₀", "f": {"Mo": 0.2, "Nb": 0.2, "Re": 0.2, "Rh": 0.2, "Ru": 0.2}, "tc": 4.0, "st": "FCC (Type-B)", "ref": "Sun & Cava (2019)"}, {"label": "Mo₂₀Nb₂₀Re₂₀Rh₂₀Ti₂₀", "f": {"Mo": 0.2, "Nb": 0.2, "Re": 0.2, "Rh": 0.2, "Ti": 0.2}, "tc": 5.0, "st": "FCC (Type-B)", "ref": "Sun & Cava (2019)"}, {"label": "(ScZrNb)₆₅(RhPd)₃₅", "f": {"Sc": 0.21678, "Zr": 0.21678, "Nb": 0.21678, "Rh": 0.17483, "Pd": 0.17483}, "tc": 9.3, "st": "CsCl (Type-C)", "ref": "Stolze et al. (2018)"}];
 
 /* ---------- k-NN Composition Similarity ---------- */
