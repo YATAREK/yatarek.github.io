@@ -621,9 +621,6 @@
   inset: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 0;
+  z-index: -1;            /* behind everything; never blocks menus or links */
   pointer-events: none;
 }
-/* keep page content above the dots */
-.md-container, .md-header { position: relative; z-index: 1; }
-.md-main, .md-main__inner, .md-content { background: transparent; }
