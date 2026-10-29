@@ -60,6 +60,7 @@ extra_css:
 extra_javascript:
   - javascripts/ascii-portrait.js
   - javascripts/popup.js
+  - javascripts/dots.js
 
 
 extra:

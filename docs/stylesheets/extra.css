@@ -614,3 +614,16 @@
 .popup__body { overflow-y: auto; max-height: calc(min(86vh, 900px) - 3.2rem); padding: 0.4rem 1.4rem 1.4rem; }
 .popup__body h1 { display: none; }
 @media (prefers-reduced-motion: reduce) { .popup[open] { animation: none; } }
+
+/* ---- Drifting dot field (Home background) ---------------------------------- */
+.dot-field {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+/* keep page content above the dots */
+.md-container, .md-header { position: relative; z-index: 1; }
+.md-main, .md-main__inner, .md-content { background: transparent; }
