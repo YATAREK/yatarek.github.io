@@ -56,6 +56,10 @@ plugins:
 
 extra_css:
   - stylesheets/extra.css
+  - stylesheets/hero-shapes.css
+
+extra_javascript:
+  - javascripts/hero-shapes.js
 
 extra:
   social:

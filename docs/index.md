@@ -5,6 +5,7 @@ hide:
 ---
 
 <div class="hero" markdown>
+<div id="hero-3d" aria-hidden="true"></div>
 <img class="hero__portrait" src="assets/Profile.jpeg" alt="Yeasin Tarek">
 <div class="hero__body" markdown>
 
@@ -25,6 +26,8 @@ combines synthesis, characterisation and machine learning.
 
 [Read my research](research.md){ .md-button .md-button--primary }
 [View publications](publications.md){ .md-button }
+
+<p class="hero-3d-hint">Tap anywhere here to create shapes</p>
 
 </div>
 </div>
