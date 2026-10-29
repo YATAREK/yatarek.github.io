@@ -2316,7 +2316,7 @@ function renderPhysicsModel(fractions) {
   bar.style.width = pct + "%";
   bar.className = "confidence-bar-fill" + (pct < 30 ? " low" : pct < 60 ? " mid" : "");
   $("physConfPct").textContent = `${pct}% — ${pct < 30 ? "extrapolation" : pct < 60 ? "moderate" : "well-covered"}`;
-  $("physExtrapWarn").classList.toggle("visible", pct < 25);
+  $("physExtrapWarn").classList.toggle("visible", pct < 35);
 
   // VEC descriptor
   const vecItem = $("physVecItem");
