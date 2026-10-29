@@ -18,7 +18,6 @@ hide:
 <canvas class="holo__canvas" data-src="assets/portrait-holo.png" width="240" height="235"></canvas>
 </div>
 <div class="holo__beam" aria-hidden="true"></div>
-<div class="holo__base" aria-hidden="true"></div>
 <p class="sr-only" aria-live="polite" id="holo-live"></p>
 </div>
 <div class="hero__body" markdown>

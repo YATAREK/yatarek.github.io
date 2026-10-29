@@ -472,7 +472,7 @@
   position: relative;
   width: 232px;
   flex-shrink: 0;
-  padding-bottom: 34px;           /* room for the projector base */
+  padding-bottom: 14px;
   perspective: 700px;
 }
 .holo__stage {
@@ -562,7 +562,7 @@
 .holo__beam {
   position: absolute;
   left: 50%;
-  bottom: 18px;
+  bottom: 4px;
   width: 150px;
   height: 120px;
   translate: -50% 0;
@@ -572,17 +572,6 @@
   animation: holo-beam 3s ease-in-out infinite;
 }
 @keyframes holo-beam { 50% { opacity: 0.6; } }
-.holo__base {
-  position: absolute;
-  left: 50%;
-  bottom: 8px;
-  width: 140px;
-  height: 22px;
-  translate: -50% 0;
-  border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(111, 211, 255, 0.55), rgba(46, 143, 214, 0.15) 60%, transparent 72%);
-  box-shadow: 0 0 24px rgba(111, 211, 255, 0.35);
-}
 .sr-only {
   position: absolute; width: 1px; height: 1px; overflow: hidden;
   clip: rect(0 0 0 0); white-space: nowrap;
