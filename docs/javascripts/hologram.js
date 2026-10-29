@@ -29,7 +29,7 @@
     const wait = (ms) => new Promise((r) => timers.push(setTimeout(r, ms)));
 
     // Place each character around the circle, centred at the top.
-    const STEP_DEG = 6.2; // angular spacing per character
+    const STEP_DEG = 5.4; // angular spacing per character
     function setText(str, fullLen) {
       const len = fullLen || str.length;
       const start = -((len - 1) * STEP_DEG) / 2;
@@ -70,6 +70,116 @@
     }
     talk();
 
+    // ---- Line-drawn portrait ------------------------------------------------
+    // A small brightness map (alpha = person mask) becomes glowing horizontal
+    // lines: brighter, thicker and slightly raised where the photo is lighter.
+    const canvas = holo.querySelector(".holo__canvas");
+    let raf = 0;
+    if (canvas) {
+      const src = new Image();
+      src.onload = () => {
+        if (stopped) return;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const cssW = canvas.clientWidth || 216, cssH = canvas.clientHeight || 212;
+        canvas.width = Math.round(cssW * dpr);
+        canvas.height = Math.round(cssH * dpr);
+        const ctx = canvas.getContext("2d");
+        const W = canvas.width, H = canvas.height;
+
+        // read the brightness map
+        const off = document.createElement("canvas");
+        off.width = src.width; off.height = src.height;
+        const octx = off.getContext("2d", { willReadFrequently: true });
+        octx.drawImage(src, 0, 0);
+        const px = octx.getImageData(0, 0, src.width, src.height).data;
+        const sx = W / src.width, sy = H / src.height;
+
+        // pre-render the finished portrait once
+        const art = document.createElement("canvas");
+        art.width = W; art.height = H;
+        const actx = art.getContext("2d");
+        const colour = getComputedStyle(holo).getPropertyValue("--holo").trim() || "#6fd3ff";
+        actx.strokeStyle = colour;
+        actx.lineCap = "round";
+        const ROW = 3;      // source rows between lines
+        const RISE = 2.2;   // relief in source pixels
+        const rows = [];
+        for (let y = 1; y < src.height; y += ROW) {
+          rows.push(y * sy);
+          for (let x = 1; x < src.width; x += 2) {
+            const i0 = (y * src.width + x - 1) * 4, i1 = (y * src.width + x + 1) * 4;
+            const a0 = px[i0 + 3], a1 = px[i1 + 3];
+            if (a0 < 128 || a1 < 128) continue;
+            const l0 = px[i0] / 255, l1 = px[i1] / 255, l = (l0 + l1) / 2;
+            actx.globalAlpha = 0.18 + 0.82 * l;
+            actx.lineWidth = (0.35 + 1.5 * Math.pow(l, 1.4)) * dpr;
+            actx.beginPath();
+            actx.moveTo((x - 1) * sx, (y - RISE * l0) * sy);
+            actx.lineTo((x + 1) * sx, (y - RISE * l1) * sy);
+            actx.stroke();
+          }
+        }
+        const band = ROW * sy; // height of one line band in canvas pixels
+
+        if (reduced) { ctx.drawImage(art, 0, 0); return; }
+
+        // construct row by row, then idle with a scan band and rare glitches
+        const BUILD_MS = 2600;
+        let t0 = performance.now();
+        let nextRebuild = t0 + 16000;
+        function frame(now) {
+          if (stopped) return;
+          ctx.clearRect(0, 0, W, H);
+          const p = Math.min(1, (now - t0) / BUILD_MS);
+          if (p < 1) {
+            const done = p * rows.length;
+            const full = Math.floor(done);
+            if (full > 0) {
+              const hFull = Math.min(H, full * band + band * 0.6);
+              ctx.drawImage(art, 0, 0, W, hFull, 0, 0, W, hFull);
+            }
+            const yCur = full * band + band * 0.6;
+            const wCur = (done - full) * W;
+            if (wCur > 0 && yCur < H) {
+              ctx.drawImage(art, 0, yCur, wCur, band, 0, yCur, wCur, band);
+              ctx.globalAlpha = 0.9;
+              ctx.fillStyle = colour;
+              ctx.fillRect(wCur - 2 * dpr, yCur, 3 * dpr, band); // drawing head
+              ctx.globalAlpha = 1;
+            }
+          } else {
+            const talking = holo.classList.contains("is-talking");
+            ctx.globalAlpha = talking ? 0.92 + 0.08 * Math.sin(now / 70) : 0.95;
+            // rare horizontal glitch on a few rows
+            const glitch = Math.random() < 0.012;
+            if (glitch) {
+              const gy = Math.random() * H, gh = band * (2 + Math.random() * 4);
+              ctx.drawImage(art, 0, 0, W, gy, 0, 0, W, gy);
+              ctx.drawImage(art, 0, gy, W, gh, (Math.random() - 0.5) * 8 * dpr, gy, W, gh);
+              ctx.drawImage(art, 0, gy + gh, W, H - gy - gh, 0, gy + gh, W, H - gy - gh);
+            } else {
+              ctx.drawImage(art, 0, 0);
+            }
+            // scan band sweeping down
+            const sy2 = ((now / 3200) % 1.4 - 0.2) * H;
+            ctx.globalCompositeOperation = "source-atop";
+            const grad = ctx.createLinearGradient(0, sy2 - 24 * dpr, 0, sy2 + 24 * dpr);
+            grad.addColorStop(0, "rgba(255,255,255,0)");
+            grad.addColorStop(0.5, "rgba(255,255,255,0.55)");
+            grad.addColorStop(1, "rgba(255,255,255,0)");
+            ctx.fillStyle = grad;
+            ctx.globalAlpha = 1;
+            ctx.fillRect(0, sy2 - 24 * dpr, W, 48 * dpr);
+            ctx.globalCompositeOperation = "source-over";
+            if (now > nextRebuild) { t0 = now; nextRebuild = now + BUILD_MS + 16000; }
+          }
+          raf = requestAnimationFrame(frame);
+        }
+        raf = requestAnimationFrame(frame);
+      };
+      src.src = canvas.dataset.src.startsWith("/") ? canvas.dataset.src : new URL(canvas.dataset.src, document.baseURI).href;
+    }
+
     // Pointer tilt (desktop only).
     const stage = holo.querySelector(".holo__stage");
     function onMove(e) {
@@ -86,6 +196,7 @@
     cleanup = () => {
       stopped = true;
       timers.forEach(clearTimeout);
+      cancelAnimationFrame(raf);
       window.removeEventListener("pointermove", onMove);
     };
   }

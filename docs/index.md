@@ -8,19 +8,14 @@ hide:
 <div class="holo" markdown="0" role="img" aria-label="Holographic portrait of Yeasin Tarek">
 <div class="holo__stage">
 <svg class="holo__ring" viewBox="0 0 220 220" aria-hidden="true">
-<circle class="holo__track" cx="110" cy="110" r="96"/>
-<circle class="holo__pulse" cx="110" cy="110" r="103"/>
+<circle class="holo__track" cx="110" cy="110" r="104"/>
+<circle class="holo__pulse" cx="110" cy="110" r="108"/>
 </svg>
 <div class="holo__orbit" aria-hidden="true">
 <div class="holo__caption" id="holo-text">
 </div>
 </div>
-<div class="holo__frame">
-<img class="holo__img" src="assets/Profile.jpeg" alt="">
-<span class="holo__tint"></span>
-<span class="holo__scan"></span>
-<span class="holo__sweep"></span>
-</div>
+<canvas class="holo__canvas" data-src="assets/portrait-holo.png" width="240" height="235"></canvas>
 </div>
 <div class="holo__beam" aria-hidden="true"></div>
 <div class="holo__base" aria-hidden="true"></div>
